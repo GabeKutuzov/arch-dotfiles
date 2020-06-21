@@ -1,0 +1,13 @@
+CC=gcc
+CFLAGS= `--libs --cflags` -I. -g3 
+DEPS =
+NAME = NAME
+OBJ = Object.o 
+
+.PHONY = $(NAME)
+
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+$(NAME): $(OBJ)
+	$(CC) -o $@ $^ $(CFLAGS)

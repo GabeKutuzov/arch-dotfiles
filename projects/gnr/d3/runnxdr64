@@ -1,0 +1,1 @@
+nxdr2 -m64 -f d3hdrs.c -b d3objs -c "gcc -DPCLUX64 -I$HOME/include" -o d3nxt64.c -h d3nxd64.h

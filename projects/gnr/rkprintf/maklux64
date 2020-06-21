@@ -1,0 +1,61 @@
+# (c) Copyright 2011-2012, The Rockefeller University *11203* 
+# $Id: maklux64 26 2011-08-31 21:18:08Z  $
+########################################################################
+#        Make file for rkprintf library - Linux 64-bit version         #
+#                                                                      #
+# V1A, 11/27/11, GNR - New makefile                                    #
+# Rev, 01/28/12, GNR - Add puts()                                      #
+# ==>, 01/28/12, GNR - Last date before committing to svn repository   #
+########################################################################
+
+LIBDIR := $(HOME)/lib
+INC    := $(HOME)/include
+LIBNM  := librkpf
+
+# Linux common pathnames
+DIR := pclux64
+LL  := $(LIBDIR)/$(DIR)
+
+# Object code to be included in ROCKS library:
+
+FILES = \
+rkprintf \
+printf   \
+fprintf  \
+puts     \
+rfprintf \
+sprintf  \
+snprintf
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+########## Target dependent macro definitions:
+CC := gcc
+CFLAGS := -g -Wunused -m64
+SVNV := $(shell gnrversn)
+DEFS := PCLUX64 _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:     %.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+# Compile
+$(DIR)/%.o:     %.c $(DIR)/%.d maklux64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+.PHONY : pclux64 depend
+pclux64:   $(LL)/$(LIBNM).a
+depend:    $(FILES:%=$(DIR)/%.d)
+
+$(LL)/$(LIBNM).a: $(FILES:%=$(DIR)/%.o)
+	ar r $(LIBNM).a $(FILES:%=$(DIR)/%.o)
+	ranlib $(LIBNM).a
+	mv $(LIBNM).a $(LL)
+
+clean:
+	rm -f $(DIR)/*.o $(LL)/$(LIBNM).a
+
+-include $(FILES:%=$(DIR)/%.d)

@@ -1,0 +1,117 @@
+# (c) Copyright 2015, The Rockefeller University *11225* 
+# $Id: makmac64 16 2017-01-13 20:36:40Z  $
+########################################################################
+#            Make file for BBD mex-function client library             #
+#                         Mac 64-bit version                           #
+#                                                                      #
+# V1A, 12/04/15, GNR - New makefile, derived from makmex64             #
+# ==>, 12/04/15, GNR - Last mod before committing to svn repository    #
+########################################################################
+
+BINDIR	:= $(HOME)/bin
+MEXDIR	:= $(HOME)/matlab
+LIBDIR	:= $(HOME)/lib
+INC1	:= $(HOME)/include
+INC2	:= /Applications/MATLAB_R2015b.app/extern/include
+INC     := $(INC1) $(INC2)
+
+# Linux common pathnames
+DIR := macos64
+LL  := $(LIBDIR)/$(DIR)
+
+CFILES = \
+abexit   \
+bbdcminp \
+bbdcmlog \
+bbdcquit
+
+MEXFILES = \
+bbdcrege \
+bbdcregs \
+bbdcrsid \
+bbdcregt \
+bbdcrtid \
+bbdcregv \
+bbdcchk  \
+bbdcevnt \
+bbdcexsi \
+bbdcgete \
+bbdcgetm \
+bbdcputs \
+bbdcputt \
+bbdcputv \
+bbdcwait
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o .h .mexa64
+.PHONY : bbdmex bbdxinit bbdxclse bbdxminp bbdxmlog depend clean
+
+# Target dependent macro definitions:
+CC := gcc
+MEXC := mex
+CFLAGS := -m64 -fPIC -O2 -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := MACOS64 _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(CPPFLAGS) $(INC:%=-I%) $< \
+	| sed '\''s/^\(.*\)\.o[ :]*/$(DIR)\/\1.o $(DIR)\/\1.d : /g'\'' > $@; \
+	[ -s $@ ] || rm -f $@'
+
+#Compile for Mac
+$(DIR)/%.o:	%.c $(DIR)/%.d makmac64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) -c $<
+	mv $*.o $(DIR)
+
+#Compile a mex file
+$(MEXDIR)/%.mexa64:	%.c $(DIR)/abexit.o $(LL)/libcrkpic.a $(INC1)/bbd.h makmac64
+	$(MEXC) $(DEFS:%=-D%) -I$(INC1) -g -outdir $(MEXDIR) $< $(DIR)/abexit.o \
+		$(LL)/libcrkpic.a
+
+#Make all this stuff
+# N.B.  bbbcminp and bbdcmlog have same names in 32 and 64-bit versions
+all: depend bbdxinit bbdxclse bbdmex bbdxminp bbdxmlog
+
+bbdmex:		$(MEXFILES:%=$(MEXDIR)/%.mexa64)
+bbdxinit:	$(MEXDIR)/bbdcinit.mexa64
+bbdxclse:	$(MEXDIR)/bbdcclse.mexa64
+bbdxminp:	$(BINDIR)/bbdcminp
+bbdxmlog:	$(BINDIR)/bbdcmlog
+depend:		$(CFILES:%=$(DIR)/%.d)
+
+$(BINDIR)/bbdcminp:	$(DIR)/bbdcminp.o makmac64
+		$(CC) $(CFLAGS) $(DIR)/bbdcminp.o $(LL)/libcrk.a -lm -o $@
+
+$(BINDIR)/bbdcmlog:	$(DIR)/bbdcmlog.o makmac64
+		$(CC) $(CFLAGS) $(DIR)/bbdcmlog.o $(LL)/libcrk.a -lm -o $@
+
+$(MEXDIR)/bbdcinit.mexa64: bbdcinit.c $(DIR)/abexit.o $(DIR)/bbdcquit.o \
+		$(LL)/libcrkpic.a $(INC1)/bbd.h makmac64
+	mex $(DEFS:%=-D%) -I$(INC1) -g -outdir $(MEXDIR) $< $(DIR)/abexit.o \
+		$(DIR)/bbdcquit.o $(LL)/libcrkpic.a
+
+$(MEXDIR)/bbdcclse.mexa64: bbdcclse.c $(DIR)/abexit.o $(DIR)/bbdcquit.o \
+		$(LL)/libcrkpic.a $(INC1)/bbd.h makmac64
+	mex $(DEFS:%=-D%) -I$(INC1) -g -outdir $(MEXDIR) $< $(DIR)/abexit.o \
+		$(DIR)/bbdcquit.o $(LL)/libcrkpic.a
+
+#Compile abexit.o and bbdcquit.o for inclusion in mexa64 files
+$(DIR)/abexit.o:	abexit.c $(DIR)/abexit.d  makmac64
+	$(CC) $(CFLAGS) -fPIC $(DEFS:%=-D%) -DMATLAB_MEX_FILE \
+		$(INC:%=-I%) -c $<
+	mv abexit.o $(DIR)
+
+$(DIR)/bbdcquit.o:	bbdcquit.c $(DIR)/bbdcquit.d  makmac64
+	$(CC) $(CFLAGS) -fPIC $(DEFS:%=-D%) -DMATLAB_MEX_FILE \
+		$(INC:%=-I%) -c $<
+	mv bbdcquit.o $(DIR)
+
+#Remove all the products of this make
+clean:
+	rm -f $(DIR)/*.o $(BINDIR)/bbcdmlog $(BINDIR)/bbdcminp \
+		$(MEXDIR)/$(MEXFILES:%=%.mexa64)
+
+-include $(CFILES:%=$(DIR)/%.d)

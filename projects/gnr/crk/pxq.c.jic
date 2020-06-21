@@ -1,0 +1,177 @@
+/* (c) Copyright 1989-2008, George N. Reeke, Jr. */
+/* $Id: pxq.c 15 2009-12-30 22:02:21Z  $ */
+/***********************************************************************
+*                  ROCKS Library - C Implementation                    *
+*                        PXON, PXQ, and PXOFF                          *
+*                                                                      *
+*        These routines are part of the C-language implementation      *
+*        of the ROCKS interface routines.  They provide a standard     *
+*        method for a user to interrupt an executing application.      *
+*        The code given here is for use under TURBO C, which is no     *
+*        longer supported.  The code may be used as a template to      *
+*        implement other versions.                                     *
+*        The interruption here is accomplished with CTRL/BRK.          *
+*                                                                      *
+************************************************************************
+*  V1A, 03/18/89, GNR - Convert from FORTRAN-compatible version        *
+*  Rev, 04/03/89, GNR - Modify to make compilable on NCUBE             *
+*  Rev, 04/19/89, GNR - Implement revised system definitions           *
+*  ==>, 08/18/07, GNR - Last date before committing to svn repository  *
+***********************************************************************/
+
+/*
+         To install the CTRL/BRK handler in DOS:
+               int pxon(void);
+         The value returned is 0 if the interactive interface was
+               successfully established, otherwise -1.
+         After this call has been completed, the terminal user may
+               at any time enter CTRL/BRK, at which time a '>' prompt
+               will be displayed.  Any command acceptable to the
+               application may be entered, and will be passed to the
+               application at the next pxq call.
+
+         To determine whether a CTRL/BRK command has been issued:
+               int pxq(char *string, int maxstr)
+         'string' is a pointer to a string which will receive the
+               command string if one has been entered.  If no command
+               has been entered, the first character of the string is
+               set to an end-of-string character.  The string should
+               be long enough to contain the longest command line that
+               the operating system permits (min CDSIZE characters).
+         'maxstr' gives the number of characters (not including the
+               end-of-string marker) that will fit in 'string'.  pxq
+               will truncate the input command, if necessary, to fit
+               in 'string'.
+         The value returned is -1 if no CTRL/BRK command has been
+               issued or if the pxon call failed.  Otherwise, pxq
+               returns the number of characters in the command string,
+               not including the end-of-string character.  If this
+               value is larger than 'maxstr', the command has been
+               truncated.  The pending command state is cleared so
+               that one command from the terminal can only give one
+               positive pxq return.
+         If the command string is 'quit' or 'hx', the program is
+               terminated at once.
+
+         To cancel an existing CTRL/BRK command linkage:
+               void pxoff(void)
+         After this call is completed, CTRL/BRK will no longer be a
+               recognized immediate command.  The command is also
+               automatically cancelled when the program terminates,
+               normally or abnormally.  pxoff performs no operation
+               if the pxon call failed.
+
+*/
+
+#include "sysdef.h"           /* System definitions */
+
+#ifdef IBM370
+#error *** Use PXQ ASSEMBLE for IBM 370 version ***
+#endif
+
+#ifdef TURBOC
+#include <dos.h>
+#include <conio.h>
+#endif
+
+#include <stddef.h>
+#include <string.h>
+#include "rocks.h"            /* Be sure prototype gets checked */
+
+/* Define static storage.  The PXS structure incorporates the
+   arrangement needed for the PC-DOS cgets function.  Other
+   versions may be defined as needed.  PXS.flag is zero if
+   pxon has not been called, otherwise it is the maximum cmd
+   length.  This nonzero value serves as a PX-loaded flag. */
+
+static struct {               /* Reduce number of externs */
+   volatile int nc;              /* Number of characters entered */
+   unsigned char flag;           /* CDSIZE+1 if handler installed */
+   volatile unsigned char ncs;   /* Number of characters saved */
+   char cmd[CDSIZE+1];           /* Command string */
+   } PXS = {-1, 0, 0};   /* Set up for uninstalled interface */
+
+/*--------------------------------------------------------------------*
+*                                PXGO                                 *
+*--------------------------------------------------------------------*/
+
+/* Here is the actual code executed during the interrupt.  The
+   TURBO C documentation indicates that it is safe to perform
+   system calls during a ctrlbrk routine--this may not necessarily
+   be valid for other implementations.  In general, one must be
+   careful not to use any nonreentrant library functions that might
+   have been executing when the interruption occurred.  Note that
+   cgets limits the number of characters that can be read, so the
+   theoretical possibility that nc > ncs cannot happen here.  */
+
+int pxgo(void) {
+
+   if (PXS.flag) {
+      cputs("\r\n>");            /* Give forth a prompt */
+      cgets(&PXS.flag);          /* Pick up the reply */
+      PXS.nc = (int)(PXS.ncs);   /* Save number stored */
+      if (!strnicmp(PXS.cmd,"QUIT",4) || !strnicmp(PXS.cmd,"HX",2))
+         return 0;
+      }
+   return TRUE;               /* Resume execution */
+
+   } /* End pxgo */
+
+/*--------------------------------------------------------------------*
+*                                PXQ                                  *
+*--------------------------------------------------------------------*/
+
+int pxq(char *string, int maxstr) {
+
+   register int pxqret;       /* Return value */
+   register int ncused;       /* Number of characters used */
+
+   /* Next two lines should be an atomic operation if possible */
+#ifdef TURBOC
+   asm cli;                   /* Disable interrupts */
+#endif
+   pxqret = PXS.nc;           /* Pick up string count */
+   PXS.nc = -1;               /* Clear string count */
+#ifdef TURBOC
+   asm sti;                   /* Reallow interrupts */
+#endif
+
+   if (pxqret > 0) {          /* There was a command */
+      int incs = (int)PXS.ncs;
+      ncused = min(incs,maxstr); /* Command string to user */
+      strncpy(string,PXS.cmd,ncused);
+      }
+   else ncused = 0;           /* There was not a command */
+
+   string[ncused] = '\0';     /* Protect if truncated */
+   return pxqret;
+   } /* End pxq */
+
+/*--------------------------------------------------------------------*
+*                                PXON                                 *
+*--------------------------------------------------------------------*/
+
+int pxon(void) {
+
+   if (!PXS.flag) {
+#ifdef TURBOC
+      PXS.flag = CDSIZE+1;
+      ctrlbrk(pxgo);          /* Install handler */
+#endif
+      }
+   return 0;
+   } /* End pxon */
+
+/*--------------------------------------------------------------------*
+*                                PXOFF                                *
+*--------------------------------------------------------------------*/
+
+void pxoff(void) {
+
+   /* No way to clear CTRL/BRK handler, just flag it into oblivion */
+   PXS.flag = FALSE;
+   PXS.nc = -1;
+   PXS.cmd[0] = '\0';
+
+   } /* End pxoff */
+

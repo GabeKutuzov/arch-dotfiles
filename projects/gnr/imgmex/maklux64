@@ -1,0 +1,90 @@
+# (c) Copyright 2011-2017, The Rockefeller University *11226* 
+# $Id: maklux64 9 2012-11-21 22:00:13Z  $
+########################################################################
+#        Make file for image acquisition mex-function library          #
+#    (mex routines to read NORB or CIT images according to a spec)     #
+#                        Linux 64-bit version                          #
+#                                                                      #
+# V1A, 03/16/11, GNR - New makefile                                    #
+# V1B, 04/16/11, GNR - Add norfmex                                     #
+# Rev, 11/21/11, GNR - Add citmex                                      #
+# ==>, 11/28/11, GNR - Last mod before committing to svn repository    #
+# Rev, 09/24/12, GNR - Change MatlabR2010b to MatlabR2012b             #
+# Rev, 11/09/12, GNR - Add citmexpbg, SVNVRS def                       #
+# Rev, 05/05/17, GNR - Change MatlabR2012b to MatlabR2016b             #
+########################################################################
+
+MEXDIR	:= $(HOME)/matlab
+LIBDIR	:= $(HOME)/lib
+INC1	:= $(HOME)/include
+INC2	:= /opt/MatlabR2016b/extern/include
+INC     := $(INC1) $(INC2)
+
+# Linux common pathnames
+DIR := pclux64
+LL  := $(LIBDIR)/$(DIR)
+
+CFILES = \
+abexit
+
+NORBMEXFILES = \
+norbmexset \
+norbmexget
+
+NORFMEXFILES = \
+norfmexset \
+norfmexget
+
+CITMEXFILES = \
+citmexset \
+citmexget \
+citmexpbg
+
+.SUFFIXES:
+.SUFFIXES: .d .c .h .mexa64
+.PHONY : norbmex norfmex citmex depend clean
+
+# Target dependent macro definitions:
+CC := gcc
+MEXC := mex
+CFLAGS := -g -Wunused -m64
+SVNV := $(shell gnrversn)
+DEFS := PCLUX64 _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+#Override implicit rule for C compilation
+%.o : %.c
+
+#Compile a mex file
+$(MEXDIR)/%.mexa64:	%.c $(DIR)/%.d $(DIR)/abexit.o $(LL)/libcrkpic.a \
+		makefile
+	mex $(DEFS:%=-D%) $(INC1:%=-I%) -g -outdir $(MEXDIR) $< \
+		$(DIR)/abexit.o $(LL)/libcrkpic.a -lrt -lm
+
+#Make all this stuff
+all: depend norbmex norfmex citmex
+
+depend:		$(NORBMEXFILES:%=$(DIR)/%.d) $(NORFMEXFILES:%=$(DIR)/%.d) \
+		$(CITMEXFILES:%=$(DIR)/%.d)
+
+norbmex: 	$(NORBMEXFILES:%=$(MEXDIR)/%.mexa64)
+
+norfmex: 	$(NORFMEXFILES:%=$(MEXDIR)/%.mexa64)
+
+citmex: 	$(CITMEXFILES:%=$(MEXDIR)/%.mexa64)
+
+#Special case for abexit.o (for inclusion in citmexset)
+$(DIR)/abexit.o:	abexit.c $(DIR)/abexit.d  makefile
+	$(CC) $(CFLAGS) -fPIC $(DEFS:%=-D%) -DMATLAB_MEX_FILE \
+		$(INC:%=-I%) -c $<
+	mv abexit.o $(DIR)
+
+#Remove all the products of this make
+clean:
+	rm -f $(DIR)/*.d $(MEXDIR)/$(MEXFILES:%=%.mexa64)
+
+-include $(MEXFILES:%=$(DIR)/%.d)

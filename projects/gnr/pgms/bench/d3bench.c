@@ -1,0 +1,460 @@
+/* (c) Copyright 1988 by George N. Reeke, Jr.  *** CONFIDENTIAL ***   */
+/* (c) Copyright 1992,  Neurosciences Research Foundation, Inc.       */
+/* For use only in testing performance of computers on a simplified   */
+/* version of a Darwin III simulation.  Please do not distribute      */
+/* to any third parties without permission.                           */
+/*--------------------------------------------------------------------*/
+/*                                                                    */
+/*    Darwin III "Benchmark" Program                                  */
+/*                                                                    */
+/*    This program is designed to be a "miniature" version of         */
+/*    Darwin III, incorporating the most time-consuming inner-        */
+/*    loop calculations.  It should be a suitable basis for           */
+/*    developing specialized versions for various parallel-           */
+/*    architecture machines.                                          */
+/*                                                                    */
+/*    V1A, 05/05/88, G. N. Reeke                                      */
+/*    V1B, 05/26/88, GNR - Fix bug allocating CONNDATA structures     */
+/*                                                                    */
+/*--------------------------------------------------------------------*/
+
+/* Note that integer arithmetic will be used for all calculations,
+   as in the current program.  This will be a realistic test for the
+   kind of modelling we expect to do.  In the comments that follow,
+   parenthesized expressions of the form '(Sn)' will be used to
+   indicate that a quantity is understood to have n fraction bits.
+   Long int will be assumed 32 bits; short int and int, 16 bits       */
+
+/* The program will read one setup file, whose name must be given
+   as a command-line argument.  The file contains:
+
+   Line 1: NCELLTYPES, NITERATIONS, SEED
+   where:  NCELLTYPES = Number of types of cells to be simulated
+           NITERATIONS = Number of times to iterate entire model
+           SEED = Random number generating seed
+
+   For each cell type, the following line is read, followed
+   immediately by NCONNTYPES lines of connection information:
+           NCELLS, NCONNTYPES, DELTA
+   where:  NCELLS = Number of cells of this type (NCELLS < 65536)
+           NCONNTYPES = Number of connection types for these cells
+           DELTA = Amplification parameter (zero to disable amp)
+
+   For each of NCONNTYPE connection types, a line of the following
+   format is read:
+           NCONNS, SOURCE, RULE, SCALE
+   where:  NCONNS = Number of connections of this type
+           SOURCE = Integer between 1 and NCELLTYPES, giving the
+                        type of source cells for these connections
+           RULE = 0 for completely random connections
+                  1 for sequential ("partitioned") connections
+           SCALE = scale factor for these connections
+                                                                      */
+
+/* Include standard library functions */
+
+#include <stdio.h>
+#include <stdlib.h>
+#ifndef T805
+#include <sys/types.h>
+#include <sys/stat.h>
+#endif
+#include <time.h>
+#define difftime(a,b) ((double)((a)-(b)))
+#define SRA(x,s) ( ((x) >= 0) ? ((x)>>(s)) : (~(~(x)>>(s))) )
+
+/***********************************************************************
+*  Crude random number generator - taken from Kernigan & Ritchie,      *
+*  second edition, page 46.  This is very portable, but generates      *
+*  only 15-bit random numbers, which is good enough for benchmarking.  *
+*                                                                      *
+* Rev, 10/22/88, GNR - randskip added                                  *
+* Rev, 08/08/92, GNR - shift,AND used in place of division,remainder   *
+***********************************************************************/
+#ifdef RAND_MAX
+#undef RAND_MAX
+#endif
+
+#define RAND_MAX 32767
+
+unsigned long int next = 1;
+
+/*-------------------------------------------------------------------*/
+/*                    srand: set seed for rand()                     */
+/*-------------------------------------------------------------------*/
+
+void srand(unsigned int seed) {
+
+   next = seed;
+   }
+
+/*-------------------------------------------------------------------*/
+/*          rand: return pseudo-random integer on 0..32767           */
+/*-------------------------------------------------------------------*/
+
+int rand(void) {
+
+   next = next * 1103515245 + 12345;
+   return (unsigned int)(next>>16) & RAND_MAX;
+   }
+
+/* Define parameters that aren't worth varying in input file
+      PT = positive firing threshold for a cell
+      MTI = modification threshold on output of a cell
+      MTJ = modification threshold on input to a connection
+      ET = excitatory threshold for an input to a connection          */
+
+   #define  PT  0.25
+   #define MTI  0.3
+   #define MTJ  0.4
+   #define  ET  0.2
+
+/* Define structure types used in the simulation
+   Note: In the real simulation, all of the structures contain
+   many more variables.                                               */
+
+   typedef unsigned char byte;
+
+   struct CONNDATA {          /* Data for a single connection */
+      short int lij;          /* Number of source cell */
+      byte cij;               /* Strength of connection (S7) */
+      };
+
+   struct CONNBLK {           /* Connection-type information block */
+      struct CONNBLK * pct;   /* Pointer to next CONNBLK */
+      struct CELLBLK * psrc;  /* Pointer to source cell type */
+      double chunksize;       /* Range of a generated connection */
+      long int nconns;        /* Number of connections */
+      int source;             /* Serial number of source cell type */
+      int rule;               /* Connection generating rule */
+      long int scale;         /* Scale factor (S8) */
+      long int das[4];        /* Detailed amp stats */
+      long int ax;            /* Intermediate afferent sum (S15) */
+      };
+
+   struct CELLBLK {           /* Cell-type information block */
+      struct CELLBLK * play;  /* Pointer to next CELLBLK */
+      struct CONNBLK * pct1;  /* Pointer to first CONNBLK */
+      struct CONNDATA * prd;  /* Pointer to actual connection data */
+      long int ncells;        /* Number of cells of this type */
+      long int nconntypes;    /* Number of connection types */
+      long int nconntotal;    /* Total number of connections */
+      long int delta;         /* Amplification factor (S10) */
+      byte * psi;             /* Pointer to s(i) data */
+      byte * ps2;             /* Pointer to alternate (new) s(i) */
+      };
+
+/*--------------------------------------------------------------------*/
+/*                                                                    */
+/*                         MAIN PROCEDURE                             */
+/*                                                                    */
+/*--------------------------------------------------------------------*/
+
+int main(int argc,char *argv[])
+{
+
+/* Declarations: */
+
+   int ncelltypes;            /* Number of cell types in simulation */
+   int niterations;           /* Number of iterations to perform */
+   unsigned int seed;         /* Random number seed */
+   long int pt;               /* Working output threshold */
+   int mti,mtj,et;            /* Working thresholds (S8) */
+   float tdelta,tscale;       /* Temporary delta, scale */
+   int trule;                 /* Temporary copy of 'rule' */
+   int ji,jl,js,jx,jc;        /* Iter, cell, conn type & data counters */
+   struct CELLBLK *play1;     /* Pointer to first cell block */
+   struct CELLBLK *il,*ll;    /* Pointer to current, last CELLBLK */
+   struct CONNBLK *ix,*lx;    /* Pointer to current, last CONNBLK */
+   struct CONNDATA *ic,*lc;   /* Pointer to current connection data */
+   byte *is,*is2,*psj;        /* Pointers to state variables */
+   int wksj,sjmet,wkcij;      /* s(j) (S8); s(j) - et (S8); cij (S7) */
+   int simmti,sjmmtj;         /* s(i) - mti (S8); s(j) - mtj (S8) */
+   int ampcase;               /* Amplification case for "DAS" */
+   long int wksum;            /* Working sum for s(i) */
+   time_t time1,time2,time3;  /* Starting, setup, ending time */
+   FILE *pif;                 /* Input file pointer */
+   double ftemp;
+
+/* Note the beginning time */
+
+   time(&time1);
+
+/* Open the setup file and read the first line */
+
+   if (argc < 2) {
+      printf("Setup file name required\n"); exit(1);}
+   if ((pif = fopen(argv[1],"r")) == NULL) {
+      printf("Cannot open setup file\n"); exit(2);}
+   fscanf(pif,"%d%d%d",&ncelltypes,&niterations,&seed);
+   printf("Number of celltypes = %d, number of iterations = %d, seed = %u\n",
+      ncelltypes,niterations,seed);
+   srand(seed);
+
+/* Read the cell type information and create linked list of cell blocks */
+
+   play1 = NULL; ll = NULL;
+   for (jl=1;jl<=ncelltypes;jl++) {
+      if ((il=(struct CELLBLK *)malloc(sizeof(struct CELLBLK)))==NULL) {
+         printf("No mem for CELLBLK\n"); exit(3);}
+      if (ll==NULL) play1 = il; else ll->play = il;
+      ll = il;
+      fscanf(pif,"%ld%ld%lf",&il->ncells,&il->nconntypes,&ftemp);
+      tdelta = (float)ftemp;
+      printf("   Cell type %d\n",jl);
+      printf("      Ncells = %ld, nconntypes = %ld, delta = %f\n",
+         il->ncells,il->nconntypes,ftemp);
+      il->nconntotal = 0;
+      il->delta = (long int)(1024.0*tdelta);
+
+/* Read the connection type information and create connection
+   blocks in a linked list chained to the controlling CELLBLK.
+   This is done prior to allocating cell data to keep linked-
+   list memory better localized */
+
+      lx = NULL;
+      for (jx=1;jx<=il->nconntypes;jx++)  {
+         if ((ix=(struct CONNBLK *)malloc(sizeof(struct CONNBLK)))==NULL) {
+            printf("No mem for CONNBLK\n"); exit(4);}
+         if (lx==NULL) il->pct1 = ix; else lx->pct = ix;
+         lx = ix;
+         fscanf(pif,"%ld%d%d%lf",&ix->nconns,&ix->source,&ix->rule,&ftemp);
+         tscale = (float)ftemp;
+         printf("      Connection type %d\n",jx);
+         printf("         Nconns = %ld, source = %d, rule = %d, scale = %f\n",
+            ix->nconns,ix->source,ix->rule,ftemp);
+         ix->scale = (long int)(256.0*tscale);
+         il->nconntotal += ix->nconns;
+         } /* End reading CONNBLK input lines for this CELLBLK */
+      lx->pct = NULL; /* Terminate the connection linked list */
+
+      } /* End reading CELLBLK input lines */
+   ll->play = NULL; /* Terminate the cell linked list */
+
+/* Allocate space for two vectors of s(i) values (s(i) == state of
+   cell i).  psi points to current values, ps2 points to newly cal-
+   culated values.  The psi states are given random initial values.   */
+
+   for (il=play1;il!=NULL;il=il->play) {
+      if ((il->psi=(byte *)malloc((unsigned int)il->ncells))==NULL) {
+         printf("No mem for s(i)\n"); exit(5);}
+      if ((il->ps2=(byte *)malloc((unsigned int)il->ncells))==NULL) {
+         printf("No mem for s(i)\n"); exit(5);}
+      for (is=il->psi,js=1;js<=il->ncells;js++)
+         *is++ = (byte)rand();}
+
+/* Complete the connection blocks:
+      1) Allocate space for the connection data
+      2) Locate the relevant source data and save pointers
+      3) Fill in random starting values for cij and lij.              */
+
+   for (il=play1;il!=NULL;il=il->play) {
+
+      /* Allocate space for the actual connection data */
+
+      if ((il->prd=(struct CONNDATA *)malloc((unsigned int)
+         il->ncells*il->nconntotal*sizeof(struct CONNDATA)))==NULL) {
+         printf("No mem for cij,lij\n"); exit(6);}
+      ic = il->prd;
+
+      /* Locate the appropriate cell blocks and figure chunksize */
+
+      for (ix=il->pct1;ix!=NULL;ix=ix->pct) {
+
+         /* Locate the source cell type block */
+         for (jl=1,ll=play1;jl<ix->source;jl++,ll=ll->play) ;
+         ix->psrc = ll;
+
+         /* Constant for uniform random connection rule */
+         ix->chunksize = (double)ll->ncells/((double)RAND_MAX+1.0);
+         /* Constant for partitioned connection rule */
+         if (ix->rule) ix->chunksize /= (double)ix->nconns;
+         } /* End connection block initialization */
+
+      /* Generate and fill in the actual connection data */
+
+      for (js=1;js<=il->ncells;js++) { /* Loop over cells */
+         for (ix=il->pct1;ix!=NULL;ix=ix->pct) { /* Connection types */
+            trule = ix->rule;
+            for (jc=0;jc<ix->nconns;jc++,ic++) {
+               /* Note that the eight bits of cij will be interpreted
+                  later as a sign and 7 fraction bits */
+               ic->cij = (byte) rand();
+               /* Note that the following calculation of lij is not
+                  really adequate with a 15-bit random number gene-
+                  rator -- try to do better on individual machines.
+                  Also, we are forced to use an intermediate double-
+                  float variable, since 'C' does not support access
+                  to the high-order 32 bits of a 32 x 32 bit product. */
+               ic->lij = trule ?
+                  /* Partitioned (pseudo-linear) connection rule */
+                  (short)(ix->chunksize*((double)jc*(double)RAND_MAX +
+                     (double)rand())) :
+                  /* Uniformly distributed random connection rule */
+                  (short)(ix->chunksize*(double)rand());
+               } /* End loop over connections */
+            } /* End loop over connection types */
+         } /* End loop over cells */
+      } /* End loop over cell types */
+
+/* Make fixed-point working thresholds */
+
+   pt  = (long int) 8388608.0*PT; /* PT with 23 fraction bits */
+   mti = (int) 256.0*MTI;
+   mtj = (int) 256.0*MTJ;
+   et  = (int) 256.0*ET;
+
+/* Note the end-of-setup time */
+
+   time(&time2);
+   printf("Setup required %f seconds\n",difftime(time2,time1));
+
+/*--------------------------------------------------------------------*/
+/*                                                                    */
+/*                  PERFORM THE ACTUAL SIMULATION                     */
+/*                                                                    */
+/*--------------------------------------------------------------------*/
+
+/* Perform 'niterations' iterations.  Note that in general, it is not
+   possible to parallelize by having different processors work on
+   different iterations because the state of the environment will
+   depend on outputs generated by the automaton in the previous step. */
+
+   for (ji=1;ji<=niterations;ji++) {
+#if 0
+/* DEBUG DEBUG DEBUG */
+      printf("State at iteration %d\n",ji);
+      for (jl=1,il=play1;il!=NULL;il=il->play,jl++) {
+         ic = il->prd; lc = ic;
+         for (js=0,is=il->psi;js<il->ncells;js++) {
+            printf("   s(%d,%d) = x%X\n",jl,js,*is++);
+            for (jx=1,ix=il->pct1;ix!=NULL;ix=ix->pct,jx++) {
+               printf("     l(%d): ",jx);
+               for (jc=0;jc<ix->nconns;jc++,lc++)
+                  printf("%10d",lc->lij);
+               printf("\n");
+               printf("     c(%d): ",jx);
+               for (jc=0;jc<ix->nconns;jc++,ic++) {
+                  wkcij = ic->cij >= 128 ? ic->cij - 256 : ic->cij;
+                  printf("x%08X ",wkcij);}
+               printf("\n");}}}
+/* ENDDEBUG ENDDEBUG ENDDEBUG */
+#endif
+/* Evaluate responses for all defined cell types.  In general, one
+   will want to allow different processors to work on different cell-
+   types.  This is complicated by the fact that different celltypes
+   have different numbers of connections, so the processors will not
+   all finish together.  In present models, the order of evaluation
+   of celltypes is deterministic and the resulting states are used
+   for evaluation of celltypes defined later.  This restriction may
+   be relaxed in the future.  In any event, cells can be made to
+   appear to be updated simultaneously by keeping multiple state
+   vectors and switching pointers at appropriate times, as is done
+   in the present program.  In the real Darwin III program, there
+   is an 'UPWITH' option to specify that a group of celltypes are
+   to be updated simultaneously.                                      */
+
+/* In systems with relatively few processors, it will probably be
+   sufficient to process cell types sequentially, exercising parallelism
+   at the level of cells of the same type.  In the connection machine,
+   there will typically be fewer cells of one type than there are
+   processors.  Designs to consider are (1) to process the entire
+   network simultaneously, with one or more cells of whatever type
+   assigned to a processor, masking each processor off when it has
+   completed the relevant number of connections; or (2) to distribute
+   connections, rather than cells, over the processors.  This would
+   assure a very uniform load distribution, but would have the added
+   complication of needing to bring the results together to update the
+   cell variables.                                                    */
+
+      for (il=play1;il!=NULL;il=il->play) {
+
+/* For each iteration, the "DAS" statistics are collected in the
+   CONNBLKs.  This calculation is included in the benchmark mainly
+   to see how different parallel architectures deal with possibly
+   asynchronous updating of a variable from a number of different
+   processes (in this case, different connections getting updated).
+   At this time, the statistics must be initialized to zero.          */
+
+         for (ix=il->pct1;ix!=NULL;ix=ix->pct) {
+            ix->das[0]=0;ix->das[1]=0;ix->das[2]=0;ix->das[3]=0;}
+
+/* Evaluate responses for all cells of this type */
+
+         ic = il->prd;
+         for (js=1,is=il->psi,is2=il->ps2;js<=il->ncells;js++) {
+
+/* Evaluate responses for all connection types associated with each
+   cell type.                                                         */
+
+            wksum = 0; /* Clear the working s(i) sum */
+            simmti = (int)*is++ - mti; /* Temp term needed for amplif */
+            for (ix=il->pct1;ix!=NULL;ix=ix->pct) {
+
+/* Calculate contributions of all connections of current type         */
+
+               ix->ax = 0; /* Clear the connection-type sum.  This is
+                              stored in the data block for other uses */
+               psj = ix->psrc->psi; /* Locate the source cells */
+               for (jc=0;jc<ix->nconns;jc++,ic++) {
+                  wksj  = (int)psj[ic->lij];
+                  sjmet = wksj - et;
+                  wkcij = ic->cij >= 128 ? ic->cij - 256 : ic->cij;
+                  if (sjmet > 0) ix->ax += sjmet*wkcij;
+
+/* Perform amplification if delta != zero.  Only the "4-way" rule
+   is implemented in this "benchmark".  To make life simpler,
+   the 'phi' factor is ignored (i.e. taken to be 1.0), and scaling
+   is fudged to make intermediate results fit in 32-bit registers.
+   "DAS" statistics are always collected.                             */
+
+                  if (il->delta) {
+                     long tmpcij;
+                     sjmmtj = wksj - mtj;
+                     ampcase = 0;
+                     if (simmti < 0) ampcase += 2;
+                     if (sjmmtj < 0) ampcase += 1;
+                     ix->das[ampcase]++;
+                     tmpcij = il->delta*simmti*sjmmtj;
+                     wkcij += SRA(tmpcij,19);
+                     if (wkcij > 127) wkcij = 127;
+                     if (wkcij <-127) wkcij =-127;
+                     ic->cij = (byte) wkcij;
+                     }
+                  } /* End loop over individual connections */
+
+               /* Scale the connection-type contribution and add it in */
+               ix->ax *= ix->scale;
+               wksum += ix->ax;
+               } /* End loop over connection types */
+
+            /* Force the final s(i) into range 0 to 255 */
+            if (wksum < pt) wksum = 0;
+            else {wksum = wksum>>15; if (wksum > 255) wksum = 255;}
+            *is2++ = (byte)wksum;
+            } /* End loop over cells of current type */
+
+         /* Reverse the new and old states of the cells */
+         psj = il->psi; il->psi = il->ps2; il->ps2 = psj;
+
+         } /* End loop over cell types */
+
+      } /* End loop over requested number of iterations */
+
+/* Report time required for simulation */
+
+   time(&time3);              /* Note ending time */
+   printf("%d iterations required %f seconds\n",
+      niterations,difftime(time3,time2));
+
+/* Report "DAS" statistics for final iteration only. */
+
+   printf("DAS statistics for final iteration:\n");
+   for (jl=1,il=play1;il!=NULL;il=il->play,jl++) {
+      printf("   Celltype %d\n",jl);
+      for (jx=1,ix=il->pct1;ix!=NULL;ix=ix->pct,jx++)
+         printf("      Conntype %3d: %8ld%8ld%8ld%8ld\n",
+         jx,ix->das[0],ix->das[1],ix->das[2],ix->das[3]);}
+
+   } /* END MAIN */
+

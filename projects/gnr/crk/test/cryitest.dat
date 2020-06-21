@@ -1,0 +1,13 @@
+TITLE This is run in directory &syscwd
+This is the first line of the test data
+* This was run on &sysdate at &systime
+* This is an &example_of_a_symbol_that_is_way_too_long end
+* This is an &&example of an escaped symbol
+* This is another \&example of an escaped symbol
+* This is a &syscpu==IBM symbol ended by a punctuation character
+* This is a &syscpu.=&undefined symbol ended by a period
+
+DEFAULT Dat1=1001,Dat2=1002
+This is the third line of the test data
+SETENV Cryitest=Data7890,Cryi1=&Dat1,Cryi2=&Dat2
+And this should be read after the insert

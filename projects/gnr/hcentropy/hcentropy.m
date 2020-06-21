@@ -1,0 +1,1078 @@
+function [ci, total_results, results, mcnums, total_clusters, ...
+   gfwte, approx_theory_entropy] = hcentropy(X)
+
+% $Id: hcentropy.m 7 2014-06-12 21:51:55Z  $
+
+%  This software was developed in the Laboratory of Biological
+% Modelling at The Rockefeller University by Nicholas D. Watters
+% and George N. Reeke
+
+% (c) The Rockefeller University, 2013
+
+% hcentropy.m - MATLAB routine to compute entropy of a neuronal spike
+%  train by the history clustering method of Watters & Reeke (Neural
+%  Computation, submitted) and, for comparison purposes, by the methods
+%  of Kozachenko & Leonenko (1987), Lin & Reeke (2010), Reeke & Coop
+%  (2004), Shannon (1948), Strong et al. (1998), and also the lower
+%  bound entropy proposed by Ma (1981).
+
+% LICENSE:
+   % This software is distributed under GPL, version 2.
+   % This program is free software; you can redistribute it and/or
+   % modify it under the terms of the GNU General Public License as
+   % published by the Free Software Foundation; either version 2 of
+   % the License, or (at your option) any later version.
+   % Accordingly, this program is distributed in the hope that it will
+   % be useful, but WITHOUT ANY WARRANTY; without even the implied
+   % warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+   % See the GNU General Public License for more details.  You should
+   % have received a copy of the GNU General Public License along with
+   % this program.  If not, see <http://www.gnu.org/licenses/>.
+
+% REVISION HISTORY:
+   % See README file for revision history
+
+% SOFTWARE REQUIREMENTS:
+   % The following subroutine functions are required.  They are part of
+   %  this program package and should be found stored in the same .tgz
+   %  or .zip file as hcentropy.m if you copied one of these files from
+   %  the distribution directory.  They are:  nelder.m, mc.m,
+   %  refrac_gamma_fitter.m, refrac_2gamma_fitter.m, nmiter4a.m,
+   %  nminit4a.m, history_clustering.m, k_means.m, strong.m, koz_leo.m,
+   %  lin_reeke.m, LR_la.m, dir_gamma.m, dir_bin.m, ma_bound.m
+   % Multi-dimensional Kolmogorov-Smirnov statistics are computed using
+   %  a method developed by GNR and available from
+   %  http://lab.rockefeller.edu/reeke/techpubs as C-language source
+   %  code that can be used to make the needed mex files.
+   % Strong et al. calculations also require generating a mex file from
+   %  the source file strongmx.c provided with this package.
+   % Standard MATLAB and the MATLAB statistics toolbox are also required.
+   % The program was prepared and tested using MATLAB Release 2012b.
+
+% USAGE:
+   % Edit this file to select the program options you want in the section
+   %  titled "USER-EDITABLE PARAMETERS" below.  Then call the file from
+   %  the MATLAB command line providing the input ISI sequence (vector
+   %  of interspike intervals) as the only argument.  The results will
+   %  be returned in the variables listed in the section "OUTPUTS" below
+   %  and as plots (if selected).
+
+% INPUTS:
+   % X: Vector containing the input ISI sequence.  Any convenient units
+   %  of time may be used, noting that the differential entropy depends
+   %  on the time units, but the entropy per spike does not, as long as
+   %  the spike length is specified in the same units as the ISI data.
+   %  Note that X is an ordered ISI sequence, so raw spike time data
+   %  must be converted into an ISI sequence before use.  Also, be sure
+   %  to eliminate any zero intervals or other atypical data from the
+   %  dataset.
+
+% OUTPUTS:
+   % ci: the confidence intervals.  A three-dimensional array, where the
+   %   first index runs over the entropy estimation methods in the run
+   %   (excluding APPROXEXPER), the second index runs over the data
+   %   sizes (values of N) tested, and the third index is 1 for the low
+   %   entropy and 2 for the high entropy at the specified confidence
+   %   limit.
+   % total_results: all result data (as differential entropy).  A three-
+   %   dimensional array, wherehce the first two indexes are as for 'ci'
+   %   and the third index runs over bootstraps.
+   % results: the mean entropies averaging total_results over all
+   %   bootstraps.
+   % mcnums: vector giving the mean across bootstraps of the number of
+   %   history clusters produced as a function of data size iteration.
+   %   (A null matrix is returned if history clustering is not done.)
+   % total_clusters: the clusters produced by the last bootstrap and last
+   %   data size of the History Clustering method.  A cell array with one
+   %   member array for each cluster.  Each member array contains the
+   %   ISI times for the history vectors contained in that cluster.
+   % gfwte: the Monte Carlo results.  This is a two-row matrix, the
+   %   first row showing the number of comparisons of experimental data
+   %   with model data (see mc.m code for details) and the second show-
+   %   ing the value referred to as 'beta' in the submitted manuscript,
+   %   namely, the fraction of the experimental subsequences for which
+   %   the multidimensional Kolmogorov-Smirnov statistic for model vs
+   %   experiment is greater than the corresponding statistic between
+   %   experimental subsequences.  These numbers will be between 0 and
+   %   1, with closer to 0.5 representing a better fit.  The row index
+   %   runs over the iterations of 'iter', the data sizes ('N') tested.
+   % approx_theory_entropy: the entropy results of the artificial data
+   %   approximation
+
+   % Also plots the differential entropy estimations for all the
+   %  estimators.
+
+global h nnegln yinfo nmstats yhist lnelseq tree_depth mdkscom
+global numgams skeleton1 maxdatlength entiredata
+
+%% USER-EDITABLE PARAMETERS:
+
+% TESTS: Put 1 to include the test, 0 otherwise
+    HCTEST = 1; % History clustering method
+    DGTEST = 0; % Direct gamma (Interval) method
+        % Reeke, G.N., & Coop, A.D. (2004).  Estimating the temporal
+        % interval entropy of neuronal discharge.  Neural Computation,
+        % 16(5), 941-970.
+    DBTEST = 0; % Direct bin method
+        % Shannon, C. (1948).  A mathematical theory of communications.
+        % Bell System Technical Journal, 27(2), 632-656.
+    STEST = 0;  % Strong method
+        % Strong, S.P., Koberle, R., van Steveninvk, R.R.D., & Bialek, W.
+        % (1998).  Entropy and information in neural spike trains.
+        % Physical Review letters, 80(1), 197-200.
+    SRTEST = 0; % Variant of Strong method in which ISIs are digitized
+        % to give a base alphabet and "words" are made from successive
+        % ISIs (not recommended, see Neural Computation paper).
+    LRTEST = 0; % Lin & Reeke method
+        % Lin, T.W., & Reeke, G.N. (2010).  A continuous entropy rate
+        % estimator for spike trains using a k-means-based context tree.
+        % Neural Computation, 22, 998-1024.
+    KLTEST = 0; % Kozachenko & Leonenko method
+        % Kozachenko, L.F., & Leonenko, N.N. (1987).  Sample estimate of
+        % the entropy of a random vector.
+        % Problems of Information Transmission, 23(1), 95-101.
+    MA_BOUND = 0; % Ma bound
+        % Ma, S. (1981).  Calculation of entropy from data motion.
+        % Journal of Statistical Physics, 26, 221-240.
+
+% General parameters:
+    kind_entropy = 1; % 0 to output differential, >0 for discrete entropy
+    bin_resolution = 0; % Assumed time resolution in same units as input
+                     %  data X, used to convert between differential and
+                     %  discrete entropy.  A value 0 here indicates that
+                     %  the program should use the mean ISI, which pro-
+                     %  vides one kind of estimate of entropy per spike.
+    bin_width = 0;   % Assumed bin width for those methods that dis-
+                     %  cretize the data into bins (Strong, direct bin,
+                     %  Ma bound).  A value 0 here indicates that the
+                     %  program should use the larger of (bin_wid_mult
+                     %  times the smallest ISI) or min_bin_width.
+    bin_wid_mult = 0.9; % Multiplier of minimum ISI to get bin width
+                     %  when input bin_width is 0.
+    min_bin_width = 0.01; % Minimum bin width to apply when computing
+                     %  the bin_width using bin_wid_mult.
+    alpha = 0.05;    % .05 for 95 percent confidence intervals
+    bootstrap_num = 200; % How many bootstraps to do (200 for the demo,
+                     %  10000 generally recommended).
+    PRINT_RESULTS = 1; % 1 to display 'results' array as a table,
+                     %  0 otherwise
+    SHOW_PROGRESS = 1; % 1 to display waitbars, 0 to omit
+
+% History clustering test variables:
+    history_depth = 3; % Number of history spikes considered
+    HCLUSTERPLOT = 1;  % 1 to make a scatter plot of the clusters (if
+                       %  history_depth < 3), 0 otherwise
+
+% Strong test variables:
+    S_MxAlSz = 240;  % This is a control for the alternative method
+                     %  activated by SRTEST.  Data 'words' are concat-
+                     %  enations of numbers representing the lengths of
+                     %  successive ISIs in units of bin_width.  Values
+                     %  larger than S_MxAlSz are set to S_MxAlSz in
+                     %  order to keep the 'alphabet' size from becoming
+                     %  excessively large.
+    S_Thresh = 2.5;  % Rejection threhold for Strong et al regression
+    SR_Thresh = 1.5; % Rejection threshold for SRTEST
+    STRONGPLOT = 0;  % 1 to make a plot of the entropy vs 1/word-length
+                     %  as in the Strong et al. paper, 0 otherwise.
+
+% Lin & Reeke test variables:
+    LR_max_branch = 20; % Maximum number of branches at a node of the
+                     %  context tree
+    sub_tree_minsize = 10; % Minimum number of data points per node of
+                     %  the context tree
+    X_std = .1;      % Standard deviation of cluster at which clustering
+                     %  is terminated
+                
+% Kozachenko & Leonenko variables:
+    KL_dimension = 1; % The dimension for the Kozachenko & Leonenko test
+    KL_noise_test = 2.0; % The KL test requires data from a continuous
+                     %  distribution.  Noise must be added to discrete
+                     %  data to get meaningful results.  We would like
+                     %  to add uniformly distributed noise between -0.5
+                     %  and +0.5 times the smallest ISI difference in
+                     %  the data, but in some data sets the authors have
+                     %  encountered, very small roundoff noise makes the
+                     %  smallest ISI difference unrepresentative.  So we
+                     %  use the smallest ISI difference that is at least
+                     %  KL_noise_test times larger than the next smaller
+                     %  difference.  Set to 0 to just use the smallest
+                     %  ISI difference to set the noise range.
+
+% Artificial data approximation variables
+    APPROXEXPER = 0; % 1 to approximate the experimental data and do
+                     %  synthetic entropy (with theory) for the
+                     %  approximation.  If APPROXEXPER=1, look at
+                     %  nelder.m to control parameters.
+    flseq = 10000;   % Number of points to do approximate theory
+                     %  calculation
+    nelder_reps = 500; % Max number of iterations of the Nelder-Mead
+                     % approximation
+    nelderlseq = 2000; % Seq length for Nelder-Mead approximation
+    expneldernumreps = 100; % How many experimental tests to do for
+                     %  Nelder-Mead confidence levels
+    numgams = 2;     % Number of gammas per history state for the
+                     %  approximate data
+    gamma_nelder_reps = 500; % Max number of Nelder-Mead iterations for the
+                     %  gamma fits for the synthetic data starting points
+    GAMDELAY = 0;    % 1 to do gamma delay (i.e. refractory period),
+                     %  0 otherwise
+    subseq_num = 16; % Number of subsequences to break the entire data
+                     %  into to measure internal variability of experi-
+                     %  mental data for Monte Carlo simulation
+
+% PARAMETERS THAT PROBABLY SHOULD NOT BE CHANGED:
+    AUTOITER = 1;    % 1 if you don't want to worry about iter, 0 if you
+                     %  want to control iter (the number of ISIs included
+                     %  in each iteration of the entropy estimators, for
+                     %  purposes of plotting entropy vs input vector
+                     %  length to help evaluate undersampling bias.
+    ITERTYPE = 1;    % 1, 2, 3, or 4 depending on how many elements of
+                     %  iter you want (only for AUTOITER)
+    in_iter = [10,100]; % Row vector containing the sequence lengths for
+                     %  the estimators. Not needed if AUTOITER = 1.
+    nelder_initvar = 3; % Inversely proporional to how much variance is
+                     %  allowed in the Nelder-Mead initialization
+    max_branch = 20; % Maximum number of branches at a node
+
+% END USER-SETTABLE PARAMETERS
+
+% Below is executable program code--modify only if you intend to change
+% how this program operates.
+
+% Set up variables:
+nnegln = 0; yinfo = 0; h = 0;
+nmstats = zeros(20,1);
+approx_theory_entropy = [];
+tree_depth = 1+history_depth;
+if bin_resolution <= 0, bin_resolution = mean(X); end
+log2br = log2(bin_resolution);
+mdkscom = [];
+
+%% Get the sequence of data:
+
+entiredata = X;
+maxdatlength = length(X);
+
+%% Generate the automated iter, if requested:
+if AUTOITER == 1
+    if ITERTYPE == 1
+        iter = round([.01,.05,.1,.5,.8]*length(X));
+    elseif ITERTYPE ==2
+        iter = round([.001,.005,.01,.05,.1,.5,.8]*length(X));
+    elseif ITERTYPE == 3
+        iter = round([.0001,.0005,.001,.005,.01,.05,.1,.5,.8]*length(X));
+    elseif ITERTYPE == 4
+        iter = round([.0001,.0005,.001,.005,.01,.05,.1]*length(X));
+    end
+else
+    iter = in_iter;
+end
+
+%% Make sure no iter elements are too small:
+if find(iter<=tree_depth)~=0
+    disp('Your iter choice should be revised')
+    iter(iter<=tree_depth)=[];
+end
+
+%% Create hist_X, columns of which are history of X
+num = size(X, 2)-tree_depth+1;
+Y = zeros(tree_depth,num);
+for i=1:tree_depth
+    begin = tree_depth-i+1;
+    Y(i,:) = X(1, begin:begin+num-1);
+end;
+hist_X = Y;
+
+%% Create KL_hist_X, columns of which are history of X
+num = size(X, 2)-KL_dimension+1;
+Y = zeros(KL_dimension,num);
+for i=1:KL_dimension
+    begin = KL_dimension-i+1;
+    Y(i,:) = X(1, begin:begin+num-1);
+end;
+KL_hist_X = Y;
+
+%% Do the approximation of the data with Nelder-Mead and calculate
+%   theoretical entropy
+entropy_rate = [];
+if APPROXEXPER ~= 0
+    % Start with an empty progress bar
+    if SHOW_PROGRESS
+       WT_Tot = 0;
+       hwb = waitbar(WT_Tot, 'Fitting synthetic data...');
+    end
+
+    % Use history clustering to obtain initial Nelder-Mead parameters
+    [~,~,test_clusters] = history_clustering(hist_X(:,1:iter(end)), ...
+        GAMDELAY,max_branch);
+    ccenters = zeros(tree_depth-1,numel(test_clusters));
+    for i = 1:size(ccenters,2)
+        temp_mat = mean(test_clusters{i},2);
+        ccenters(:,i) = temp_mat(2:end);
+    end
+
+    % skeleton1 encodes the cluster centers, gamma parameters, and gamma
+    %  weights to produce the artificial data
+    if numgams == 1
+        skeleton1 = cell(2,numel(test_clusters));
+    elseif numgams == 2
+        skeleton1 = cell(4,numel(test_clusters));
+    else
+        error('Invalid value for numgams.  Must be 1 or 2.')
+    end
+    base_telements = zeros(1,numel(ccenters));
+    base_t_tracker = 1;
+    for i = 1:size(ccenters,2)
+        skeleton1{1,i} = [base_t_tracker:1:base_t_tracker+numel(ccenters(:,i))-1]';
+        base_telements(base_t_tracker:base_t_tracker+size(ccenters,1)-1) = ccenters(:,i)';
+        base_t_tracker = base_t_tracker+numel(ccenters(:,i));
+    end
+
+    if numgams == 1
+        base_telements = [base_telements,zeros(1,3*numel(ccenters))];
+    else
+        base_telements = [base_telements,zeros(1,7*numel(ccenters))];
+    end
+
+    NumFits = size(skeleton1,2);
+    NumTemps = 15;
+    if SHOW_PROGRESS
+        % Because we do not known in advance how many Nelder-Mead 
+        % iterations, etc. will occur, I have divided the time for
+        % a typical run into segments and these times are used to
+        % give approximate completion fractions for the waitbar:
+        WT_HCluster = 0.01; WT_InitFits = 0.66;
+        WT_FullFits = 0.32; WT_GenSeq   = 0.01;
+        if numgams == 1, InitIncr = WT_InitFits/NumFits;
+        else InitIncr = WT_InitFits/(NumFits*NumTemps);
+        end
+        WT_Tot = WT_HCluster; waitbar(WT_Tot);
+    end
+         
+    for i = 1:NumFits
+        global smalldata fitter_datsize
+        smalldata = test_clusters{i}(1,:);
+        init_fitter_datsize = 1000; % Sequence length considered for ks test
+        fitter_datsize = init_fitter_datsize;
+        if numgams == 1
+            [iparams1,iparams2] = gamfit(smalldata);
+        elseif numgams == 2
+            [finclusters,~] = k_means(smalldata',2,[min(smalldata);max(smalldata)]);
+            [cluster1inds,~] = find(finclusters == 1);
+            [cluster2inds,~] = find(finclusters == 2);
+            sd1 = smalldata(cluster1inds);
+            sd2 = smalldata(cluster2inds);
+            [iparams1,~] = gamfit(sd1);
+            [iparams2,~] = gamfit(sd2);
+            fracparam = numel(sd1)/numel(smalldata);
+        else
+            error('Invalid value for numgams.  Must be 1 or 2.')
+        end
+        if numgams == 1
+            % (This works well for the ks test)
+            [gparams] = fminsearch(@refrac_gamma_fitter,[iparams1(1),iparams1(2),0]);
+            base_telements(base_t_tracker:base_t_tracker+2) = ...
+                [gparams(1),gparams(2),gparams(3)];
+            skeleton1{2,i} = [base_t_tracker,base_t_tracker+1,base_t_tracker+2];
+            base_t_tracker = base_t_tracker+3;
+            if SHOW_PROGRESS
+               WT_Tot = WT_Tot + InitIncr;
+               waitbar(WT_Tot);
+            end
+        elseif numgams == 2
+            % Find an appropriate starting simulated annealing temperature:
+            trialtemp = 16;
+            for j = 1:NumTemps
+                newtemp = trialtemp/(2^j);
+                nnegln = 0; yinfo = 0; h = 0;
+                nmstats = zeros(20,1);
+                s_telements = [iparams1(1),iparams1(2),0,iparams2(1),iparams2(2),0,fracparam];
+                s_t= s_telements;
+                nums = numel(s_t);
+                base_selements = repmat(s_t,nums,1);
+                rand_mat = (rand(nums,nums)-.5).*base_selements/nelder_initvar;
+                init_telements = vertcat(s_t,rand_mat+base_selements);
+                % Adjust the init_telements values for zeros and infinities:
+                ns_t = s_t;
+                ns_t(ns_t == Inf) = [];
+                ns_t(ns_t == -Inf) = [];
+                temp_badfact = mean(abs(ns_t));
+                for zi = 1:size(init_telements,1)
+                    for zj = 1:size(init_telements,2)
+                        if init_telements(zi,zj) == 0 || init_telements(zi,zj) == Inf || ...
+                           init_telements(zi,zj) == -Inf || isnan(init_telements(zi,zj)) == 1
+                            init_telements(zi,zj) = (rand(1,1)-.5)*temp_badfact*.5/nelder_initvar;
+                        end
+                    end
+                end
+                % Initialize Nelder-Mead inputs
+                [gnrx,~] = nminit4a(@refrac_2gamma_fitter,init_telements',0);
+                yhist = zeros(4,gamma_nelder_reps);
+                for k = 1:10
+                    fitter_datsize = init_fitter_datsize*(20-2*k+1)/20;
+                    trial_fit = refrac_2gamma_fitter(s_telements);
+                    if trial_fit<-10^(1)
+                        break
+                    end
+                    if k == 10
+                        error('Problem with fitting data')
+                    end
+                end
+
+                % Nelder-Mead
+                [~,final_telements,~,~] = nmiter4a(@refrac_2gamma_fitter,gnrx,0.0001,1, ...
+                    gamma_nelder_reps,newtemp);
+                if SHOW_PROGRESS
+                   WT_Tot = WT_Tot + InitIncr;
+                   waitbar(WT_Tot);
+                end
+                if yhist(:,end) ~= 0
+                   if SHOW_PROGRESS
+                      WT_Tot = WT_Tot + (NumTemps - j)*InitIncr;
+                      waitbar(WT_Tot);
+                   end
+                   break;
+                end
+                if j == 15
+                    disp(['WARNING:Nelder-Mead converged early.  Probably the ' ...
+                       'annealing tempurature should be changed, or numgams ' ...
+                       'should be changed.'])
+                end
+            end
+
+            % Conduct Nelder-Mead optimizations with decreasing simulated
+            %  annealing temperatures:
+            isim_temps = [min(newtemp,3),min(newtemp,.3),.01];
+            NumSims = numel(isim_temps);
+            for j = 1:NumSims
+                nnegln = 0; yinfo = 0; h = 0;
+                nmstats = zeros(20,1);
+                s_telements = final_telements';
+                base_selements = repmat(s_telements,nums,1);
+                rand_mat = (rand(nums,nums)-.5).*base_selements/nelder_initvar;
+                init_telements = vertcat(s_telements,rand_mat+base_selements);
+                % Adjust the init_telements for zeros and infinities:
+                ns_telements = s_telements;
+                ns_telements(ns_telements == Inf) = [];
+                ns_telements(ns_telements == -Inf) = [];
+                temp_badfact = mean(abs(ns_telements));
+                for zi = 1:size(init_telements,1)
+                    for zj = 1:size(init_telements,2)
+                        if init_telements(zi,zj) == 0 || init_telements(zi,zj) == Inf || ...
+                           init_telements(zi,zj) == -Inf || isnan(init_telements(zi,zj)) == 1
+                            init_telements(zi,zj) = (rand(1,1)-.5)*temp_badfact/nelder_initvar;
+                        end
+                    end
+                end
+                % Initialize Nelder-Mead inputs
+                [gnrx,~] = nminit4a(@refrac_2gamma_fitter,init_telements',0);
+                yhist = zeros(4,gamma_nelder_reps);
+                % Nelder-Mead
+                [~,final_telements,~,~] = nmiter4a(@refrac_2gamma_fitter,gnrx,0.0001,1, ...
+                    gamma_nelder_reps,isim_temps(j));
+                if SHOW_PROGRESS
+                   WT_Tot = WT_Tot + InitIncr;
+                   waitbar(WT_Tot);
+                end
+                if yhist(:,end) == 0
+                    disp(['WARNING:Nelder-Mead converged early.  Probably the ' ...
+                       'annealing tempurature should be changed, or numgams ' ...
+                       'should be changed.'])
+                end
+            end
+            gparams = final_telements;
+            base_telements(base_t_tracker:base_t_tracker+6) = gparams';
+            skeleton1{2,i} = [base_t_tracker;base_t_tracker+1;base_t_tracker+2];
+            skeleton1{3,i} = [base_t_tracker+3;base_t_tracker+4;base_t_tracker+5];
+            skeleton1{4,i} = base_t_tracker+6;
+            base_t_tracker = base_t_tracker+7;
+        end
+    end
+    final_telements = base_telements';
+    fsim_temps = [5,1,.2,.02,0];
+    % Conduct Nelder-Mead optimizations with decreasing simulated annealing
+    %  temperatures:
+    lnelseq = nelderlseq;
+    NumSims = numel(fsim_temps);
+    for i = 1:NumSims
+        nnegln = 0; yinfo = 0; h = 0;
+        nmstats = zeros(20,1);
+        base_t= final_telements';
+        nums = numel(base_t);
+        base_telements = repmat(base_t,nums,1);
+        rand_mat = (rand(nums,nums)-.5).*base_telements/nelder_initvar;
+        init_telements = vertcat(base_t,rand_mat+base_telements);
+        % Adjust init_telements for zeros and infinities:
+        nbase_t = base_t;
+        nbase_t(nbase_t == Inf) = [];
+        nbase_t(nbase_t == -Inf) = [];
+        temp_badfact = mean(abs(nbase_t));
+        for zi = 1:size(init_telements,1)
+            for zj = 1:size(init_telements,2)
+                if init_telements(zi,zj) == 0 || init_telements(zi,zj) == Inf || ...
+                   init_telements(zi,zj) == -Inf|| isnan(init_telements(zi,zj)) == 1
+                    init_telements(zi,zj) = (rand(1,1)-.5)*temp_badfact*.5/nelder_initvar;
+                end
+            end
+        end
+        % Initialize nedler-Mead inputs
+        [gnrx,~] = nminit4a(@nelder,init_telements',0);
+        yhist = zeros(4,nelder_reps);
+        % Nelder-Mead
+        [~,final_telements,~,~] = nmiter4a(@nelder,gnrx,0.0001,1,nelder_reps,fsim_temps(i));
+        if SHOW_PROGRESS, waitbar(WT_Tot + WT_FullFits*i/NumSims); end
+    end
+    if SHOW_PROGRESS, WT_Tot = WT_Tot + WT_FullFits; end
+    if numgams == 1
+        T = skeleton1;
+        for i = 1:size(T,1)
+            for j = 1:size(T,2)
+                for k = 1:size(T{i,j},1)
+                    for kk = 1:size(T{i,j},2)
+                        if T{i,j}(k,kk)~=0 && T{i,j}(k,kk)~=Inf
+                            T{i,j}(k,kk) = final_telements(T{i,j}(k,kk));
+                        end
+                    end
+                end
+            end
+        end
+    elseif numgams == 2
+        T = skeleton1(1:end-1,:);
+        for i = 1:size(T,1)-1
+            for j = 1:size(T,2)
+                for k = 1:size(T{i,j},1)
+                    for kk = 1:size(T{i,j},2)
+                        if T{i,j}(k,kk)~=0 && T{i,j}(k,kk)~=Inf
+                            T{i,j}(k,kk) = final_telements(T{i,j}(k,kk));
+                        end
+                    end
+                end
+            end
+        end
+        T_probs = cell2mat(skeleton1(4,:));
+        for i = 1:numel(T_probs)
+            T_probs(i) = final_telements(T_probs(i));
+        end
+    end
+
+    gfwte = zeros(2,numel(iter));
+
+    % Do Monte Carlo:
+    for i = 1:numel(iter)
+        mclseq = iter(i);
+        lnelseq = iter(i);
+
+        [ntrialZsubn,compnum] = mc(subseq_num, mclseq);
+        if ntrialZsubn ~= 0;
+            expZsubn = zeros(1,expneldernumreps);
+            for ni = 1:expneldernumreps
+               expZsubn(ni) = nelder(final_telements);
+            end
+            ntrialZsubn = mean(ntrialZsubn);
+            gfwte(1,i) = compnum;
+            gfwte(2,i) = numel(find(expZsubn >= ntrialZsubn))/numel(expZsubn);
+        end
+    end
+
+    %% Generate sequence
+    if numgams == 2
+        if (size(T,1) ~= 3 || flseq < 2)
+           error('generate_markov called with bad desciptor');
+        end
+        seq = zeros(flseq,1);
+        I = zeros(flseq,1);
+        lhist = size(T{1,1},1);
+        for i = 1:flseq+tree_depth+lhist
+           if (i <= lhist)
+              continue
+           end;
+           prior = seq(i-lhist:i-1);
+           % Find which point in the centers this history is closest to:
+           ND = zeros(1,size(T,2));
+           for j = 1:size(T,2)
+               ND(j) = sum((T{1,j}-prior).^2);
+           end
+           [~,ir] = min(ND);
+           % Choose which gamma on a weighted coin flip:
+           coin_flip = rand(1,1);
+           if coin_flip < T_probs(ir)
+               spec = T{2,ir};
+           else
+               spec = T{3,ir};
+           end
+           a = abs(spec(1));
+           b = abs(spec(2));
+           c = abs(spec(3));
+           if (a == 0)
+              % This is a Gaussian region
+              seq(i) = b + c*randn(1);
+           else
+              % This is a gamma region
+              seq(i) = c + gamrnd(a,b);
+           end
+           I(i) = ir;
+        end;
+    else % if numgams == 1
+        if (size(T,1) ~= 2 || flseq < 2)
+           error('generate_markov called with bad desciptor');
+        end
+        seq = zeros(flseq,1);
+        I = zeros(flseq,1);
+        lhist = size(T{1,1},1);
+        for i = 1:flseq+tree_depth+lhist
+           if (i <= lhist)
+              continue
+           end;
+
+           prior = seq(i-lhist:i-1);
+           % Find which point in the centers this history is closest to:
+           ND = zeros(1,size(T,2));
+           for j = 1:size(T,2)
+               ND(j) = sum((T{1,j}-prior).^2);
+           end
+           [~,ir] = min(ND);
+           % Choose specifications from T
+           spec = T{2,ir};
+           a = abs(spec(1));
+           b = abs(spec(2));
+           c = abs(spec(3));
+           if (a == 0)
+              % This is a Gaussian region
+              seq(i) = b + c*randn(1);
+           else
+              % This is a gamma region
+              seq(i) = c + gamrnd(a,b);
+           end
+           I(i) = ir;
+        end;
+    end
+    if SHOW_PROGRESS, WT_Tot = WT_Tot + WT_GenSeq; waitbar(WT_Tot); end
+
+    I(1:lhist) = 1;
+%% Calculate the theoretical entropy rate
+    if numgams == 1
+       stateweights = zeros(1,size(T,2));
+       totlength = numel(I);
+       for i = 1:size(T,2)
+           stateweights(i) = numel(find(I == i));
+       end
+       stateweights = stateweights/totlength;
+       totH = 0;
+       for i = 1:size(T,2)
+           spec1 = T{2,i};
+           a1 = abs(spec1(1));
+           b1 = abs(spec1(2));
+           c1 = abs(spec1(3));
+           if (a1 == 0)
+              % This is a Gaussian region
+                % Compute the entropy of a Gaussian distribution
+                % sigma = Standard deviation
+                sqrt2pie = 4.132731353;
+                entropy1 = log(sqrt2pie*c1)/log(2);
+              totH = totH + stateweights(i)*entropy1;
+           else
+              % This is a gamma region
+                % Compute the entropy of a gamma distribution
+                % k = Order of the gamma distribution
+                % theta = Scale parameter
+                entropy1 = (a1 + log(b1) + log(gamma(a1)) + (1-a1)*psi(a1))/log(2);
+                if (entropy1 == Inf || isnan(entropy1)==1)
+                   warning('Gamma entropy very large, set to 0, a1 = %f', a1)
+                   entropy1 = 0;
+                end;
+              totH = totH + stateweights(i)*entropy1;
+           end
+       end
+    elseif numgams == 2
+       stateweights = zeros(1,size(T,2));
+       totlength = numel(I);
+       for i = 1:size(T,2)
+           stateweights(i) = numel(find(I == i));
+       end
+        stateweights = stateweights/totlength;
+        totH = 0;
+        totH1 = 0;
+        totH2 = 0;
+        for j = 1:size(T,2)
+           spec1 = T{2,j};
+           a1 = abs(spec1(1));
+           b1 = abs(spec1(2));
+           c1 = abs(spec1(3));
+           if (a1 == 0)
+              % This is a Gaussian region
+                % Compute the entropy of a Gaussian distribution
+                % sigma = Standard deviation
+                sqrt2pie = 4.132731353;
+                entropy1 = log(sqrt2pie*c1)/log(2);
+              totH1 = totH1 + stateweights(j)*entropy1;
+           else
+              % This is a gamma region
+                % Compute the entropy of a gamma distribution
+                % k = Order of the gamma distribution
+                % theta = Scale parameter
+                entropy1 = (a1 + log(b1) + log(gamma(a1)) + (1-a1)*psi(a1))/log(2);
+                if (entropy1 == Inf || isnan(entropy1)==1)
+                   warning('Gamma entropy very large, set to 0, a1 = %f', a1)
+                   entropy1 = 0;
+                end;
+              totH1 = totH1 + stateweights(j)*entropy1;
+           end
+           spec2 = T{3,j};
+           a2 = abs(spec2(1));
+           b2 = abs(spec2(2));
+           c2 = abs(spec2(3));
+           if (a2 == 0)
+              % This is a Gaussian region
+                % Compute the entropy of a Gaussian distribution
+                % sigma = Standard deviation
+                sqrt2pie = 4.132731353;
+                entropy1 = log(sqrt2pie*c2)/log(2);
+              totH2 = totH2 + stateweights(j)*entropy1;
+           else
+              % This is a gamma region
+                % Compute the entropy of a gamma distribution
+                % k = Order of the gamma distribution
+                % theta = Scale parameter
+                entropy1 = (a2 + log(b2) + log(gamma(a2)) + (1-a2)*psi(a2))/log(2);
+                if (entropy1 == Inf || isnan(entropy1)==1)
+                   warning('Gamma entropy very large, set to 0, a1 = %f', a2)
+                   entropy1 = 0;
+                end;
+              totH2 = totH2 + stateweights(j)*entropy1;
+           end
+           for k = 1:numel(T_probs)
+               if T_probs(k)<0
+                   T_probs(k) = 0;
+               elseif T_probs(k)>1
+                   T_probs(k) = 1;
+               end
+           end
+           totH = totH1*T_probs(j)+totH2*(1-T_probs(j));
+        end
+    end
+    entropy_rate = totH;
+    approx_theory_entropy = repmat(entropy_rate,1,numel(iter));
+    if SHOW_PROGRESS, close(hwb); end 
+else
+    gfwte = 0;
+end
+
+%% Set the bin width for Strong, Direct bin, Koz-Leo, and Ma
+if bin_width <= 0
+   bin_width = max(bin_wid_mult*min(X),min_bin_width);
+end
+   
+%% Run the estimators
+ci = [];
+% NOTE: Strong test and Ma bound are omitted from bootstrapping
+testcounter = STEST + DGTEST + DBTEST + HCTEST + MA_BOUND + ...
+   LRTEST + KLTEST + SRTEST;
+bstestcounter = DGTEST + DBTEST + HCTEST + LRTEST + KLTEST;
+HC_index = HCTEST;
+DG_index = HC_index+DGTEST;
+DB_index = DG_index+DBTEST;
+LR_index = DB_index+LRTEST;
+KL_index = LR_index+KLTEST;
+total_results = zeros(bstestcounter,size(iter,2),bootstrap_num);
+markertypes = cell(1,testcounter);
+temp_legend = cell(1,testcounter);
+result_names = cell(1,testcounter);
+nbsindex = bstestcounter + 1; % No bootstrap index
+if STEST == 1
+   % This will run the new "standard" Strong et al code
+   strong_e = strong(bin_width,iter,S_Thresh,0,STRONGPLOT,X);
+   % Adjust strong_e, which is per bin, to bin_resolution, then
+   %  add the log2(bin_width) to get effective differential entropy.
+   strong_e = (strong_e*bin_resolution/bin_width) + log2(bin_width);
+   markertypes{nbsindex} = '-k<';
+   temp_legend{nbsindex} = 'Strong';
+   result_names{nbsindex} = 'Strong         ';
+   nbsindex = nbsindex + 1;
+end
+if SRTEST == 1
+   % Run variant of Strong et al
+   if S_MxAlSz < 8, S_MxAlSz = 8; end  % Just in case
+   strong_re=strong(bin_width,iter,SR_Thresh,S_MxAlSz,STRONGPLOT,X);
+   strong_re = (strong_re*bin_resolution/bin_width) + log2(bin_width);
+   markertypes{nbsindex} = '-kv';
+   temp_legend{nbsindex} = 'Strong-mod';
+   result_names{nbsindex} = 'Strong-mod     ';
+   nbsindex = nbsindex + 1;
+end
+if MA_BOUND == 1
+   e_ma_bound = ma_bound(iter, X, bin_width);
+   markertypes{nbsindex} = '-kp';
+   temp_legend{nbsindex} = 'Ma bound';
+   result_names{nbsindex} = 'Ma bound       ';
+   nbsindex = nbsindex + 1;
+end
+if HCTEST == 1
+    HCclusternums = zeros(bootstrap_num,numel(iter));
+    markertypes{HC_index} = '-k>';
+    temp_legend{HC_index} = 'History Clustering';
+    result_names{HC_index} = 'History Clust. ';
+end
+if DGTEST == 1
+    markertypes{DG_index} = '-ko';
+    temp_legend{DG_index} = 'Interval';
+    result_names{DG_index} = 'Interval       ';
+end
+if DBTEST == 1
+    markertypes{DB_index} = '-ks';
+    temp_legend{DB_index} = 'Direct Bin';
+    result_names{DB_index} = 'Direct Bin     ';
+end
+if LRTEST == 1
+    markertypes{LR_index} = '-kd';
+    temp_legend{LR_index} = 'Lin & Reeke';
+    result_names{LR_index} = 'Lin & Reeke    ';
+end
+if KLTEST == 1
+    markertypes{KL_index} = '-k*';
+    temp_legend{KL_index} = 'Kozachenko';
+    result_names{KL_index} = 'Koz. & Leo.    ';
+end
+iter_X = cell(1,numel(iter));
+iter_hist_X = cell(1,numel(iter));
+iter_KL_hist_X = cell(1,numel(iter));
+for i=1:numel(iter)
+    iter_X{i} = X(1:iter(i));
+    iter_hist_X{i} = hist_X(:,1:iter(i));
+    iter_KL_hist_X{i} = KL_hist_X(:,1:iter(i));
+end
+
+if SHOW_PROGRESS, hwb = waitbar(0, 'Performing bootstraps...'); end
+    for j=1:bootstrap_num
+        for i=1:numel(iter)
+            temp_testtracker = 1;
+
+            % Bootstrap (rearrange elements of iter_X{i},
+            % leaving some out randomly):
+            n = iter(i);
+            ind = ceil(rand(1, n).*n);
+            BS_iter_X = iter_X{i}(:, ind);
+
+            % Bootstrap (rearrange elements of iter_hist_X{i},
+            % leaving some out randomly):
+            n = iter(i);
+            ind = ceil(rand(1, n).*n);
+            BS_iter_hist_X = iter_hist_X{i}(:, ind);
+            
+            if HCTEST == 1
+                [hc_e,clusternumber,HCLUSTERS] = ...
+                   history_clustering(BS_iter_hist_X,GAMDELAY,max_branch);
+                total_results(HC_index,i,j) = hc_e;
+                HCclusternums(j,i) = clusternumber;
+            end
+            if DGTEST == 1
+                dir_gam_e=dir_gamma(BS_iter_X);  % Revised 6/26/12 by ndw
+                total_results(DG_index,i,j) = dir_gam_e;
+            end
+            if DBTEST == 1
+                dir_bin_e=dir_bin(BS_iter_X,bin_width);  % Revised 6/26/12 by ndw
+                total_results(DB_index,i,j) = dir_bin_e;
+            end
+            if LRTEST == 1
+                lin_reeke_e = lin_reeke(BS_iter_hist_X,X_std, ...
+                     LR_max_branch,sub_tree_minsize);
+                total_results(LR_index,i,j) = lin_reeke_e;
+            end
+            if KLTEST == 1
+               % Bootstrap (rearrange elements of iter_KL_hist_X{i},
+               % leaving some out randomly):
+               n = iter(i);
+               ind = ceil(rand(1, n).*n);
+               BS_iter_KL_hist_X = iter_KL_hist_X{i}(:, ind);
+               koz_leo_e = koz_leo(BS_iter_KL_hist_X, KL_noise_test);
+               total_results(KL_index,i,j) = koz_leo_e;
+            end
+        end
+        if SHOW_PROGRESS, waitbar(j/bootstrap_num); end
+    end
+    if SHOW_PROGRESS, close(hwb); end
+
+   if bootstrap_num > 1
+      results = mean(total_results, 3);      % Average bootstrap
+      % Get confidence intervals:
+      n = size(total_results, 3);
+      min_ind = ceil(n*alpha);
+      max_ind = floor(n*(1-alpha));
+      ci = zeros(size(total_results, 1), size(total_results, 2), 2);
+      sorted_results = sort(total_results, 3, 'ascend');
+      ci(:, :, 1) = sorted_results(:, :, min_ind);
+      ci(:, :, 2) = sorted_results(:, :, max_ind);
+   else
+      results = total_results;
+   end
+   if STEST == 1
+      results = vertcat(results, strong_e);
+   end
+   if SRTEST == 1
+      results = vertcat(results, strong_re);
+   end
+   if MA_BOUND == 1
+      results = vertcat(results,e_ma_bound);
+   end
+                  %% Get history clustering method clustering information:
+if HCTEST == 1
+   mcnums = mean(HCclusternums,1);
+   total_clusters = HCLUSTERS;
+else
+   mcnums = [];
+   total_clusters = [];
+end
+
+%% Convert differential entropies to discrete
+% Note:  The methods that already compute discrete entropy have
+%  code to return effective differential entropy so it can be
+%  converted back to discrete here
+if kind_entropy > 0
+    results = results - log2br;
+    if bootstrap_num > 1, ci = ci - log2br; end
+    if APPROXEXPER == 1, approx_theory_entropy = ...
+        approx_theory_entropy - log2br; end
+end
+
+%% Print the results
+if PRINT_RESULTS ~= 0
+   fprintf('\nEntropy vs. N  ');
+   for i=1:numel(iter)
+      fprintf('%12d',iter(i));
+      end
+   fprintf('\n');
+   for j=1:testcounter
+      fprintf('%15s',result_names{j});
+      for i=1:numel(iter)
+         fprintf('%12.5f',results(j,i));
+         end
+      fprintf('\n');
+      end
+   if APPROXEXPER ~= 0 && numel(entropy_rate) > 0
+      fprintf('Artif. Data    %12.5f\n', entropy_rate - log2br);
+      end 
+   end
+
+%% Scatterplot the clusters:
+if HCTEST ~= 0 && HCLUSTERPLOT ~= 0
+   if tree_depth > 3
+      disp('Cannot plot clusters with history_depth > 2')
+   else
+      clustercolors = [.99,.01,.01,.01,.6,.6,.2,.2,.5,.5,.8,.8;...
+                       .01,.99,.01,.6,.01,.6,.5,.8,.2,.8,.2,.5;...
+                       .01,.01,.99,.6,.6,.01,.8,.5,.8,.2,.5,.2];
+      figure
+      for i = 1:numel(HCLUSTERS)
+        currentclusters = HCLUSTERS{i};
+        ic = mod(i-1,12) + 1;
+        switch tree_depth
+        case 2
+            scatter(currentclusters(1,:), ...
+                currentclusters(2,:),12., ...
+                clustercolors(:,ic)','filled');
+        case 3
+            scatter3(currentclusters(1,:), ...
+                currentclusters(2,:), ...
+                currentclusters(3,:),12., ...
+                clustercolors(:,ic)','filled');
+        end % tree_depth switch
+      hold on
+      end % HCLUSTERS loop
+   title('History clusters','FontSize',12)
+   end % tree_depth <= 3
+end % if HCLUSTERPLOT
+
+%% Plot the entropies
+nbsindex = bstestcounter + 1; % No bootstrap index
+if bootstrap_num > 1
+   Y = log10(iter);
+   figure
+   clf
+   if bstestcounter > 0
+      L = results(1:bstestcounter,:) - ci(:,:,1);
+      U = ci(:,:,2) - results(1:bstestcounter,:);
+      for i = 1:bstestcounter
+         errorbar(Y,results(i,:),L(i,:),U(i,:), ...
+               markertypes{i},'markersize',11);
+         hold on
+      end
+   end
+   if STEST == 1
+      plot(Y,results(nbsindex,:), ...
+         markertypes{nbsindex},'markersize',11);
+      nbsindex = nbsindex + 1;
+      hold on
+   end
+   if SRTEST == 1
+      plot(Y,results(nbsindex,:), ...
+         markertypes{nbsindex},'markersize',11);
+      nbsindex = nbsindex + 1;
+      hold on
+   end
+   if MA_BOUND == 1
+      plot(Y,results(nbsindex,:), ...
+         markertypes{nbsindex},'markersize',11);
+      nbsindex = nbsindex + 1;
+      hold on
+   end
+   if APPROXEXPER == 1
+      plot(Y,approx_theory_entropy,'-k.','markersize',15);
+      temp_legend = [temp_legend,'artificial data'];
+      hold on
+   end
+   leg1 = legend(temp_legend,'Location','SouthEast');
+   set(leg1,'FontSize',12)
+   if kind_entropy > 0
+      ylabel('Discrete Entropy (bits)','FontSize',12)
+   else
+      ylabel('Differential entropy (bits)','FontSize',12)
+   end
+   xlabel('log_1_0N','FontSize',12)
+   title('Entropies','FontSize',12)
+else
+   Y = log10(iter);
+   figure
+   clf
+   if bstestcounter > 0
+      for i = 1:bstestcounter
+         plot(Y,results(i,:),markertypes{i},'markersize',11);
+      hold on
+      end
+   end
+   if STEST == 1
+      plot(Y,results(nbsindex,:), ...
+         markertypes{nbsindex},'markersize',11);
+      nbsindex = nbsindex + 1;
+      hold on
+   end
+   if SRTEST == 1
+      plot(Y,results(nbsindex,:), ...
+         markertypes{nbsindex},'markersize',11);
+      nbsindex = nbsindex + 1;
+      hold on
+   end
+   if MA_BOUND == 1
+      plot(Y,results(nbsindex,:), ...
+         markertypes{nbsindex},'markersize',11);
+      hold on
+      nbsindex = nbsindex + 1;
+   end
+   if APPROXEXPER == 1
+      plot(Y,approx_theory_entropy,'-k.','markersize',15);
+      temp_legend = [temp_legend,'artificial data'];
+      hold on
+   end
+   leg1 = legend(temp_legend,'Location','SouthEast');
+   set(leg1,'FontSize',12)
+   if kind_entropy > 0
+      ylabel('Discrete Entropy (bits)','FontSize',12)
+   else
+      ylabel('Differential entropy (bits)','FontSize',12)
+   end
+   xlabel('log_1_0N','FontSize',12)
+   title('Entropies','FontSize',12)
+end
+
+% Clear mex memory
+if ~isempty(mdkscom), mdksallod(mdkscom, 0); end
+

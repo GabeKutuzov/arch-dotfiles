@@ -1,0 +1,41 @@
+armwdw_type
+fdm_type
+gac_type
+ilst
+ilstitem
+outnow_type
+si32
+struct AUTSCL
+struct BREGDEF
+struct CLSTAT
+struct GPSTAT
+struct CELLTYPE
+struct CLBLK
+struct CONDUCT
+struct CNSTAT
+struct CONNTYPE
+struct CPDEF
+struct FDHEADER
+struct IJPLNODE
+struct IONTYPE
+struct INHIBBAND
+struct INHIBBLK
+struct IZHICOM
+struct IZ03DEF
+struct IZ07DEF
+struct MODALITY
+struct MODCOM
+struct MODBY
+struct MODVAL
+struct PCF
+struct PHASEDEF
+struct PPFDATA
+struct PRBDEF
+struct PREPROC
+struct REPBLOCK
+struct RFRCDATA
+struct RPDEF
+struct UTVDEF
+struct VBDEF
+struct VDTDEF
+struct TVDEF

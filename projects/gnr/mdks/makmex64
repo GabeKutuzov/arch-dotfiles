@@ -1,0 +1,113 @@
+# (c) Copyright 2013-2015, The Rockefeller University */
+# $Id: makmex64 8 2015-11-25 20:04:01Z  $
+########################################################################
+# Make file for multi-dimensional Kolmogorov-Smirnov statistic library #
+# This is the version for 64-bit mex files                             #
+#                                                                      #
+# Program written by George N. Reeke                                   #
+########################################################################
+# V1A, 11/17/13, GNR - New makefile                                    #
+# ==>, 04/17/14, GNR - Last mod before committing to svn repository    #
+# V7A, 08/17/15, GNR - Add ribbon, equi-partition, center-grav approx  #
+# R09, 11/28/15, GNR - Add mdksqset                                    #
+# Rev, 12/30/15, GNR - Remove bfksallox                                #
+########################################################################
+
+MEXDIR	:= $(HOME)/matlab
+INC1	:= $(HOME)/include
+INC2	:= /opt/MatlabR2017b/extern/include
+INC     := $(INC1) $(INC2)
+
+# Linux common pathnames
+DIR := pcmex64
+
+MEXFILES = \
+mdksallod \
+mdksallof \
+mdks1sd   \
+mdks1sf   \
+mdks2sd   \
+mdks2sf   \
+rmks1sd   \
+rmks1sf   \
+cgks1sd   \
+cgks1sf   \
+cgks2sd   \
+cgks2sf   \
+upks1sd   \
+upks1sf   \
+upks2sd   \
+upks2sf   \
+bfks1sd   \
+bfks1sf   \
+bfks2sd   \
+bfks2sf   \
+mdksdivs  \
+mdksqset  \
+mdksvers
+
+EPKSMEX = \
+epks1sd   \
+epks1sf   \
+epks2sd   \
+epks2sf   \
+
+CFILES = ncbitcnt
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o .h .mexa64
+
+CC := gcc
+MEXC := mex
+CFLAGS := -g
+SVNV := $(shell gnrversn)
+DEFS := PCLUX64 _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV)) \
+	I_AM_MATLAB NO_CRKLIB
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+# Compile C files
+$(DIR)/%.o:     %.c $(DIR)/%.d makmex64
+	$(CC) $(CFLAGS) -m64 -fPIC  $(DEFS:%=-D%) $(INC:%=-I%) -c $<
+	mv $*.o $(DIR)
+
+# Make all this stuff
+.PHONY : mdksmex epksmex bitct depend clean
+all: depend mdksmex bitct epksmex
+mdksmex:	$(MEXFILES:%=$(MEXDIR)/%.mexa64)
+bitct: $(DIR)/ncbitcnt.o
+epksmex: $(EPKSMEX:%=$(MEXDIR)/%.mexa64) $(CFILES:%=$(DIR)/%.o)
+depend:	$(MEXFILES:%=$(DIR)/%.d) $(EPKSMEX:%=$(DIR)/%.d) \
+		$(CFILES:%=$(DIR)/%.d)
+
+$(MEXDIR)/epks1sd.mexa64:	epks1sd.c $(DIR)/epks1sd.d makmex64 \
+		$(DIR)/ncbitcnt.o
+	$(MEXC) $(DEFS:%=-D%) $(INC:%=-I%) $(CFLAGS) \
+   	-outdir $(MEXDIR) $< $(DIR)/ncbitcnt.o
+$(MEXDIR)/epks1sf.mexa64:	epks1sf.c $(DIR)/epks1sf.d makmex64 \
+		$(DIR)/ncbitcnt.o
+	$(MEXC) $(DEFS:%=-D%) $(INC:%=-I%) $(CFLAGS) \
+   	-outdir $(MEXDIR) $< $(DIR)/ncbitcnt.o
+$(MEXDIR)/epks2sd.mexa64:	epks2sd.c $(DIR)/epks2sd.d makmex64 \
+		$(DIR)/ncbitcnt.o
+	$(MEXC) $(DEFS:%=-D%) $(INC:%=-I%) $(CFLAGS) \
+   	-outdir $(MEXDIR) $< $(DIR)/ncbitcnt.o
+$(MEXDIR)/epks2sf.mexa64:	epks2sf.c $(DIR)/epks2sf.d makmex64 \
+		$(DIR)/ncbitcnt.o
+	$(MEXC) $(DEFS:%=-D%) $(INC:%=-I%) $(CFLAGS) \
+   	-outdir $(MEXDIR) $< $(DIR)/ncbitcnt.o
+
+$(MEXDIR)/%.mexa64:	%.c $(DIR)/%.d makmex64
+	$(MEXC) $(DEFS:%=-D%) $(INC:%=-I%) $(CFLAGS) -outdir $(MEXDIR) $<
+
+# Remove all the products of this make
+clean:
+	rm -f $(DIR)/*.o $(MEXDIR)/$(MEXFILES:%=%.mexa64) \
+		$(MEXDIR)/$(EPKSMEX:%=%.mexa64)
+
+-include $(MEXFILES:%=$(DIR)/%.d)
+-include $(EPKSMEX:%=$(DIR)/%.d)
+-include $(CFILES:%=$(DIR)/%.d)

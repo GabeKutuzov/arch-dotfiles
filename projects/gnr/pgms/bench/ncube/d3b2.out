@@ -1,0 +1,66 @@
+	On acteon, Fri May 14 14:04:44 1993
+
+Number of celltypes = 4, number of iterations = 2, seed = 1009
+   Cell type 1
+      Ncells = 600, nconntypes = 4, delta = 0.100000
+      Connection type 1
+         Nconns = 40, source = 1, rule = 0, scale = 0.200000
+      Connection type 2
+         Nconns = 10, source = 2, rule = 1, scale = 0.300000
+      Connection type 3
+         Nconns = 4, source = 3, rule = 0, scale = 0.250000
+      Connection type 4
+         Nconns = 2, source = 4, rule = 1, scale = 0.180000
+   Cell type 2
+      Ncells = 240, nconntypes = 4, delta = 0.200000
+      Connection type 1
+         Nconns = 20, source = 1, rule = 1, scale = 0.200000
+      Connection type 2
+         Nconns = 10, source = 2, rule = 0, scale = 0.250000
+      Connection type 3
+         Nconns = 4, source = 3, rule = 1, scale = 0.180000
+      Connection type 4
+         Nconns = 2, source = 4, rule = 0, scale = 0.250000
+   Cell type 3
+      Ncells = 100, nconntypes = 4, delta = 0.100000
+      Connection type 1
+         Nconns = 40, source = 1, rule = 1, scale = 0.200000
+      Connection type 2
+         Nconns = 15, source = 2, rule = 0, scale = 0.250000
+      Connection type 3
+         Nconns = 4, source = 3, rule = 0, scale = 0.330000
+      Connection type 4
+         Nconns = 24, source = 4, rule = 1, scale = 0.250000
+   Cell type 4
+      Ncells = 60, nconntypes = 4, delta = 0.200000
+      Connection type 1
+         Nconns = 12, source = 1, rule = 1, scale = 0.100000
+      Connection type 2
+         Nconns = 1, source = 2, rule = 0, scale = 0.200000
+      Connection type 3
+         Nconns = 4, source = 3, rule = 1, scale = 0.250000
+      Connection type 4
+         Nconns = 2, source = 4, rule = 0, scale = 0.180000
+Setup required 9.000000 seconds
+2 iterations required 10.000000 seconds
+DAS statistics for final iteration:
+   Celltype 1
+      Conntype   1:      483    3717    2260   17540
+      Conntype   2:       73     977     334    4616
+      Conntype   3:       30     390     185    1795
+      Conntype   4:        0     210       0     990
+   Celltype 2
+      Conntype   1:        0     540       0    4260
+      Conntype   2:       19     251     149    1981
+      Conntype   3:       13      95      63     789
+      Conntype   4:        0      54       0     426
+   Celltype 3
+      Conntype   1:        0     560       0    3440
+      Conntype   2:        0     210       0    1290
+      Conntype   3:        7      49      35     309
+      Conntype   4:        0     336       0    2064
+   Celltype 4
+      Conntype   1:        0       0       0     720
+      Conntype   2:        0       0       0      60
+      Conntype   3:        0       0       0     240
+      Conntype   4:        0       0       0     120

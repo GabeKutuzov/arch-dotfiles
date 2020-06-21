@@ -1,0 +1,203 @@
+# (c) Copyright 1996-2010, Neurosciences Research Foundation, Inc.
+# $Id: makehost 31 2010-08-30 18:57:56Z  $
+########################################################################
+# MAKE file for CNS (D3) hybrid host program, with or without Darwin I #
+# Unconditionally includes support for COMPXP                          #
+#                                                                      #
+# Targets supported:                                                   #
+#    host, cnshost, all:  normal version                               #
+#    optimized:           optimized version d1 or timers               #
+#    hostt:               profiling timers added                       #
+#    d1host:              Darwin I support added                       #
+#    d1hostt:             Darwin I support and timers added            #
+#    bbdhost:             BBD support added                            #
+#    bbdhostt:            BBD support and timers added                 #
+#                                                                      #
+# N.B.  nxdr2 cannot be run from the src/d3/host child directory.      #
+#       Accordingly, before running this makefile, run the script      #
+#       runnxdr2_host in the src/d3 directory.  When make is OK,       #
+#       go back and run runnxdr2_acc to restore d3nxtab.c and          #
+#       d3nxdr.h for serial CNS.                                       #
+#                                                                      #
+# Rev, 05/13/96-08/20/96, GNR - Add new routines, structs for V8A      #
+# Rev, 12/20/96, GNR - Add support for optimization and timers         #
+# Rev, 09/04/97, GNR - Add d3gfcl, d3gfsh                              #
+# Rev, 01/07/98, GNR - Add dist, PPFDATA, delete MODSTATS, CNDIST      #
+# Rev, 02/25/98, GNR - Add RFRCDATA                                    #
+# Rev, 03/28/98, GNR - Reverse order of nsitool and ROCKS libraries    #
+# Rev, 05/04/99, GNR - New directory layout                            #
+# Rev, 09/05/99, GNR - Remove remaining NCUBE support                  #
+# V8D, 02/14/07, GNR - Remove PNS, add BBDS support, d3vitp            #
+# ==>, 12/29/07, GNR - Last mod before committing to svn repository    #
+# Rev, 12/28/08, GNR - Add clean target, dependency on makefile itself #
+# V8F, 02/21/10, GNR - Remove PLATFORM support
+########################################################################
+
+#IMPORTANT - The file d3nxtab.c, which is generated automatically by
+# the nxdr utility, must be the first in the list of source/object
+# files for some unknown reason.
+
+SUNOBJ = \
+d3nxtab \
+darwin3 \
+d3abort \
+d3ajw \
+d3allo \
+d3autsc \
+d3bgis \
+d3cchk \
+d3chng \
+d3cij  \
+d3clst \
+d3cnmd \
+d3cond \
+d3ctbl \
+d3dflt \
+d3dij  \
+d3echo \
+d3elij \
+d3epsi \
+d3evtm \
+d3exch \
+d3exit \
+d3fchk \
+d3foff \
+d3g1g3 \
+d3g1imin \
+d3g2cell \
+d3g2cond \
+d3g2conn \
+d3g3prob \
+d3g3rset \
+d3g3timr \
+d3genr \
+d3gfcl \
+d3gfhd \
+d3gfsh \
+d3gfsv \
+d3go \
+d3grp0 \
+d3grp1 \
+d3grp2 \
+d3grp3 \
+d3gsta \
+d3gvin \
+d3i3vr \
+d3ijpi \
+d3ijpz \
+d3imgt \
+d3inhi \
+d3kij  \
+d3lij  \
+d3lplt \
+d3mark \
+d3master \
+d3mchk \
+d3mset \
+d3news \
+d3ngph \
+d3nset \
+d3oafs \
+d3parm \
+d3pdpz \
+d3perr \
+d3phase \
+d3plot \
+d3regenr \
+d3resetz \
+d3rlnm \
+d3rplt \
+d3rprt \
+d3rpsi \
+d3rstr \
+d3salf \
+d3save \
+d3schk \
+d3sfhm \
+d3sj   \
+d3snsa \
+d3stat \
+d3tchk \
+d3tsvp \
+d3ucvt \
+d3uprg \
+d3valu \
+d3vitp \
+d3vjnt \
+d3vplt \
+d3vtch \
+d3woff \
+d3zsta \
+findcell \
+findln \
+findmdlt \
+findpcf \
+findvc \
+rfdmtx \
+stubs \
+tvplot
+
+# Object files added for D1 support
+OBJD1 = \
+d1exch \
+d1genr \
+d1go \
+d1nset \
+d1rplt
+
+# Object files added for BBDS support
+OBJBBD = 
+
+# Common pathnames
+
+SRCROOT  = /home/cdr/src
+
+I   = $(HOME)/include
+L   = $(HOME)/lib/sparc
+S   = ../
+
+# Search path additions for "include" files
+INC = -I$S -I$I
+
+# NSI home-grown libraries (note: order is NOT arbitrary)
+
+TOOLS = tools
+hostt d1hostt bbdhostt := TOOLS = tools_t
+NSILIBS = $(L)/libenv.a \
+          $(L)/libhostplot.a \
+          $(L)/libhost$(TOOLS).a \
+          $(L)/libcrk.a
+bbdhost bbdhostt := NSILIBS += $(L)/libbbds.a
+
+# Compile-time definitions
+DEFS = SUN4 PAR PAR0 COMPXP
+CFLAGS = -Xc -g
+
+.SUFFIXES: .o .c
+
+# Additions for specialized targets
+
+optimized      := CFLAGS += -O2
+bbdhost bbdhostt := SUNOBJ += $(OBJBBD)
+d1host d1hostt := SUNOBJ += $(OBJD1)
+d1host d1hostt := DEFS += D1
+hostt d1hostt bbdhostt := DEFS += TIMERS
+
+# Store the complete command used for compilation. Needed
+# because it is used twice -- for actual compilation, and
+# as an argument to nxdr
+
+CCMD = acc $(CFLAGS) $(DEFS:%=-D%) $(INC) -c
+
+%.o:	../%.c makefile
+	$(CCMD) $< 
+
+.KEEP_STATE:
+
+all host optimized hostt bbdhost bbdhostt d1host d1hostt:	cnshost 
+
+cnshost: $$(SUNOBJ:%=%.o) $$(NSILIBS)
+	acc -g $(SUNOBJ:%=%.o) -o $@ $(NSILIBS) 
+
+clean:
+	rm -f *.o cnshost

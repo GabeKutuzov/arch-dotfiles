@@ -1,0 +1,73 @@
+Proposed task agenda for Gabriel, current version, 09/12/18
+
+Let us agree to use the word "frame" to mean one full plot, as it
+is in the present code, and use a new word, "viewport" for the
+new material that would allow parts of a plot to be manipulated
+by the online user.  I am suggesting that for now the calls and
+metafile data for viewport should be coded, but this should be
+ignored by mfdraw (see "Later" section of this document).
+
+Goal 1:  Complete updated plots library according to specification
+   in plotting.pdf.
+   -- Read headers and files already worked on by GNR, particularly
+      newpltw (with old newplt() function), newwin, be sure to under-
+      stand existing protocols for data exchange between running
+      application and mfdraw.
+   -- Also look at oldstuff/endplt.c to understand how plotting is
+      shut down when an application terminates.
+   -- Note that routines are already written to accomplish packing
+      of numerical data into the new binary metafile format.
+   -- Read the file Notes.txt and discuss w/GNR how the questions
+      contained therein should be dealt with.
+   -- Be sure to understand the protocol for plot calls that generate
+      data longer than one message buffer and consider whether it
+      needs to be changed.
+   -- Actually write the code.  Presumably all the differences that
+      depend on whether you are in a serial or a parallel application
+      have already been dealt with.  Once the startup/communication/
+      end code is in place, replacing the numerical conversions in
+      the individual plotting calls should be pretty trivial.
+Goal 2:  Testing the new plot library.
+   -- Add calls to the test program rkgtest.c to exercise as many as
+      practical of the new options.
+   -- Inasmuch as we have no version of mfdraw that can read the new
+      metafiles, I suggest writing a simple dump program ("dumpmf")
+      to read such a file and print the plot commands in a human-
+      readable format.
+   -- Use dumpmf to check that correct plot command data are written
+      to a metafile by serial and parallel versions of rkgtest.
+Goal 3:  Making new mfdraw.
+   -- Read enough of existing program to understand basically how
+      it works.
+   -- Read GNRnotes file and discuss any questions.
+   -- Work out with GNR method mfdraw should use for reporting errors
+      other than just calling 'exit'.  This will be different in 
+      metafile vs socket mode.  Agree on assignment of new abend
+      error codes if needed.  (Currently 210-239 and 260-269 are
+      already in use or available.  We can add new ones if needed.)
+   -- Decide whether to work with existing source files or start fresh.
+      If doing it myself, I would start fresh, except the startup code
+      that I rewrote in the existing version and the fltk UI definition
+      should mostly be usable.  Plan on multithreading to separate
+      communications with socket application from plot navigation.
+   -- I strongly urge use of the mffm package that I wrote to handle
+      input and storage of plot frames, unless you have a really good
+      alternative idea.
+   -- My advice would be to get the communications working with some
+      minimum subset of the actual plotting calls (line, circle, text),
+      get it all working (using a rump version of rkgtest to make the
+      test data), then add the rest of the plotting commands.
+Later, if time permits:
+   -- Add ability of mfdraw to produce some sort of standard graphics
+      output file for use in publication figures, etc.  To allow
+      subsequent rescaling, this should be a "drawing commands"
+      (e.g. .eps) rather than an "image" file (e.g. .tiff, .jpg) but
+      both have their uses.
+   -- The present mechanism for interrupting a running program via
+      a right mouse click doesn't work at all and needs to be
+      modified for "out-of-stream" communication so can happen at
+      any time.
+   -- Implement mechanism for moving viewports, clicking on single
+      objects and returning object identifiers to running application.
+      This is not yet fully worked out in the plotting.pdf document.
+

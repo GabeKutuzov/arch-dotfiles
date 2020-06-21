@@ -1,0 +1,101 @@
+# (c) Copyright 1997-2009, The Rockefeller University *11223* 
+# $Id: makeunix 23 2017-01-16 19:28:30Z  $
+# Makefile for env package
+#
+# Rev, 04/22/97, GNR - Remove ncube and xp8i versions, not used in
+#                      hybrids, add target for envtest program.
+# Rev, 01/23/98, GNR - Add solaris target
+# Rev, 05/04/99, GNR - New directory layout
+# ==>, 11/01/03, GNR - Last mod before committing to svn repository
+# Rev, 12/28/08, GNR - Add clean target, dependency on makefile itself
+# Rev, 12/19/09, GNR - Add mechanism to retrieve svn version
+
+# Include pathname
+I    = $(HOME)/include
+
+# Sparc library pathname
+SL   = $(HOME)/lib/sparc
+
+# Solaris library pathname
+SS   = /syl2/cdr/lib/solaris
+
+# Object code to be included in ENV library:
+OBJ = \
+envarm \
+envctl \
+envcyc \
+envdel \
+envget \
+envgob \
+envlim \
+envloc \
+envlod \
+envpia \
+envplot \
+envprt \
+envsav \
+envset \
+envshp \
+envvers
+
+# Pick up svn version number
+SVNV:sh = gnrversn
+SVNVQT  = $(SVNV:%='"%"')
+
+# Target-dependent macro definitions
+sun envtest  := CC    = acc
+sun envtest  := DEFS  = SUN4 SVNVRS=$(SVNVQT)
+sun envtest  := DIR   = sparc
+sun envtest  := LIB   = $(SL)
+
+solaris      := DEFS  = SUN5 SVNVRS=$(SVNVQT)
+solaris      := DIR   = solaris
+solaris      := LIB   = $(SS)
+
+# Libraries for making test drive program
+NSILIBS = $(LIB)/libenv.a \
+	  $(LIB)/libserplot.a \
+	  $(LIB)/libhosttools.a \
+	  $(LIB)/libcrk.a
+
+# Compile for sparc
+$$(DIR)/%.o:   %.c makefile
+	$(CC) -g $(DEFS:%=-D%) -I$I -c $<
+	mv $*.o $(DIR)
+ 
+.KEEP_STATE:
+
+all:   sun envtest
+sparc Sparc SPARC: sun
+
+help h HELP H Help:
+	@echo This make file creates the 'env' library
+	@echo 
+	@echo Commands:
+	@echo
+	@echo --make [all]:    Make Sparc version and envtest
+	@echo --make sun:      Only Sparc version
+	@echo --make sparc:    Same as 'make sun'
+	@echo --make envtest:  Make test drive program
+	@echo --make solaris:  Only solaris version
+
+sun:      $(SL)/libenv.a 
+
+solaris:  $(SS)/libenv.a
+
+$(SL)/libenv.a: $$(OBJ:%=$$(DIR)/%.o)
+	ar r libenv.a $(OBJ:%=$(DIR)/%.o)
+	ranlib libenv.a
+	mv     libenv.a $(SL)
+
+$(SS)/libenv.a: $$(OBJ:%=$$(DIR)/%.o)
+	/usr/ccs/bin/ar r libenv.a $(OBJ:%=$(DIR)/%.o)
+	mv     libenv.a $(SS)
+
+envtest:	$$(DIR)/envtest.o $$(NSILIBS)
+	acc -g $(DIR)/envtest.o -o $@ $(NSILIBS)
+
+clean:
+	rm -f solaris/*.o sparc/*.o
+	rm -f $(SL)/libenv.a $(SS)/libenv.a envtest
+

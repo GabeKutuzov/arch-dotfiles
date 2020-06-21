@@ -1,0 +1,14 @@
+demo
+Spike times read: 13611
+The minimum ISI is 0.030000
+The mean ISI is 22.048370
+The maximum ISI is 797.250000
+
+Entropy vs. N           136         681        1361        6805       10888
+History Clust.      1.05271     1.16118     1.32952     1.37401     1.40265
+Direct Bin         -3.46983    -1.42175    -0.67365     0.48916     0.69545
+Koz. & Leo.        -2.29210    -1.04675    -0.44034     0.50785     0.70728
+Strong              3.68749     3.06391     1.77806     1.58397     1.29978
+Ma bound           -2.74650    -0.97330    -0.41436     0.25062     0.34194
+Elapsed time is 578.907884 seconds.
+diary off

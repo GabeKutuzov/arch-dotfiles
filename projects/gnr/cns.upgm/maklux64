@@ -1,0 +1,69 @@
+# (c) Copyright 2010-2018, The Rockefeller University *11202* 
+# PCLINUX MAKE file for Cns user ("plug-in") programs
+#
+# (Assumes these programs are not yet in a svn archive)
+#
+# V1A, 05/09/10, GNR - UPROGS separated from src/d3
+# Rev, 09/29/11, GNR - Make this pclux64 version
+# Rev, 07/10/17, GNR - Add tiffcam, remove prescale (now in d3imgt)
+# Rev, 08/03/18, GNR - Incorporate LCLHOME                             #
+
+# Define local directory acting as home
+LCLHOME ?= $(HOME)
+
+# Define name of the library we are constructing
+SONAME  = libcnsupgm.so.1
+LIBNAME = libcnsupgm.so.1.0.1
+
+# Define architecture-specific subdirectory
+DIR := pclux64
+
+# Define directories where include files are stored
+# $$$ TEMPORARILY SET TO d3mpi $$$
+INC1 := $(LCLHOME)/include
+INC2 := $(LCLHOME)/src/d3mpi
+INC := $(INC1) $(INC2)
+
+# Define directory where private libraries are stored
+LIB := $(LCLHOME)/lib/$(DIR)
+
+# Object files to place in CNS plugin library
+UPGMOBJ = \
+norbmix  \
+sjrbar1  \
+sjrbar2  \
+sjrbar3  \
+tiffcam  \
+zsprb1
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+# Compilation macros for LINUX
+CC := gcc
+CFLAGS := -g -fPIC -Wunused -m64
+DEFS := PCLUX64 _ISOC99_SOURCE
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(CPPFLAGS) $(INC:%=-I%) $< \
+	| sed '\''s/^\(.*\)\.o[ :]*/\1.o $(DIR)\/\1\.d : /g'\'' > $@; \
+	[ -s $@ ] || rm -f $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d $(INC2)/utvdef.h makefile
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) -o $@ -c $<
+
+# Targets for making various programs
+.PHONY:  upgmfns depend
+
+upgmfns:	$(UPGMOBJ:%=$(DIR)/%.o) $(LIB)/libcrkpic.a maklux64
+	$(CC) -shared -Wl,-soname=$(SONAME) -o $(LIB)/$(LIBNAME) \
+		$(UPGMOBJ:%=$(DIR)/%.o) -L$(LIB) -ltiff -lcrkpic -lc -lm
+
+depend:  $(UPGMOBJ:%=$(DIR)/%.d) $(TIFFOBJ:%=$(DIR)/%.d)
+
+clean:
+	rm -f $(DIR)/*.o $(LIB)/$(LIBNAME)
+
+-include:  $(UPGMOBJ:%=$(DIR)/%.d) $(TIFFOBJ:%=$(DIR)/%.d)

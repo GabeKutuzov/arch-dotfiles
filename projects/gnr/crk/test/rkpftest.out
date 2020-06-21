@@ -1,0 +1,51 @@
+                                      ROCKS - CRYSTALLOGRAPHIC COMPUTING SYSTEM                   28 JAN 12    0:00000  Page 1    
+           a           b           c           d           e
+     0.00000     0.06498     3.14159       256.0 5.732000+13
+ 1.063200-32  6.498340-2    3.141593  2.560000+2 5.732000+13
+     0.00000     0.00574     2.78178  1259.42000 3.890200+12
+ 2.794300-31  5.738020-3    2.781780  1.259420+3 3.890200+12
+       -9999          -1           0          23       65536
+       2.+19       2.+19           0          23       65536
+Note:  It is correct that the first two values on the line above
+   are different in 64-bit vs 32-bit runs, because the variables
+   are negative longs printed as unsigned.
+A pointer (8 hex chars if 32-bit, 16 if 64-bit):  0X0000007FBFFFF4F0
+A 64-bit integer (should be 377957370801): 377957370801
+A size_t value (should be 8): 8
+Left padding (should be 0008): 0008
+Test concatenation with blank flag: 3 8
+Shorts (ptr,promoted):  +1009    -2   128,  1009    -2   128
+Written 1009 so far: (result OK)
+                                      ROCKS - CRYSTALLOGRAPHIC COMPUTING SYSTEM                   28 JAN 12    0:00.00  Page 2    
+           a           b           c           d           e
+     0.00000  Now      0.06498  is t     3.14159  he t   256.00000  ime  5.732000+13  for 
+     0.00000 ,,     2.78178 ,, 3.890200+12
+Q.5   -2.4949   -2.4950   -2.4951   -2.9949   -2.9950   -2.9951
+Q.3     -2.49     -2.50     -2.50     -2.99     -3.00     -3.00
+
+Old saying:
+
+  Now is the time for all good men to come to the aid of their party
+
+Now is the time for all good men to come to the aid of their party
+
+Now w isis t thehe t timime e fofor r alall l gogoodod m menen t to 
+This output has no conversons
+Should see a percent sign here %
+RK.iexit correctly set to 3
+    12345678    9ABCDEF0    00000111abcdef  4096.0 256.0000000-1     1.063200-32       0.065
+Last two w/g instead of Vf:  1.063200-32       0.065
+
+A char c, an octal 0421, a word -9999, and 23 ends here
+
+Testnum2     0.00000     3.14159   5.732000+13
+
+Indent on the second line    -2.4949   -2.4950   -2.4951
+                             -2.9949   -2.9950   -2.9951
+
+K(W=4) test, expect AFKR8bbb: AFKR8   <--End here
+K(J=1) test, expect AFKR8b: AFKR8 <--End here
+Skip with blanks test:         <--End here
+Wseed test, expect (1234,56789) (0,2147483646): (1234,56789) (0,2147483646) 
+
+End of tests

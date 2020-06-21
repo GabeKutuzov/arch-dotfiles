@@ -1,0 +1,81 @@
+# (c) Copyright 1999-2018, The Rockefeller University *11225* 
+# $Id: maklux64 26 2018-08-15 19:38:08Z  $
+########################################################################
+#                      Make file for env library                       #
+#                           64-bit version                             #
+#                                                                      #
+# Rev, 07/24/99, GNR - New version for PCLINUX (GNU make)              #
+# ==>, 08/18/07, GNR - Last mod before committing to svn repository    #
+# Rev, 03/31/08, GNR - Use shell syntax to get svnversion into code    #
+# Rev, 12/28/08, GNR - Add clean target, dependency on makefile itself #
+# Rev, 01/30/11, GNR - Add NEWARB definition                           #
+# Rev, 02/16/16, GNR - New 64-bit makefile derived from maklinux       #
+# Rev, 11/07/17, GNR - Remove -O2, causes objmove test crash           #
+# Rev, 08/03/18, GNR - Incorporate LCLHOME                             #
+########################################################################
+
+# Where all this stuff is stored
+LCLHOME ?= $(HOME)
+# Where local include files are stored
+INC     := $(LCLHOME)/include
+# Where local libraries are stored (64-bit Linux)
+LL      := $(LCLHOME)/lib/pclux64
+# Name of library to be created in LL
+LIBNM   := libenv
+# Where object code is to be stored
+DIR     := pclux64
+
+FILES = \
+envarm \
+envctl \
+envcyc \
+envdel \
+envget \
+envgob \
+envlim \
+envloc \
+envlod \
+envpia \
+envplot \
+envprt \
+envsav \
+envset \
+envshp \
+envvers
+
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+########## Target dependent macro definitions:
+CC := gcc
+CFLAGS := -g -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := PCLUX64 NEWARB _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d maklux64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+.PHONY : pclux64 depend
+pclux64:   $(LL)/$(LIBNM).a
+depend:    $(FILES:%=$(DIR)/%.d)
+
+$(LL)/$(LIBNM).a: $(FILES:%=$(DIR)/%.o)
+	ar r $(LIBNM).a $(FILES:%=$(DIR)/%.o)
+	ranlib $(LIBNM).a
+	mv $(LIBNM).a $(LL)
+
+clean:
+	rm -f $(DIR)/*.o
+	rm -f $(LL)/$(LIBNM).a
+
+-include $(FILES:%=$(DIR)/%.d)

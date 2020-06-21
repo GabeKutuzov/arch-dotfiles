@@ -1,0 +1,382 @@
+Output C file name is ./nxdrtab.c
+Output header file name is ./nxdrdef.h
+
+Type void has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = #, count = 1, align = 8
+
+Type __builtin_va_list has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = #, count = 1, align = 8
+
+Type enum has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = e, count = 1, align = 4
+
+Type byte has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 1
+   Members of this object are:
+      type = b, count = 1, align = 1
+
+Type unsigned char has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 1
+   Members of this object are:
+      type = b, count = 1, align = 1
+
+Type char has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 1
+   Members of this object are:
+      type = c, count = 1, align = 1
+
+Type unsigned short has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 2
+   Members of this object are:
+      type = m, count = 1, align = 2
+
+Type ui16 has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 2
+   Members of this object are:
+      type = m, count = 1, align = 2
+
+Type short has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 2
+   Members of this object are:
+      type = h, count = 1, align = 2
+
+Type si16 has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 2
+   Members of this object are:
+      type = h, count = 1, align = 2
+
+Type unsigned int has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = u, count = 1, align = 4
+
+Type int has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = i, count = 1, align = 4
+
+Type ui32 has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = u, count = 1, align = 4
+
+Type si32 has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = i, count = 1, align = 4
+
+Type unsigned long has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = n, count = 1, align = 8
+
+Type long has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = l, count = 1, align = 8
+
+Type unsigned long long has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = y, count = 1, align = 8
+
+Type ui64 has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = y, count = 1, align = 8
+
+Type long long has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = w, count = 1, align = 8
+
+Type si64 has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = w, count = 1, align = 8
+
+Type float has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = f, count = 1, align = 4
+
+Type double has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = d, count = 1, align = 8
+
+Type size_t has keys: Base 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = z, count = 1, align = 8
+
+Unnamed type has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = n, count = 1, align = 8
+
+Type wchar_t has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = i, count = 1, align = 4
+
+Unnamed type has keys: Struct Defined 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = i, count = 2, align = 4
+
+Type div_t has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = i, count = 2, align = 4
+
+Unnamed type has keys: Struct Defined 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = l, count = 2, align = 8
+
+Type ldiv_t has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = l, count = 2, align = 8
+
+Type __compar_fn_t has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = p, count = 1, align = 8
+
+Type schr has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 1
+   Members of this object are:
+      type = c, count = 1, align = 1
+
+Unnamed type has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 1
+   Members of this object are:
+      type = b, count = 1, align = 1
+
+Type ulng has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = n, count = 1, align = 8
+
+Unnamed type has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 2
+   Members of this object are:
+      type = h, count = 1, align = 2
+
+Unnamed type has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 2
+   Members of this object are:
+      type = m, count = 1, align = 2
+
+Unnamed type has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = i, count = 1, align = 4
+
+Unnamed type has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = u, count = 1, align = 4
+
+Type smed has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = i, count = 1, align = 4
+
+Type umed has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = u, count = 1, align = 4
+
+Type sbig has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = l, count = 1, align = 8
+
+Type ubig has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = n, count = 1, align = 8
+
+Unnamed type has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = l, count = 1, align = 8
+
+Unnamed type has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = n, count = 1, align = 8
+
+Type str_wseed_type has keys: Struct Defined 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = i, count = 2, align = 4
+
+Type wseed has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = i, count = 2, align = 4
+
+Type str_xyf_t has keys: Struct Defined 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = f, count = 2, align = 4
+
+Type xyf has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = f, count = 2, align = 4
+
+Type str_htbl has keys: Struct Defined 
+   nel = 5, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = p, count = 2, align = 8
+      type = n, count = 3, align = 8
+      type = i, count = 1, align = 4
+      type = h, count = 2, align = 2
+
+Type htbl has keys: Typedef Defined 
+   nel = 3, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = x, count = 1, align = 0, pointing to str_htbl
+
+Type idfr has keys: Typedef Defined 
+   nel = 2, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = p, count = 1, align = 8
+
+Type str_itm has keys: Struct Defined 
+   nel = 4, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = p, count = 2, align = 8
+      type = l, count = 1, align = 8
+      type = c, count = 2, align = 1
+
+Type str_tb3 has keys: Struct Defined 
+   nel = 5, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = p, count = 5, align = 8
+      type = l, count = 1, align = 8
+      type = h, count = 2, align = 2
+      type = c, count = 2, align = 1
+
+Type item has keys: Key Typedef Defined 
+   nel = 3, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = x, count = 1, align = 0, pointing to str_itm
+
+Type str_tyr has keys: Struct Defined 
+   nel = 3, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = p, count = 3, align = 8
+      type = c, count = 1, align = 1
+
+Type tab3 has keys: Key Typedef Defined 
+   nel = 3, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = x, count = 1, align = 0, pointing to str_tb3
+
+Type typrec has keys: Key Typedef Defined 
+   nel = 3, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = x, count = 1, align = 0, pointing to str_tyr
+
+Type str_kyr has keys: Struct Defined 
+   nel = 3, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = p, count = 3, align = 8
+      type = c, count = 1, align = 1
+
+Type keyrec has keys: Typedef Defined 
+   nel = 3, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = x, count = 1, align = 0, pointing to str_kyr
+
+Type uni_u1 has keys: Union Defined 
+   nel = 1, ninc = 3, mxtlen = 8
+
+Unnamed type has keys: Struct UnionEl 
+   nel = 3, ninc = 1, mxtlen = 8
+   Members of this object are:
+      type = x, count = 1, align = 0, pointing to str_tb3
+
+Unnamed type has keys: Struct UnionEl 
+   nel = 3, ninc = 2, mxtlen = 8
+   Members of this object are:
+      type = x, count = 1, align = 0, pointing to str_itm
+
+Unnamed type has keys: Struct UnionEl 
+   nel = 2, ninc = 3, mxtlen = 8
+   Members of this object are:
+      type = l, count = 1, align = 8
+
+Type uni1 has keys: Key Typedef Defined 
+   nel = 3, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = j, count = 1, align = 0, pointing to uni_u1
+
+Type str_t1 has keys: Key Struct Defined 
+   nel = 7, ninc = 0, mxtlen = 8
+   Members of this object are:
+      type = i, count = 1, align = 4
+      type = p, count = 1, align = 8
+      type = i, count = 1, align = 4
+      type = e, count = 1, align = 4
+      type = p, count = 3, align = 8
+      type = i, count = 35, align = 4
+
+Type enu_et1 has keys: Enum Defined 
+   nel = 2, ninc = 0, mxtlen = 4
+   Members of this object are:
+      type = e, count = 1, align = 4
+
+Promoting str_htbl into parent htbl
+Object nel = 5 , parent nel = 3 
+
+Promoting str_kyr into parent keyrec
+Object nel = 3 , parent nel = 3 
+
+AssignOffsets called for item
+
+AssignOffsets called for str_itm
+  Current ioff is 0, increment will be 5
+  Current ioff is 5, increment will be 3
+
+AssignOffsets called for typrec
+
+AssignOffsets called for str_tyr
+  Current ioff is 8, increment will be 4
+  Current ioff is 12, increment will be 3
+
+AssignOffsets called for tab3
+
+AssignOffsets called for str_tb3
+  Current ioff is 15, increment will be 6
+  Current ioff is 21, increment will be 3
+
+AssignOffsets called for str_t1
+  Current ioff is 24, increment will be 8
+
+AssignOffsets called for uni1
+
+AssignOffsets called for uni_u1
+
+AssignOffsets called for uni_u1_1
+  Current ioff is 32, increment will be 3
+
+AssignOffsets called for uni_u1_2
+  Current ioff is 35, increment will be 3
+
+AssignOffsets called for uni_u1_3
+  Current ioff is 38, increment will be 2
+  Current ioff is 40, increment will be 3
+  Current ioff is 43, increment will be 3

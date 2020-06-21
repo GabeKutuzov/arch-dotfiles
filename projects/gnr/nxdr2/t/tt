@@ -1,0 +1,342 @@
+Output C file name is ./nxdrtab.c
+Output header file name is ./nxdrdef.h
+
+Type void has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 0
+   Members of this object are:
+      type = #, count = 1, tseq = 0
+
+Type unsigned char has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 1
+   Members of this object are:
+      type = b, count = 1, tseq = 1
+
+Type char has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 1
+   Members of this object are:
+      type = c, count = 1, tseq = 1
+
+Type unsigned short has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 3
+   Members of this object are:
+      type = m, count = 1, tseq = 3
+
+Type short has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 3
+   Members of this object are:
+      type = h, count = 1, tseq = 3
+
+Type unsigned int has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 5
+   Members of this object are:
+      type = u, count = 1, tseq = 5
+
+Type int has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 5
+   Members of this object are:
+      type = i, count = 1, tseq = 5
+
+Type enum has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 5
+   Members of this object are:
+      type = e, count = 1, tseq = 5
+
+Type unsigned long has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 8
+   Members of this object are:
+      type = n, count = 1, tseq = 8
+
+Type long has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 8
+   Members of this object are:
+      type = l, count = 1, tseq = 8
+
+Type float has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 9
+   Members of this object are:
+      type = f, count = 1, tseq = 9
+
+Type unsigned long long has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 12
+   Members of this object are:
+      type = y, count = 1, tseq = 12
+
+Type ui64 has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 12
+   Members of this object are:
+      type = y, count = 1, tseq = 12
+
+Type long long has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 14
+   Members of this object are:
+      type = w, count = 1, tseq = 14
+
+Type si64 has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 14
+   Members of this object are:
+      type = w, count = 1, tseq = 14
+
+Type double has keys: Base 
+   nel = 2, ninc = 0, mxtseq = 15
+   Members of this object are:
+      type = d, count = 1, tseq = 15
+
+Type size_t has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 8
+   Members of this object are:
+      type = n, count = 1, tseq = 8
+
+Type wchar_t has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 5
+   Members of this object are:
+      type = i, count = 1, tseq = 5
+
+Unnamed type has keys: Struct Defined 
+   nel = 2, ninc = 0, mxtseq = 5
+   Members of this object are:
+      type = i, count = 2, tseq = 5
+
+Type div_t has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 5
+   Members of this object are:
+      type = i, count = 2, tseq = 5
+
+Unnamed type has keys: Struct Defined 
+   nel = 2, ninc = 0, mxtseq = 8
+   Members of this object are:
+      type = l, count = 2, tseq = 8
+
+Type ldiv_t has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 8
+   Members of this object are:
+      type = l, count = 2, tseq = 8
+
+Type __compar_fn_t has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = p, count = 1, tseq = 10
+
+Type schr has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 1
+   Members of this object are:
+      type = c, count = 1, tseq = 1
+
+Type byte has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 1
+   Members of this object are:
+      type = b, count = 1, tseq = 1
+
+Type si16 has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 3
+   Members of this object are:
+      type = h, count = 1, tseq = 3
+
+Type ui16 has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 3
+   Members of this object are:
+      type = m, count = 1, tseq = 3
+
+Type si32 has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 5
+   Members of this object are:
+      type = i, count = 1, tseq = 5
+
+Type ui32 has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 5
+   Members of this object are:
+      type = u, count = 1, tseq = 5
+
+Type smed has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 5
+   Members of this object are:
+      type = i, count = 1, tseq = 5
+
+Type umed has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 5
+   Members of this object are:
+      type = u, count = 1, tseq = 5
+
+Type sbig has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 8
+   Members of this object are:
+      type = l, count = 1, tseq = 8
+
+Type ubig has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 8
+   Members of this object are:
+      type = n, count = 1, tseq = 8
+
+Unnamed type has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 8
+   Members of this object are:
+      type = l, count = 1, tseq = 8
+
+Unnamed type has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 8
+   Members of this object are:
+      type = n, count = 1, tseq = 8
+
+Type str_wseed_type has keys: Struct Defined 
+   nel = 2, ninc = 0, mxtseq = 5
+   Members of this object are:
+      type = i, count = 2, tseq = 5
+
+Type wseed has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 5
+   Members of this object are:
+      type = i, count = 2, tseq = 5
+
+Type str_xyf_t has keys: Struct Defined 
+   nel = 2, ninc = 0, mxtseq = 9
+   Members of this object are:
+      type = f, count = 2, tseq = 9
+
+Type xyf has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 9
+   Members of this object are:
+      type = f, count = 2, tseq = 9
+
+Type str_htbl has keys: Struct Defined 
+   nel = 5, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = p, count = 2, tseq = 10
+      type = n, count = 3, tseq = 8
+      type = i, count = 1, tseq = 5
+      type = h, count = 2, tseq = 3
+
+Type htbl has keys: Defined 
+   nel = 3, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = x, count = 1, tseq = 10, pointing to str_htbl
+
+Type idfr has keys: Defined 
+   nel = 2, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = p, count = 1, tseq = 10
+
+Type str_itm has keys: Struct Defined 
+   nel = 4, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = p, count = 2, tseq = 10
+      type = l, count = 1, tseq = 8
+      type = c, count = 2, tseq = 1
+
+Type str_tb3 has keys: Struct Defined 
+   nel = 5, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = p, count = 5, tseq = 10
+      type = l, count = 1, tseq = 8
+      type = h, count = 2, tseq = 3
+      type = c, count = 2, tseq = 1
+
+Type item has keys: Key Defined 
+   nel = 3, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = x, count = 1, tseq = 10, pointing to str_itm
+
+Type str_tyr has keys: Struct Defined 
+   nel = 3, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = p, count = 3, tseq = 10
+      type = c, count = 1, tseq = 1
+
+Type tab3 has keys: Key Defined 
+   nel = 3, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = x, count = 1, tseq = 10, pointing to str_tb3
+
+Type typrec has keys: Key Defined 
+   nel = 3, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = x, count = 1, tseq = 10, pointing to str_tyr
+
+Type str_kyr has keys: Struct Defined 
+   nel = 3, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = p, count = 3, tseq = 10
+      type = c, count = 1, tseq = 1
+
+Type keyrec has keys: Defined 
+   nel = 3, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = x, count = 1, tseq = 10, pointing to str_kyr
+
+Type uni_u1 has keys: Union Defined 
+   nel = 1, ninc = 3, mxtseq = 10
+
+Unnamed type has keys: Struct Union 
+   nel = 3, ninc = 1, mxtseq = 10
+   Members of this object are:
+      type = x, count = 1, tseq = 10, pointing to str_tb3
+
+Unnamed type has keys: Struct Union 
+   nel = 3, ninc = 2, mxtseq = 10
+   Members of this object are:
+      type = x, count = 1, tseq = 10, pointing to str_itm
+
+Unnamed type has keys: Struct Union 
+   nel = 2, ninc = 3, mxtseq = 8
+   Members of this object are:
+      type = l, count = 1, tseq = 8
+
+Type uni1 has keys: Key Defined 
+   nel = 3, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = j, count = 1, tseq = 10, pointing to uni_u1
+
+Type str_t1 has keys: Key Struct Defined 
+   nel = 7, ninc = 0, mxtseq = 10
+   Members of this object are:
+      type = i, count = 1, tseq = 5
+      type = p, count = 1, tseq = 10
+      type = i, count = 1, tseq = 5
+      type = e, count = 1, tseq = 5
+      type = p, count = 3, tseq = 10
+      type = i, count = 35, tseq = 5
+
+Type enu_et1 has keys: Enum Defined 
+   nel = 2, ninc = 0, mxtseq = 5
+   Members of this object are:
+      type = e, count = 1, tseq = 5
+
+Promoting str_htbl into parent htbl
+Object nel = 5 , parent nel = 3 
+
+Promoting str_tyr into parent typrec
+Object nel = 3 , parent nel = 3 
+
+Promoting str_kyr into parent keyrec
+Object nel = 3 , parent nel = 3 
+
+AssignOffsets called for item
+
+AssignOffsets called for str_itm
+  Current ioff is 0, increment will be 5
+  Current ioff is 5, increment will be 3
+
+AssignOffsets called for typrec
+  Current ioff is 8, increment will be 4
+
+AssignOffsets called for tab3
+
+AssignOffsets called for str_tb3
+  Current ioff is 12, increment will be 6
+  Current ioff is 18, increment will be 3
+
+AssignOffsets called for str_t1
+  Current ioff is 21, increment will be 8
+
+AssignOffsets called for uni1
+
+AssignOffsets called for uni_u1
+
+AssignOffsets called for uni_u1_1
+  Current ioff is 29, increment will be 3
+
+AssignOffsets called for uni_u1_2
+  Current ioff is 32, increment will be 3
+
+AssignOffsets called for uni_u1_3
+  Current ioff is 35, increment will be 2
+  Current ioff is 37, increment will be 3
+  Current ioff is 40, increment will be 3

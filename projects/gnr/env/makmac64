@@ -1,0 +1,74 @@
+# (c) Copyright 1999-2016, The Rockefeller University *11225* 
+# $Id: makmac64 26 2018-08-15 19:38:08Z  $
+########################################################################
+#                      Make file for env library                       #
+#                        64-bit Mac OS version                         #
+#                                                                      #
+# Rev, 07/24/99, GNR - New version for PCLINUX (GNU make)              #
+# Rev, 02/16/16, GNR - New 64-bit makefile derived from maklinux       #
+# Rev, 03/09/16, GNR - Mac OS version derived from maklux64            #
+# ==>, 03/09/16, GNR - Last mod before committing to svn repository    #
+########################################################################
+
+LIBDIR   = /$(HOME)/lib
+INC      = /$(HOME)/include
+LIBNM    = libenv
+
+# Linux common pathnames
+DIR := macos64
+LL  := $(LIBDIR)/macos64
+
+FILES = \
+envarm \
+envctl \
+envcyc \
+envdel \
+envget \
+envgob \
+envlim \
+envloc \
+envlod \
+envpia \
+envplot \
+envprt \
+envsav \
+envset \
+envshp \
+envvers
+
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+########## Target dependent macro definitions:
+CC := gcc
+CFLAGS := -g -O2 -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := MACOS64 NEWARB _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d makmac64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+.PHONY : macos64 depend
+macos64:   $(LL)/$(LIBNM).a
+depend:    $(FILES:%=$(DIR)/%.d)
+
+$(LL)/$(LIBNM).a: $(FILES:%=$(DIR)/%.o)
+	ar r $(LIBNM).a $(FILES:%=$(DIR)/%.o)
+	ranlib $(LIBNM).a
+	mv $(LIBNM).a $(LL)
+
+clean:
+	rm -f $(DIR)/*.o
+	rm -f $(LL)/$(LIBNM).a
+
+-include $(FILES:%=$(DIR)/%.d)

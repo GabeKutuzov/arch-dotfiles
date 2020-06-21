@@ -1,0 +1,165 @@
+nnpfl -- added 2nd prmtnode = -1. It was getting changed to 1 in
+anread, causing msg lookup in sparcnio not to find the pending read.
+
+nioint. prob with backnbr assignment, needed to be <=. Causing last
+node of 1st board to not be assigned a  neighbor. messages never made
+it to sun.
+
+fix in nngetb. The ChanIn and Out calls in anreadp were modifiying the
+node. Setup a temp variable for call to anreadp. Odd that this only
+became apparent with double-ended.
+
+because 2 bugs so far have been from addresses of variable getting
+passed into returns with modify the value, I checked nsitools
+for examples of anreadp, anread, nread and nreadp for places where 
+they are called without a temp variable. I found two instances:
+in nnpflc I changed pnn->node to src and in nngetb I changed
+NC.bcstnbr to src.
+
+nioinit was assigning outer ring incorrectly, ORING_UP and DN reversed.
+
+Also, in course of debugging, had to modify main.c of driver so that
+it would start a 2nd inquest process so that both the head and
+tail could be debugged.
+
+The makefile in NSITOOLS was changed so that the nioin and nioout
+processes on the internal nodes would also be displayed in
+debugger.
+
+
+DETAILED LOG OF CHANGES
+
+My code is to left (top)  on the diffs.
+
+This is a diff of my changes with installed nsi changes 
+in the file nio.c:
+
+*****************************
+< *  Rev, 04/03/95,  LC - Debugged for double-ended runs.                *
+592c591
+<       NC.hostout = nchanl[ORING_DN_OUT];
+---
+>       NC.hostout = nchanl[ORING_UP_OUT];
+617c616
+<       else if (NC.node <= NC.lowerhalf)
+---
+>       else if (NC.node < NC.lowerhalf)
+665c664
+<       ch[2] = nchanl[ORING_UP_IN];
+---
+>       ch[2] = nchanl[ORING_DN_IN];
+668,671c667
+<    /* ch[2] and [3] can be switched without ill-effects,
+<       does not need to be inversed for "tail", "down" machine. */
+<       
+<    ch[2] = nchanl[ORING_UP_IN]; 
+---
+>    ch[2] = nchanl[ORING_UP_IN];
+*********************************
+
+These are changes to nngetb.c:
+
+********************************
+
+19,20d18
+<    int src;                /* temp variable for anread calls */
+<                            
+29d26
+<       src = NC.bcstnbr;
+31c28
+<           (inr=anread((byte *)&cflg,0,&src,&pnn->type,&cflg))<0)
+---
+>           (inr=anread((byte *)&cflg,0,&NC.bcstnbr,&pnn->type,&cflg))<0)
+41,44d37
+<    src = pnn->node; /* anread and readp may change the value of src,
+<                        thus the temp variable */
+< 
+< 
+47c40
+<    inr = anreadp((void **)&pnn->buff,MAX_MSG_LENGTH,&src, 
+---
+>    inr = anreadp((void **)&pnn->buff,MAX_MSG_LENGTH,&pnn->node, 
+54c47
+<       &src,&pnn->type,&cflg);
+---
+>       &pnn->node,&pnn->type,&cflg);
+***********************************
+
+changes to nnpfl.c:
+
+***********************************
+53d52
+<       prmptnode = -1; /* reset, it gets changed in above anread */
+65,67c64,65
+<   int src = pnn->node; 
+<   if (pnn->buff) {
+<       ior = anread(&cflg,0,&src,&pnn->type,&cflg);
+---
+>    if (pnn->buff) {
+>       ior = anread(&cflg,0,&pnn->node,&pnn->type,&cflg);
+
+*************************************
+
+changes to main.c
+
+*************************************
+
+150d149
+<    "-GB",
+357,360c356
+<                case 4:   /* -GB */
+<                   spectools |= (TNM_SPEC_INQUESTB | TNM_SPEC_SAVTMP);
+<                   break;
+<                case 5:   /* -PROF */
+---
+>                case 4:   /* -PROF */
+363c359
+<                case 6:   /* -SAVE */
+---
+>                case 5:   /* -SAVE */
+366c362
+<                case 7:   /* -MON */
+---
+>                case 6:   /* -MON */
+528c524
+<             strcpy(tnmdev,"UAETON0:DAETON2");  /* Built in defaults */
+---
+>             strcpy(tnmdev,"UAETON0:DAETON1");  /* Built in defaults */
+607,608c603
+<       if ((spectools & TNM_SPEC_INQUEST) ||
+<           (spectools & TNM_SPEC_INQUESTB)) {
+---
+>       if (spectools & TNM_SPEC_INQUEST) {
+714c709
+<        (TNM_SPEC_IPROF | TNM_SPEC_IMON)) {
+---
+>        (TNM_SPEC_IPROF || TNM_SPEC_IMON)) {
+800,811d794
+< 
+<                if (spectools & TNM_SPEC_INQUESTB) {
+<                /* Because inquest does not have a provision for
+<                *  overriding the environment resource, we must
+<                *  change the environment */
+<                   char newtrans[128];
+<                   sprintf(newtrans,"TRANSPUTER=%s",tnmdevhi);
+<                   if (putenv(newtrans))
+<                      fatalpe("Cannot change env",NULL);
+<                   if (execlp("irun","irun","-SE","-SB",btlfn[1],NULL) || 1)
+<                      fatalpe("Cannot run Inquest",NULL);
+<                   }
+
+***************************************
+
+changes to makefile:
+
+***************************************
+
+200,201c201,202
+< T8IINTTOOLS: $(LIB)/xptr/$$(LNAME:%=%$$(TMRLIB)).lib 
+< T8IEXTTOOLS: $(LIB)/xptr/$$(LNAME:%=%$$(TMRLIB)).lib nio.inq
+---
+> T8IINTTOOLS: $(LIB)/$$(LNAME:%=%$$(TMRLIB)).lib nio.inq
+> T8IEXTTOOLS: $(LIB)/$$(LNAME:%=%$$(TMRLIB)).lib nio.inq
+
+***************************************
+

@@ -1,0 +1,9 @@
+:: DUMPMF notes ::
+~ w2mf and h2mf caching might not be set, causing 
+   infinite values and messing up the whole program!
+~ 'currbyte' is not updated by string reading.
+~ sign values are not really a thing.
+~ Hex/Dec wrong op reading error
+~ New test program?
+~ Change metafile header reading
+~ Update headers for plotops and plotdefs

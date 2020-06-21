@@ -1,0 +1,8 @@
+# Items for adding noise type V
+# Search string 'il-.No|NFL_|NDO_|CDAT.noise|\<nmn\>|CTFHN'
+# Changes: d3opkeys, d3g2cell, d3echo, d3news, d3nset, d3go
+d3genr.c
+d3regenr.c
+d3resetn.c
+d3autsc.c
+misc.h

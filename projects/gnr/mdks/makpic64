@@ -1,0 +1,85 @@
+# (c) Copyright 2013-2015, The Rockefeller University */
+# $Id: makpic64 8 2015-11-25 20:04:01Z  $
+########################################################################
+# Make file for multi-dimensional Kolmogorov-Smirnov statistic library #
+# This is the version to make a shared library for for 64-bit systems  #
+#                                                                      #
+# Program written by George N. Reeke                                   #
+########################################################################
+# V1A, 11/17/13, GNR - New makefile                                    #
+# ==>, 12/14/13, GNR - Last mod before committing to svn repository    #
+# V7A, 08/17/15, GNR - Add ribbon, equi-partition, center-grav approx  #
+# R09, 11/28/15, GNR - Add mdksqset                                    #
+# Rev, 12/30/15, GNR - Remove bfksallox and bfksfree                   #
+########################################################################
+
+LIBDIR    = $(HOME)/lib
+INC       = $(HOME)/include
+KSLIBNAME = libmdkspic.a
+
+# Linux common pathnames
+DIR := pcpic64
+LL  := $(LIBDIR)/pclux64
+
+CFILES = \
+mdksallod \
+mdksallof \
+mdks1sd   \
+mdks1sf   \
+mdks2sd   \
+mdks2sf   \
+rmks1sd   \
+rmks1sf   \
+epks1sd   \
+epks1sf   \
+epks2sd   \
+epks2sf   \
+cgks1sd   \
+cgks1sf   \
+cgks2sd   \
+cgks2sf   \
+upks1sd   \
+upks1sf   \
+upks2sd   \
+upks2sf   \
+mdksfree  \
+bfks1sd   \
+bfks1sf   \
+bfks2sd   \
+bfks2sf   \
+mdksdivs  \
+mdksqset  \
+mdksvers  \
+ncbitcnt
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+########## Target dependent macro definitions:
+CC := gcc
+CFLAGS := -O2 -Wall -m64 -fPIC
+SVNV := $(shell gnrversn)
+DEFS := PCLUX64 _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d makpic64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -o $@ -c $<
+
+.PHONY : piclib depend
+piclib: $(LL)/$(KSLIBNAME)
+depend:  $(CFILES:%=$(DIR)/%.d)
+
+$(LL)/$(KSLIBNAME):	$(CFILES:%=$(DIR)/%.o)
+	ar r $(KSLIBNAME) $(CFILES:%=$(DIR)/%.o)
+	ranlib $(KSLIBNAME)
+	mv $(KSLIBNAME) $(LL)
+
+clean:
+	rm -f $(DIR)/*.o $(LL)/$(KSLIBNAME)
+
+-include $(CFILES:%=$(DIR)/%.d)

@@ -1,0 +1,2 @@
+pclux64/jsuwd.o pclux64/jsuwd.d : jsuwd.c /home/gmk/include/sysdef.h /home/gmk/include/rkarith.h \
+ /home/gmk/include/sysdef.h

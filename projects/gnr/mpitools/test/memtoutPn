@@ -1,0 +1,751 @@
+DBG MSG from host: Host returned from aninit
+DBG MSG from host: Entering Stage I setup
+DBG MSG from host: Entering Stage I membcst
+DBG MSG from host: MBDBG Loc 1, tnbr = 15
+DBG MSG from host: MBDBG First, ChangedPools = 15
+DBG MSG from host: MBDBG Loc 2.1, nblks = 3
+DBG MSG from host: MBDBG Loc 2.2 (Sent static blkinfo)
+DBG MSG from host: MBDBG Looping on ChangedPools = 15
+DBG MSG from host: MBDBG Loc 3B, pool = 0, nbr = 3
+DBG MSG from host:    Sent pmblk = 91e180, magic = 1196568592, type = -2147483648, nmb = 1
+DBG MSG from host:    Sent pmblk = 91dfc0, magic = 1196568592, type = -2147483641, nmb = 2
+DBG MSG from host:    Sent pmblk = 921680, magic = 1196568592, type = -2147483627, nmb = 1
+DBG MSG from host: MBDBG Loc 3B, pool = 1, nbr = 3
+DBG MSG from host:    Sent pmblk = 91a540, magic = 1196568593, type = -2147483648, nmb = 1
+DBG MSG from host:    Sent pmblk = 91a5b0, magic = 1196568593, type = -2147483641, nmb = 3
+DBG MSG from host:    Sent pmblk = 921510, magic = 1196568593, type = -2147483623, nmb = 1
+DBG MSG from host: MBDBG Loc 3B, pool = 2, nbr = 6
+DBG MSG from host:    Sent pmblk = 91e120, magic = 1196568594, type = -2147483641, nmb = 1
+DBG MSG from host:    Sent pmblk = 91cf80, magic = 1196568594, type = -2147483623, nmb = 1
+DBG MSG from host:    Sent pmblk = 91cff0, magic = 1196568594, type = 49, nmb = 1
+DBG MSG from host:    Sent pmblk = 91e5c0, magic = 1196568594, type = 24, nmb = 1
+DBG MSG from host:    Sent pmblk = 921580, magic = 1196568594, type = 37, nmb = 2
+DBG MSG from host:    Sent pmblk = 921610, magic = 1196568594, type = -2147483648, nmb = 1
+DBG MSG from host: MBDBG Loc 3B, pool = 3, nbr = 3
+DBG MSG from host:    Sent pmblk = 921150, magic = 1196568595, type = -2147483648, nmb = 1
+DBG MSG from host:    Sent pmblk = 9211c0, magic = 1196568595, type = -2147483641, nmb = 2
+DBG MSG from host:    Sent pmblk = 921240, magic = 1196568595, type = -2147483623, nmb = 1
+DBG MSG from host: nnpfl entered, lbsr = 7420, nnode = 2147483647, type = 12576, flags = 0
+andmsg got argc = 2, argv[1] = 0
+DBG MSG from Node 1: Node 1 returned from aninit
+DBG MSG from Node 2: Node 2 returned from aninit
+DBG MSG from Node 3: Node 3 returned from aninit
+DBG MSG from Node 1: Entering Stage I membcst
+DBG MSG from Node 2: Entering Stage I membcst
+DBG MSG from Node 3: Entering Stage I membcst
+DBG MSG from Node 1: nngetb entered, lbsr = 0, nnode = 2147483647, type = 12576, flags = 1953719138
+DBG MSG from Node 2: nngetb entered, lbsr = 0, nnode = 2147483647, type = 12576, flags = 1953719138
+DBG MSG from host: nnpfl bcst returned from barrier
+DBG MSG from host: nnpfl at MPI_Bcast, buff = 9216c0, count = 580
+DBG MSG from Node 3: nngetb entered, lbsr = 0, nnode = 2147483647, type = 12576, flags = 1953719138
+DBG MSG from host: nnpfl sent 580 of type 12576 from 2147483647
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: nncom entered, table offset = 0, flags = 0
+DBG MSG from host: Code S: Align 91e180 to 8
+DBG MSG from host: Sending 1 items of type I from 91e180
+DBG MSG from host:     0b000000
+DBG MSG from host: Sending 1 items of type D from 91e188
+DBG MSG from host:     3333333333332640
+DBG MSG from host: Sending 2 items of type P from 91e190
+DBG MSG from host:     40a5910000000000c0df910000000000
+DBG MSG from host: Sending 1 items of type D from 91e1a0
+DBG MSG from host:     6666666666662640
+DBG MSG from host: Sending 1 items of type C from 91e1a8
+DBG MSG from host:     41
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: nncom entered, table offset = 7, flags = 0
+DBG MSG from host: Code S: Align 91dfc0 to 8
+DBG MSG from host: Sending 1 items of type C from 91dfc0
+DBG MSG from host:     42
+DBG MSG from host: Sending 1 items of type L from 91dfc8
+DBG MSG from host:     738d6e0f00000000
+DBG MSG from host: Sending 1 items of type P from 91dfd0
+DBG MSG from host:     80e1910000000000
+DBG MSG from host: Sending 1 items of type C from 91dfd8
+DBG MSG from host:     62
+DBG MSG from host: nncom entered, table offset = 7, flags = 0
+DBG MSG from host: Code S: Align 91dfd9 to 8
+DBG MSG from host: Sending 1 items of type C from 91dfe0
+DBG MSG from host:     43
+DBG MSG from host: Sending 1 items of type L from 91dfe8
+DBG MSG from host:     748d6e0f00000000
+DBG MSG from host: Sending 1 items of type P from 91dff0
+DBG MSG from host:     5011920000000000
+DBG MSG from host: Sending 1 items of type C from 91dff8
+DBG MSG from host:     63
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 0
+DBG MSG from host: nncom entered, table offset = 21, flags = 0
+DBG MSG from host: Code S: Align 921680 to 8
+DBG MSG from host: Code J: Jump to NXDRUT[0] 1 times
+DBG MSG from host: nncom entered, table offset = 19, flags = 0
+DBG MSG from host: Sending 5 items of type L from 921680
+DBG MSG from host:     1e00000000000000000000000000000000000000000000000000000000000000
+DBG MSG from host:     2200000000000000
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: nncom entered, table offset = 0, flags = 0
+DBG MSG from host: Code S: Align 91a540 to 8
+DBG MSG from host: Sending 1 items of type I from 91a540
+DBG MSG from host:     15000000
+DBG MSG from host: Sending 1 items of type D from 91a548
+DBG MSG from host:     9a99999999193540
+DBG MSG from host: Sending 2 items of type P from 91a550
+DBG MSG from host:     80e1910000000000b0a5910000000000
+DBG MSG from host: Sending 1 items of type D from 91a560
+DBG MSG from host:     3333333333333540
+DBG MSG from host: Sending 1 items of type C from 91a568
+DBG MSG from host:     44
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: nncom entered, table offset = 7, flags = 0
+DBG MSG from host: Code S: Align 91a5b0 to 8
+DBG MSG from host: Sending 1 items of type C from 91a5b0
+DBG MSG from host:     45
+DBG MSG from host: Sending 1 items of type L from 91a5b8
+DBG MSG from host:     176abb1400000000
+DBG MSG from host: Sending 1 items of type P from 91a5c0
+DBG MSG from host:     80e1910000000000
+DBG MSG from host: Sending 1 items of type C from 91a5c8
+DBG MSG from host:     65
+DBG MSG from host: nncom entered, table offset = 7, flags = 0
+DBG MSG from host: Code S: Align 91a5c9 to 8
+DBG MSG from host: Sending 1 items of type C from 91a5d0
+DBG MSG from host:     46
+DBG MSG from host: Sending 1 items of type L from 91a5d8
+DBG MSG from host:     186abb1400000000
+DBG MSG from host: Sending 1 items of type P from 91a5e0
+DBG MSG from host:     1016920000000000
+DBG MSG from host: Sending 1 items of type C from 91a5e8
+DBG MSG from host:     66
+DBG MSG from host: nncom entered, table offset = 7, flags = 0
+DBG MSG from host: Code S: Align 91a5e9 to 8
+DBG MSG from host: Sending 1 items of type C from 91a5f0
+DBG MSG from host:     47
+DBG MSG from host: Sending 1 items of type L from 91a5f8
+DBG MSG from host:     196abb1400000000
+DBG MSG from host: Sending 1 items of type P from 91a600
+DBG MSG from host:     40a5910000000000
+DBG MSG from host: Sending 1 items of type C from 91a608
+DBG MSG from host:     67
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: nncom entered, table offset = 25, flags = 0
+DBG MSG from host: Code S: Align 921510 to 8
+DBG MSG from host: Sending 1 items of type I from 921510
+DBG MSG from host:     01000000
+DBG MSG from host: Code J: Jump to NXDRUT[0] 1 times
+DBG MSG from host: nncom entered, table offset = 13, flags = 0
+DBG MSG from host: Code X: Exec NXDRTT[0] 1 times
+DBG MSG from host: nncom entered, table offset = 0, flags = 0
+DBG MSG from host: Code S: Align 921514 to 8
+DBG MSG from host: Sending 1 items of type I from 921518
+DBG MSG from host:     37010000
+DBG MSG from host: Sending 1 items of type D from 921520
+DBG MSG from host:     9a99999999717340
+DBG MSG from host: Sending 2 items of type P from 921528
+DBG MSG from host:     40a5910000000000c0df910000000000
+DBG MSG from host: Sending 1 items of type D from 921538
+DBG MSG from host:     3333333333737340
+DBG MSG from host: Sending 1 items of type C from 921540
+DBG MSG from host:     48
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: nncom entered, table offset = 7, flags = 0
+DBG MSG from host: Code S: Align 91e120 to 8
+DBG MSG from host: Sending 1 items of type C from 91e120
+DBG MSG from host:     49
+DBG MSG from host: Sending 1 items of type L from 91e128
+DBG MSG from host:     80febb1c00000000
+DBG MSG from host: Sending 1 items of type P from 91e130
+DBG MSG from host:     5011920000000000
+DBG MSG from host: Sending 1 items of type C from 91e138
+DBG MSG from host:     69
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: nncom entered, table offset = 25, flags = 0
+DBG MSG from host: Code S: Align 91cf80 to 8
+DBG MSG from host: Sending 1 items of type I from 91cf80
+DBG MSG from host:     02000000
+DBG MSG from host: Code J: Jump to NXDRUT[0] 1 times
+DBG MSG from host: nncom entered, table offset = 16, flags = 0
+DBG MSG from host: Code X: Exec NXDRTT[7] 1 times
+DBG MSG from host: nncom entered, table offset = 7, flags = 0
+DBG MSG from host: Code S: Align 91cf84 to 8
+DBG MSG from host: Sending 1 items of type C from 91cf88
+DBG MSG from host:     4a
+DBG MSG from host: Sending 1 items of type L from 91cf90
+DBG MSG from host:     cbfda30400000000
+DBG MSG from host: Sending 1 items of type P from 91cf98
+DBG MSG from host:     80e1910000000000
+DBG MSG from host: Sending 1 items of type C from 91cfa0
+DBG MSG from host:     6a
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: nncom entered, table offset = 0, flags = 0
+DBG MSG from host: Code S: Align 921610 to 8
+DBG MSG from host: Sending 1 items of type I from 921610
+DBG MSG from host:     1f000000
+DBG MSG from host: Sending 1 items of type D from 921618
+DBG MSG from host:     9a99999999193f40
+DBG MSG from host: Sending 2 items of type P from 921620
+DBG MSG from host:     0000000000000000c0df910000000000
+DBG MSG from host: Sending 1 items of type D from 921630
+DBG MSG from host:     3333333333333f40
+DBG MSG from host: Sending 1 items of type C from 921638
+DBG MSG from host:     48
+DBG MSG from host: nnpfl entered, lbsr = 7527, nnode = 2147483647, type = 12576, flags = 0
+DBG MSG from Node 2: nngetb bcst returned from barrier
+DBG MSG from Node 3: nngetb bcst returned from barrier
+DBG MSG from Node 1: nngetb bcst returned from barrier
+DBG MSG from Node 2: nngetb at MPI_Bcast, buff = 2539d40, count = 580
+DBG MSG from Node 3: nngetb at MPI_Bcast, buff = 246bc60, count = 580
+DBG MSG from Node 1: nngetb at MPI_Bcast, buff = 13ddc60, count = 580
+DBG MSG from Node 2: nngetb received 580 of type 12576 from 2147483647
+DBG MSG from Node 3: nngetb received 580 of type 12576 from 2147483647
+DBG MSG from Node 1: nngetb received 580 of type 12576 from 2147483647
+DBG MSG from host: nnpfl bcst returned from barrier
+DBG MSG from host: nnpfl at MPI_Bcast, buff = 9216c0, count = 473
+DBG MSG from host: nnpfl sent 473 of type 12576 from 2147483647
+DBG MSG from Node 2: MBDBG Loc 1A, got tnbr = 15
+DBG MSG from Node 3: MBDBG Loc 1A, got tnbr = 15
+DBG MSG from Node 1: MBDBG Loc 1A, got tnbr = 15
+DBG MSG from Node 2: MBDBG Received ChangedPools = 15
+DBG MSG from Node 3: MBDBG Received ChangedPools = 15
+DBG MSG from Node 1: MBDBG Received ChangedPools = 15
+DBG MSG from Node 2: MBDBG Loc 2.1A, got tnbr = 3
+DBG MSG from Node 3: MBDBG Loc 2.1A, got tnbr = 3
+DBG MSG from Node 1: MBDBG Loc 2.1A, got tnbr = 3
+DBG MSG from Node 2: MBDBG Loc 2.2A (About to alloc static)
+DBG MSG from Node 3: MBDBG Loc 2.2A (About to alloc static)
+DBG MSG from Node 1: MBDBG Loc 2.2A (About to alloc static)
+DBG MSG from Node 2: MBDBG Loc 4, nbr = 3
+DBG MSG from Node 3: MBDBG Loc 4, nbr = 3
+DBG MSG from Node 1: MBDBG Loc 4, nbr = 3
+DBG MSG from Node 2:    Static Rcvd phblk = 91e180, magic = 1196568592, type = -2147483648, nmb = 1
+DBG MSG from Node 3:    Static Rcvd phblk = 91e180, magic = 1196568592, type = -2147483648, nmb = 1
+DBG MSG from Node 1:    Static Rcvd phblk = 91e180, magic = 1196568592, type = -2147483648, nmb = 1
+DBG MSG from Node 2:    Static Rcvd phblk = 91dfc0, magic = 1196568592, type = -2147483641, nmb = 2
+DBG MSG from Node 3:    Static Rcvd phblk = 91dfc0, magic = 1196568592, type = -2147483641, nmb = 2
+DBG MSG from Node 1:    Static Rcvd phblk = 91dfc0, magic = 1196568592, type = -2147483641, nmb = 2
+DBG MSG from Node 2:    Static Rcvd phblk = 921680, magic = 1196568592, type = -2147483627, nmb = 1
+DBG MSG from Node 3:    Static Rcvd phblk = 921680, magic = 1196568592, type = -2147483627, nmb = 1
+DBG MSG from Node 1:    Static Rcvd phblk = 921680, magic = 1196568592, type = -2147483627, nmb = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 14
+DBG MSG from Node 3: MBDBG Looping over tpools = 14
+DBG MSG from Node 1: MBDBG Looping over tpools = 14
+DBG MSG from Node 2: MBDBG Loc 5, pool = 1, nbr = 3
+DBG MSG from Node 3: MBDBG Loc 5, pool = 1, nbr = 3
+DBG MSG from Node 1: MBDBG Loc 5, pool = 1, nbr = 3
+DBG MSG from Node 2:    Rcvd phblk = 91a540, magic = 1196568593, type = -2147483648, nmb = 1
+DBG MSG from Node 3:    Rcvd phblk = 91a540, magic = 1196568593, type = -2147483648, nmb = 1
+DBG MSG from Node 1:    Rcvd phblk = 91a540, magic = 1196568593, type = -2147483648, nmb = 1
+DBG MSG from Node 2:    Computed ltot = 96
+DBG MSG from Node 3:    Computed ltot = 96
+DBG MSG from Node 1:    Computed ltot = 96
+DBG MSG from Node 2:    Rcvd phblk = 91a5b0, magic = 1196568593, type = -2147483641, nmb = 3
+DBG MSG from Node 3:    Rcvd phblk = 91a5b0, magic = 1196568593, type = -2147483641, nmb = 3
+DBG MSG from Node 1:    Rcvd phblk = 91a5b0, magic = 1196568593, type = -2147483641, nmb = 3
+DBG MSG from Node 2:    Computed ltot = 144
+DBG MSG from Node 3:    Computed ltot = 144
+DBG MSG from Node 1:    Computed ltot = 144
+DBG MSG from Node 2:    Rcvd phblk = 921510, magic = 1196568593, type = -2147483623, nmb = 1
+DBG MSG from Node 3:    Rcvd phblk = 921510, magic = 1196568593, type = -2147483623, nmb = 1
+DBG MSG from Node 1:    Rcvd phblk = 921510, magic = 1196568593, type = -2147483623, nmb = 1
+DBG MSG from Node 2:    Computed ltot = 104
+DBG MSG from Node 3:    Computed ltot = 104
+DBG MSG from Node 1:    Computed ltot = 104
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 6
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 6
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 6
+DBG MSG from Node 2:    Rcvd phblk = 91e120, magic = 1196568594, type = -2147483641, nmb = 1
+DBG MSG from Node 3:    Rcvd phblk = 91e120, magic = 1196568594, type = -2147483641, nmb = 1
+DBG MSG from Node 1:    Rcvd phblk = 91e120, magic = 1196568594, type = -2147483641, nmb = 1
+DBG MSG from Node 2:    Computed ltot = 80
+DBG MSG from Node 3:    Computed ltot = 80
+DBG MSG from Node 1:    Computed ltot = 80
+DBG MSG from Node 2:    Rcvd phblk = 91cf80, magic = 1196568594, type = -2147483623, nmb = 1
+DBG MSG from Node 3:    Rcvd phblk = 91cf80, magic = 1196568594, type = -2147483623, nmb = 1
+DBG MSG from Node 1:    Rcvd phblk = 91cf80, magic = 1196568594, type = -2147483623, nmb = 1
+DBG MSG from Node 2:    Computed ltot = 104
+DBG MSG from Node 3:    Computed ltot = 104
+DBG MSG from Node 1:    Computed ltot = 104
+DBG MSG from Node 2:    Rcvd phblk = 91cff0, magic = 1196568594, type = 49, nmb = 1
+DBG MSG from Node 3:    Rcvd phblk = 91cff0, magic = 1196568594, type = 49, nmb = 1
+DBG MSG from Node 1:    Rcvd phblk = 91cff0, magic = 1196568594, type = 49, nmb = 1
+DBG MSG from Node 2:    Computed ltot = 104
+DBG MSG from Node 3:    Computed ltot = 104
+DBG MSG from Node 1:    Computed ltot = 104
+DBG MSG from Node 2:    Rcvd phblk = 91e5c0, magic = 1196568594, type = 24, nmb = 1
+DBG MSG from Node 3:    Rcvd phblk = 91e5c0, magic = 1196568594, type = 24, nmb = 1
+DBG MSG from Node 1:    Rcvd phblk = 91e5c0, magic = 1196568594, type = 24, nmb = 1
+DBG MSG from Node 2:    Computed ltot = 72
+DBG MSG from Node 3:    Computed ltot = 72
+DBG MSG from Node 1:    Computed ltot = 72
+DBG MSG from Node 2:    Rcvd phblk = 921580, magic = 1196568594, type = 37, nmb = 2
+DBG MSG from Node 3:    Rcvd phblk = 921580, magic = 1196568594, type = 37, nmb = 2
+DBG MSG from Node 1:    Rcvd phblk = 921580, magic = 1196568594, type = 37, nmb = 2
+DBG MSG from Node 2:    Computed ltot = 128
+DBG MSG from Node 3:    Computed ltot = 128
+DBG MSG from Node 1:    Computed ltot = 128
+DBG MSG from Node 2:    Rcvd phblk = 921610, magic = 1196568594, type = -2147483648, nmb = 1
+DBG MSG from Node 3:    Rcvd phblk = 921610, magic = 1196568594, type = -2147483648, nmb = 1
+DBG MSG from Node 1:    Rcvd phblk = 921610, magic = 1196568594, type = -2147483648, nmb = 1
+DBG MSG from Node 2:    Computed ltot = 96
+DBG MSG from Node 3:    Computed ltot = 96
+DBG MSG from Node 1:    Computed ltot = 96
+DBG MSG from Node 2: MBDBG Loc 5, pool = 3, nbr = 3
+DBG MSG from Node 3: MBDBG Loc 5, pool = 3, nbr = 3
+DBG MSG from Node 1: MBDBG Loc 5, pool = 3, nbr = 3
+DBG MSG from Node 2:    Rcvd phblk = 921150, magic = 1196568595, type = -2147483648, nmb = 1
+DBG MSG from Node 3:    Rcvd phblk = 921150, magic = 1196568595, type = -2147483648, nmb = 1
+DBG MSG from Node 1:    Rcvd phblk = 921150, magic = 1196568595, type = -2147483648, nmb = 1
+DBG MSG from Node 2:    Computed ltot = 96
+DBG MSG from Node 3:    Computed ltot = 96
+DBG MSG from Node 1:    Computed ltot = 96
+DBG MSG from Node 2:    Rcvd phblk = 9211c0, magic = 1196568595, type = -2147483641, nmb = 2
+DBG MSG from Node 3:    Rcvd phblk = 9211c0, magic = 1196568595, type = -2147483641, nmb = 2
+DBG MSG from Node 1:    Rcvd phblk = 9211c0, magic = 1196568595, type = -2147483641, nmb = 2
+DBG MSG from Node 2:    Computed ltot = 112
+DBG MSG from Node 3:    Computed ltot = 112
+DBG MSG from Node 1:    Computed ltot = 112
+DBG MSG from Node 2:    Rcvd phblk = 921240, magic = 1196568595, type = -2147483623, nmb = 1
+DBG MSG from Node 3:    Rcvd phblk = 921240, magic = 1196568595, type = -2147483623, nmb = 1
+DBG MSG from Node 1:    Rcvd phblk = 921240, magic = 1196568595, type = -2147483623, nmb = 1
+DBG MSG from Node 2:    Computed ltot = 104
+DBG MSG from Node 3:    Computed ltot = 104
+DBG MSG from Node 1:    Computed ltot = 104
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = -536870912
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = -536870912
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = -536870912
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: nncom entered, table offset = 0, flags = 1
+DBG MSG from Node 3: nncom entered, table offset = 0, flags = 1
+DBG MSG from Node 1: nncom entered, table offset = 0, flags = 1
+DBG MSG from Node 2: Code S: Align 25435d0 to 8
+DBG MSG from Node 3: Code S: Align 24754f0 to 8
+DBG MSG from Node 1: Code S: Align 13e74f0 to 8
+DBG MSG from Node 2: Receiving 1 items of type I from 25435d0
+DBG MSG from Node 3: Receiving 1 items of type I from 24754f0
+DBG MSG from Node 1: Receiving 1 items of type I from 13e74f0
+DBG MSG from Node 2:     00000000
+DBG MSG from Node 3:     00000000
+DBG MSG from Node 1:     00000000
+DBG MSG from Node 2: Receiving 1 items of type D from 25435d8
+DBG MSG from Node 3: Receiving 1 items of type D from 24754f8
+DBG MSG from Node 1: Receiving 1 items of type D from 13e74f8
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: Receiving 2 items of type P from 25435e0
+DBG MSG from Node 3: Receiving 2 items of type P from 2475500
+DBG MSG from Node 1: Receiving 2 items of type P from 13e7500
+DBG MSG from Node 2:     00000000000000000000000000000000
+DBG MSG from Node 3:     00000000000000000000000000000000
+DBG MSG from Node 1:     00000000000000000000000000000000
+DBG MSG from Node 2: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 3: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 1: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 2: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 3: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 1: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 2: Receiving 1 items of type D from 25435f0
+DBG MSG from Node 3: Receiving 1 items of type D from 2475510
+DBG MSG from Node 1: Receiving 1 items of type D from 13e7510
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: Receiving 1 items of type C from 25435f8
+DBG MSG from Node 3: Receiving 1 items of type C from 2475518
+DBG MSG from Node 1: Receiving 1 items of type C from 13e7518
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 3: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 1: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 2: Code S: Align 2543630 to 8
+DBG MSG from Node 3: Code S: Align 2475550 to 8
+DBG MSG from Node 1: Code S: Align 13e7550 to 8
+DBG MSG from Node 2: Receiving 1 items of type C from 2543630
+DBG MSG from Node 3: Receiving 1 items of type C from 2475550
+DBG MSG from Node 1: Receiving 1 items of type C from 13e7550
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: Receiving 1 items of type L from 2543638
+DBG MSG from Node 3: Receiving 1 items of type L from 2475558
+DBG MSG from Node 1: Receiving 1 items of type L from 13e7558
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: Receiving 1 items of type P from 2543640
+DBG MSG from Node 3: Receiving 1 items of type P from 2475560
+DBG MSG from Node 1: Receiving 1 items of type P from 13e7560
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 3: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 1: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 2: Receiving 1 items of type C from 2543648
+DBG MSG from Node 3: Receiving 1 items of type C from 2475568
+DBG MSG from Node 1: Receiving 1 items of type C from 13e7568
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 3: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 1: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 2: Code S: Align 2543649 to 8
+DBG MSG from Node 3: Code S: Align 2475569 to 8
+DBG MSG from Node 1: Code S: Align 13e7569 to 8
+DBG MSG from Node 2: Receiving 1 items of type C from 2543650
+DBG MSG from Node 3: Receiving 1 items of type C from 2475570
+DBG MSG from Node 1: Receiving 1 items of type C from 13e7570
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: Receiving 1 items of type L from 2543658
+DBG MSG from Node 3: Receiving 1 items of type L from 2475578
+DBG MSG from Node 1: Receiving 1 items of type L from 13e7578
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: Receiving 1 items of type P from 2543660
+DBG MSG from Node 3: Receiving 1 items of type P from 2475580
+DBG MSG from Node 1: Receiving 1 items of type P from 13e7580
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 3: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 1: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 2: Receiving 1 items of type C from 2543668
+DBG MSG from Node 3: Receiving 1 items of type C from 2475588
+DBG MSG from Node 1: Receiving 1 items of type C from 13e7588
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 1
+DBG MSG from Node 2: nncom entered, table offset = 21, flags = 1
+DBG MSG from Node 3: nncom entered, table offset = 21, flags = 1
+DBG MSG from Node 1: nncom entered, table offset = 21, flags = 1
+DBG MSG from Node 2: Code S: Align 25436a0 to 8
+DBG MSG from Node 3: Code S: Align 24755c0 to 8
+DBG MSG from Node 1: Code S: Align 13e75c0 to 8
+DBG MSG from Node 2: Code J: Jump to NXDRUT[0] 1 times
+DBG MSG from Node 3: Code J: Jump to NXDRUT[0] 1 times
+DBG MSG from Node 1: Code J: Jump to NXDRUT[0] 1 times
+DBG MSG from Node 2: nncom entered, table offset = 19, flags = 1
+DBG MSG from Node 3: nncom entered, table offset = 19, flags = 1
+DBG MSG from Node 1: nncom entered, table offset = 19, flags = 1
+DBG MSG from Node 2: Receiving 5 items of type L from 25436a0
+DBG MSG from Node 3: Receiving 5 items of type L from 24755c0
+DBG MSG from Node 1: Receiving 5 items of type L from 13e75c0
+DBG MSG from Node 2:     0000000000000000000000000000000000000000000000000000000000000000
+DBG MSG from Node 3:     0000000000000000000000000000000000000000000000000000000000000000
+DBG MSG from Node 1:     0000000000000000000000000000000000000000000000000000000000000000
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: nncom entered, table offset = 0, flags = 1
+DBG MSG from Node 3: nncom entered, table offset = 0, flags = 1
+DBG MSG from Node 1: nncom entered, table offset = 0, flags = 1
+DBG MSG from Node 2: Code S: Align 2329da0 to 8
+DBG MSG from Node 3: Code S: Align 2459b10 to 8
+DBG MSG from Node 1: Code S: Align 13cac20 to 8
+DBG MSG from Node 2: Receiving 1 items of type I from 2329da0
+DBG MSG from Node 3: Receiving 1 items of type I from 2459b10
+DBG MSG from Node 1: Receiving 1 items of type I from 13cac20
+DBG MSG from Node 2:     00000000
+DBG MSG from Node 3:     00000000
+DBG MSG from Node 1:     00000000
+DBG MSG from Node 2: Receiving 1 items of type D from 2329da8
+DBG MSG from Node 3: Receiving 1 items of type D from 2459b18
+DBG MSG from Node 1: Receiving 1 items of type D from 13cac28
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: Receiving 2 items of type P from 2329db0
+DBG MSG from Node 3: Receiving 2 items of type P from 2459b20
+DBG MSG from Node 1: Receiving 2 items of type P from 13cac30
+DBG MSG from Node 2:     00000000000000000000000000000000
+DBG MSG from Node 3:     00000000000000000000000000000000
+DBG MSG from Node 1:     00000000000000000000000000000000
+DBG MSG from Node 2: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 3: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 1: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 2: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 3: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 1: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 2: Receiving 1 items of type D from 2329dc0
+DBG MSG from Node 3: Receiving 1 items of type D from 2459b30
+DBG MSG from Node 1: Receiving 1 items of type D from 13cac40
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: Receiving 1 items of type C from 2329dc8
+DBG MSG from Node 3: Receiving 1 items of type C from 2459b38
+DBG MSG from Node 1: Receiving 1 items of type C from 13cac48
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 3: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 1: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 2: Code S: Align 2526940 to 8
+DBG MSG from Node 3: Code S: Align 225c010 to 8
+DBG MSG from Node 1: Code S: Align 13ca940 to 8
+DBG MSG from Node 2: Receiving 1 items of type C from 2526940
+DBG MSG from Node 3: Receiving 1 items of type C from 225c010
+DBG MSG from Node 1: Receiving 1 items of type C from 13ca940
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: Receiving 1 items of type L from 2526948
+DBG MSG from Node 3: Receiving 1 items of type L from 225c018
+DBG MSG from Node 1: Receiving 1 items of type L from 13ca948
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: Receiving 1 items of type P from 2526950
+DBG MSG from Node 3: Receiving 1 items of type P from 225c020
+DBG MSG from Node 1: Receiving 1 items of type P from 13ca950
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 3: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 1: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 2: Receiving 1 items of type C from 2526958
+DBG MSG from Node 3: Receiving 1 items of type C from 225c028
+DBG MSG from Node 1: Receiving 1 items of type C from 13ca958
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 3: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 1: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 2: Code S: Align 2526959 to 8
+DBG MSG from Node 3: Code S: Align 225c029 to 8
+DBG MSG from Node 1: Code S: Align 13ca959 to 8
+DBG MSG from Node 2: Receiving 1 items of type C from 2526960
+DBG MSG from Node 3: Receiving 1 items of type C from 225c030
+DBG MSG from Node 1: Receiving 1 items of type C from 13ca960
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: Receiving 1 items of type L from 2526968
+DBG MSG from Node 3: Receiving 1 items of type L from 225c038
+DBG MSG from Node 1: Receiving 1 items of type L from 13ca968
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: Receiving 1 items of type P from 2526970
+DBG MSG from Node 3: Receiving 1 items of type P from 225c040
+DBG MSG from Node 1: Receiving 1 items of type P from 13ca970
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 3: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 1: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 2: Receiving 1 items of type C from 2526978
+DBG MSG from Node 3: Receiving 1 items of type C from 225c048
+DBG MSG from Node 1: Receiving 1 items of type C from 13ca978
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 3: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 1: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 2: Code S: Align 2526979 to 8
+DBG MSG from Node 3: Code S: Align 225c049 to 8
+DBG MSG from Node 1: Code S: Align 13ca979 to 8
+DBG MSG from Node 2: Receiving 1 items of type C from 2526980
+DBG MSG from Node 3: Receiving 1 items of type C from 225c050
+DBG MSG from Node 1: Receiving 1 items of type C from 13ca980
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: Receiving 1 items of type L from 2526988
+DBG MSG from Node 3: Receiving 1 items of type L from 225c058
+DBG MSG from Node 1: Receiving 1 items of type L from 13ca988
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: Receiving 1 items of type P from 2526990
+DBG MSG from Node 3: Receiving 1 items of type P from 225c060
+DBG MSG from Node 1: Receiving 1 items of type P from 13ca990
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 3: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 1: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 2: Receiving 1 items of type C from 2526998
+DBG MSG from Node 3: Receiving 1 items of type C from 225c068
+DBG MSG from Node 1: Receiving 1 items of type C from 13ca998
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: nncom entered, table offset = 25, flags = 1
+DBG MSG from Node 3: nncom entered, table offset = 25, flags = 1
+DBG MSG from Node 1: nncom entered, table offset = 25, flags = 1
+DBG MSG from Node 2: Code S: Align 2526c10 to 8
+DBG MSG from Node 3: Code S: Align 225bda0 to 8
+DBG MSG from Node 1: Code S: Align 11cdcc0 to 8
+DBG MSG from Node 2: Receiving 1 items of type I from 2526c10
+DBG MSG from Node 3: Receiving 1 items of type I from 225bda0
+DBG MSG from Node 1: Receiving 1 items of type I from 11cdcc0
+DBG MSG from Node 2:     00000000
+DBG MSG from Node 3:     00000000
+DBG MSG from Node 1:     00000000
+DBG MSG from Node 2: Code J: Jump to NXDRUT[0] 1 times
+DBG MSG from Node 3: Code J: Jump to NXDRUT[0] 1 times
+DBG MSG from Node 1: Code J: Jump to NXDRUT[0] 1 times
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 3: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 1: nncom entered, table offset = 7, flags = 1
+DBG MSG from Node 2: Code S: Align 2329cc0 to 8
+DBG MSG from Node 3: Code S: Align 2458c20 to 8
+DBG MSG from Node 1: Code S: Align 13e7630 to 8
+DBG MSG from Node 2: Receiving 1 items of type C from 2329cc0
+DBG MSG from Node 3: Receiving 1 items of type C from 2458c20
+DBG MSG from Node 1: Receiving 1 items of type C from 13e7630
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: Receiving 1 items of type L from 2329cc8
+DBG MSG from Node 3: Receiving 1 items of type L from 2458c28
+DBG MSG from Node 1: Receiving 1 items of type L from 13e7638
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: Receiving 1 items of type P from 2329cd0
+DBG MSG from Node 3: Receiving 1 items of type P from 2458c30
+DBG MSG from Node 1: Receiving 1 items of type P from 13e7640
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 3: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 1: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 2: Receiving 1 items of type C from 2329cd8
+DBG MSG from Node 3: Receiving 1 items of type C from 2458c38
+DBG MSG from Node 1: Receiving 1 items of type C from 13e7648
+DBG MSG from Node 2:     00
+DBG MSG from Node 3:     00
+DBG MSG from Node 1:     00
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: nncom entered, table offset = 25, flags = 1
+DBG MSG from Node 3: nncom entered, table offset = 25, flags = 1
+DBG MSG from Node 1: nncom entered, table offset = 25, flags = 1
+DBG MSG from Node 2: Code S: Align 232a010 to 8
+DBG MSG from Node 3: Code S: Align 2475630 to 8
+DBG MSG from Node 1: Code S: Align 13e7690 to 8
+DBG MSG from Node 2: Receiving 1 items of type I from 232a010
+DBG MSG from Node 3: Receiving 1 items of type I from 2475630
+DBG MSG from Node 1: Receiving 1 items of type I from 13e7690
+DBG MSG from Node 2:     00000000
+DBG MSG from Node 3:     00000000
+DBG MSG from Node 1:     00000000
+DBG MSG from Node 2: Code J: Jump to NXDRUT[0] 1 times
+DBG MSG from Node 3: Code J: Jump to NXDRUT[0] 1 times
+DBG MSG from Node 1: Code J: Jump to NXDRUT[0] 1 times
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: nncom entered, table offset = 0, flags = 1
+DBG MSG from Node 3: nncom entered, table offset = 0, flags = 1
+DBG MSG from Node 1: nncom entered, table offset = 0, flags = 1
+DBG MSG from Node 2: Code S: Align 2543810 to 8
+DBG MSG from Node 3: Code S: Align 24757a0 to 8
+DBG MSG from Node 1: Code S: Align 13e7800 to 8
+DBG MSG from Node 2: Receiving 1 items of type I from 2543810
+DBG MSG from Node 3: Receiving 1 items of type I from 24757a0
+DBG MSG from Node 1: Receiving 1 items of type I from 13e7800
+DBG MSG from Node 2:     00000000
+DBG MSG from Node 3:     00000000
+DBG MSG from Node 1:     00000000
+DBG MSG from Node 2: Receiving 1 items of type D from 2543818
+DBG MSG from Node 3: Receiving 1 items of type D from 24757a8
+DBG MSG from Node 1: Receiving 1 items of type D from 13e7808
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: Receiving 2 items of type P from 2543820
+DBG MSG from Node 3: Receiving 2 items of type P from 24757b0
+DBG MSG from Node 1: Receiving 2 items of type P from 13e7810
+DBG MSG from Node 2:     00000000000000000000000000000000
+DBG MSG from Node 3:     00000000000000000000000000000000
+DBG MSG from Node 1:     00000000000000000000000000000000
+DBG MSG from Node 2: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 3: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 1: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 2: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 3: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 1: xlatptr called, arg = 0, ret = NULL
+DBG MSG from Node 2: Receiving 1 items of type D from 2543830
+DBG MSG from Node 3: Receiving 1 items of type D from 24757c0
+DBG MSG from Node 1: Receiving 1 items of type D from 13e7820
+DBG MSG from Node 2:     0000000000000000
+DBG MSG from Node 1:     0000000000000000
+DBG MSG from Node 2: Receiving 1 items of type C from 2543838
+DBG MSG from Node 1: Receiving 1 items of type C from 13e7828
+DBG MSG from Node 2:     00
+DBG MSG from Node 1:     00
+-------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code.. Per user-direction, the job has been aborted.
+-------------------------------------------------------
+DBG MSG from Node 3:     0000000000000000
+DBG MSG from Node 3: Receiving 1 items of type C from 24757c8
+DBG MSG from Node 3:     00
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[39973,1],1]
+  Exit code:    1
+--------------------------------------------------------------------------

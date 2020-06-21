@@ -1,0 +1,22 @@
+##############################################################
+#                           lj4
+#
+# Default file for HP Laser Jet 4 printer
+# Version 1, 01/06/93  ROZ
+##############################################################
+
+# Printer name and alias
+name: Laser Jet 4 (Network)
+alias: ljps
+
+# Page control
+tmargin: 1.09
+lmargin: 0.20
+width: 8.10
+height: 8.825
+
+# Visual
+gray: 8
+
+# Special
+lwidth: 1

@@ -1,0 +1,101 @@
+In order to incorporate the IR sensors in the platform design, it is
+necessary to re-structure the program as a non-sequential, event
+driven handler.    With the current structure, the process is
+dedicated to either incoming packets ( blocked by the Read command in
+pktrecv), or motors completion of previous movement ( blocked by
+the WE command in basemove).   
+
+The changes suggested, are based on the following design rules:
+
+1.  The WE command (to the base) may no longer be used.  Experiment
+has shown that this will completely disable motor halting commands.
+
+
+2.  Incoming packets will be devided into two classes: Low and High
+priority.   Each packet will be processed sequentially within its
+class.   The purpose of this division is to enable processing of
+Override packets at various platform states (e.g. to halt motor
+action), while insuring that other packets, especially Changes
+packets, are only processed at known states.   Currently, the High
+priority class will include only the Override packet.
+
+3. Four concurrent processes will run:  
+   - A CNS Input process.
+   - A base I/O process.
+   - An Override process.
+   - A master control process.
+
+The following is a brief description of each process:
+
+3.1 The CNS input process:  Reads incoming packets from the CNS port. 
+Upon reception of a complete packet, it is queued into either the
+high or low priority pipe, and a matching hi/low event flag is
+raised. 
+
+3.2 The BASE I/O process:   A modification of the current basemove
+function.   Reads base commands issued by either the master or
+override processes, thru a BASE pipe.   The current command
+vocabulary is: MOV, PAUSE, RESUME, ABORT.
+
+   MOV: Similar to the current call to basemove.  Will cause the
+   process to issue a base command, periodically sample shaft
+   encoders to determine completion, and optionally update the
+   dead reckoning location.  This last action is controlled by a
+   bit in the command.
+   Upon completion of the movement, an event is sent to the process
+   that issued the command.  This command may be sent by either the
+   master or override processes.   
+
+   PAUSE:  Causes all effectors to stop, and the process to switch
+   to "i" mode, in which it responds only to commands from the
+   override process.   The dead reckoning may be updated, according
+   to bit flag.  This command may be issued only by the override
+   process.
+
+   RESUME:  The process will switch out of "i" mode.  If a MOV
+   command was left unterminated before switching into "i" mode, it
+   will be re-started.  Update of dead reckoning will take place if
+   the flag was set in original command.
+
+   ABORT:  The process will switch out of "i" mode.   If a MOV
+   command was left unterminated before switching into "i" mode, it
+   will be aborted, and a termination signal sent to the master
+   process.  Update of dead reckoning will take place if the flag
+   was set in original command.
+
+3.3 The Override process:  Will monitor the IR sensors and the high
+priority packet pipe (and in the future, any other high priority
+input), and interrupt the Base I/O process with the PAUSE command, to
+handle such events.  This process may update the dead reckoning
+location, but care should be taken since the Base process may also do
+so.  The way different conditions are handled may depend on a global
+status variable (e.g. normal status, aviding status, going home
+status).   The base process may resume normal execution of master
+process NOV commands, only after a RESUME or ABORT command from the
+override process.  
+
+Monitoring the IR sensors will be done by a periodic alarm and a
+short intercepter routine, that will take care of "debouncing".
+
+3.4  The master control process:  Very simailar to the current
+program.  After spawning the other child processes, will act much
+like the current "packet loop", with the following differences:
+
+-Incoming packets will be read from the low priority pipe.
+
+-All dead reckoning is assumed to be taken care of in the base
+process.
+
+-In interfacing with the base process, the following protocol should
+be observed:  Only MOV commands may be issued, the "updr" bit flag
+should (probably) always be raised, and the call to basemove should
+be faked by queing the command and waiting for the completion event.
+
+-A global status variable is maintained, to determine how events are
+handled by the override process.  Both the master and the override
+process may change this variable, but the override process is the
+only one that examined it.  A "call" to basemove is assumed to return
+with the same status (i.e. the RESUME/ABORT commands  will restore
+it).   The master process may set this variable to either Normal, or
+"Going Home", when moving to initial position at start of run.
+

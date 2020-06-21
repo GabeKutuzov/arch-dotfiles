@@ -1,0 +1,540 @@
+Multi-Dimensional Kolmogorov-Smirnov Statistic -- README file
+$Id: readme $
+
+COPYRIGHT AND LICENSE:
+----------------------
+
+   This software was developed in the Laboratory of Biological
+Modelling at The Rockefeller University by George N. Reeke,
+(c) Copyright 2013-2014, The Rockefeller University.
+
+Please send any corrections, suggestions, or improvements to the
+author by email to reeke@mail.rockefeller.edu for incorporation
+in future revisions.
+
+This software is distributed under GPL, version 2.  This program is
+free software; you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your
+option) any later version.  Accordingly, this program is distributed
+in the hope that it will be useful, but WITHOUT ANY WARRANTY; with-
+out even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.  See the GNU General Public License for more
+details.  You should have received a copy of the GNU General Public
+License along with this program.  If not, see <http://www.gnu.org/
+licenses/>.
+
+
+INTRODUCTION:
+-------------
+
+   This MDKS package contains routines to compute the single- and
+double-sample multi-dimensional Kolmogorov-Smirnov statistic, which
+may be used to quantitate the degree to which two distributions of
+points in k-dimensional space are statistically distinguishable.
+An algorithm proposed by G.N. Reeke (see below) is used in which the
+data space is divided into a hierarchy of rectilinear bricks and the
+count of points in a brick can be used when a brick lies entirely in
+one quadrant, minimizing the need to check the coordinates of each
+point individually.  The computation makes use of a work area that is
+allocated in a separate call (see below).  The work area may be reused
+for multiple calculations with the same dimensional parameters.
+
+The version of the statistic proposed by G. Fasano and A. Franceschini
+(1987, reference given below) is the one computed here.  Other versions
+have been proposed.
+
+The software is written in C and has provision to be compiled for
+either single- or double-precision data arrays with integer numbers
+and dimensionality of the data points.  Other data types may easily
+by added, with the restriction that the sorting method used assumes
+the data are in some sort of two's complement notation with the sign
+in the highest-order bit, and if floating-point, the data must be
+normalized (higher values sort higher when treated as integers).  Each
+source file also contains code that allows it to be compiled into a
+MATLAB 'mex' file, allowing the routines in the package to be called
+easily from any MATLAB script.  A header file is provided that may be
+#included in C or C++ user programs to declare the calling sequences
+for the routines in the package.
+
+
+INSTALLATION:
+-------------
+
+   The files needed to install this package for C and/or MATLAB
+users are contained in the compressed tar file "mdkspkgV6.tgz" or
+"mdkspkgV6.zip".  The contents of these files are the same--Linux
+users may prefer the .tgz version, Windows users the .zip.  The
+instructions given here are for Linux--users of other operating
+systems will need to modify accordingly.  The first thing to do
+is to make a directory to contain the package and uncompress the
+tar file in that directory:
+
+>mkdir mdks
+>cd mdks
+>tar zxf mdkspkgV6.tgz
+
+You should find this README file, a copy of the GPL license,
+22 .c source files, 3 .h header files, 4 make files, and one
+MATLAB test script (mdkstest.m) with sample output (mdkstestV6.out).
+
+The source files provided in the package are the following:
+mdksallo.c  Allocate a work area used by the other routines.
+mdksallod.c Wrapper for mdksallo for double-precision data.
+mdksallof.c Wrapper for mdksallo for single-precision data.
+mdks1s.c    Compute the one-sample MDKS statistic.
+mdks1sd.c   Wrapper for mdks1s for double-precision data.
+mdks1sf.c   Wrapper for mdks1s for single-precision data.
+mdks2s.c    Compute the two-sample MDKS statistic.
+mdks2sd.c   Wrapper for mdks2s for double-precision data.
+mdks2sf.c   Wrapper for mdks2s for single-precision data.
+mdksfree.c  Release work area when calculations are complete.
+bfksxxxx.c  Same as above except for implementing the brute-
+				force algorithm, useful for test purposes.
+mdksdivs.c  Return depth of brick divisions.
+mdksvers.c  Provide current version number as a string.
+
+The header files provided in the package are the following:
+mdks.h      Defines interface to the package routines.
+            Intended to be #included in user's C or C++
+            routines; may be moved to user's general header
+            file storage location.
+mdksint.h   Defines internal data structures and variables--
+            not to be #included in user programs.
+bfksint.h   Same, for the brute-force routines.
+
+The make files provided in the package are the following:
+maklux32    Makes a 32-bit .a library for static linking of the
+            package routines into user programs.
+maklux64    Makes a 64-bit .a library for static linking of the
+            package routines into user programs.
+makpic64    Makes a 64-bit .a library in which all the routines
+				are compiled with the -fPIC option so they can be
+				statically linked with other programs to make .so
+				libraries suitable for dynamic linking of routines
+            in the combined library into user programs.
+makmex64    Makes 64-bit 'mex' routines for using the package
+            with user MATLAB scripts.
+
+You may run as many of these make files as desired to make the types
+of libraries you require.  Each make file stores the dependency and
+object files from its compilations into a different subdirectory of
+the source directory so the various versions can coexist in the same
+source directory.  Each make file (except makmex64) stores the output
+library in a subdirectory of a generic library location ($(HOME)/lib
+as distributed) with the same subdirectory name.  This scheme may be
+changed, or just the locations of the various files changed, by
+editing the make files to suit your particular system requirements.
+In all cases, the directories where the object and library outputs
+will be stored must exist before the make files are run.  The macros
+used to define file locations in the various make files are as
+follows:
+
+maklux32, maklux64, and makpic64:
+   KSLIBNAME   Name of the output library.
+   LIBDIR      Parent directory for library storage.
+   INC         Directory where local include files are stored--
+               change this if you move the mdks.h header to a
+               location outside the source file directory.
+   DIR         Name of subdirectory of source directory where
+               generated dependency and object files are stored;
+               also name of subdirectory under $(LIBDIR) where
+               output library is stored.
+
+makmex64:
+   MEXDIR      Location where output mex files should be stored.
+   INC1        Directory where local include files are stored.
+   INC2        Directory where MATLAB include files are stored.
+   DIR         As for maklux64.
+
+You may also want to edit the make files to change the C compiler,
+the level of optimization, warning messages, or other CFLAGS options.
+Finally, each make file defines a variable SVNVRS which is used to
+transmit the current revision number of the package (the "subversion"
+source control package is used by the author) to mdksvers().  This is
+updated manually in the distribution files.  It can be changed if you
+make your own version of the code.
+
+
+USAGE:
+------
+
+   Once the desired libraries have been made, calls to the MDKS
+routines can be put into your own programs.  In the case of C (or C++)
+programs, #include the header file mdks.h and call the routines in
+accord with instructions provided below.  Add the location of the MDKS
+library to any other user libraries listed in your make file.  In the
+case of MATLAB programs, the mdks.h header is not used--simply add the
+location of the mex routines to your MATLAB path and call the mex
+routines using MATLAB syntax as described in the next section.
+
+The same code is compiled with different external definitions provided
+in wrapper files to generate routines to handle different data types.
+This provides a mechanism in C similar to C++ templates.  Each routine
+is named with a terminal letter to indicate the types of data it
+handles.  This letter is represented by an 'x' in the comments.  In
+the present implementation, only two letters are used: 'd' for double-
+precision floating-point ('double') data with integer dimensions and
+'f' for single-precision ('float') data with integer dimensions.  The
+functions with no terminal letter should not be called from user code.
+
+Samples of equal dimensionality and type ('double' or 'float') from
+two data distributions are compared by this program.  The two data
+sets are referred to as 'X1' and 'X2' in the documentation.  If 'ni'
+is the number of points in data set i (i={1,2}) and 'k' is the dimen-
+sion of the problem, then the data must be created by the caller in
+arrays of size ni x k (C ordering, last index fast moving). Note that
+if creating the data in a MATLAB program, the order of the dimensions
+should be reversed from the C usage or else the transpose operator
+must be applied to the arguments.  There is no restriction that the
+data values in each dimension need to cover the same range nor that
+n1 must equal n2.
+
+The program requires a work area that may be reused with multiple
+calls to mdks1sx() or mdks2sx() that have the same n1, n2, k, and
+brick hierarchy depth.  This area is allocated (or modified for
+different parameters) by a call to mdksallox() and freed by a call to
+mdksfree().  The size of the work area depends on the pointer (PSIZE)
+and data count (int or long, NSIZE) sizes.  Let n=n1+n2, d=hypercube
+hierarchy depth, which is either an input value or the default
+described below, b=number of bricks=Sum(j=1..d)(2^(j*k)) and bb=number
+of bottom-level bricks=2^(d*k).  Then when k > 1, the work area size
+is approximately max(512*PSIZE, 2*2^k*NSIZE) + (20+3n+2k+6d+2bb)*PSIZE
++ 4b*NSIZE plus a small fixed amount of overhead.  When k == 1, the
+work area size is (532+3n)*PSIZE plus overhead.
+ 
+The default depth of division in the brick hierarchy has been
+established by a polynomial fit to the optimum depth found in tests
+with k=2,...,5 and n={200,1000,5000,25000,125000}.  This polynomial
+may not be optimal for other data set sizes and may be modified in
+future versions of this program.  Letting mxn = max(n1,n2), lmxn =
+log2(maxn), and lnok = lmxn/k, the default depth is:
+(int)round(1.9287E-6*maxn*lnok + 1.0305*lnok + 0.0101*lmxn +
+0.3616*k - 2.6180).
+
+The work area is allocated and deallocated by routines separate from
+the computational routines so the same work area can be reused for
+multiple MDKS calculations without needing to make repeated system
+calls to allocate and deallocate memory.
+
+Usage to allocate a work area:
+------------------------------
+
+   mdksallox() ('x' = 'f' for floating point data, 'd' for double-
+precision data) must be called before calls to any of the other
+routines in the MDKS package or any time one of the parameters
+changes.  The value returned is a pointer to a work area that is
+an argument to the other functions.  Once allocated, the same
+work area can be used for multiple calculations as long as all
+the mdksallox() parameters remain unchanged.
+
+MATLAB Synopsis:
+   MDKSCOM = mdksallox(MDKSCOM, g1, g2, n1, n2, k)
+		where g1, g2, n1, n2, and k are MATLAB double-precision
+      scalars (1 x 1 matrices).
+C or C++ Synopsis:
+   #include "mdks.h"
+   int mdksallox(void **ppwk, int *g1, int *g2, NDAT_T n1,
+		NDAT_T n2, int k)
+
+Arguments:
+   k        Number of dimensions of the data points, 1 <= k < < MXK,
+            where MXK is 8*PSIZE - 4 - KTN.
+   n1       Number of points in distribution X1, k < n1 < MXN.
+   n2       Number of points in distribution X2, k < n2 < MXN.
+            (NDAT_T represents the type of 'n1' and 'n2' for which
+            the particular version of mdksallox was compiled.  The
+            type NDAT_T is determined by the compile-time variable
+            'KTN', which is 0 for 'int' and 1 for 'long'.  The
+            actual data are passed as arguments to mdks1sx() or
+            mdks2sx().)  MXN depends on the memory available in
+            the system.
+   g1,g2    These arguments are pointers for compatibility with an
+            earlier version of mdksallox().  g1 overrides the depth
+            of the calculation with a user-specified value,
+            0 <= g1 < MXK.  g1 may be 0 or a NULL pointer (empty
+            MATLAB array) to use the default depth.  g2 is ignored.
+   ppwk     Pointer to a location where mdksallox() will return a
+            pointer to the work area described above.  The pointer
+            at *ppwk must be initialized to NULL for the first call
+            to mdksallox()--a non-NULL value indicates that this
+            call is intended to update an existing work area at
+            that location for data with different size parameters.
+            The pointer at *ppwk must be passed as the first argu-
+            ment in each following call to mdks1sx(), mdks2sx(),
+            or mdksfree().
+   MDKSCOM  MATLAB equivalent of pwk.  This should be an empty
+            array on the first call, otherwise a value returned
+            by a previous call if the intent is to modify an
+            existing work area.
+
+Return values:
+   mdksallox() returns (at *ppwk) a pointer to a work area that
+will be used by mdks1sx() or mdks2sx() during its calculations.
+The contents of this work area are not of interest to the calling
+program.  Care should be taken not to use stale pointers if multi-
+ple calls are made to mdksallox() with different 'ppwk', as the
+work area may be moved to a new location if it needs to be expanded.
+In this case, the pointer at *ppwk will be modified.  The function
+return from mdksallox() is an integer which is zero in case of
+success.  Nonzero values indicate errors as follows:
+   (1) On an attempt to modify the work area, the value at *ppwk
+       did not appear to point to a previously allocated work area.
+   (2) 'k' is negative or zero.
+   (3) Quadrant sums will not fit in memory.
+   (4) 'n1' is not larger than 'k'.
+   (5) 'n2' is not larger than 'k'.
+   (6) A cube depth specified in 'g1' is larger than 8*PSIZE/k.
+   (7) [No longer used].
+	(8) Size of work space exceeds system address space.  If running
+	    in a 32-bit system, problem might fit in a 64-bit system.
+   (9) The required amount of storage was not available.  In
+       this case the pointer at *ppwk is set to NULL.
+
+Note:  The MATLAB version makes a mexErrMsgTxt() call and terminates
+on any of the above errors.
+
+Note:  On calls to mdksallox() to modify an existing work area
+for use with different values of the parameters, if the new work
+area fits in the space already allocated, the area is reused,
+otherwise, it is expanded via a realloc() call.  This minimizes
+the number of system calls needed when working with data sets of
+different sizes.  (If under caller control, reallocation can be
+minimized by processing the larger data sets first.)
+
+Usage to determine depth of hypercube division in a work space:
+------------------------------------------------------------------
+
+   mdksdivs() may be called by application that is using the MDKS
+library to find out the depth of hypercube division established by
+an earlier call to mdksallox(), for example, when the default is
+requested and the caller would like to know what value was assigned
+to the default by mdksallox().  mdksdivs() may be called at any time
+after a call to mdksallox() and before the corresponding call to
+mdksfree().  (This program is the same for all argument types and
+therefore has no version identifier letter 'x'.)
+ 
+MATLAB Synopsis:
+   [DivsX1, DivsX2] = mdksdivs(MDKSCOM)
+The MATLAB mex version returns the hierarchy depth directly as two
+double-precision floating-point scalars, 'DivsX1' for data set X1
+and 'DivsX2' for data set X2.  In the current program design, these
+are always identical.  The argument 'MDKSCOM' is the work area
+returned by a previous call to mdksallox().
+
+C or C++ Synopsis:
+   #include "mdks.h"
+   int mdksdivs(void *pwk, int *pdivs[2]);
+The C version returns an array of two pointers to int stored in the 
+user-supplied space pointed to by the argument 'pdivs'.  Each points 
+to a single integer which is the depth of hypercube brick division
+assigned for this problem.  The first pointer gives the depth for   
+data set X1 and the second for data set X2.  In the present version, 
+these are always identical, but may not be in future versions.
+The values pointed to remain valid until the next call to mdksallox()
+or mdksfree().  The argument 'pwk' must be the pointer stored at *ppwk
+by the most recent call to mdksallox().  The value of the function
+return is 0 for success and 1 (defined in the header file mdks.h as
+MDKSA_ERR_BADWK) when the argument 'pwk' does not point to a valid
+work space block.
+
+Usage to compute the one- or two-sample MDKS statistic:
+-------------------------------------------------------
+
+   mdks1sx() computes the one-sample MDKS statistic.  The user supplies
+data from an experimental data set as 'X1' and data from a model which
+is intended to fit those data as 'X2'.  mdks2sx() computes the two-
+sample MDKS statistic.  In this case, the question being asked is
+whether the two samples are taken from the same (unknown) distribution.
+In the multidimensional case, there is no universal relationship between
+the value of the MDKS statistic and a "P-value" or confidence limit for
+the comparison--this must be obtained by bootstrap or other methods as
+described in the Fasano & Franceschini reference.
+
+MATLAB Synopses:
+   s = mdks1sx(MDKSCOM, X1, X2)
+   s = mdks2sx(MDKSCOM, X1, X2)
+C or C++ Synopses:
+   #include "mdks.h"
+   double mdks1sx(void *pwk, XDAT_T *X1, XDAT_T *X2)
+   double mdks2sx(void *pwd, XDAT_T *X1, XDAT_T *X2)
+
+Arguments:
+   X1,X2    Pointers to the sets of points to be compared.  X1 and
+            X2 must be arrays of whatever type the mdks1sx() or
+            mdks2sx() version was compiled for.  The type XDAT_T is
+            'double' for the 'x' == 'd' routines and float for the
+            'x' == 'f' routines.  X1 has dimension n1 x k and X2 has
+            dimension n2 x k, where n1, n2, and k are the values given
+            in the most recent call to mdksallox().  The coordinates
+            are assumed to be stored in the native byte order of the
+            machine on which the program runs.
+   pwk      This must be the pointer stored at *ppwk by a call to
+            mdksallox() with the 'n1', 'n2', and 'k' of X1 and X2.
+   MDKSCOM  MATLAB equivalent of pwk.
+
+Return values:
+   mdks1sx() returns the one-sided MDKS statistic.  MDKS is defined
+as the maximum over 'n1' of the maximum over the 2^k generalized
+quadrants in a k-dimensional coordinate system with origin at each
+point of X1 of the absolute value of the difference between the
+numbers of points in that quadrant in X1 and in X2, normalized as
+if n2 == n1 and divided by sqrt(n1).  A negative value is returned
+in case of an error as follows:
+   (-1) The argument 'pwk' apparently did not point to an area
+        allocated by an earlier call to mdksallox().
+   (-2) All the data values in some dimension were identical.
+
+   mdks2sx() returns the two-sample (symmetric) MDKS statistic
+computed according to the formula given in the reference cited
+below.
+
+Usage to release storage occupied by a work area:
+-------------------------------------------------
+
+   mdksfree() releases storage previously allocated by mdksallox()
+back to the operating system.  (This program is the same for all
+argument types and thus has no version identifier letter 'x'.)
+MATLAB uses a different call to mdksallox() to release a work area.
+
+MATLAB Synopsis to release a work area:
+   mdksallox(MDKSCOM, 0)
+C or C++ Synopsis:
+   #include "mdks.h"
+   int mdksfree(void *pwk)
+
+Arguments:
+   pwk      This must be the pointer stored at *ppwk by a previous
+            call to mdksallox().
+   MDKSCOM  MATLAB equivalent of pwk.
+
+Return values:
+   mdksfree() returns 0 on success and 1 if the argument 'pwk'
+apparently did not point to an area allocated by an earlier call
+to mdksallox().  The MATLAB mex file gives a terminal error if
+the operation was not successful.
+
+
+MATLAB DEMO SCRIPT:
+-------------------
+
+   The supplied MATLAB script mdkstest.m performs a number of MDKS
+calculations using a brute-force method that is directly derivable
+from the theoretical equations and using the new method developed in
+this project.  The brute force method is computed both with MATLAB
+code (k=1,2,3 only) and with a C 'mex' file for comparison.  One-
+sample and two-sample calculations are performed for random data
+taken from uniform, normal, and gamma distributions, with k = 1:5
+and with n = 200, 1000, 5000, and 25000.  Each calculation is
+repeated multiple times with different random number seeds and the
+mean, standard deviation, and mean execution time are reported for
+each calculation.  (The number of repetitions ranges between 10
+and 500, with smaller numbers for the larger values of n to keep
+calculation times reasonable.  Nonetheless, the calculations may
+take several hours.)  Results for the demo as computed by the
+author are provided in the file mdkstestV6.out.  Your results may
+differ if different random number seeds are used, but the results
+for all methods tested should be the same for each calculation.
+
+
+ALGORITHM:
+----------
+
+   This program uses an algorithm developed by GNR (possibly not   
+original).  The obvious algorithm runs in time proportional to     
+(n^2)*(2^k).  I was unable to find an algorithm that is provably   
+faster than this, but, depending on the distribution of the data,  
+the algorithm used here can run significantly faster than the      
+brute-force algorithm (timing data in the 'readme' file).  The new 
+algorithm divides the data space into a hierarchy of rectilinear   
+bricks.  At each successive hierarchy level, each coordinate axis  
+is divided so as to place roughly 1/(2^k) of the data points in    
+each child brick.  The user may specify the depth of the hierarchy 
+(usually only for test purposes) or accept the default, which is   
+computed according to a polynomial given in the mdksallo.c source  
+file.  Then, beginning at the lowest level, each brick is provided 
+with a list of the enclosed points and the count of such points.   
+Going up the hierarchy, each brick holds the count of the data     
+points contained in the 2^k bricks contained in that brick at the  
+next lower level.  The MDKS is then initialized to 0.  For each    
+data point in set X1, the populations of two sets of 2^k quadrants 
+around that point (one for X1, one for X2) are set to 0.  The pro- 
+gram then starts at the top of the hierarchy and recusively scans  
+the bricks at the current level.  If the brick does not overlap the
+brick that contains the current target point, the count for that   
+brick is added into the total for the appropriate quadrant.  If    
+there are overlaps, the scan descends to the next lower level until
+either nonoverlapping bricks, empty bricks, or the lowest level is 
+reached.  At the lowest level, individual points must be examined  
+to determine the appropriate quadrant in which to count them.  The 
+quadrant counts for the two data sets can then be subtracted and   
+used to update the global MDKS.                                    
+                                                                   
+ 
+TIMING:
+-------
+
+   The following table shows the speedup obtained with with the
+MATLAB mdkstest script, comparing the average times for numbers of
+runs chosen in each case to consume 1000000 random data points,
+averaged across uniform, normal, and gamma distributions of the data
+and comparing this algorithm with the brute force algorithm, also
+programmed as a C mex file and applied to the same random data to
+give a fair comparison.  In the table, k is the dimension of the
+problem and N is the number of data points per run.
+
+   k     N = 200     1000     5000     25000
+  ---    -------     ----     ----     -----
+   2        1.86     3.64     8.88     16.80
+   3        1.07     1.85     2.89      4.63
+   4        1.02     1.31     1.52      2.29
+   5        0.94     1.01     1.19      1.28
+
+As might be expected, there is a greater advantage to using the
+package for large data sets but the advantage rapidly disappears
+for larger k, no doubt because the number of dimensions on which
+bricks will inevitably overlap increases with the dimensionality
+of the space.  It would probably be advantageous simply to use
+the provided brute-force routines for k > 5.
+
+
+REVISION HISTORY:
+-----------------
+
+Note:  Version numbers, e.g. "V6", refer to major algorithm
+developments.  Revision numbers, e.g. "Rev. 6", refer to check-in
+numbers assigned by the "subversion" version control software.
+
+Rev. 1:  V4, first version to pass all tests, including k = 1:4,
+single and double-sided statistic, float and double precision data,
+32- and 64-bit compilation.  Brick hierarchy only to depth 1.
+
+Rev. 2:  V5C, partial quadrant totals for nonoverlapping dimensions
+are stored for each brick pair to reduce number of comparisons when
+looping over points in the experimental data set.
+
+Rev. 3:  Added improved tests to catch cases where total size of
+all elements in the requested work area would exceed the address
+space of the system (32 or 64 bits).  Added mdksdivs function.
+
+Rev. 4:  Cleaner allocation of points to bricks, conditional debug
+outputs added, mdksallox MATLAB interface generates messages instead
+of just a return code for errors, added 'const' qualifier to arguments
+where appropriate.
+
+Rev. 5:  V6, program now has binary hierarchy of bricks instead
+of one-level brick structure.  First compilation of V6 that passes
+all tests.
+
+Rev. 6:  Minor efficiency improvements in the mdksdq code,
+revised default depth calculation to fit test results, revised
+comments and this "readme" to reflect current code version.
+
+
+REFERENCE:
+----------
+
+   G. Fasano & A. Franceschini (1987).  A multidimensional version
+of the Kolmogorov-Smirnov test.  Monthly Notices of the Royal
+Astronomical Society, 225:155-170.
+

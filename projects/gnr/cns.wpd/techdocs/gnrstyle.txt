@@ -1,0 +1,574 @@
+
+                 GNR STYLE GUIDE FOR C/C++ PROGRAMMING
+
+                              G. N. Reeke
+                        Revised, Sept. 2, 2018
+
+
+     The following guidelines are intended to provide a basis for a
+helpful but not overly restrictive level of stylistic uniformity in C
+or C++ source programs written for the Laboratory of Biological Model-
+ling.  The word "Required" in square brackets will indicate that a
+particular guideline must be followed.  Naturally, individual program-
+mers may wish to use their own favorite style in writing new code that
+is not part of an ongoing project; however, when maintaining existing
+code, the major consideration should be to preserve consistency of the
+existing style.  Suggestions for revision of this document are
+welcome.
+
+
+I. General Remarks
+
+     A. Introduction
+
+     Code written for research purposes is subject to frequent change,
+yet certain pieces of it push the available hardware to the limit and
+therefore must be fast and compact as well.  Code is frequently
+maintained by persons different from those who wrote it.  Code may be
+transferred to new machines that were unavailable at the time the code
+was written.  The programmer should be sensitive to the likely future
+status of a particular piece of code in order to see where it is
+appropriate to emphasize coding speed, running speed, portability,
+elegance, versatility, flexibility, etc.  In all cases, an effort
+should be made to include sufficient comments to permit a future
+programmer who is unfamiliar with the historical details to maintain
+the program.
+
+     B. Language
+
+     This document does not deal with MATLAB or scripting-language
+code, which is generally intended for rapid development by an indi-
+vidual scientist.  For code that is expected to have a significant
+lifetime and to be used by individuals who may not be known to the
+programmer, our general policy is to write code in ANSI standard C
+wherever possible.  C++ is used where needed to interface with par-
+ticular library packages (for example, fltk for graphics user inter-
+faces), or because of programmer preference.  Standard "make" files
+are used to control program compilation and linking.
+
+     C. Hardware, Compiler, and Operating-System Dependencies
+
+     Wherever possible, code that is to be used on multiple platforms
+should be maintained in generic source files.  Separate "make" file
+targets are used to compile these files for different platforms,
+placing the resulting binaries in appropriately named platform-
+specific subdirectories.  Machine or operating system dependencies are
+handled by conditional compilation controlled by symbols defined in
+the "make" file.  The header file "sysdef.h" (found in the directory
+/home/cdr/include) contains numerous definitions of such items as the
+maximum size of an int, the maximum length of a pathname, whether
+variables are stored "big-endian" or "little-endian", etc.  Examine
+this file and use the definitions there rather than inventing your own
+or using the ones contained in some compiler-supplied header files
+(which are not consistent) [Required].
+
+     sysdef.h contains definitions for all platforms used in the lab
+and new platforms are added as needed.  The particular choice is made
+by defining a compile-time symbol that specifies the platform (for
+example, "PCLINUX" for a PC running 32-bit Linux, "PCLUX64" for a PC
+running 64-bit Linux, etc.).  For convenience, each such platform
+symbol refers to a particular combination of hardware architecture,
+compiler, and operating system.  Separate symbols for these three
+components are defined in sysdef.h based on the supplied platform
+name.  Where appropriate, conditional compilation tests should be
+based on the architecture, compiler, or operating system name rather
+than the overall platform name.
+
+     In applications written by G.N.R., routines from the CRK library
+(developed from the remains of the earlier ROCKS crystallographic
+computing system) are extensively used for input parsing and output
+formatting.  Local extensions of printf, sprintf, fprintf have been
+written that extend the format codes available in the standard C
+library package to handle array output, fixed-point numbers with
+fraction bits, page numbering, and many others.  These calls can be
+freely intermixed with the CRK output calls (cryout, convrt, etc.)
+However, usage of scanf and its relatives will not correctly handle
+EXECUTE input with variable symbols and other valuable services
+provided by the CRK library, and it will add unnecessary bulk to the
+runtime code.  According, such usage should be confined to debugging.
+Use of CRK routines is optional for other, non-GNR, projects.
+
+     CRK graphics routines should be used when a need for cross-
+platform operation is anticipated and the graphics are simple and
+two-dimensional.  These routines provide a simple route to graphics
+metafile preparation for image storage.  In other situations, machine-
+specific graphics routines may be used where necessary for adequate
+performance.
+
+     D. Parallel versus Serial Versions
+
+     Older parallel programs were written for the NCUBE or T/NM plat-
+forms.  These have now been converted to work with MPI and many
+extensions are available "mpitools" library.  Any program that is
+written to operate in parallel should be maintained in such a way that
+it can be compiled as a serial program and run on any suitable
+platform.  This is accomplished by using the compile-time symbols PAR
+(controlling code that is present only in the parallel version), PAR0
+(controlling code that is present only on node 0 or the host in the
+parallel ver-sion) and PARn (controlling code that is present only on
+computational nodes in the parallel version).  The correct conditional
+compilation for code that is present in the serial and parallel host
+code is:
+
+          #ifndef PARn
+               ...
+          #endif
+
+and the conditional compilation for code that is present in the
+serial and parallel computational node code is:
+
+          #ifndef PAR0
+               ...
+          #endif
+
+     In a few instances, when PAR0 and PARn programs are very
+different, they may be contained in separate source files (see
+below).  In such cases, a separate serial version should also be
+maintained.
+
+     A tool called nxdr2 (written by G.N.R.) is available to scan
+C source code and generate tables to manage run-time conversions of
+data types when sending binary messages between unlike processors.
+These tables are used with the allocpxx and membcst routines in the
+mpitools library.  Documentation is available from G.N.R.
+
+     CRK parsing and formatting routines are never used on compu-
+tational nodes.  The program should provide means for passing user
+parameters and results to and from computational nodes via binary
+messages, so all input and output formatting is done on the host (PAR0
+node).  On computational nodes, a dbgmsg() function is provided to
+send a debug message to the host via the nio node I/O system.  Any
+routine that does not actually do I/O may be used to format debug
+messages.  The CRK library has a routine ssprintf() that handles
+integer and string formatting, and wbcdwtPn() can be used to format
+fixed-point numbers that are not integers.
+
+     E. 32-bit vs 64-bit Versions
+
+     Most new code should be designed to run on a machine with a 
+64-bit operating systems, but existing code is compatible with either
+32-bit or 64-bit systems.  This compatibility was handled as follows.
+We assume a memory model in which pointers are 32 bits in 32-bit
+systems and 64 bits in 64-bit systems.  Long integers may be either 32-
+bit or 64-bit depending on the compiler and therefore this variable
+type should be avoided.  sysdef.h typedefs si16, si32, and si64 as 16,
+32, and 64 bit signed integers, and ui16, ui32, and ui64 as 16, 32,
+and 64 bit unsigned integers, respectively.  It also typedefs smed and
+umed as "medium-sized" signed and unsigned integers that are 16 bits
+on 32 bit systems and 32 bits on 64-bit systems, as well as sbig and
+ubig that are 32 bits on 32-bit systems and 64 bits on 64-bit systems
+(usually, but not necessarily, the same as "long").
+ 
+These type should be used to assure that the length of fixed-point
+variables is predictable regardless of which compiler is used.  A
+number of arithmetic routines are provided in the CRK library to
+perform arithmetic on 64-bit fixed-point variables regardless of
+whether these are supported by the hardware and compiler or not
+(a struct of two 32-bit variables is used where 64-bit variables
+are not available).
+
+     Careful thought should be given to what is the the proper
+length for each program variable, and whether this length should
+be the same in 32-bit and 64-bit systems or larger in the latter.
+User documentation should carefully describe any restrictions on
+the computations that can be done depending on whether compilation
+is 32-bit or 64-bit.  As a general guide, the only difference
+should be that larger data sets can be accommodated in 64-bit
+systems because of the larger memory capacity and pointer size.
+
+
+II. Functions and Source Files
+
+     A. Functional Breakdown
+
+     Our general style is to avoid breaking a program down into
+numerous tiny functions (as taught in some computer-science courses).
+Separate functions should of course be defined for coding sequences
+that are invoked from multiple points in an application, although
+macros are preferred for very short sequences to avoid call overhead.
+On the other end of the scale, very large programs (e.g., entire
+applications) should be broken into separate source files when they
+become inconveniently large.  When this is done, some effort should be
+made to break the program at natural joints, such that the number of
+function calls at execution time is minimized.
+
+     Parameters may be passed to functions as calling arguments or
+via common (external) data structures.  In general, we avoid
+passing structures as arguments or results because of the overhead
+involved.  Pointers may be used for these purposes.  A useful rule
+of thumb is that explicit arguments are used for items that tend
+to change from one invocation of the function to another or that
+control its mode of operation; external data structures are used
+to pass information that is extensive or that tends to remain
+static over multiple calls.
+
+     B. File Names
+
+     Source files may be transferred among different operating
+systems.  File names should not be case-dependent as files are
+sometimes transported to and from Windows machines that do not
+respect file name case.  Avoid non-alphanumeric characters other
+than underscore, plus, or minus.  Never include a blank in a
+file name [Required].
+
+     Names of source files that relate to a particular application
+should begin with a two-or three-letter code that identifies the
+application.  Examples are:  d3 (Darwin III, a.k.a. CNS), env (the
+stimulated environment).  This rule need not be followed in the case
+of toolkit functions that are used across different applications, or
+if a particularly elegant name suggests itself for a particular
+function.
+
+     Pairs of files with names ending in 'z' and 'n' generally
+contain code for PARO and PARn parallel functions where the code
+is sufficiently different to justify separate source files.  The
+serial version of such a routine should have a similar name
+without the 'z' or 'n' suffix.
+
+     C. Function Names
+
+     The guidelines given above in regard to file names apply also to
+external function names.  G.N.R. prefers to keep all external func-
+tion names no longer than 8 characters so directory listings of source
+files remain compact.  Names of static functions (functions which are
+visible only within a single source file) need not observe the 8-
+character and no-case-sensitivity restrictions.  The "Pascal" style
+"UpperLowerCaseConcatenated" may thus be used to name static functions
+if desired.
+
+     There is a tendency to keep all function names within a
+single application the same length (usually 6 characters) so they
+look nice in memory maps and other documentation.  Avoid function
+names that are too generic, such as "open" or "next" or "finish".
+
+     D. Multiple Functions within a Source File
+
+     Keeping in mind that some linkers include all functions
+from a particular source file when it includes any one of them,
+functions which may need to be loaded independently should always
+be placed in their own source files.  If a function has "private"
+subroutines, those should generally be included in the same source
+file and should be declared static.  The static functions may be
+placed before or after the external function(s), but if after,
+prototypes must be declared at the top of the file.
+
+
+III.  Source File Formatting
+
+     A. Tabs and Blanks
+
+     Source file lines should not exceed 72 characters so lines do
+not wrap when viewed in a standard editing window (Required in code
+written for G.N.R.).  Lines should be divided after an operator where
+possible.  Text strings may be divided in ANSI C by closing quotes at
+the end of a line and reopening them after an indent at the start of
+the next line.  We use tabs in every third column (1,4,7, etc.).
+Blanks rather than explicit tabs are used for indenting in source
+files to facilitate working with a variety of editors.
+
+     Generally, blanks are used rather than tabs to set off material
+within a single C statement.  There are no required guidelines in
+regard to placement of blanks within a single C statement, except that
+a consistent style should be followed within any one file.  A recom-
+mended style is:  use blanks between arguments in a function call and
+between control elements in a "for" statement but not within single
+arguments or control elements.  Place a blank between a statement
+keyword ("if", "for", "while", "switch") and the following left
+parenthesis.  Place a blank before a semicolon that indicates a null
+"for" or "while" block.  In assignments, blanks are used surrounding
+low priority arithmetic operators (+,-,&,|) and not around high
+priority operators (*,/,%).  Shift operators may be treated either way
+because they are syntactically lower than they should be.
+
+     When a single statement is continued on multiple lines, the
+continuations should be indented.  The number of indents is a gray
+area, but generally if the statement does not govern a following inner
+block, a single indent is sufficient.  If the statement does govern a
+following inner block, the continuation should be indented two times
+to distinguish it from the following block, which is indented once.
+Multiple-line statements, such as complex function calls, may be
+indented in some manner that tends to group related arguments in
+rows or columns.
+
+     Cases of a switch statement may be indented at the same or one
+level to the right of the switch statement itself.  In either event,
+the code contained in each case block is indented one position to the
+right of the case statement that heads it.  The "case" keyword itself
+is sometimes placed at the left margin when the case blocks are long.
+
+     B. Braces
+
+     The general idea of G.N.R.'s style is to minimize the prominence
+of braces so the reader can focus on the code.  For those who would
+choose differently, kindly respect the integrity of existing format-
+ting in source files you work on.  Please note that G.N.R. strongly
+dislikes the standard convention of placing closing brackets to the
+left of the indentation of the material enclosed.
+
+     A left brace that opens a block of code should be placed at the
+end of the statement that introduces the block ("if", "while", "for",
+function declaration, etc.).  If it does not fit, it may be placed on
+the next line, indented the same way as any continuation statement.
+If the block is not introduced by any statement (usually to introduce
+a local variable declaration), the opening brace should start a new
+line and be indented at the same level as the surrounding outer code.
+The material in the block can follow the brace on the same and
+following lines, indented to the next inner level.
+
+     A right brace that closes a block of code should be placed on a
+line of its own, indented at the same level as the code it encloses.
+(This rule applies equally to the right brace that closes a function.)
+It is encouraged to provide a comment following such a brace to
+indicate the nature of the block being closed, e.g.  "/* End while */"
+or better yet, "/* End loop over input tokens */", etc.  If a block is
+very short (one or two lines), the closing brace may be placed at the
+end of the last line of the block.  Sometimes the comma operator can
+be used with a few short assignments to eliminate the need for braces
+altogether.
+
+     C. Comments
+
+     Existing programs in the Lab have been commented in a number
+of different styles.  When maintaining a program, be sensitive to
+the style that already exists.  The following guidelines may be
+helpful in writing new programs.
+
+     The first line of every new source file should be the following
+copyright notice [Required]:
+
+/* (c) Copyright 20xx, The Rockefeller University *nnnnn* */
+
+The five-digit number between two asterisks controls placement of
+licensing comments when programs are reformatted (by a utility written
+by G.N.R.) for public access on the internet.  Please see G.N.R. for
+instructions on how to code this number.
+                    
+     Every program must have at least a comment that describes
+what it does, who wrote it, and the date [Required].  Descriptions of
+arguments, return values, error conditions, and revision history are
+strongly encouraged.  Generally, highest level comments (those that
+describe an entire function or the contents of an entire source file)
+are contained in boxes delineated by asterisks in the following style:
+
+/***********************************************************************
+*                                                                      *
+*                           Centered Stuff                             *
+*                                                                      *
+***********************************************************************/
+(The right-hand asterisks are in column 72.  A 'crisp' macro is
+available to create these boxes.)
+
+     Following or within the boxed comment at the top of a file
+should be the revision history, in the following format:
+
+* Rnn, 07/27/91, FML - What was done.
+
+("Rnn" should be replaced by the appropriate revision number for
+programs under version control with the 'subversion' utility, other-
+wise with an ascending version number and letter, or by "Rev" if a
+version number was not assigned.  The month and day should be expanded
+with leading zeros if necessary so all the dates in a series of
+revisions will line up vertically.  Month, day, year order is used.
+"FML" stands for the initials (first, middle, last) of the programmer
+who made the change.)
+
+     If a file contains multiple functions, each function is
+headed by a comment box with equals signs instead of asterisks
+along the top and bottom:
+
+/*=====================================================================*
+*                              Funcname                                *
+*   What this function does                                            *
+*=====================================================================*/
+
+     Second-level comments (those that describe a major section
+of a function) are contained in similar boxes with minus signs
+along the top and bottom:
+
+/*---------------------------------------------------------------------*
+*                                                                      *
+*                         Initialization Code                          *
+*                                                                      *
+*---------------------------------------------------------------------*/
+
+     Third-level comments are set to the left margin and set off
+from the code with blank lines above and below.  Fourth-level
+comments are similar, but are indented with the initial "/*" at
+the same level as the code below to which the comment applies.
+Multiline comments should generally have a "*" at the start of
+each line to delineate the comments clearly from the code, e.g.:
+
+/* This is a comment that would apply to an entire following block
+*  of code.  Note that each line begins with an asterisk so the
+*  comment will not be confused with code.  End like this: */
+
+     Another possibility is the following:
+
+/*
+** This is a comment in an alternative style that gives more
+** emphasis to the starting and ending delimiters.
+*/
+
+     The lowest level of comment applies to a single line and is
+placed following the code on the line if it will fit, otherwise on
+the line above, without an intervening blank line.  Comments
+should be aligned vertically on a convenient tab stop (column 31
+if no other seems better).  In some cases, right-alignment in col.
+72 is useful.  There should usually be one blank between the "/*"
+and the first word of the comment.  The initial letter of the
+first word should be in upper case unless it is the name of a
+variable.  There should also be a single space between the last
+word of the comment and the closing "*/".  Use a period if the
+comment is a full sentence.  Avoid semicolons in comments.
+
+Example:
+
+      x = a + b;              /* Add alpha and beta terms */
+
+It is useful to someone maintaining your code to be clear when
+an assignment is contained within a "if" statement.  This may
+be done by enclosing the assignment in inner parentheses or
+by a comment:
+
+     if ((a = b)) {  ... }
+     if (a = b)   /* Assignment intended */
+
+IV.  "goto" Statements
+
+     We have no "religious" prohibition against goto statements.
+They are generally most useful to provide exits from nested loop
+structures, or to avoid creating local state variables solely to
+control what happens upon exit from some loop.  They should gene-
+rally be avoided elsewhere.  Never branch into the range of a looping
+structure.  Labels that are targets of goto's should generally be
+names starting with an uppercase letter and aligned at the left
+margin.
+
+
+V.  Variable Names and Declarations
+
+     A. Names
+
+     As an outgrowth of FORTRAN practice, we often use initial
+letters to indicate the type of a variable.  Some of the more
+common conventions are:
+
+          d         double precision floating point value
+          f         floating point value, file name
+          i,j       local counters or subscripts
+          k         "kind of" -- flags or switch controls
+          l         length of something or local copy of something
+          m         maximum or minimum of something
+          n         number of things of some kind
+          o         offset to something in a block
+          p         pointer, pp=pointer to a pointer, etc.
+          q         answer to a query or a pointer
+          t         temporary variable
+          u         union
+          x,y,z     geometrical coordinates
+
+     There is no objection to using more complex naming conventions
+to indicate type, along the lines of the popular "Hungarian" system.
+Try to use short names for variable that are frequently referenced or
+local and longer names for other variable.  Never use common English
+words (e.g. "it") as variable names, as these will always be found in
+comments when using "grep".  If the name of a variable is not obvious,
+explain it in a comment where the variable is declared.
+
+     Avoid using duplicate names in different structures, because
+it can be confusing, even though it is legal in C.
+
+     Upper case or PASCAL-style names should be used for prepro-
+cessor variables.
+
+     B. Variable Types
+
+     CNS and the CRK library generally avoid floating point calcu-
+lations because these were slow on older machines and precision was
+incompatible between IBM and IEEE-standard machines.  These consider-
+ations perhaps no longer apply, but much house code will be found to
+use fixed-point arithmetic exclusively.  If you choose to work with
+floating-point arithmetic, please consider carefully which variables
+need to be "double" and for which "float" will suffice.
+
+     Memory is precious on older machines, and on newer machines users
+are always interested in pushing memory capacity to the limit--try to
+use the shortest type that will do the job.  While we have largely
+left the era when type int could be 32 bits on some processors and 16
+bits on others, much of our older code still makes this assumption.
+Generally use int when it is known that 32 bits will suffice, and
+where one wants to assume that the compiler will select the type that
+gives most rapid execution.  Otherwise, type all fixed-point variables
+explicitly as described above to force 16- (si16 or ui16), 32- (si32
+or ui32), or 64-bit (si64 or ui64) length.  This is essential for vari-
+ables that might be passed between processors in a parallel computing
+environment, as it may be disastrous to copy a 64-bit long from one
+processor to what turns out to be a 32-bit long on another processor.
+Some arithmetic may be faster with unsigned variables where applicable.
+When a signed or unsigned character type is explicitly required, use
+"schr" or "byte", respectively--these names are typedef'd in sysdef.h.
+
+     C. Memory Cache and Variable Arrangement
+
+     Modern machines almost always include one or more levels of cache
+memory.  This implies that when a variable in memory is accessed, a
+"line" of neighboring memory locations is brought into the cache,
+where those items can then be accessed more quickly--at least until
+the cache is replaced with newer data.
+
+     Therefore, when designing data layouts for a program, it is
+important always to try to place data that will be accessed at
+around the same time (same place in the code) into neighboring
+memory locations.  Usually, this can be accomplished by placing
+related variables in a structure, then making an array of those
+structures to hold multiple instances of the variables.  It will
+almost always be less efficient to make a separate array for each
+variable.  It is also easier to allocate dynamic memory for an
+array of structures rather than for separate arrays of variables
+using calloc() (CRK library callocv()) or similar methods.
+
+     D. Constants
+
+     A good rule to follow is that no code should ever have an
+explicit numeric constant other than '0' or '1'.  Other constants
+should be given descriptive names and defined in a header file
+(if used in more than one source file) or at the top of the
+source file.  Depending on the situation, these may be
+preprocessor constants ("#define" variables), const declarations,
+or enums.  The reason for this is to make it easier to change
+the program later.  You don't want to have to grep for every
+appearance of the number '3' and then figure out which ones
+you need to change.  And for variables like 'pi', it is important
+that the exact same numeric value be used everywhere in the
+program.
+    
+     A number of constants giving the sizes and maximum values
+of various data types are defined in sysdef.h.  Use these where
+appropriate.
+
+     E. Order of Declarations
+
+     Within a structure, always declare variables in order of
+decreasing size to minimize wasted "holes" and problems due to
+different alignment requirements on different processors.  Generally
+put pointers and structures first, followed by ordinary variables.  If
+a structure is used to construct a linked list, put the chain pointer
+first (this is required when using the CRK 'sort' routine to sort
+items in a linked list).
+
+     Elsewhere, it is encouraged to follow this same order.  It is
+preferred to declare items of the same type in alphabetical order,
+which makes them easier to find when scanning the code.  A blank line
+may be placed between related declarations to set them off.
+
+     When writing code that will be scanned by nxdr2, any sort of
+legal C declaration is allowed, except that a typedef should not
+contain a struct--instead, first declare the struct with a type
+name, then use that name in the typedef, like this:
+
+     struct somename {
+        si32 var1,var2
+        ...
+        };
+     typedef struct somename typename;
+

@@ -1,0 +1,191 @@
+# (c) Copyright 1999-2016, The Rockefeller University *11224* 
+# $Id: makmac64 79 2018-08-21 19:26:36Z  $
+########################################################################
+#          MAKE file for Cns (DARWIN III) running on Mac OS            #
+#                                                                      #
+# This makefile makes the following target:                            #
+#                  Cns  The version with BBD options                   #
+#                                                                      #
+# The following options are always selected by this makefile:          #
+# no timers.                                                           #
+#                                                                      #
+# V1A, 08/08/99, GNR - Derived from IRIX makefile                      #
+# Rev, 03/09/16, GNR - Make Mac OS version from maklxBBD               #
+# ==>, 04/15/16, GNR - Last mod before committing to svn repository    #
+########################################################################
+
+.DEFAULT_GOAL := Cns
+
+# Common pathnames
+I        := $(HOME)/include
+L        := $(HOME)/lib/macos64
+
+# Paths for object files
+DIR := macos64
+
+# Object files to build standard version of CNS
+CNSOBJ := \
+darwin3 \
+d3ajw  \
+d3allo \
+d3autsc \
+d3bgis \
+d3bxvp \
+d3cchk \
+d3chng \
+d3clst \
+d3cij  \
+d3cnmd \
+d3cpli \
+d3cond \
+d3ctbl \
+d3decay \
+d3dflt \
+d3dij  \
+d3dprt \
+d3echo \
+d3elij \
+d3epsi \
+d3evtm \
+d3exit \
+d3fchk \
+d3g1g3 \
+d3g1imin \
+d3g2cell \
+d3g2cond \
+d3g2conn \
+d3g3prob \
+d3g3rset \
+d3g3timr \
+d3genr \
+d3gfcl \
+d3gfhd \
+d3gfrl \
+d3gfsh \
+d3gfsv \
+d3go   \
+d3grex \
+d3grp0 \
+d3grp1 \
+d3grp2 \
+d3grp3 \
+d3gvin \
+d3i3vr \
+d3ijpi \
+d3ijpl \
+d3imgt \
+d3inhb \
+d3inhi \
+d3kij  \
+d3lani \
+d3lij  \
+d3lime \
+d3lkni \
+d3lplt \
+d3mark \
+d3master \
+d3mchk \
+d3mset \
+d3news \
+d3ngph \
+d3nset \
+d3nxt64 \
+d3oafs \
+d3oflw \
+d3parm \
+d3perr \
+d3phase \
+d3plot \
+d3regenr \
+d3resetn \
+d3resetz \
+d3rlnm \
+d3rplt \
+d3rpsi \
+d3rstr \
+d3salf \
+d3save \
+d3schk \
+d3sfhm \
+d3sj   \
+d3snsa \
+d3start \
+d3stat \
+d3tchk \
+d3term \
+d3tsvp \
+d3uprg \
+d3valu \
+d3vchk \
+d3vitp \
+d3vjnt \
+d3vplt \
+d3vtch \
+d3woff \
+d3zsta \
+findln \
+findmdlt \
+findpcf \
+findvc \
+getthr \
+rfdmtx \
+stubs  \
+tvplot
+
+# Search path additions for "include" files
+INC := $I
+
+# NSI home-grown libraries (note: order is NOT arbitrary)
+NSILIBS := \
+$(L)/libbbds.a \
+$(L)/libenv.a \
+$(L)/libserplot.a \
+$(L)/libsertools.a \
+$(L)/libcrk.a
+
+# Compile-time and target-dependent definitions
+CC := gcc
+CFLAGS := -g -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS    := MACOS64 _ISOC99_SOURCE BBDS SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+.SUFFIXES:
+.SUFFIXES: .o .c .s .d
+
+.PHONY:	all cdate
+all:	cdate Cns
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+#Compile for Linux or Mac
+$(DIR)/%.o:	%.c $(DIR)/%.d d3nxd64.h makmac64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) -c $< ; \
+	mv $*.o $(DIR)
+	
+$(DIR)/%.o:	%.s makmac64
+	as $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) $*.s; \
+	mv $*.o $(DIR)
+
+# Put it all together
+
+# Compile cdate every time the make file is run
+cdate:
+	$(CC) $(CFLAGS) -DMACOS64 $(INC:%=-I%) -o $(DIR)/compdate.o -c compdate.c
+
+Cns:	$(CNSOBJ:%=$(DIR)/%.o) $(NSILIBS)
+	echo $(DIR); \
+	$(CC) $(CFLAGS) $(CNSOBJ:%=$(DIR)/%.o) $(DIR)/compdate.o $(NSILIBS) \
+   	-lm -ldl -o $@
+	mv $@ $(HOME)/bin
+	chmod a+x ~/bin/$@
+
+clean:
+	rm -f $(DIR)/*.o
+	rm -f $(HOME)/bin/Cns
+
+-include $(CNSOBJ:%=$(DIR)/%.d)

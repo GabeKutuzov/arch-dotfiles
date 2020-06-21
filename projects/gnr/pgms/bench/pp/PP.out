@@ -1,0 +1,65 @@
+Number of celltypes = 4, number of iterations = 10, seed = 1009
+   Cell type 1
+      Ncells = 300, nconntypes = 4, delta = 0.100000
+      Connection type 1
+         Nconns = 400, source = 1, rule = 0, scale = 0.200000
+      Connection type 2
+         Nconns = 100, source = 2, rule = 1, scale = 0.300000
+      Connection type 3
+         Nconns = 40, source = 3, rule = 0, scale = 0.250000
+      Connection type 4
+         Nconns = 20, source = 4, rule = 1, scale = 0.180000
+   Cell type 2
+      Ncells = 120, nconntypes = 4, delta = 0.200000
+      Connection type 1
+         Nconns = 200, source = 1, rule = 1, scale = 0.200000
+      Connection type 2
+         Nconns = 100, source = 2, rule = 0, scale = 0.250000
+      Connection type 3
+         Nconns = 40, source = 3, rule = 1, scale = 0.180000
+      Connection type 4
+         Nconns = 20, source = 4, rule = 0, scale = 0.250000
+   Cell type 3
+      Ncells = 50, nconntypes = 4, delta = 0.100000
+      Connection type 1
+         Nconns = 400, source = 1, rule = 1, scale = 0.200000
+      Connection type 2
+         Nconns = 150, source = 2, rule = 0, scale = 0.250000
+      Connection type 3
+         Nconns = 40, source = 3, rule = 0, scale = 0.330000
+      Connection type 4
+         Nconns = 24, source = 4, rule = 1, scale = 0.250000
+   Cell type 4
+      Ncells = 30, nconntypes = 4, delta = 0.200000
+      Connection type 1
+         Nconns = 120, source = 1, rule = 1, scale = 0.100000
+      Connection type 2
+         Nconns = 10, source = 2, rule = 0, scale = 0.200000
+      Connection type 3
+         Nconns = 40, source = 3, rule = 1, scale = 0.250000
+      Connection type 4
+         Nconns = 20, source = 4, rule = 0, scale = 0.180000
+
+Benchmark time is 25.879973
+ Celltype 1 
+      Conntype   1:     6725   22475   20642   70158
+      Conntype   2:     1659    5641    5074   17626
+      Conntype   3:      729    2191    2111    6969
+      Conntype   4:      216    1244     542    3998
+ Celltype 2 
+      Conntype   1:     1171    4229    4039   14561
+      Conntype   2:      610    2090    2041    7259
+      Conntype   3:      251     829     913    2807
+      Conntype   4:       71     469     233    1627
+ Celltype 3 
+      Conntype   1:     1036    3764    3250   11950
+      Conntype   2:      400    1400    1194    4506
+      Conntype   3:      132     348     391    1129
+      Conntype   4:       40     248     116     796
+ Celltype 4 
+      Conntype   1:      138     462     628    2372
+      Conntype   2:        9      41      40     210
+      Conntype   3:       56     144     251     749
+      Conntype   4:        7      93      79     421
+
+

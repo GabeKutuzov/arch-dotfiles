@@ -1,0 +1,5 @@
+Include files for acc are in /usr/lang/SC1.0/ansi_include
+
+Results of sizetest pgm:
+On 32-bit PC Linux: int = 4, long = 4, long long = 8, size_t = 4.
+On 64-bit PC Linux: int = 4, long = 8, long long = 8, size_t = 8.

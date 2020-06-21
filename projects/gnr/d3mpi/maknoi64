@@ -1,0 +1,179 @@
+# (c) Copyright 2009, The Rockefeller University *11224* 
+# $Id: maknoi64 73 2017-04-26 20:36:40Z  $
+########################################################################
+#         MAKE file for CNS (DARWIN III) running on PC Linux           #
+#                                                                      #
+# This makefile makes the following target:                            #
+#    CnsNoi64  Serial CNS without HAS_I64 arithmentic                  #
+#                                                                      #
+# The following options are always selected by this makefile:          #
+# no BBDS, no timers.                                                  #
+#                                                                      #
+# After multiple attempts to get one makefile to make both Cns and     #
+# BBDCns targets, that approach was abandoned.  Use make -f maklxBBD   #
+# to make the BBD version of CNS in a Linux system.                    #
+#                                                                      #
+# V1A, 01/01/09, GNR - New makefile derived from maklinux makefile     #
+# ==>, 01/01/09, GNR - Last mod before committing to svn repository    #
+########################################################################
+
+.DEFAULT_GOAL := CnsNoi64
+
+# Common pathnames
+I        := $(HOME)/include
+L        := $(HOME)/lib/noi64
+
+# Path for object files
+DIR := noi64
+
+# Object files to build standard version of CNS
+CNSOBJ := \
+darwin3 \
+d3ajw  \
+d3allo \
+d3autsc \
+d3bgis \
+d3bxvp \
+d3cchk \
+d3chng \
+d3clst \
+d3cij  \
+d3cnmd \
+d3cpli \
+d3cond \
+d3ctbl \
+d3decay \
+d3dflt \
+d3dij  \
+d3dprt \
+d3echo \
+d3elij \
+d3epsi \
+d3evtm \
+d3exit \
+d3fchk \
+d3g1g3 \
+d3g1imin \
+d3g2cell \
+d3g2cond \
+d3g2conn \
+d3g3prob \
+d3g3rset \
+d3g3timr \
+d3genr \
+d3gfcl \
+d3gfhd \
+d3gfrl \
+d3gfsh \
+d3gfsv \
+d3go   \
+d3grex \
+d3grp0 \
+d3grp1 \
+d3grp2 \
+d3grp3 \
+d3gvin \
+d3i3vr \
+d3ijpi \
+d3ijpl \
+d3imgt \
+d3inhb \
+d3inhi \
+d3kij  \
+d3lani \
+d3lij  \
+d3lkni \
+d3lplt \
+d3mark \
+d3master \
+d3mchk \
+d3mset \
+d3news \
+d3ngph \
+d3nset \
+d3nxtab \
+d3oafs \
+d3parm \
+d3perr \
+d3phase \
+d3plot \
+d3regenr \
+d3resetn \
+d3resetz \
+d3rlnm \
+d3rplt \
+d3rpsi \
+d3rstr \
+d3salf \
+d3save \
+d3schk \
+d3sfhm \
+d3sj   \
+d3snsa \
+d3start \
+d3stat \
+d3tchk \
+d3term \
+d3tsvp \
+d3uprg \
+d3valu \
+d3vchk \
+d3vitp \
+d3vjnt \
+d3vplt \
+d3vtch \
+d3woff \
+d3zsta \
+findln \
+findmdlt \
+findpcf \
+findvc \
+getthr \
+rfdmtx \
+stubs  \
+tvplot
+
+# Search path additions for "include" files
+INC := $I
+
+# NSI home-grown libraries (note: order is NOT arbitrary)
+NSILIBS := \
+$(L)/libenv.a \
+$(L)/libserplot.a \
+$(L)/libsertools.a \
+$(L)/libcrk.a
+
+# Compile-time and target-dependent definitions
+CC := gcc
+CFLAGS := -g -Wunused
+SVNV := $(shell gnrversn)
+DEFS := PCLINUX _ISOC99_SOURCE NO_I64 SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+.SUFFIXES:
+.SUFFIXES: .o .c .s .d
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d maknoi64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) -c $< ; \
+	mv $*.o $(DIR)
+	
+$(DIR)/%.o:	%.s maknoi64
+	as $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) $*.s; \
+	mv $*.o $(DIR)
+
+# Put it all together
+CnsNoi64:	$(CNSOBJ:%=$(DIR)/%.o) $(NSILIBS)
+	echo $(DIR); \
+	$(CC) $(CFLAGS) $(CNSOBJ:%=$(DIR)/%.o) $(NSILIBS) -lm -ldl -o $@; \
+	mv $@ $(HOME)/bin
+
+clean:
+	rm -f $(DIR)/*.o
+	rm $(HOME)/bin/CnsNoi64
+
+-include $(CNSOBJ:%=$(DIR)/%.d)

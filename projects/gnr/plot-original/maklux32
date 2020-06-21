@@ -1,0 +1,155 @@
+# (c) Copyright 2002, The Rockefeller University *112254* 
+# $Id: maklux32 20 2011-12-24 02:59:03Z  $
+########################################################################
+#         Make file for ROCKS metafile plotting library, V2A           #
+#                        Version for PC Linux                          #
+#                                                                      #
+# Rev, 08/18/02, GNR - Update list of object files in library          #
+########################################################################
+
+# Define name of library to be created
+LIBNM = libserplotV2A
+
+# Define directory where plot library is stored
+RL     = $(HOME)/lib/pclinux
+
+# Define directory where include files are stored
+INC   = $(HOME)/include
+
+# Define directory where object files are stored
+DIR = pclinux
+
+# Object files to be included in PLOT library
+OBJFILES = \
+mfalign \
+mfbchk  \
+mfbitpk \
+mfckerr \
+mfflush \
+mfhead  \
+mfstate \
+mfsynch \
+newpltw \
+newwin  \
+a2mf    \
+cs2mf   \
+g2mf    \
+h2mf    \
+k2mf    \
+r2mf    \
+s2mf    \
+w2mf    \
+x2mf    \
+xp2mf   \
+y2mf    \
+yp2mf
+
+#arc \
+#arc2 \
+#arrow \
+#axlin \
+#axlog \
+#axpol \
+#bitmap \
+#bitmaps \
+#chgwin \
+#circle \
+#clswin \
+#color \
+#ctscol \
+#ctsyn \
+#ellips \
+#endplt \
+#factor \
+#finplt \
+#finwin \
+#font \
+#frame \
+#frmdbm \
+#frmdef \
+#frmdel \
+#frminq \
+#frmplt \
+#gmode \
+#gobjid \
+#gscale \
+#line \
+#mfhead \
+#mfprtf \
+#newplt \
+#nombc \
+#nomber \
+#numbc \
+#number \
+#pencol \
+#penset \
+#pentyp \
+#plot \
+#plotvers \
+#polygn \
+#polyln \
+#rect \
+#retrace \
+#square \
+#simbc \
+#simbol \
+#symbc \
+#symbol \
+#where
+
+# Object files compiled only on host or serial nodes
+
+MF0FILES = \
+mfclose \
+mfcreate \
+mfstart \
+rkgifin \
+rkginit \
+setmf \
+setmovie
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+FILES := $(OBJFILES) $(MF0FILES)
+CC := gcc
+CFLAGS := -m32 -g -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := PCLUX64 _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Targets
+.PHONY : all depend
+all:		$(RL)/$(LIBNM).a
+depend:	$(FILES:%=$(DIR)/%.d)
+
+# Library files to be included with test program
+LIBS = $(RL)/$(LIBNM).a $(RL)/libsertools.a $(RL)/libcrk.a
+rkgtest:	$(DIR)/rkgtest.o $(LIBS)
+	pushd $(DIR); \
+	$(CC) $(CFLAGS) rkgtest.o $(LIBS) -lm -o $@; \
+	mv rkgtest $(HOME)/bin/$(DIR)
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+$(DIR)/%.o: %.c $(DIR)/%.d maklux32
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+$(DIR)/%.o: %.s maklux32
+	as $(CFLAGS) -I$(INC) $*.s
+	mv $*.o $(DIR)
+
+$(RL)/$(LIBNM).a: $(FILES:%=$(DIR)/%.o)
+	ar r $(LIBNM).a $(FILES:%=$(DIR)/%.o)
+	ranlib $(LIBNM).a
+	mv $(LIBNM).a $(RL)
+
+clean:
+	rm -f $(DIR)/*.o $(RL)/$(LIBNM).a
+
+-include $(FILES:%=$(DIR)/%.d)

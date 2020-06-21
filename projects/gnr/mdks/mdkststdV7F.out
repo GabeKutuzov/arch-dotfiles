@@ -1,0 +1,675 @@
+mdkststd
+
+For k = 2, n = 320, uniform distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 1.698853, sigma MDKS1s = 0.301814, time = 0.001401
+   Old brick method mean = 1.698853, sigma = 0.301814, error = 0.000000, time = 0.001482
+-->Depth = 1
+   Brick method mean MDKS1s = 1.698853, sigma MDKS1s = 0.301814, time = 0.002482
+   Old brick method mean = 1.698853, sigma = 0.301814, error = 0.000000, time = 0.002580
+-->Depth = 3
+   Brick method mean MDKS1s = 1.698853, sigma MDKS1s = 0.301814, time = 0.001012
+   Old brick method mean = 1.698853, sigma = 0.301814, error = 0.000000, time = 0.001166
+-->Depth = 4
+   Brick method mean MDKS1s = 1.698853, sigma MDKS1s = 0.301814, time = 0.001086
+   Old brick method mean = 1.698853, sigma = 0.301814, error = 0.000000, time = 0.001384
+
+For k = 2, n = 320, unlike distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 2.354021, sigma MDKS1s = 0.405914, time = 0.001396
+   Old brick method mean = 2.354021, sigma = 0.405914, error = 0.000000, time = 0.001478
+-->Depth = 1
+   Brick method mean MDKS1s = 2.352903, sigma MDKS1s = 0.405463, time = 0.002492
+   Old brick method mean = 2.352903, sigma = 0.405463, error = 0.000000, time = 0.002592
+-->Depth = 3
+   Brick method mean MDKS1s = 2.354580, sigma MDKS1s = 0.406643, time = 0.001013
+   Old brick method mean = 2.354580, sigma = 0.406643, error = 0.000000, time = 0.001172
+-->Depth = 4
+   Brick method mean MDKS1s = 2.356816, sigma MDKS1s = 0.407220, time = 0.001089
+   Old brick method mean = 2.356816, sigma = 0.407220, error = 0.000000, time = 0.001381
+
+For k = 2, n = 1000, uniform distribution
+-->Depth = 3
+   Brick method mean MDKS1s = 1.753483, sigma MDKS1s = 0.381580, time = 0.007430
+   Old brick method mean = 1.753483, sigma = 0.381580, error = 0.000000, time = 0.008079
+-->Depth = 2
+   Brick method mean MDKS1s = 1.753483, sigma MDKS1s = 0.381580, time = 0.012979
+   Old brick method mean = 1.753483, sigma = 0.381580, error = 0.000000, time = 0.013344
+-->Depth = 4
+   Brick method mean MDKS1s = 1.753483, sigma MDKS1s = 0.381580, time = 0.005753
+   Old brick method mean = 1.753483, sigma = 0.381580, error = 0.000000, time = 0.006683
+-->Depth = 5
+   Brick method mean MDKS1s = 1.753483, sigma MDKS1s = 0.381580, time = 0.006228
+   Old brick method mean = 1.753483, sigma = 0.381580, error = 0.000000, time = 0.008071
+
+For k = 2, n = 1000, unlike distribution
+-->Depth = 3
+   Brick method mean MDKS1s = 3.366245, sigma MDKS1s = 0.414689, time = 0.007451
+   Old brick method mean = 3.366245, sigma = 0.414689, error = 0.000000, time = 0.008081
+-->Depth = 2
+   Brick method mean MDKS1s = 3.357074, sigma MDKS1s = 0.414454, time = 0.013029
+   Old brick method mean = 3.357074, sigma = 0.414454, error = 0.000000, time = 0.013403
+-->Depth = 4
+   Brick method mean MDKS1s = 3.368142, sigma MDKS1s = 0.415763, time = 0.005770
+   Old brick method mean = 3.368142, sigma = 0.415763, error = 0.000000, time = 0.006707
+-->Depth = 5
+   Brick method mean MDKS1s = 3.368142, sigma MDKS1s = 0.415763, time = 0.006243
+   Old brick method mean = 3.368142, sigma = 0.415763, error = 0.000000, time = 0.008077
+
+For k = 2, n = 3200, uniform distribution
+-->Depth = 4
+   Brick method mean MDKS1s = 1.811254, sigma MDKS1s = 0.349760, time = 0.043253
+   Old brick method mean = 1.811254, sigma = 0.349760, error = 0.000000, time = 0.045469
+-->Depth = 3
+   Brick method mean MDKS1s = 1.811254, sigma MDKS1s = 0.349760, time = 0.071637
+   Old brick method mean = 1.811254, sigma = 0.349760, error = 0.000000, time = 0.075339
+-->Depth = 5
+   Brick method mean MDKS1s = 1.811254, sigma MDKS1s = 0.349760, time = 0.034745
+   Old brick method mean = 1.811254, sigma = 0.349760, error = 0.000000, time = 0.041617
+-->Depth = 6
+   Brick method mean MDKS1s = 1.811254, sigma MDKS1s = 0.349760, time = 0.038624
+   Old brick method mean = 1.811254, sigma = 0.349760, error = 0.000000, time = 0.049636
+
+For k = 2, n = 3200, unlike distribution
+-->Depth = 4
+   Brick method mean MDKS1s = 5.148975, sigma MDKS1s = 0.399486, time = 0.043329
+   Old brick method mean = 5.148975, sigma = 0.399486, error = 0.000000, time = 0.045524
+-->Depth = 3
+   Brick method mean MDKS1s = 5.142964, sigma MDKS1s = 0.402276, time = 0.071431
+   Old brick method mean = 5.142964, sigma = 0.402276, error = 0.000000, time = 0.075464
+-->Depth = 5
+   Brick method mean MDKS1s = 5.149328, sigma MDKS1s = 0.399252, time = 0.034784
+   Old brick method mean = 5.149328, sigma = 0.399252, error = 0.000000, time = 0.041649
+-->Depth = 6
+   Brick method mean MDKS1s = 5.149328, sigma MDKS1s = 0.399252, time = 0.038503
+   Old brick method mean = 5.149328, sigma = 0.399252, error = 0.000000, time = 0.049565
+
+For k = 2, n = 10000, uniform distribution
+-->Depth = 5
+   Brick method mean MDKS1s = 1.763000, sigma MDKS1s = 0.330647, time = 0.273775
+   Old brick method mean = 1.763000, sigma = 0.330647, error = 0.000000, time = 0.288103
+-->Depth = 4
+   Brick method mean MDKS1s = 1.763000, sigma MDKS1s = 0.330647, time = 0.451292
+   Old brick method mean = 1.763000, sigma = 0.330647, error = 0.000000, time = 0.457762
+-->Depth = 6
+   Brick method mean MDKS1s = 1.763000, sigma MDKS1s = 0.330647, time = 0.225126
+   Old brick method mean = 1.763000, sigma = 0.330647, error = 0.000000, time = 0.263104
+-->Depth = 7
+   Brick method mean MDKS1s = 1.763000, sigma MDKS1s = 0.330647, time = 0.234828
+   Old brick method mean = 1.763000, sigma = 0.330647, error = 0.000000, time = 0.306803
+
+For k = 2, n = 10000, unlike distribution
+-->Depth = 5
+   Brick method mean MDKS1s = 8.244200, sigma MDKS1s = 0.524086, time = 0.272026
+   Old brick method mean = 8.244200, sigma = 0.524086, error = 0.000000, time = 0.286048
+-->Depth = 4
+   Brick method mean MDKS1s = 8.243600, sigma MDKS1s = 0.523979, time = 0.447328
+   Old brick method mean = 8.243600, sigma = 0.523979, error = 0.000000, time = 0.454568
+-->Depth = 6
+   Brick method mean MDKS1s = 8.244200, sigma MDKS1s = 0.524086, time = 0.224492
+   Old brick method mean = 8.244200, sigma = 0.524086, error = 0.000000, time = 0.261989
+-->Depth = 7
+   Brick method mean MDKS1s = 8.244200, sigma MDKS1s = 0.524086, time = 0.234101
+   Old brick method mean = 8.244200, sigma = 0.524086, error = 0.000000, time = 0.304429
+
+For k = 2, n = 32000, uniform distribution
+-->Depth = 6
+   Brick method mean MDKS1s = 2.082152, sigma MDKS1s = 0.407068, time = 1.604196
+   Old brick method mean = 2.082152, sigma = 0.407068, error = 0.000000, time = 1.724629
+-->Depth = 5
+   Brick method mean MDKS1s = 2.082152, sigma MDKS1s = 0.407068, time = 2.610261
+   Old brick method mean = 2.082152, sigma = 0.407068, error = 0.000000, time = 2.607652
+-->Depth = 7
+   Brick method mean MDKS1s = 2.082152, sigma MDKS1s = 0.407068, time = 1.347814
+   Old brick method mean = 2.082152, sigma = 0.407068, error = 0.000000, time = 1.631495
+-->Depth = 8
+   Brick method mean MDKS1s = 2.082152, sigma MDKS1s = 0.407068, time = 1.463291
+   Old brick method mean = 2.082152, sigma = 0.407068, error = 0.000000, time = 1.910461
+
+For k = 2, n = 32000, unlike distribution
+-->Depth = 6
+   Brick method mean MDKS1s = 14.265368, sigma MDKS1s = 0.452764, time = 1.600026
+   Old brick method mean = 14.265368, sigma = 0.452764, error = 0.000000, time = 1.719920
+-->Depth = 5
+   Brick method mean MDKS1s = 14.265368, sigma MDKS1s = 0.452764, time = 2.604414
+   Old brick method mean = 14.265368, sigma = 0.452764, error = 0.000000, time = 2.603059
+-->Depth = 7
+   Brick method mean MDKS1s = 14.265368, sigma MDKS1s = 0.452764, time = 1.340994
+   Old brick method mean = 14.265368, sigma = 0.452764, error = 0.000000, time = 1.627772
+-->Depth = 8
+   Brick method mean MDKS1s = 14.265368, sigma MDKS1s = 0.452764, time = 1.458543
+   Old brick method mean = 14.265368, sigma = 0.452764, error = 0.000000, time = 1.906208
+
+For k = 2, n = 100000, uniform distribution
+-->Depth = 8
+   Brick method mean MDKS1s = 1.698143, sigma MDKS1s = 0.260931, time = 14.558458
+   Old brick method mean = 1.698143, sigma = 0.260931, error = 0.000000, time = 16.696354
+-->Depth = 7
+   Brick method mean MDKS1s = 1.698143, sigma MDKS1s = 0.260931, time = 15.984173
+   Old brick method mean = 1.698143, sigma = 0.260931, error = 0.000000, time = 16.504605
+-->Depth = 9
+   Brick method mean MDKS1s = 1.698143, sigma MDKS1s = 0.260931, time = 18.179733
+   Old brick method mean = 1.698143, sigma = 0.260931, error = 0.000000, time = 21.385780
+-->Depth = 10
+   Brick method mean MDKS1s = 1.698143, sigma MDKS1s = 0.260931, time = 20.519011
+   Old brick method mean = 1.698143, sigma = 0.260931, error = 0.000000, time = 24.200707
+
+For k = 2, n = 100000, unlike distribution
+-->Depth = 8
+   Brick method mean MDKS1s = 24.698653, sigma MDKS1s = 0.934785, time = 14.478755
+   Old brick method mean = 24.698653, sigma = 0.934785, error = 0.000000, time = 16.560257
+-->Depth = 7
+   Brick method mean MDKS1s = 24.698653, sigma MDKS1s = 0.934785, time = 15.851912
+   Old brick method mean = 24.698653, sigma = 0.934785, error = 0.000000, time = 16.384032
+-->Depth = 9
+   Brick method mean MDKS1s = 24.698653, sigma MDKS1s = 0.934785, time = 18.045729
+   Old brick method mean = 24.698653, sigma = 0.934785, error = 0.000000, time = 21.118162
+-->Depth = 10
+   Brick method mean MDKS1s = 24.698653, sigma MDKS1s = 0.934785, time = 20.411627
+   Old brick method mean = 24.698653, sigma = 0.934785, error = 0.000000, time = 23.886549
+
+For k = 3, n = 320, uniform distribution
+-->Depth = 1
+   Brick method mean MDKS1s = 1.792768, sigma MDKS1s = 0.359508, time = 0.003980
+   Old brick method mean = 1.792768, sigma = 0.359508, error = 0.000000, time = 0.004082
+-->Depth = 0
+   Brick method mean MDKS1s = 1.792768, sigma MDKS1s = 0.359508, time = 0.003974
+   Old brick method mean = 1.792768, sigma = 0.359508, error = 0.000000, time = 0.004074
+-->Depth = 2
+   Brick method mean MDKS1s = 1.792768, sigma MDKS1s = 0.359508, time = 0.002819
+   Old brick method mean = 1.792768, sigma = 0.359508, error = 0.000000, time = 0.002981
+-->Depth = 3
+   Brick method mean MDKS1s = 1.792768, sigma MDKS1s = 0.359508, time = 0.003404
+   Old brick method mean = 1.792768, sigma = 0.359508, error = 0.000000, time = 0.003584
+
+For k = 3, n = 320, unlike distribution
+-->Depth = 1
+   Brick method mean MDKS1s = 2.709555, sigma MDKS1s = 0.425991, time = 0.003992
+   Old brick method mean = 2.709555, sigma = 0.425991, error = 0.000000, time = 0.004100
+-->Depth = 0
+   Brick method mean MDKS1s = 2.709555, sigma MDKS1s = 0.425991, time = 0.003998
+   Old brick method mean = 2.709555, sigma = 0.425991, error = 0.000000, time = 0.004095
+-->Depth = 2
+   Brick method mean MDKS1s = 2.708996, sigma MDKS1s = 0.428132, time = 0.002826
+   Old brick method mean = 2.708996, sigma = 0.428132, error = 0.000000, time = 0.002985
+-->Depth = 3
+   Brick method mean MDKS1s = 2.711791, sigma MDKS1s = 0.428285, time = 0.003407
+   Old brick method mean = 2.711791, sigma = 0.428285, error = 0.000000, time = 0.003583
+
+For k = 3, n = 1000, uniform distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 1.992867, sigma MDKS1s = 0.383550, time = 0.022750
+   Old brick method mean = 1.992867, sigma = 0.383550, error = 0.000000, time = 0.023293
+-->Depth = 1
+   Brick method mean MDKS1s = 1.992867, sigma MDKS1s = 0.383550, time = 0.039972
+   Old brick method mean = 1.992867, sigma = 0.383550, error = 0.000000, time = 0.039425
+-->Depth = 3
+   Brick method mean MDKS1s = 1.992867, sigma MDKS1s = 0.383550, time = 0.020407
+   Old brick method mean = 1.992867, sigma = 0.383550, error = 0.000000, time = 0.022003
+-->Depth = 4
+   Brick method mean MDKS1s = 1.992867, sigma MDKS1s = 0.383550, time = 0.025025
+   Old brick method mean = 1.992867, sigma = 0.383550, error = 0.000000, time = 0.028554
+
+For k = 3, n = 1000, unlike distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 4.095782, sigma MDKS1s = 0.485267, time = 0.022864
+   Old brick method mean = 4.095782, sigma = 0.485267, error = 0.000000, time = 0.023332
+-->Depth = 1
+   Brick method mean MDKS1s = 4.101474, sigma MDKS1s = 0.483641, time = 0.040182
+   Old brick method mean = 4.101474, sigma = 0.483641, error = 0.000000, time = 0.039635
+-->Depth = 3
+   Brick method mean MDKS1s = 4.100842, sigma MDKS1s = 0.485234, time = 0.020472
+   Old brick method mean = 4.100842, sigma = 0.485234, error = 0.000000, time = 0.022004
+-->Depth = 4
+   Brick method mean MDKS1s = 4.106534, sigma MDKS1s = 0.485133, time = 0.024962
+   Old brick method mean = 4.106534, sigma = 0.485133, error = 0.000000, time = 0.028453
+
+For k = 3, n = 3200, uniform distribution
+-->Depth = 3
+   Brick method mean MDKS1s = 1.996162, sigma MDKS1s = 0.329999, time = 0.150601
+   Old brick method mean = 1.996162, sigma = 0.329999, error = 0.000000, time = 0.152220
+-->Depth = 2
+   Brick method mean MDKS1s = 1.996162, sigma MDKS1s = 0.329999, time = 0.238612
+   Old brick method mean = 1.996162, sigma = 0.329999, error = 0.000000, time = 0.228396
+-->Depth = 4
+   Brick method mean MDKS1s = 1.996162, sigma MDKS1s = 0.329999, time = 0.168594
+   Old brick method mean = 1.996162, sigma = 0.329999, error = 0.000000, time = 0.180416
+-->Depth = 5
+   Brick method mean MDKS1s = 1.996162, sigma MDKS1s = 0.329999, time = 0.212442
+   Old brick method mean = 1.996162, sigma = 0.329999, error = 0.000000, time = 0.239876
+
+For k = 3, n = 3200, unlike distribution
+-->Depth = 3
+   Brick method mean MDKS1s = 6.538616, sigma MDKS1s = 0.435044, time = 0.150863
+   Old brick method mean = 6.538616, sigma = 0.435044, error = 0.000000, time = 0.152635
+-->Depth = 2
+   Brick method mean MDKS1s = 6.529424, sigma MDKS1s = 0.432936, time = 0.239344
+   Old brick method mean = 6.529424, sigma = 0.432936, error = 0.000000, time = 0.229076
+-->Depth = 4
+   Brick method mean MDKS1s = 6.549400, sigma MDKS1s = 0.435611, time = 0.168791
+   Old brick method mean = 6.549400, sigma = 0.435611, error = 0.000000, time = 0.180195
+-->Depth = 5
+   Brick method mean MDKS1s = 6.552228, sigma MDKS1s = 0.435784, time = 0.212442
+   Old brick method mean = 6.552228, sigma = 0.435784, error = 0.000000, time = 0.239107
+
+For k = 3, n = 10000, uniform distribution
+-->Depth = 3
+   Brick method mean MDKS1s = 2.174242, sigma MDKS1s = 0.350027, time = 1.467308
+   Old brick method mean = 2.174242, sigma = 0.350027, error = 0.000000, time = 1.446960
+-->Depth = 2
+   Brick method mean MDKS1s = 2.174242, sigma MDKS1s = 0.350027, time = 2.599946
+   Old brick method mean = 2.174242, sigma = 0.350027, error = 0.000000, time = 2.555215
+-->Depth = 4
+   Brick method mean MDKS1s = 2.174242, sigma MDKS1s = 0.350027, time = 1.144047
+   Old brick method mean = 2.174242, sigma = 0.350027, error = 0.000000, time = 1.205735
+-->Depth = 5
+   Brick method mean MDKS1s = 2.174242, sigma MDKS1s = 0.350027, time = 1.314769
+   Old brick method mean = 2.174242, sigma = 0.350027, error = 0.000000, time = 1.471451
+
+For k = 3, n = 10000, unlike distribution
+-->Depth = 3
+   Brick method mean MDKS1s = 10.912121, sigma MDKS1s = 0.416051, time = 1.472427
+   Old brick method mean = 10.912121, sigma = 0.416051, error = 0.000000, time = 1.452916
+-->Depth = 2
+   Brick method mean MDKS1s = 10.895152, sigma MDKS1s = 0.418779, time = 2.614317
+   Old brick method mean = 10.895152, sigma = 0.418779, error = 0.000000, time = 2.568572
+-->Depth = 4
+   Brick method mean MDKS1s = 10.949091, sigma MDKS1s = 0.419705, time = 1.149648
+   Old brick method mean = 10.949091, sigma = 0.419705, error = 0.000000, time = 1.207747
+-->Depth = 5
+   Brick method mean MDKS1s = 10.952121, sigma MDKS1s = 0.419186, time = 1.315113
+   Old brick method mean = 10.952121, sigma = 0.419186, error = 0.000000, time = 1.469012
+
+For k = 3, n = 32000, uniform distribution
+-->Depth = 4
+   Brick method mean MDKS1s = 2.151656, sigma MDKS1s = 0.296278, time = 9.313216
+   Old brick method mean = 2.151656, sigma = 0.296278, error = 0.000000, time = 9.023742
+-->Depth = 3
+   Brick method mean MDKS1s = 2.151656, sigma MDKS1s = 0.296278, time = 15.611430
+   Old brick method mean = 2.151656, sigma = 0.296278, error = 0.000000, time = 14.671210
+-->Depth = 5
+   Brick method mean MDKS1s = 2.151656, sigma MDKS1s = 0.296278, time = 8.853242
+   Old brick method mean = 2.151656, sigma = 0.296278, error = 0.000000, time = 9.380921
+-->Depth = 6
+   Brick method mean MDKS1s = 2.151656, sigma MDKS1s = 0.296278, time = 18.272590
+   Old brick method mean = 2.151656, sigma = 0.296278, error = 0.000000, time = 18.903503
+
+For k = 3, n = 32000, unlike distribution
+-->Depth = 4
+   Brick method mean MDKS1s = 18.804773, sigma MDKS1s = 0.632019, time = 9.261895
+   Old brick method mean = 18.804773, sigma = 0.632019, error = 0.000000, time = 8.977746
+-->Depth = 3
+   Brick method mean MDKS1s = 18.745517, sigma MDKS1s = 0.641564, time = 15.512863
+   Old brick method mean = 18.745517, sigma = 0.641564, error = 0.000000, time = 14.586739
+-->Depth = 5
+   Brick method mean MDKS1s = 18.808127, sigma MDKS1s = 0.629695, time = 8.829837
+   Old brick method mean = 18.808127, sigma = 0.629695, error = 0.000000, time = 9.328875
+-->Depth = 6
+   Brick method mean MDKS1s = 18.808127, sigma MDKS1s = 0.629695, time = 18.146029
+   Old brick method mean = 18.808127, sigma = 0.629695, error = 0.000000, time = 18.574464
+
+For k = 3, n = 100000, uniform distribution
+-->Depth = 5
+   Brick method mean MDKS1s = 2.301506, sigma MDKS1s = 0.114136, time = 127.632185
+   Old brick method mean = 2.301506, sigma = 0.114136, error = 0.000000, time = 127.907626
+-->Depth = 4
+   Brick method mean MDKS1s = 2.301506, sigma MDKS1s = 0.114136, time = 186.111247
+   Old brick method mean = 2.301506, sigma = 0.114136, error = 0.000000, time = 182.902801
+-->Depth = 6
+   Brick method mean MDKS1s = 2.301506, sigma MDKS1s = 0.114136, time = 161.507444
+   Old brick method mean = 2.301506, sigma = 0.114136, error = 0.000000, time = 172.135828
+-->Depth = 7
+   Brick method mean MDKS1s = 2.301506, sigma MDKS1s = 0.114136, time = 207.124967
+   Old brick method mean = 2.301506, sigma = 0.114136, error = 0.000000, time = 223.536384
+
+For k = 3, n = 100000, unlike distribution
+-->Depth = 5
+   Brick method mean MDKS1s = 32.229301, sigma MDKS1s = 0.581719, time = 127.583511
+   Old brick method mean = 32.229301, sigma = 0.581719, error = 0.000000, time = 127.728265
+-->Depth = 4
+   Brick method mean MDKS1s = 32.216020, sigma MDKS1s = 0.579602, time = 186.309938
+   Old brick method mean = 32.216020, sigma = 0.579602, error = 0.000000, time = 180.482637
+-->Depth = 6
+   Brick method mean MDKS1s = 32.229301, sigma MDKS1s = 0.581719, time = 160.731452
+   Old brick method mean = 32.229301, sigma = 0.581719, error = 0.000000, time = 170.800938
+-->Depth = 7
+   Brick method mean MDKS1s = 32.229301, sigma MDKS1s = 0.581719, time = 206.795894
+   Old brick method mean = 32.229301, sigma = 0.581719, error = 0.000000, time = 222.627999
+
+For k = 4, n = 320, uniform distribution
+-->Depth = 1
+   Brick method mean MDKS1s = 1.841402, sigma MDKS1s = 0.273032, time = 0.005574
+   Old brick method mean = 1.841402, sigma = 0.273032, error = 0.000000, time = 0.005692
+-->Depth = 0
+   Brick method mean MDKS1s = 1.841402, sigma MDKS1s = 0.273032, time = 0.005563
+   Old brick method mean = 1.841402, sigma = 0.273032, error = 0.000000, time = 0.005682
+-->Depth = 2
+   Brick method mean MDKS1s = 1.841402, sigma MDKS1s = 0.273032, time = 0.006240
+   Old brick method mean = 1.841402, sigma = 0.273032, error = 0.000000, time = 0.005988
+-->Depth = 3
+   Brick method mean MDKS1s = 1.841402, sigma MDKS1s = 0.273032, time = 0.007010
+   Old brick method mean = 1.841402, sigma = 0.273032, error = 0.000000, time = 0.007013
+
+For k = 4, n = 320, unlike distribution
+-->Depth = 1
+   Brick method mean MDKS1s = 2.890118, sigma MDKS1s = 0.372042, time = 0.005618
+   Old brick method mean = 2.890118, sigma = 0.372042, error = 0.000000, time = 0.005725
+-->Depth = 0
+   Brick method mean MDKS1s = 2.890118, sigma MDKS1s = 0.372042, time = 0.005594
+   Old brick method mean = 2.890118, sigma = 0.372042, error = 0.000000, time = 0.005719
+-->Depth = 2
+   Brick method mean MDKS1s = 2.878938, sigma MDKS1s = 0.369317, time = 0.006266
+   Old brick method mean = 2.878938, sigma = 0.369317, error = 0.000000, time = 0.006023
+-->Depth = 3
+   Brick method mean MDKS1s = 2.883969, sigma MDKS1s = 0.368855, time = 0.007013
+   Old brick method mean = 2.883969, sigma = 0.368855, error = 0.000000, time = 0.007105
+
+For k = 4, n = 1000, uniform distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 2.027652, sigma MDKS1s = 0.323593, time = 0.041461
+   Old brick method mean = 2.027652, sigma = 0.323593, error = 0.000000, time = 0.042111
+-->Depth = 1
+   Brick method mean MDKS1s = 2.027652, sigma MDKS1s = 0.323593, time = 0.053593
+   Old brick method mean = 2.027652, sigma = 0.323593, error = 0.000000, time = 0.053608
+-->Depth = 3
+   Brick method mean MDKS1s = 2.027652, sigma MDKS1s = 0.323593, time = 0.050016
+   Old brick method mean = 2.027652, sigma = 0.323593, error = 0.000000, time = 0.048719
+-->Depth = 4
+   Brick method mean MDKS1s = 2.027652, sigma MDKS1s = 0.323593, time = 0.062712
+   Old brick method mean = 2.027652, sigma = 0.323593, error = 0.000000, time = 0.063203
+
+For k = 4, n = 1000, unlike distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 4.456914, sigma MDKS1s = 0.422877, time = 0.041635
+   Old brick method mean = 4.456914, sigma = 0.422877, error = 0.000000, time = 0.042196
+-->Depth = 1
+   Brick method mean MDKS1s = 4.470828, sigma MDKS1s = 0.424402, time = 0.053925
+   Old brick method mean = 4.470828, sigma = 0.424402, error = 0.000000, time = 0.053962
+-->Depth = 3
+   Brick method mean MDKS1s = 4.464504, sigma MDKS1s = 0.426529, time = 0.049984
+   Old brick method mean = 4.464504, sigma = 0.426529, error = 0.000000, time = 0.048645
+-->Depth = 4
+   Brick method mean MDKS1s = 4.467666, sigma MDKS1s = 0.426000, time = 0.062693
+   Old brick method mean = 4.467666, sigma = 0.426000, error = 0.000000, time = 0.063073
+
+For k = 4, n = 3200, uniform distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 2.168914, sigma MDKS1s = 0.353143, time = 0.377958
+   Old brick method mean = 2.168914, sigma = 0.353143, error = 0.000000, time = 0.366336
+-->Depth = 1
+   Brick method mean MDKS1s = 2.168914, sigma MDKS1s = 0.353143, time = 0.586341
+   Old brick method mean = 2.168914, sigma = 0.353143, error = 0.000000, time = 0.563860
+-->Depth = 3
+   Brick method mean MDKS1s = 2.168914, sigma MDKS1s = 0.353143, time = 0.406836
+   Old brick method mean = 2.168914, sigma = 0.353143, error = 0.000000, time = 0.377837
+-->Depth = 4
+   Brick method mean MDKS1s = 2.168914, sigma MDKS1s = 0.353143, time = 0.498811
+   Old brick method mean = 2.168914, sigma = 0.353143, error = 0.000000, time = 0.499617
+
+For k = 4, n = 3200, unlike distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 7.360256, sigma MDKS1s = 0.499910, time = 0.380705
+   Old brick method mean = 7.360256, sigma = 0.499910, error = 0.000000, time = 0.368702
+-->Depth = 1
+   Brick method mean MDKS1s = 7.386999, sigma MDKS1s = 0.497815, time = 0.591823
+   Old brick method mean = 7.386999, sigma = 0.497815, error = 0.000000, time = 0.568240
+-->Depth = 3
+   Brick method mean MDKS1s = 7.367282, sigma MDKS1s = 0.500772, time = 0.408296
+   Old brick method mean = 7.367282, sigma = 0.500772, error = 0.000000, time = 0.378492
+-->Depth = 4
+   Brick method mean MDKS1s = 7.380200, sigma MDKS1s = 0.503105, time = 0.500200
+   Old brick method mean = 7.380200, sigma = 0.503105, error = 0.000000, time = 0.499723
+
+For k = 4, n = 10000, uniform distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 2.173200, sigma MDKS1s = 0.285054, time = 3.874049
+   Old brick method mean = 2.173200, sigma = 0.285054, error = 0.000000, time = 3.776845
+-->Depth = 1
+   Brick method mean MDKS1s = 2.173200, sigma MDKS1s = 0.285054, time = 6.181056
+   Old brick method mean = 2.173200, sigma = 0.285054, error = 0.000000, time = 6.140388
+-->Depth = 3
+   Brick method mean MDKS1s = 2.173200, sigma MDKS1s = 0.285054, time = 2.936733
+   Old brick method mean = 2.173200, sigma = 0.285054, error = 0.000000, time = 2.914390
+-->Depth = 4
+   Brick method mean MDKS1s = 2.173200, sigma MDKS1s = 0.285054, time = 3.440259
+   Old brick method mean = 2.173200, sigma = 0.285054, error = 0.000000, time = 3.496970
+
+For k = 4, n = 10000, unlike distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 12.426000, sigma MDKS1s = 0.546046, time = 3.920334
+   Old brick method mean = 12.426000, sigma = 0.546046, error = 0.000000, time = 3.822747
+-->Depth = 1
+   Brick method mean MDKS1s = 12.460400, sigma MDKS1s = 0.552890, time = 6.277881
+   Old brick method mean = 12.460400, sigma = 0.552890, error = 0.000000, time = 6.245602
+-->Depth = 3
+   Brick method mean MDKS1s = 12.446800, sigma MDKS1s = 0.538901, time = 2.949039
+   Old brick method mean = 12.446800, sigma = 0.538901, error = 0.000000, time = 2.909620
+-->Depth = 4
+   Brick method mean MDKS1s = 12.482000, sigma MDKS1s = 0.533174, time = 3.465543
+   Old brick method mean = 12.482000, sigma = 0.533174, error = 0.000000, time = 3.536683
+
+For k = 4, n = 32000, uniform distribution
+-->Depth = 3
+   Brick method mean MDKS1s = 2.379815, sigma MDKS1s = 0.342018, time = 25.643478
+   Old brick method mean = 2.379815, sigma = 0.342018, error = 0.000000, time = 24.825205
+-->Depth = 2
+   Brick method mean MDKS1s = 2.379815, sigma MDKS1s = 0.342018, time = 43.923248
+   Old brick method mean = 2.379815, sigma = 0.342018, error = 0.000000, time = 40.654845
+-->Depth = 4
+   Brick method mean MDKS1s = 2.379815, sigma MDKS1s = 0.342018, time = 31.026418
+   Old brick method mean = 2.379815, sigma = 0.342018, error = 0.000000, time = 28.029111
+-->Depth = 5
+   Brick method mean MDKS1s = 2.379815, sigma MDKS1s = 0.342018, time = 82.771744
+   Old brick method mean = 2.379815, sigma = 0.342018, error = 0.000000, time = 77.169192
+
+For k = 4, n = 32000, unlike distribution
+-->Depth = 3
+   Brick method mean MDKS1s = 21.815239, sigma MDKS1s = 0.701203, time = 25.556447
+   Old brick method mean = 21.815239, sigma = 0.701203, error = 0.000000, time = 24.116512
+-->Depth = 2
+   Brick method mean MDKS1s = 21.792080, sigma MDKS1s = 0.681487, time = 43.634519
+   Old brick method mean = 21.792080, sigma = 0.681487, error = 0.000000, time = 40.710865
+-->Depth = 4
+   Brick method mean MDKS1s = 21.886314, sigma MDKS1s = 0.687526, time = 30.266347
+   Old brick method mean = 21.886314, sigma = 0.687526, error = 0.000000, time = 26.825432
+-->Depth = 5
+   Brick method mean MDKS1s = 21.897494, sigma MDKS1s = 0.691401, time = 83.537726
+   Old brick method mean = 21.897494, sigma = 0.691401, error = 0.000000, time = 79.298153
+
+For k = 4, n = 100000, uniform distribution
+-->Depth = 4
+   Brick method mean MDKS1s = 2.351470, sigma MDKS1s = 0.329261, time = 444.108581
+   Old brick method mean = 2.351470, sigma = 0.329261, error = 0.000000, time = 444.415542
+-->Depth = 3
+   Brick method mean MDKS1s = 2.351470, sigma MDKS1s = 0.329261, time = 614.380380
+   Old brick method mean = 2.351470, sigma = 0.329261, error = 0.000000, time = 600.524158
+-->Depth = 5
+   Brick method mean MDKS1s = 2.351470, sigma MDKS1s = 0.329261, time = 664.284878
+   Old brick method mean = 2.351470, sigma = 0.329261, error = 0.000000, time = 660.381744
+-->Depth = 6
+   Brick method mean MDKS1s = 2.351470, sigma MDKS1s = 0.329261, time = 787.151586
+   Old brick method mean = 2.351470, sigma = 0.329261, error = 0.000000, time = 827.643723
+
+For k = 4, n = 100000, unlike distribution
+-->Depth = 4
+   Brick method mean MDKS1s = 38.280004, sigma MDKS1s = 0.680656, time = 482.184419
+   Old brick method mean = 38.280004, sigma = 0.680656, error = 0.000000, time = 466.287078
+-->Depth = 3
+   Brick method mean MDKS1s = 38.068763, sigma MDKS1s = 0.681640, time = 654.018519
+   Old brick method mean = 38.068763, sigma = 0.681640, error = 0.000000, time = 637.506475
+-->Depth = 5
+   Brick method mean MDKS1s = 38.299610, sigma MDKS1s = 0.676811, time = 680.317285
+   Old brick method mean = 38.299610, sigma = 0.676811, error = 0.000000, time = 680.309451
+-->Depth = 6
+   Brick method mean MDKS1s = 38.299610, sigma MDKS1s = 0.676811, time = 798.689597
+   Old brick method mean = 38.299610, sigma = 0.676811, error = 0.000000, time = 840.933088
+
+For k = 5, n = 320, uniform distribution
+-->Depth = 1
+   Brick method mean MDKS1s = 1.871589, sigma MDKS1s = 0.360405, time = 0.007539
+   Old brick method mean = 1.871589, sigma = 0.360405, error = 0.000000, time = 0.007526
+-->Depth = 0
+   Brick method mean MDKS1s = 1.871589, sigma MDKS1s = 0.360405, time = 0.007429
+   Old brick method mean = 1.871589, sigma = 0.360405, error = 0.000000, time = 0.007585
+-->Depth = 2
+   Brick method mean MDKS1s = 1.871589, sigma MDKS1s = 0.360405, time = 0.010209
+   Old brick method mean = 1.871589, sigma = 0.360405, error = 0.000000, time = 0.008693
+-->Depth = 3
+   Brick method mean MDKS1s = 1.871589, sigma MDKS1s = 0.360405, time = 0.010674
+   Old brick method mean = 1.871589, sigma = 0.360405, error = 0.000000, time = 0.010140
+
+For k = 5, n = 320, unlike distribution
+-->Depth = 1
+   Brick method mean MDKS1s = 2.980679, sigma MDKS1s = 0.435620, time = 0.007506
+   Old brick method mean = 2.980679, sigma = 0.435620, error = 0.000000, time = 0.007605
+-->Depth = 0
+   Brick method mean MDKS1s = 2.980679, sigma MDKS1s = 0.435620, time = 0.007495
+   Old brick method mean = 2.980679, sigma = 0.435620, error = 0.000000, time = 0.007656
+-->Depth = 2
+   Brick method mean MDKS1s = 2.973970, sigma MDKS1s = 0.439668, time = 0.010216
+   Old brick method mean = 2.973970, sigma = 0.439668, error = 0.000000, time = 0.008717
+-->Depth = 3
+   Brick method mean MDKS1s = 2.979561, sigma MDKS1s = 0.439848, time = 0.010667
+   Old brick method mean = 2.979561, sigma = 0.439848, error = 0.000000, time = 0.010157
+
+For k = 5, n = 1000, uniform distribution
+-->Depth = 1
+   Brick method mean MDKS1s = 2.021960, sigma MDKS1s = 0.326500, time = 0.068038
+   Old brick method mean = 2.021960, sigma = 0.326500, error = 0.000000, time = 0.068737
+-->Depth = 0
+   Brick method mean MDKS1s = 2.021960, sigma MDKS1s = 0.326500, time = 0.067981
+   Old brick method mean = 2.021960, sigma = 0.326500, error = 0.000000, time = 0.068567
+-->Depth = 2
+   Brick method mean MDKS1s = 2.021960, sigma MDKS1s = 0.326500, time = 0.077601
+   Old brick method mean = 2.021960, sigma = 0.326500, error = 0.000000, time = 0.072915
+-->Depth = 3
+   Brick method mean MDKS1s = 2.021960, sigma MDKS1s = 0.326500, time = 0.093530
+   Old brick method mean = 2.021960, sigma = 0.326500, error = 0.000000, time = 0.085373
+
+For k = 5, n = 1000, unlike distribution
+-->Depth = 1
+   Brick method mean MDKS1s = 4.770928, sigma MDKS1s = 0.438009, time = 0.068686
+   Old brick method mean = 4.770928, sigma = 0.438009, error = 0.000000, time = 0.069606
+-->Depth = 0
+   Brick method mean MDKS1s = 4.770928, sigma MDKS1s = 0.438009, time = 0.068662
+   Old brick method mean = 4.770928, sigma = 0.438009, error = 0.000000, time = 0.069314
+-->Depth = 2
+   Brick method mean MDKS1s = 4.757331, sigma MDKS1s = 0.440783, time = 0.078236
+   Old brick method mean = 4.757331, sigma = 0.440783, error = 0.000000, time = 0.073312
+-->Depth = 3
+   Brick method mean MDKS1s = 4.761758, sigma MDKS1s = 0.439862, time = 0.094279
+   Old brick method mean = 4.761758, sigma = 0.439862, error = 0.000000, time = 0.085988
+
+For k = 5, n = 3200, uniform distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 2.123886, sigma MDKS1s = 0.250550, time = 0.632769
+   Old brick method mean = 2.123886, sigma = 0.250550, error = 0.000000, time = 0.625548
+-->Depth = 1
+   Brick method mean MDKS1s = 2.123886, sigma MDKS1s = 0.250550, time = 0.763878
+   Old brick method mean = 2.123886, sigma = 0.250550, error = 0.000000, time = 0.721379
+-->Depth = 3
+   Brick method mean MDKS1s = 2.123886, sigma MDKS1s = 0.250550, time = 0.742370
+   Old brick method mean = 2.123886, sigma = 0.250550, error = 0.000000, time = 0.688477
+-->Depth = 4
+   Brick method mean MDKS1s = 2.123886, sigma MDKS1s = 0.250550, time = 0.925856
+   Old brick method mean = 2.123886, sigma = 0.250550, error = 0.000000, time = 0.912460
+
+For k = 5, n = 3200, unlike distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 7.922447, sigma MDKS1s = 0.410108, time = 0.636024
+   Old brick method mean = 7.922447, sigma = 0.410108, error = 0.000000, time = 0.627546
+-->Depth = 1
+   Brick method mean MDKS1s = 7.945827, sigma MDKS1s = 0.406741, time = 0.769334
+   Old brick method mean = 7.945827, sigma = 0.406741, error = 0.000000, time = 0.727697
+-->Depth = 3
+   Brick method mean MDKS1s = 7.930716, sigma MDKS1s = 0.411692, time = 0.742113
+   Old brick method mean = 7.930716, sigma = 0.411692, error = 0.000000, time = 0.687757
+-->Depth = 4
+   Brick method mean MDKS1s = 7.948393, sigma MDKS1s = 0.413888, time = 0.927591
+   Old brick method mean = 7.948393, sigma = 0.413888, error = 0.000000, time = 0.910665
+
+For k = 5, n = 10000, uniform distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 2.202000, sigma MDKS1s = 0.348464, time = 5.602278
+   Old brick method mean = 2.202000, sigma = 0.348464, error = 0.000000, time = 5.538857
+-->Depth = 1
+   Brick method mean MDKS1s = 2.202000, sigma MDKS1s = 0.348464, time = 8.089806
+   Old brick method mean = 2.202000, sigma = 0.348464, error = 0.000000, time = 7.912538
+-->Depth = 3
+   Brick method mean MDKS1s = 2.202000, sigma MDKS1s = 0.348464, time = 6.129154
+   Old brick method mean = 2.202000, sigma = 0.348464, error = 0.000000, time = 5.407432
+-->Depth = 4
+   Brick method mean MDKS1s = 2.202000, sigma MDKS1s = 0.348464, time = 11.793701
+   Old brick method mean = 2.202000, sigma = 0.348464, error = 0.000000, time = 10.025575
+
+For k = 5, n = 10000, unlike distribution
+-->Depth = 2
+   Brick method mean MDKS1s = 13.668000, sigma MDKS1s = 0.612145, time = 5.593923
+   Old brick method mean = 13.668000, sigma = 0.612145, error = 0.000000, time = 5.527558
+-->Depth = 1
+   Brick method mean MDKS1s = 13.740000, sigma MDKS1s = 0.617601, time = 8.084280
+   Old brick method mean = 13.740000, sigma = 0.617601, error = 0.000000, time = 7.909150
+-->Depth = 3
+   Brick method mean MDKS1s = 13.675000, sigma MDKS1s = 0.614582, time = 6.077567
+   Old brick method mean = 13.675000, sigma = 0.614582, error = 0.000000, time = 5.363897
+-->Depth = 4
+   Brick method mean MDKS1s = 13.708000, sigma MDKS1s = 0.604384, time = 10.922504
+   Old brick method mean = 13.708000, sigma = 0.604384, error = 0.000000, time = 9.173514
+
+For k = 5, n = 32000, uniform distribution
+-->Depth = 3
+   Brick method mean MDKS1s = 2.217434, sigma MDKS1s = 0.179536, time = 54.955488
+   Old brick method mean = 2.217434, sigma = 0.179536, error = 0.000000, time = 48.769743
+-->Depth = 2
+   Brick method mean MDKS1s = 2.217434, sigma MDKS1s = 0.179536, time = 59.392104
+   Old brick method mean = 2.217434, sigma = 0.179536, error = 0.000000, time = 54.944238
+-->Depth = 4
+   Brick method mean MDKS1s = 2.217434, sigma MDKS1s = 0.179536, time = 146.983540
+   Old brick method mean = 2.217434, sigma = 0.179536, error = 0.000000, time = 152.305277
+-->Depth = 5
+   Brick method mean MDKS1s = 2.217434, sigma MDKS1s = 0.179536, time = 224.764143
+   Old brick method mean = 2.217434, sigma = 0.179536, error = 0.000000, time = 221.006068
+
+For k = 5, n = 32000, unlike distribution
+-->Depth = 3
+   Brick method mean MDKS1s = 24.389911, sigma MDKS1s = 0.531601, time = 53.760661
+   Old brick method mean = 24.389911, sigma = 0.531601, error = 0.000000, time = 47.642804
+-->Depth = 2
+   Brick method mean MDKS1s = 24.381526, sigma MDKS1s = 0.551314, time = 58.331215
+   Old brick method mean = 24.381526, sigma = 0.551314, error = 0.000000, time = 54.613590
+-->Depth = 4
+   Brick method mean MDKS1s = 24.447677, sigma MDKS1s = 0.560264, time = 142.725192
+   Old brick method mean = 24.447677, sigma = 0.560264, error = 0.000000, time = 146.546303
+-->Depth = 5
+   Brick method mean MDKS1s = 24.470037, sigma MDKS1s = 0.568525, time = 222.264342
+   Old brick method mean = 24.470037, sigma = 0.568525, error = 0.000000, time = 213.513034
+
+For k = 5, n = 100000, uniform distribution
+-->Depth = 3
+   Brick method mean MDKS1s = 2.523498, sigma MDKS1s = 0.286452, time = 1017.563494
+   Old brick method mean = 2.523498, sigma = 0.286452, error = 0.000000, time = 937.536533
+-->Depth = 2
+   Brick method mean MDKS1s = 2.523498, sigma MDKS1s = 0.286452, time = 1642.171910
+   Old brick method mean = 2.523498, sigma = 0.286452, error = 0.000000, time = 1443.156420
+-->Depth = 4
+   Brick method mean MDKS1s = 2.523498, sigma MDKS1s = 0.286452, time = 1346.114645
+   Old brick method mean = 2.523498, sigma = 0.286452, error = 0.000000, time = 1288.736757
+-->Depth = 5
+   Brick method mean MDKS1s = 2.523498, sigma MDKS1s = 0.286452, time = 1831.837345
+   Old brick method mean = 2.523498, sigma = 0.286452, error = 0.000000, time = 1817.380178
+
+For k = 5, n = 100000, unlike distribution
+-->Depth = 3
+   Brick method mean MDKS1s = 42.593983, sigma MDKS1s = 0.359622, time = 1008.924428
+   Old brick method mean = 42.593983, sigma = 0.359622, error = 0.000000, time = 947.327838
+-->Depth = 2
+   Brick method mean MDKS1s = 42.593983, sigma MDKS1s = 0.359622, time = 1646.652576
+   Old brick method mean = 42.593983, sigma = 0.359622, error = 0.000000, time = 1449.003579
+-->Depth = 4
+   Brick method mean MDKS1s = 42.743242, sigma MDKS1s = 0.384822, time = 1343.257307
+   Old brick method mean = 42.743242, sigma = 0.384822, error = 0.000000, time = 1283.008529
+-->Depth = 5
+   Brick method mean MDKS1s = 42.777395, sigma MDKS1s = 0.386566, time = 1832.529294
+   Old brick method mean = 42.777395, sigma = 0.386566, error = 0.000000, time = 1803.255030
+MDKS timing and accuracy test completed.
+

@@ -1,0 +1,70 @@
+# (c) Copyright 2009, The Rockefeller University *11224* 
+# $Id: maknoi64 26 2018-08-15 19:38:08Z  $
+########################################################################
+#        Make file for env library without HAS_I64 arithmetic          #
+#                                                                      #
+# Rev, 01/01/09, GNR - New GNU make version based on maklinux makefile #
+# ==>, 01/01/09, GNR - Last mod before committing to svn repository    #
+########################################################################
+
+LIBDIR   = $(HOME)/lib
+INC      = $(HOME)/include
+
+# Linux common pathnames
+DIR := noi64
+LL  := $(LIBDIR)/$(DIR)
+
+FILES = \
+envarm \
+envctl \
+envcyc \
+envdel \
+envget \
+envgob \
+envlim \
+envloc \
+envlod \
+envpia \
+envplot \
+envprt \
+envsav \
+envset \
+envshp \
+envvers
+
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+########## Target dependent macro definitions:
+CC := gcc
+CFLAGS := -g -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := PCLINUX _ISOC99_SOURCE NO_I64 SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d maknoi64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+.PHONY : noi64 depend
+noi64:   $(LL)/libenv.a
+depend:    $(FILES:%=$(DIR)/%.d)
+
+$(LL)/libenv.a: $(FILES:%=$(DIR)/%.o)
+	ar r libenv.a $(FILES:%=$(DIR)/%.o)
+	ranlib libenv.a
+	mv libenv.a $(LL)
+
+clean:
+	rm -f $(DIR)/*.o
+	rm -f $(LL)/libenv.a
+
+-include $(FILES:%=$(DIR)/%.d)

@@ -1,0 +1,67 @@
+Allocations for cameras:
+------------------------
+Input:  If doing TV_REDUC|TV_SpAvg  use psws (d3imgt)
+        Always tvrx*tvry*tvipxsz (d3snsa, used as TV_REDUC|TV_SpAvg
+            output, otherwise just normal input space.  This may be
+            in broadcast space or ser/PAR0 space, see below.
+Output: pmyim
+        Always tvx*tvy*tvopxsz (d3snsa)
+        If TV_ONDIR AND !(TV_Reduc|TV_SpAvg)
+            Allocate on pbcst, store otvi, set pmyin = pbcst + otvi
+        If TV_ONDIR but tvx != tvix || tvy != tviy
+            Allocate tvx*tvy*tvopxsz on pbcst, store otvi
+            Also allocate pmyim tvix*tviy*tvopxsz on Node 0
+        If !TV_ONDIR
+            Allocate pmyim tvix*tviy*tvopxsz on Node 0
+            No pbcst alloc.
+
+Better way to look at it:
+-------------------------
+Compute the three sizes early, let's call them ltvrxy, ltvixy, ltvxy.
+Then TV_Reduc|TV_SpAvg is test for using psws raw image buffer.
+ltvixy > ltvxy is test for allocating pmyim separately from broadcast
+set.  Otherwise they are the same.  If !TV_ONDIR the ltvxy set is not
+needed.
+
+Allocations for preprocessors (if any hang off camera):
+------------------------------
+Input:  Always just camera pmyim
+Output: Always has its own on pbcst + oppoi
+            Size is nppx*nppy*nker*HSIZE*(Color? 3:1)
+
+Allocations for Gray from Color (if any hang off camera):
+---------------------------------------------------------
+There is another messy story here.  If output is used as input
+to a preprocessor, it needs to be ltvixy size.  If used as input
+to an Sj lookup, it needs to be ltvxy size.  Both might be needed
+in the same run.
+Input:  Its input should always be the camera pmyim (because
+   its output might be input to a preprocessor and because
+   pmyim is always there.
+Ouput:  Seems like we need to set up theoretically two areas:
+   If input to a preprocessor, this would be in RP0->pipimin
+      space with its own pointer (in utv?)
+   If input to a conntype, modulation, or touch, needs to be
+      in pbcst space with its own offset ogci.
+   If both, and tvx==tvix,tvy==tviy, then the preprocessor
+      input space is the same as the pbcst output space and
+      no allocation in  RP0->pipimin is needed.
+
+Things postponed:
+--------------------
+Finish rescale code with 1 or 3 targets
+Finish GfmC story:
+    Make sure size checks in d3tchk etc. are correct
+    Make d3gvin and d3sj routines access data at pbcst + ogci
+    Error check (d3snsa) that camera has color.
+    How to handle preprocessors:  Do the GfmC first and preprocess
+      the gray and fix d3sj to pick up just those cases OR
+      Let the preprocessor do all three colors, then use the
+         d3sj code already there, except modify to use the
+         red/green/blue fractions.  (Be sure code in d3tchk
+         does not turn on the GfmC bit in this case.)
+Plot color preprocessor outputs with negatives
+Use trig tables in sj steerable filter routine
+Use trig tables in gcijlw routine.
+
+

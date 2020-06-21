@@ -1,0 +1,434 @@
+mdkstest
+
+For k = 1, n = 200, uniform distribution,
+   Brute-force ML mean MDKS1s = 1.165100, sigma MDKS1s = 0.385430, time = 0.001192
+   Brute-force mex mean MDKS1s = 1.165100, sigma MDKS1s = 0.385430, time = 0.000301
+   Brick method mean MDKS1s = 1.165100, sigma MDKS1s = 0.385430, time = 0.000045
+   Brute-force ML mean MDKS2s = 0.824525, sigma MDKS2s = 0.270686, time = 0.002300
+   Brute-force mex mean MDKS2s = 0.824525, sigma MDKS2s = 0.270686, time = 0.000556
+   Brick method mean MDKS2s = 0.824525, sigma MDKS2s = 0.270686, time = 0.000049
+
+For k = 1, n = 200, normal distribution,
+   Brute-force ML mean MDKS1s = 1.150463, sigma MDKS1s = 0.355488, time = 0.001182
+   Brute-force mex mean MDKS1s = 1.150463, sigma MDKS1s = 0.355488, time = 0.000299
+   Brick method mean MDKS1s = 1.150463, sigma MDKS1s = 0.355488, time = 0.000044
+   Brute-force ML mean MDKS2s = 0.813300, sigma MDKS2s = 0.249841, time = 0.002294
+   Brute-force mex mean MDKS2s = 0.813300, sigma MDKS2s = 0.249841, time = 0.000540
+   Brick method mean MDKS2s = 0.813300, sigma MDKS2s = 0.249841, time = 0.000048
+
+For k = 1, n = 200, gamma distribution,
+   Brute-force ML mean MDKS1s = 1.164463, sigma MDKS1s = 0.369474, time = 0.001188
+   Brute-force mex mean MDKS1s = 1.164463, sigma MDKS1s = 0.369474, time = 0.000300
+   Brick method mean MDKS1s = 1.164463, sigma MDKS1s = 0.369474, time = 0.000044
+   Brute-force ML mean MDKS2s = 0.821725, sigma MDKS2s = 0.260745, time = 0.002302
+   Brute-force mex mean MDKS2s = 0.821725, sigma MDKS2s = 0.260745, time = 0.000540
+   Brick method mean MDKS2s = 0.821725, sigma MDKS2s = 0.260745, time = 0.000048
+
+For k = 1, n = 25000, uniform distribution,
+   Brute-force ML mean MDKS1s = 1.233921, sigma MDKS1s = 0.378415, time = 7.738024
+   Brute-force mex mean MDKS1s = 1.233921, sigma MDKS1s = 0.378415, time = 5.163586
+   Brick method mean MDKS1s = 1.233921, sigma MDKS1s = 0.378415, time = 0.003100
+   Brute-force ML mean MDKS2s = 0.872514, sigma MDKS2s = 0.267750, time = 15.467113
+   Brute-force mex mean MDKS2s = 0.872514, sigma MDKS2s = 0.267750, time = 10.324190
+   Brick method mean MDKS2s = 0.872514, sigma MDKS2s = 0.267750, time = 0.003745
+
+For k = 1, n = 25000, normal distribution,
+   Brute-force ML mean MDKS1s = 1.155971, sigma MDKS1s = 0.312782, time = 7.724437
+   Brute-force mex mean MDKS1s = 1.155971, sigma MDKS1s = 0.312782, time = 5.159542
+   Brick method mean MDKS1s = 1.155971, sigma MDKS1s = 0.312782, time = 0.003071
+   Brute-force ML mean MDKS2s = 0.817283, sigma MDKS2s = 0.220897, time = 15.452204
+   Brute-force mex mean MDKS2s = 0.817283, sigma MDKS2s = 0.220897, time = 10.316760
+   Brick method mean MDKS2s = 0.817283, sigma MDKS2s = 0.220897, time = 0.003738
+
+For k = 1, n = 25000, gamma distribution,
+   Brute-force ML mean MDKS1s = 1.342861, sigma MDKS1s = 0.379001, time = 7.725975
+   Brute-force mex mean MDKS1s = 1.342861, sigma MDKS1s = 0.379001, time = 5.159315
+   Brick method mean MDKS1s = 1.342861, sigma MDKS1s = 0.379001, time = 0.003059
+   Brute-force ML mean MDKS2s = 0.948764, sigma MDKS2s = 0.267853, time = 15.452640
+   Brute-force mex mean MDKS2s = 0.948764, sigma MDKS2s = 0.267853, time = 10.318556
+   Brick method mean MDKS2s = 0.948764, sigma MDKS2s = 0.267853, time = 0.003709
+
+For k = 1, n = 5000, uniform distribution,
+   Brute-force ML mean MDKS1s = 1.206324, sigma MDKS1s = 0.357301, time = 0.327743
+   Brute-force mex mean MDKS1s = 1.206324, sigma MDKS1s = 0.357301, time = 0.208817
+   Brick method mean MDKS1s = 1.206324, sigma MDKS1s = 0.357301, time = 0.000442
+   Brute-force ML mean MDKS2s = 0.852850, sigma MDKS2s = 0.252782, time = 0.655553
+   Brute-force mex mean MDKS2s = 0.852850, sigma MDKS2s = 0.252782, time = 0.415452
+   Brick method mean MDKS2s = 0.852850, sigma MDKS2s = 0.252782, time = 0.000545
+
+For k = 1, n = 5000, normal distribution,
+   Brute-force ML mean MDKS1s = 1.215092, sigma MDKS1s = 0.357780, time = 0.327807
+   Brute-force mex mean MDKS1s = 1.215092, sigma MDKS1s = 0.357780, time = 0.208840
+   Brick method mean MDKS1s = 1.215092, sigma MDKS1s = 0.357780, time = 0.000443
+   Brute-force ML mean MDKS2s = 0.859750, sigma MDKS2s = 0.252771, time = 0.655525
+   Brute-force mex mean MDKS2s = 0.859750, sigma MDKS2s = 0.252771, time = 0.415390
+   Brick method mean MDKS2s = 0.859750, sigma MDKS2s = 0.252771, time = 0.000545
+
+For k = 1, n = 5000, gamma distribution,
+   Brute-force ML mean MDKS1s = 1.275903, sigma MDKS1s = 0.365335, time = 0.327856
+   Brute-force mex mean MDKS1s = 1.275903, sigma MDKS1s = 0.365335, time = 0.208877
+   Brick method mean MDKS1s = 1.275903, sigma MDKS1s = 0.365335, time = 0.000443
+   Brute-force ML mean MDKS2s = 0.901850, sigma MDKS2s = 0.259180, time = 0.655653
+   Brute-force mex mean MDKS2s = 0.901850, sigma MDKS2s = 0.259180, time = 0.415525
+   Brick method mean MDKS2s = 0.901850, sigma MDKS2s = 0.259180, time = 0.000545
+
+For k = 1, n = 1000, uniform distribution,
+   Brute-force ML mean MDKS1s = 1.209951, sigma MDKS1s = 0.376137, time = 0.015950
+   Brute-force mex mean MDKS1s = 1.209951, sigma MDKS1s = 0.376137, time = 0.008011
+   Brick method mean MDKS1s = 1.209951, sigma MDKS1s = 0.376137, time = 0.000097
+   Brute-force ML mean MDKS2s = 0.856358, sigma MDKS2s = 0.265900, time = 0.031859
+   Brute-force mex mean MDKS2s = 0.856358, sigma MDKS2s = 0.265900, time = 0.015157
+   Brick method mean MDKS2s = 0.856358, sigma MDKS2s = 0.265900, time = 0.000113
+
+For k = 1, n = 1000, normal distribution,
+   Brute-force ML mean MDKS1s = 1.208370, sigma MDKS1s = 0.375404, time = 0.015928
+   Brute-force mex mean MDKS1s = 1.208370, sigma MDKS1s = 0.375404, time = 0.008005
+   Brick method mean MDKS1s = 1.208370, sigma MDKS1s = 0.375404, time = 0.000098
+   Brute-force ML mean MDKS2s = 0.853943, sigma MDKS2s = 0.265226, time = 0.031827
+   Brute-force mex mean MDKS2s = 0.853943, sigma MDKS2s = 0.265226, time = 0.015141
+   Brick method mean MDKS2s = 0.853943, sigma MDKS2s = 0.265226, time = 0.000114
+
+For k = 1, n = 1000, gamma distribution,
+   Brute-force ML mean MDKS1s = 1.223201, sigma MDKS1s = 0.385878, time = 0.015945
+   Brute-force mex mean MDKS1s = 1.223201, sigma MDKS1s = 0.385878, time = 0.008007
+   Brick method mean MDKS1s = 1.223201, sigma MDKS1s = 0.385878, time = 0.000096
+   Brute-force ML mean MDKS2s = 0.865247, sigma MDKS2s = 0.272890, time = 0.031845
+   Brute-force mex mean MDKS2s = 0.865247, sigma MDKS2s = 0.272890, time = 0.015149
+   Brick method mean MDKS2s = 0.865247, sigma MDKS2s = 0.272890, time = 0.000114
+
+For k = 2, n = 200, uniform distribution,
+   Brute-force ML mean MDKS1s = 1.678742, sigma MDKS1s = 0.371467, time = 0.006689
+   Brute-force mex mean MDKS1s = 1.678742, sigma MDKS1s = 0.371467, time = 0.001224
+   Brick method mean MDKS1s = 1.678742, sigma MDKS1s = 0.371467, time = 0.000586
+   Brute-force ML mean MDKS2s = 1.186200, sigma MDKS2s = 0.259465, time = 0.012833
+   Brute-force mex mean MDKS2s = 1.186200, sigma MDKS2s = 0.259465, time = 0.002418
+   Brick method mean MDKS2s = 1.186200, sigma MDKS2s = 0.259465, time = 0.001086
+
+For k = 2, n = 200, normal distribution,
+   Brute-force ML mean MDKS1s = 1.649963, sigma MDKS1s = 0.361667, time = 0.006378
+   Brute-force mex mean MDKS1s = 1.649963, sigma MDKS1s = 0.361667, time = 0.001225
+   Brick method mean MDKS1s = 1.649963, sigma MDKS1s = 0.361667, time = 0.000587
+   Brute-force ML mean MDKS2s = 1.166575, sigma MDKS2s = 0.249982, time = 0.012826
+   Brute-force mex mean MDKS2s = 1.166575, sigma MDKS2s = 0.249982, time = 0.002420
+   Brick method mean MDKS2s = 1.166575, sigma MDKS2s = 0.249982, time = 0.001087
+
+For k = 2, n = 200, gamma distribution,
+   Brute-force ML mean MDKS1s = 1.630376, sigma MDKS1s = 0.352992, time = 0.006359
+   Brute-force mex mean MDKS1s = 1.630376, sigma MDKS1s = 0.352992, time = 0.001225
+   Brick method mean MDKS1s = 1.630376, sigma MDKS1s = 0.352992, time = 0.000586
+   Brute-force ML mean MDKS2s = 1.152000, sigma MDKS2s = 0.243280, time = 0.012711
+   Brute-force mex mean MDKS2s = 1.152000, sigma MDKS2s = 0.243280, time = 0.002422
+   Brick method mean MDKS2s = 1.152000, sigma MDKS2s = 0.243280, time = 0.001086
+
+For k = 2, n = 25000, uniform distribution,
+   Brute-force ML mean MDKS1s = 1.873650, sigma MDKS1s = 0.387113, time = 37.167742
+   Brute-force mex mean MDKS1s = 1.873650, sigma MDKS1s = 0.387113, time = 18.258457
+   Brick method mean MDKS1s = 1.873650, sigma MDKS1s = 0.387113, time = 1.604146
+   Brute-force ML mean MDKS2s = 1.322075, sigma MDKS2s = 0.275104, time = 74.354386
+   Brute-force mex mean MDKS2s = 1.322075, sigma MDKS2s = 0.275104, time = 36.718202
+   Brick method mean MDKS2s = 1.322075, sigma MDKS2s = 0.275104, time = 3.193044
+
+For k = 2, n = 25000, normal distribution,
+   Brute-force ML mean MDKS1s = 1.777833, sigma MDKS1s = 0.287676, time = 37.174894
+   Brute-force mex mean MDKS1s = 1.777833, sigma MDKS1s = 0.287676, time = 18.267566
+   Brick method mean MDKS1s = 1.777833, sigma MDKS1s = 0.287676, time = 1.593917
+   Brute-force ML mean MDKS2s = 1.256111, sigma MDKS2s = 0.197373, time = 74.344216
+   Brute-force mex mean MDKS2s = 1.256111, sigma MDKS2s = 0.197373, time = 36.723013
+   Brick method mean MDKS2s = 1.256111, sigma MDKS2s = 0.197373, time = 3.181125
+
+For k = 2, n = 25000, gamma distribution,
+   Brute-force ML mean MDKS1s = 1.780362, sigma MDKS1s = 0.318255, time = 37.170506
+   Brute-force mex mean MDKS1s = 1.780362, sigma MDKS1s = 0.318255, time = 18.256175
+   Brick method mean MDKS1s = 1.780362, sigma MDKS1s = 0.318255, time = 1.601511
+   Brute-force ML mean MDKS2s = 1.259801, sigma MDKS2s = 0.224079, time = 74.368332
+   Brute-force mex mean MDKS2s = 1.259801, sigma MDKS2s = 0.224079, time = 36.730204
+   Brick method mean MDKS2s = 1.259801, sigma MDKS2s = 0.224079, time = 3.199709
+
+For k = 2, n = 5000, uniform distribution,
+   Brute-force ML mean MDKS1s = 1.849084, sigma MDKS1s = 0.359469, time = 1.594454
+   Brute-force mex mean MDKS1s = 1.849084, sigma MDKS1s = 0.359469, time = 0.734714
+   Brick method mean MDKS1s = 1.849084, sigma MDKS1s = 0.359469, time = 0.103837
+   Brute-force ML mean MDKS2s = 1.308450, sigma MDKS2s = 0.253313, time = 3.189284
+   Brute-force mex mean MDKS2s = 1.308450, sigma MDKS2s = 0.253313, time = 1.476640
+   Brick method mean MDKS2s = 1.308450, sigma MDKS2s = 0.253313, time = 0.206943
+
+For k = 2, n = 5000, normal distribution,
+   Brute-force ML mean MDKS1s = 1.882177, sigma MDKS1s = 0.407521, time = 1.594715
+   Brute-force mex mean MDKS1s = 1.882177, sigma MDKS1s = 0.407521, time = 0.734453
+   Brick method mean MDKS1s = 1.882177, sigma MDKS1s = 0.407521, time = 0.103748
+   Brute-force ML mean MDKS2s = 1.328700, sigma MDKS2s = 0.287549, time = 3.189831
+   Brute-force mex mean MDKS2s = 1.328700, sigma MDKS2s = 0.287549, time = 1.477018
+   Brick method mean MDKS2s = 1.328700, sigma MDKS2s = 0.287549, time = 0.206908
+
+For k = 2, n = 5000, gamma distribution,
+   Brute-force ML mean MDKS1s = 1.827730, sigma MDKS1s = 0.363130, time = 1.595630
+   Brute-force mex mean MDKS1s = 1.827730, sigma MDKS1s = 0.363130, time = 0.735129
+   Brick method mean MDKS1s = 1.827730, sigma MDKS1s = 0.363130, time = 0.103592
+   Brute-force ML mean MDKS2s = 1.289100, sigma MDKS2s = 0.252265, time = 3.189750
+   Brute-force mex mean MDKS2s = 1.289100, sigma MDKS2s = 0.252265, time = 1.476712
+   Brick method mean MDKS2s = 1.289100, sigma MDKS2s = 0.252265, time = 0.206301
+
+For k = 2, n = 1000, uniform distribution,
+   Brute-force ML mean MDKS1s = 1.724137, sigma MDKS1s = 0.366358, time = 0.080972
+   Brute-force mex mean MDKS1s = 1.724137, sigma MDKS1s = 0.366358, time = 0.029779
+   Brick method mean MDKS1s = 1.724137, sigma MDKS1s = 0.366358, time = 0.007429
+   Brute-force ML mean MDKS2s = 1.218232, sigma MDKS2s = 0.256112, time = 0.161906
+   Brute-force mex mean MDKS2s = 1.218232, sigma MDKS2s = 0.256112, time = 0.059558
+   Brick method mean MDKS2s = 1.218232, sigma MDKS2s = 0.256112, time = 0.014633
+
+For k = 2, n = 1000, normal distribution,
+   Brute-force ML mean MDKS1s = 1.745324, sigma MDKS1s = 0.354150, time = 0.081112
+   Brute-force mex mean MDKS1s = 1.745324, sigma MDKS1s = 0.354150, time = 0.029801
+   Brick method mean MDKS1s = 1.745324, sigma MDKS1s = 0.354150, time = 0.007449
+   Brute-force ML mean MDKS2s = 1.235293, sigma MDKS2s = 0.249825, time = 0.162159
+   Brute-force mex mean MDKS2s = 1.235293, sigma MDKS2s = 0.249825, time = 0.059570
+   Brick method mean MDKS2s = 1.235293, sigma MDKS2s = 0.249825, time = 0.014684
+
+For k = 2, n = 1000, gamma distribution,
+   Brute-force ML mean MDKS1s = 1.735458, sigma MDKS1s = 0.369387, time = 0.080994
+   Brute-force mex mean MDKS1s = 1.735458, sigma MDKS1s = 0.369387, time = 0.029777
+   Brick method mean MDKS1s = 1.735458, sigma MDKS1s = 0.369387, time = 0.007423
+   Brute-force ML mean MDKS2s = 1.226908, sigma MDKS2s = 0.258008, time = 0.161932
+   Brute-force mex mean MDKS2s = 1.226908, sigma MDKS2s = 0.258008, time = 0.059532
+   Brick method mean MDKS2s = 1.226908, sigma MDKS2s = 0.258008, time = 0.014628
+
+For k = 3, n = 200, uniform distribution,
+   Brute-force ML mean MDKS1s = 1.775192, sigma MDKS1s = 0.329679, time = 0.012964
+   Brute-force mex mean MDKS1s = 1.775192, sigma MDKS1s = 0.329679, time = 0.001782
+   Brick method mean MDKS1s = 1.775192, sigma MDKS1s = 0.329679, time = 0.001327
+   Brute-force ML mean MDKS2s = 1.257675, sigma MDKS2s = 0.222067, time = 0.025938
+   Brute-force mex mean MDKS2s = 1.257675, sigma MDKS2s = 0.222067, time = 0.003518
+   Brick method mean MDKS2s = 1.257675, sigma MDKS2s = 0.222067, time = 0.002504
+
+For k = 3, n = 200, normal distribution,
+   Brute-force ML mean MDKS1s = 1.784667, sigma MDKS1s = 0.327882, time = 0.012980
+   Brute-force mex mean MDKS1s = 1.784667, sigma MDKS1s = 0.327882, time = 0.001783
+   Brick method mean MDKS1s = 1.784667, sigma MDKS1s = 0.327882, time = 0.001330
+   Brute-force ML mean MDKS2s = 1.262100, sigma MDKS2s = 0.220158, time = 0.025958
+   Brute-force mex mean MDKS2s = 1.262100, sigma MDKS2s = 0.220158, time = 0.003519
+   Brick method mean MDKS2s = 1.262100, sigma MDKS2s = 0.220158, time = 0.002508
+
+For k = 3, n = 200, gamma distribution,
+   Brute-force ML mean MDKS1s = 1.788909, sigma MDKS1s = 0.345380, time = 0.012981
+   Brute-force mex mean MDKS1s = 1.788909, sigma MDKS1s = 0.345380, time = 0.001782
+   Brick method mean MDKS1s = 1.788909, sigma MDKS1s = 0.345380, time = 0.001327
+   Brute-force ML mean MDKS2s = 1.266500, sigma MDKS2s = 0.231614, time = 0.025945
+   Brute-force mex mean MDKS2s = 1.266500, sigma MDKS2s = 0.231614, time = 0.003518
+   Brick method mean MDKS2s = 1.266500, sigma MDKS2s = 0.231614, time = 0.002503
+
+For k = 3, n = 25000, uniform distribution,
+   Brute-force ML mean MDKS1s = 2.177593, sigma MDKS1s = 0.333690, time = 84.380575
+   Brute-force mex mean MDKS1s = 2.177593, sigma MDKS1s = 0.333690, time = 26.071370
+   Brick method mean MDKS1s = 2.177593, sigma MDKS1s = 0.333690, time = 7.120537
+   Brute-force ML mean MDKS2s = 1.549939, sigma MDKS2s = 0.230450, time = 168.780574
+   Brute-force mex mean MDKS2s = 1.549939, sigma MDKS2s = 0.230450, time = 52.120363
+   Brick method mean MDKS2s = 1.549939, sigma MDKS2s = 0.230450, time = 14.205186
+
+For k = 3, n = 25000, normal distribution,
+   Brute-force ML mean MDKS1s = 2.435440, sigma MDKS1s = 0.407132, time = 84.380201
+   Brute-force mex mean MDKS1s = 2.435440, sigma MDKS1s = 0.407132, time = 26.065897
+   Brick method mean MDKS1s = 2.435440, sigma MDKS1s = 0.407132, time = 7.139389
+   Brute-force ML mean MDKS2s = 1.718676, sigma MDKS2s = 0.284849, time = 168.755589
+   Brute-force mex mean MDKS2s = 1.718676, sigma MDKS2s = 0.284849, time = 52.121111
+   Brick method mean MDKS2s = 1.718676, sigma MDKS2s = 0.284849, time = 14.234746
+
+For k = 3, n = 25000, gamma distribution,
+   Brute-force ML mean MDKS1s = 2.288516, sigma MDKS1s = 0.482126, time = 84.379163
+   Brute-force mex mean MDKS1s = 2.288516, sigma MDKS1s = 0.482126, time = 26.072023
+   Brick method mean MDKS1s = 2.288516, sigma MDKS1s = 0.482126, time = 7.142917
+   Brute-force ML mean MDKS2s = 1.612893, sigma MDKS2s = 0.343275, time = 168.750915
+   Brute-force mex mean MDKS2s = 1.612893, sigma MDKS2s = 0.343275, time = 52.114851
+   Brick method mean MDKS2s = 1.612893, sigma MDKS2s = 0.343275, time = 14.224171
+
+For k = 3, n = 5000, uniform distribution,
+   Brute-force ML mean MDKS1s = 2.057252, sigma MDKS1s = 0.356049, time = 3.559877
+   Brute-force mex mean MDKS1s = 2.057252, sigma MDKS1s = 0.356049, time = 1.047603
+   Brick method mean MDKS1s = 2.057252, sigma MDKS1s = 0.356049, time = 0.388229
+   Brute-force ML mean MDKS2s = 1.453182, sigma MDKS2s = 0.241920, time = 7.125683
+   Brute-force mex mean MDKS2s = 1.453182, sigma MDKS2s = 0.241920, time = 2.091537
+   Brick method mean MDKS2s = 1.453182, sigma MDKS2s = 0.241920, time = 0.772835
+
+For k = 3, n = 5000, normal distribution,
+   Brute-force ML mean MDKS1s = 2.075894, sigma MDKS1s = 0.351651, time = 3.559055
+   Brute-force mex mean MDKS1s = 2.075894, sigma MDKS1s = 0.351651, time = 1.047351
+   Brick method mean MDKS1s = 2.075894, sigma MDKS1s = 0.351651, time = 0.388272
+   Brute-force ML mean MDKS2s = 1.457803, sigma MDKS2s = 0.248420, time = 7.126809
+   Brute-force mex mean MDKS2s = 1.457803, sigma MDKS2s = 0.248420, time = 2.091504
+   Brick method mean MDKS2s = 1.457803, sigma MDKS2s = 0.248420, time = 0.773600
+
+For k = 3, n = 5000, gamma distribution,
+   Brute-force ML mean MDKS1s = 2.107821, sigma MDKS1s = 0.356215, time = 3.560558
+   Brute-force mex mean MDKS1s = 2.107821, sigma MDKS1s = 0.356215, time = 1.047676
+   Brick method mean MDKS1s = 2.107821, sigma MDKS1s = 0.356215, time = 0.389058
+   Brute-force ML mean MDKS2s = 1.493106, sigma MDKS2s = 0.252483, time = 7.129405
+   Brute-force mex mean MDKS2s = 1.493106, sigma MDKS2s = 0.252483, time = 2.092208
+   Brick method mean MDKS2s = 1.493106, sigma MDKS2s = 0.252483, time = 0.775208
+
+For k = 3, n = 1000, uniform distribution,
+   Brute-force ML mean MDKS1s = 1.972957, sigma MDKS1s = 0.354766, time = 0.175226
+   Brute-force mex mean MDKS1s = 1.972957, sigma MDKS1s = 0.354766, time = 0.042647
+   Brick method mean MDKS1s = 1.972957, sigma MDKS1s = 0.354766, time = 0.020822
+   Brute-force ML mean MDKS2s = 1.395192, sigma MDKS2s = 0.243207, time = 0.350476
+   Brute-force mex mean MDKS2s = 1.395192, sigma MDKS2s = 0.243207, time = 0.084753
+   Brick method mean MDKS2s = 1.395192, sigma MDKS2s = 0.243207, time = 0.041195
+
+For k = 3, n = 1000, normal distribution,
+   Brute-force ML mean MDKS1s = 1.932693, sigma MDKS1s = 0.337560, time = 0.175310
+   Brute-force mex mean MDKS1s = 1.932693, sigma MDKS1s = 0.337560, time = 0.042640
+   Brick method mean MDKS1s = 1.932693, sigma MDKS1s = 0.337560, time = 0.020819
+   Brute-force ML mean MDKS2s = 1.365680, sigma MDKS2s = 0.233920, time = 0.350595
+   Brute-force mex mean MDKS2s = 1.365680, sigma MDKS2s = 0.233920, time = 0.084728
+   Brick method mean MDKS2s = 1.365680, sigma MDKS2s = 0.233920, time = 0.041142
+
+For k = 3, n = 1000, gamma distribution,
+   Brute-force ML mean MDKS1s = 1.948362, sigma MDKS1s = 0.316575, time = 0.175427
+   Brute-force mex mean MDKS1s = 1.948362, sigma MDKS1s = 0.316575, time = 0.042614
+   Brick method mean MDKS1s = 1.948362, sigma MDKS1s = 0.316575, time = 0.020836
+   Brute-force ML mean MDKS2s = 1.380654, sigma MDKS2s = 0.219506, time = 0.350692
+   Brute-force mex mean MDKS2s = 1.380654, sigma MDKS2s = 0.219506, time = 0.084829
+   Brick method mean MDKS2s = 1.380654, sigma MDKS2s = 0.219506, time = 0.041218
+
+For k = 4, n = 200, uniform distribution,
+   Brute-force mex mean MDKS1s = 1.807931, sigma MDKS1s = 0.321263, time = 0.002356
+   Brick method mean MDKS1s = 1.807931, sigma MDKS1s = 0.321263, time = 0.002083
+   Brute-force mex mean MDKS2s = 1.276850, sigma MDKS2s = 0.208621, time = 0.004648
+   Brick method mean MDKS2s = 1.276850, sigma MDKS2s = 0.208621, time = 0.003956
+
+For k = 4, n = 200, normal distribution,
+   Brute-force mex mean MDKS1s = 1.820941, sigma MDKS1s = 0.306131, time = 0.002352
+   Brick method mean MDKS1s = 1.820941, sigma MDKS1s = 0.306131, time = 0.002079
+   Brute-force mex mean MDKS2s = 1.285300, sigma MDKS2s = 0.195303, time = 0.004638
+   Brick method mean MDKS2s = 1.285300, sigma MDKS2s = 0.195303, time = 0.003949
+
+For k = 4, n = 200, gamma distribution,
+   Brute-force mex mean MDKS1s = 1.796688, sigma MDKS1s = 0.326259, time = 0.002353
+   Brick method mean MDKS1s = 1.796688, sigma MDKS1s = 0.326259, time = 0.002081
+   Brute-force mex mean MDKS2s = 1.265975, sigma MDKS2s = 0.209930, time = 0.004646
+   Brick method mean MDKS2s = 1.265975, sigma MDKS2s = 0.209930, time = 0.003953
+
+For k = 4, n = 25000, uniform distribution,
+   Brute-force mex mean MDKS1s = 2.368546, sigma MDKS1s = 0.229923, time = 34.038974
+   Brick method mean MDKS1s = 2.368546, sigma MDKS1s = 0.229923, time = 14.863344
+   Brute-force mex mean MDKS2s = 1.678616, sigma MDKS2s = 0.131094, time = 68.062524
+   Brick method mean MDKS2s = 1.678616, sigma MDKS2s = 0.131094, time = 29.574113
+
+For k = 4, n = 25000, normal distribution,
+   Brute-force mex mean MDKS1s = 2.324907, sigma MDKS1s = 0.486376, time = 34.023677
+   Brick method mean MDKS1s = 2.324907, sigma MDKS1s = 0.486376, time = 14.846418
+   Brute-force mex mean MDKS2s = 1.647088, sigma MDKS2s = 0.365807, time = 68.047058
+   Brick method mean MDKS2s = 1.647088, sigma MDKS2s = 0.365807, time = 29.580057
+
+For k = 4, n = 25000, gamma distribution,
+   Brute-force mex mean MDKS1s = 2.287592, sigma MDKS1s = 0.308934, time = 34.043237
+   Brick method mean MDKS1s = 2.287592, sigma MDKS1s = 0.308934, time = 14.842686
+   Brute-force mex mean MDKS2s = 1.636131, sigma MDKS2s = 0.227046, time = 68.070373
+   Brick method mean MDKS2s = 1.636131, sigma MDKS2s = 0.227046, time = 29.592338
+
+For k = 4, n = 5000, uniform distribution,
+   Brute-force mex mean MDKS1s = 2.193728, sigma MDKS1s = 0.323434, time = 1.368891
+   Brick method mean MDKS1s = 2.193728, sigma MDKS1s = 0.323434, time = 0.746467
+   Brute-force mex mean MDKS2s = 1.546600, sigma MDKS2s = 0.223128, time = 2.732634
+   Brick method mean MDKS2s = 1.546600, sigma MDKS2s = 0.223128, time = 1.485166
+
+For k = 4, n = 5000, normal distribution,
+   Brute-force mex mean MDKS1s = 2.108027, sigma MDKS1s = 0.348014, time = 1.368938
+   Brick method mean MDKS1s = 2.108027, sigma MDKS1s = 0.348014, time = 0.746657
+   Brute-force mex mean MDKS2s = 1.494800, sigma MDKS2s = 0.241454, time = 2.732656
+   Brick method mean MDKS2s = 1.494800, sigma MDKS2s = 0.241454, time = 1.485758
+
+For k = 4, n = 5000, gamma distribution,
+   Brute-force mex mean MDKS1s = 2.171101, sigma MDKS1s = 0.326106, time = 1.368627
+   Brick method mean MDKS1s = 2.171101, sigma MDKS1s = 0.326106, time = 0.746025
+   Brute-force mex mean MDKS2s = 1.542400, sigma MDKS2s = 0.219917, time = 2.733716
+   Brick method mean MDKS2s = 1.542400, sigma MDKS2s = 0.219917, time = 1.486045
+
+For k = 4, n = 1000, uniform distribution,
+   Brute-force mex mean MDKS1s = 2.024743, sigma MDKS1s = 0.318132, time = 0.055912
+   Brick method mean MDKS1s = 2.024743, sigma MDKS1s = 0.318132, time = 0.034974
+   Brute-force mex mean MDKS2s = 1.433275, sigma MDKS2s = 0.204394, time = 0.111062
+   Brick method mean MDKS2s = 1.433275, sigma MDKS2s = 0.204394, time = 0.069164
+
+For k = 4, n = 1000, normal distribution,
+   Brute-force mex mean MDKS1s = 1.999824, sigma MDKS1s = 0.291910, time = 0.055895
+   Brick method mean MDKS1s = 1.999824, sigma MDKS1s = 0.291910, time = 0.034972
+   Brute-force mex mean MDKS2s = 1.424375, sigma MDKS2s = 0.196176, time = 0.111083
+   Brick method mean MDKS2s = 1.424375, sigma MDKS2s = 0.196176, time = 0.069190
+
+For k = 4, n = 1000, gamma distribution,
+   Brute-force mex mean MDKS1s = 2.017027, sigma MDKS1s = 0.310268, time = 0.055921
+   Brick method mean MDKS1s = 2.017027, sigma MDKS1s = 0.310268, time = 0.035002
+   Brute-force mex mean MDKS2s = 1.426790, sigma MDKS2s = 0.209090, time = 0.111116
+   Brick method mean MDKS2s = 1.426790, sigma MDKS2s = 0.209090, time = 0.069245
+
+For k = 5, n = 200, uniform distribution,
+   Brute-force mex mean MDKS1s = 1.762746, sigma MDKS1s = 0.290782, time = 0.002907
+   Brick method mean MDKS1s = 1.762746, sigma MDKS1s = 0.290782, time = 0.002783
+   Brute-force mex mean MDKS2s = 1.247000, sigma MDKS2s = 0.181756, time = 0.005736
+   Brick method mean MDKS2s = 1.247000, sigma MDKS2s = 0.181756, time = 0.005295
+
+For k = 5, n = 200, normal distribution,
+   Brute-force mex mean MDKS1s = 1.752493, sigma MDKS1s = 0.292733, time = 0.002908
+   Brick method mean MDKS1s = 1.752493, sigma MDKS1s = 0.292733, time = 0.002786
+   Brute-force mex mean MDKS2s = 1.234675, sigma MDKS2s = 0.178094, time = 0.005739
+   Brick method mean MDKS2s = 1.234675, sigma MDKS2s = 0.178094, time = 0.005301
+
+For k = 5, n = 200, gamma distribution,
+   Brute-force mex mean MDKS1s = 1.771797, sigma MDKS1s = 0.299330, time = 0.002907
+   Brick method mean MDKS1s = 1.771797, sigma MDKS1s = 0.299330, time = 0.002785
+   Brute-force mex mean MDKS2s = 1.249125, sigma MDKS2s = 0.185976, time = 0.005738
+   Brick method mean MDKS2s = 1.249125, sigma MDKS2s = 0.185976, time = 0.005295
+
+For k = 5, n = 25000, uniform distribution,
+   Brute-force mex mean MDKS1s = 2.419933, sigma MDKS1s = 0.306369, time = 41.627953
+   Brick method mean MDKS1s = 2.419933, sigma MDKS1s = 0.306369, time = 24.381175
+   Brute-force mex mean MDKS2s = 1.678169, sigma MDKS2s = 0.170474, time = 83.399508
+   Brick method mean MDKS2s = 1.678169, sigma MDKS2s = 0.170474, time = 48.320761
+
+For k = 5, n = 25000, normal distribution,
+   Brute-force mex mean MDKS1s = 2.353525, sigma MDKS1s = 0.340394, time = 41.646386
+   Brick method mean MDKS1s = 2.353525, sigma MDKS1s = 0.340394, time = 24.607072
+   Brute-force mex mean MDKS2s = 1.656088, sigma MDKS2s = 0.225983, time = 83.402437
+   Brick method mean MDKS2s = 1.656088, sigma MDKS2s = 0.225983, time = 48.545458
+
+For k = 5, n = 25000, gamma distribution,
+   Brute-force mex mean MDKS1s = 2.163788, sigma MDKS1s = 0.272291, time = 41.627659
+   Brick method mean MDKS1s = 2.163788, sigma MDKS1s = 0.272291, time = 24.557317
+   Brute-force mex mean MDKS2s = 1.512420, sigma MDKS2s = 0.161524, time = 83.386025
+   Brick method mean MDKS2s = 1.512420, sigma MDKS2s = 0.161524, time = 48.565559
+
+For k = 5, n = 5000, uniform distribution,
+   Brute-force mex mean MDKS1s = 2.142180, sigma MDKS1s = 0.314732, time = 1.676092
+   Brick method mean MDKS1s = 2.142180, sigma MDKS1s = 0.314732, time = 1.137665
+   Brute-force mex mean MDKS2s = 1.511125, sigma MDKS2s = 0.192841, time = 3.353633
+   Brick method mean MDKS2s = 1.511125, sigma MDKS2s = 0.192841, time = 2.263638
+
+For k = 5, n = 5000, normal distribution,
+   Brute-force mex mean MDKS1s = 2.194506, sigma MDKS1s = 0.351989, time = 1.676087
+   Brick method mean MDKS1s = 2.194506, sigma MDKS1s = 0.351989, time = 1.136626
+   Brute-force mex mean MDKS2s = 1.550750, sigma MDKS2s = 0.227186, time = 3.353676
+   Brick method mean MDKS2s = 1.550750, sigma MDKS2s = 0.227186, time = 2.261271
+
+For k = 5, n = 5000, gamma distribution,
+   Brute-force mex mean MDKS1s = 2.168343, sigma MDKS1s = 0.289073, time = 1.676341
+   Brick method mean MDKS1s = 2.168343, sigma MDKS1s = 0.289073, time = 1.137367
+   Brute-force mex mean MDKS2s = 1.531750, sigma MDKS2s = 0.194134, time = 3.354946
+   Brick method mean MDKS2s = 1.531750, sigma MDKS2s = 0.194134, time = 2.263917
+
+For k = 5, n = 1000, uniform distribution,
+   Brute-force mex mean MDKS1s = 1.984171, sigma MDKS1s = 0.292880, time = 0.068530
+   Brick method mean MDKS1s = 1.984171, sigma MDKS1s = 0.292880, time = 0.052470
+   Brute-force mex mean MDKS2s = 1.404698, sigma MDKS2s = 0.191194, time = 0.136453
+   Brick method mean MDKS2s = 1.404698, sigma MDKS2s = 0.191194, time = 0.103756
+
+For k = 5, n = 1000, normal distribution,
+   Brute-force mex mean MDKS1s = 1.972313, sigma MDKS1s = 0.279524, time = 0.068528
+   Brick method mean MDKS1s = 1.972313, sigma MDKS1s = 0.279524, time = 0.052476
+   Brute-force mex mean MDKS2s = 1.393294, sigma MDKS2s = 0.189765, time = 0.136436
+   Brick method mean MDKS2s = 1.393294, sigma MDKS2s = 0.189765, time = 0.103740
+
+For k = 5, n = 1000, gamma distribution,
+   Brute-force mex mean MDKS1s = 2.017375, sigma MDKS1s = 0.298039, time = 0.068540
+   Brick method mean MDKS1s = 2.017375, sigma MDKS1s = 0.298039, time = 0.052508
+   Brute-force mex mean MDKS2s = 1.424040, sigma MDKS2s = 0.198272, time = 0.136505
+   Brick method mean MDKS2s = 1.424040, sigma MDKS2s = 0.198272, time = 0.103824
+MDKS timing and accuracy test completed.

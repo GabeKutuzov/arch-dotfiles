@@ -1,0 +1,39 @@
+
+
+Processor "master"
+Idle time 5.0% (800)
+High time 0.0% (0)
+Wptr Misses 0
+Iptr Misses 0
+Resolution 4
+
+
+-------------------------------------------------------------------------------
+Process "benchmark" (100.0% processor) (15.312s)
+Stack 100.0% (15312)    Heap 0.0% (0)    Static 0.0% (0)
+Function Name                                    | Process | Processor | Samples
+-------------------------------------------------------------------------------
+d3bench.tco                                      |    99.4 |      99.4 | 15213
+libc.lib/(null)                                  |     0.0 |       0.0 | 1
+libc.lib/DummySemWait                            |     0.0 |       0.0 | 2
+libc.lib/IsBufGetCharC                           |     0.0 |       0.0 | 1
+libc.lib/IsBufPutData                            |     0.0 |       0.0 | 1
+libc.lib/IsFwrite                                |     0.0 |       0.0 | 1
+libc.lib/flsbuf                                  |     0.3 |       0.3 | 40
+libc.lib/fp_display                              |     0.0 |       0.0 | 2
+libc.lib/get_numcrlf                             |     0.1 |       0.1 | 8
+libc.lib/initialise_static                       |     0.0 |       0.0 | 1
+libc.lib/ldexp                                   |     0.0 |       0.0 | 2
+libc.lib/long_ldexp                              |     0.0 |       0.0 | 1
+libc.lib/pr_dec                                  |     0.0 |       0.0 | 2
+libc.lib/printf_display                          |     0.0 |       0.0 | 6
+libc.lib/rd_int                                  |     0.0 |       0.0 | 2
+libc.lib/rd_real                                 |     0.0 |       0.0 | 2
+libc.lib/sbrk                                    |     0.0 |       0.0 | 1
+libc.lib/strlen                                  |     0.0 |       0.0 | 2
+libc.lib/sub_malloc                              |     0.0 |       0.0 | 1
+libc.lib/sub_vfprintf                            |     0.1 |       0.1 | 12
+libc.lib/vfscanf                                 |     0.0 |       0.0 | 2
+libc.lib/write                                   |     0.0 |       0.0 | 1
+libc.lib/writebuf                                |     0.0 |       0.0 | 2
+spc.lib/IsBufReceive                             |     0.0 |       0.0 | 2

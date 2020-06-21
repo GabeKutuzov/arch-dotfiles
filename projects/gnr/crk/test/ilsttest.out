@@ -1,0 +1,301 @@
+                                    Test ROCKS ilstread and iterator routines                     22 MAY 08    0:00000  Page 1     
+ 
+  
+       * Input cards for ilstread tests 
+ 
+   OUTPRTY 5 NOPG 
+   Test1:    (NEW,7,13,22) 
+ 
+Test 1, should get error, list item 22 exceeds block top 9: 
+ 
+***Iteration list value 22 exceeds array or EVERY block top 9 for Test 1 list.
+ 
+Test 1E1, should get error, NEW not first in list: 
+ 
+   Test1E1:  (5,NEW,15) 
+                  $                                                                 
+***NEW must be first item in list.
+ 
+   Test2:    (NEW,7,13,22),(OFF) 
+ 
+Test 2E1, should get error, data not allowed in OFF mode: 
+ 
+   Test2E1:  (NEW,7,13,22),(OFF,6) 
+                              $                                                     
+***Data not allowed in OFF mode.
+ 
+Test 2E2, should get error, bad punctuation: 
+ 
+   Test2E2:  (NEW,7,13,22),OFF=6 
+                              $                                                     
+***Incorrect punctuation at '$`.
+ 
+Test 2E3, should get error, data not allowed in OFF mode: 
+ 
+   Test2E3:  (5,6) 
+              $                                                                     
+***Data not allowed in OFF mode.
+ 
+   Test3:    (NEW,7,13,22),() 
+ 
+Test 3E1, should get 3 errors, bad nesting, unmatched paren, ilst required: 
+ 
+   Test3E1:  (() 
+              $$                                                                    
+***Unexpected left parenthesis at '$`.
+***Unbalanced parens or quotes at '$`.
+***An iteration list is required here.
+ 
+Test 3E2, should get error, required field missing: 
+ 
+   Test3E2:  (NEW,7,13,22,) 
+                          $                                                         
+***Required field missing at '$`.
+ 
+   Test4:    (MXCELLS=10,NEW,7,13,22) 
+ 
+Test 4E1, should get error, bad punctuation: 
+ 
+   Test4E1:  (MXCELLS*10,NEW,7,13,22) 
+                     $                                                              
+***Incorrect punctuation at '$`.
+ 
+Test 4E2, should get error, MXC not first option in list: 
+ 
+   Test4E2:  (NEW,7,MXC=10,13,22) 
+                      $                                                             
+***MX must be first item in list.
+ 
+Test 4E3, should get error, Bad numeric value for MXC: 
+ 
+   Test4E3:  (MXC=-10,NEW,7,13,22) 
+                    $                                                               
+ 
+***NUMERIC VALUE -10.00000  IS <= 0
+ 
+   Test5:    (NEW,7,13,22),(ADD,16) 
+ 
+Test 5E1, should get error, required field missing: 
+ 
+   Test5E1:  (NEW,7,13,22,ADD) 
+                             $                                                      
+***Required field missing at '$`.
+ 
+Test 5E2, should get error, parens required: 
+ 
+   Test5E2:  (NEW,7,13,22),ADD,4 
+                             $                                                      
+***Parentheses required at '$`.
+ 
+Test 5E3, should get warning, mode keyword is repeated: 
+ 
+   Test5E3:  (NEW,7,13,22),(ADD,14,ADD,18) 
+-->WARNING:  Mode keyword is repeated. 
+ 
+   Test6:    (NEW,7,13,22),(DEL 13) 
+ 
+Test 6E1, should get error, required field missing: 
+ 
+   Test6E1:  (NEW,7,13,22,DEL) 
+                             $                                                      
+***Required field missing at '$`.
+ 
+Test 6E2, should get error, parens required: 
+ 
+   Test6E2:  (NEW,7,13,22),DEL 13 
+                             $                                                      
+***Parentheses required at '$`.
+ 
+Test 6E3, should get warning, mode keyword is repeated: 
+ 
+   Test6E3:  (NEW,7,13,22),(DEL 7 DEL 22) 
+-->WARNING:  Mode keyword is repeated. 
+ 
+   Test7:    (NEW 7,13,22 EVERY 100) 
+ 
+Test 7E1, should get error, required field missing: 
+ 
+   Test7E1:  (NEW 7,13,22 EVERY) 
+                               $                                                    
+***Incorrect punctuation at '$`.
+***Required field missing at '$`.
+ 
+Test 7E2, should get error, parens required: 
+ 
+   Test7E2:  EVERY 100 
+                 $                                                                  
+***Parentheses required at '$`.
+ 
+Test 7E3, should get error, item in list is greater than EVERY value: 
+ 
+   Test7E3:  (NEW 7,13,122 EVERY=100) 
+                                    $                                               
+ 
+***One or more list entries exceeds the "EVERY" block length.
+ 
+Test 7E4, should get error, range in list ends above EVERY value: 
+ 
+   Test7E4:  (NEW 7-121 EVERY 100) 
+                                 $                                                  
+ 
+***One or more list entries exceeds the "EVERY" block length.
+ 
+   Test8:    (NEW 7,13,22),(15-18) 
+ 
+Test 8E1, should get error, negative value requires a range start: 
+ 
+   Test8E1:  (NEW,7,13,22),(-15,18) 
+                              $                                                     
+***Negative value -15 (end of range) must follow range start.
+ 
+Test 8E2, should read just 15-18 OK, caller scans 3 next: 
+ 
+   Test8E2:  (NEW,7,13,22),15-18,3 
+ 
+Test 8E3, should get error, bad punctuation: 
+ 
+   Test8E3:  (NEW,7,13,22),15/18 
+                             $                                                      
+***Incorrect punctuation at '$`.
+ 
+Test 8E4, should get 2 errors, bad numeric value: 
+ 
+   Test8E4:  (NEW,7,13,22),(-) 
+                            $                                                       
+ 
+***NUMERIC VALUE ==>-<== IS NOT A WELL FORMED NUMBER.
+   Test8E4:  (NEW,7,13,22),(-) 
+                            $                                                       
+***Negative value 0 (end of range) must follow range start.
+ 
+Test 8E5, should get 2 errors, range has too many tops: 
+ 
+   Test8E5:  (NEW,7,13,22),(15-18-20) 
+                                   $                                                
+***Too many data fields of kind marked at '$`.
+***A range may have only one top.
+ 
+Test 8E6, should get 2 errors, range bottom is greater than top: 
+ 
+   Test8E6:  (NEW,7,13,22),(18-15) 
+                                $                                                   
+***Invalid or unexpected numeric value at '$`.
+***Range end must be above range start.
+ 
+   Test9:    (NEW,7,13,32),(ADD 16-27+4) 
+ 
+Test 9E1, should get 2 errors, end and stride require a range start: 
+ 
+   Test9E1:  (NEW,7,13,22),(-27+4,16) 
+                             $                                                      
+***Negative value -27 (end of range) must follow range start.
+   Test9E1:  (NEW,7,13,22),(-27+4,16) 
+                                $                                                   
+***Signed plus value 4 (stride) must follow range start.
+ 
+Test 9E2, should get 2 errors, bad punct and stride requires range start: 
+ 
+   Test9E2:  (NEW,7,13,22),(16-27=+4) 
+                                 $ $                                                
+***Incorrect punctuation at '$`.
+***Signed plus value 4 (stride) must follow range start.
+ 
+Test 9E3, should get 2 errors, bad numeric val and stride requires range start: 
+ 
+   Test9E3:  (NEW,7,13,22),(+) 
+                            $                                                       
+ 
+***NUMERIC VALUE ==>+<== IS NOT A WELL FORMED NUMBER.
+   Test9E3:  (NEW,7,13,22),(+) 
+                            $                                                       
+***Signed plus value 0 (stride) must follow range start.
+ 
+Test 9E4, should get error, range has too many strides: 
+ 
+   Test9E4:  (NEW,7,13,22),(ADD 16+2-27+4) 
+                                        $                                           
+***Too many data fields of kind marked at '$`.
+***A range may have only one stride.
+ 
+Test 9E5, should get error, range has no top: 
+ 
+   Test9E5:  (NEW,7,13,22),(ADD 16+2) 
+                                    $                                               
+***Required field missing at '$`.
+***A stride requires a range end.
+ 
+   Test10:   (NEW,7,13,22),(ADD 16-22+1) 
+   Test11:   (ADD,7,13,22) 
+   Test12A:  (NEW,17,23,32),(ADD 5) 
+   Test12B:  (NEW,17,23,32),(ADD 5-10) 
+   Test12C:  (NEW,17,23,32),(ADD 5+3-15) 
+   Test13A:  (NEW,17,23,32),(ADD 55) 
+   Test13B:  (NEW,17,23,32),(ADD 55-60) 
+   Test13C:  (NEW,17,23,32),(ADD 55+3-65) 
+   Test14:   (NEW,17,23,32),(ADD 24-26) 
+   Test15:   (NEW,17,23,42),(ADD 26-32+3) 
+   Test16:   (NEW,17,23-32),(ADD 30-35) 
+   Test17:   (NEW,17-32+4),(ADD 27-36) 
+   Test18:   (NEW,7-32+4),(ADD 16-21) 
+   Test19:   (NEW,7-15),(ADD 10-25+4) 
+ 
+Test 20, should get warning, redundant addition ignored. 
+ 
+   Test20:   (NEW,7-15),(ADD 9-13+2) 
+                                  $                                                 
+-->WARNING: Redundant addition ignored. 
+ 
+   Test21:   (NEW,17-32+4),(ADD 33-40+4) 
+   Test22:   (NEW,7-32+8),(ADD 23-40+4) 
+   Test23:   (NEW,17-43+8),(ADD 9-25+4) 
+   Test24:   (NEW,7-30+5),(ADD 10-29+4) 
+ 
+Test 25E1, should get error, can't delete a range with stride: 
+ 
+   Test25E1: (NEW,7,13,22),(DEL 8-15+2) 
+                                     $                                              
+***Too many data fields of kind marked at '$`.
+***A non-unit stride is not allowed in a deletion range.
+ 
+Test 26E1, should get warning, there is nothing to delete: 
+ 
+   Test26E1: (DEL,7,13) 
+-->WARNING: Deletion(s) found, but there is no old list to delete from. 
+ 
+   Test27:   (NEW,17-22),(DEL 17) 
+   Test28:   (NEW,17-22),(DEL 22) 
+   Test29:   (NEW,7,10-13,22),(DEL 7-15) 
+   Test30:   (NEW,7,10-15+2,22),(DEL 7-16) 
+   Test31:   (NEW,7,10-20),(DEL 18-25) 
+   Test32:   (NEW,7,10-20+3),(DEL 18-25) 
+   Test33:   (NEW,7,10-20),(DEL 6-12) 
+   Test34:   (NEW,7,10-20+3),(DEL 6-13) 
+   Test35:   (NEW,7,10-30),(DEL 14-19) 
+   Test36:   (NEW,7,10-30+3),(DEL 14-19) 
+   Test37:   (NEW,7,10-20),(DEL 11-20) 
+   Test38:   (NEW,7-16+3,19-22),(DEL 20-22) 
+   Test39:   (NEW,17-26+3,9-14),(DEL 9-13) 
+   Test40:   (NEW,17-26+3,33),(DEL 18-26) 
+   Test41:   (NEW,7,13,23),(DEL 7-23) 
+ 
+Test 42, should get warning, redundant addition ignored: 
+ 
+   Test42:   (NEW,7,13,23),(ADD 13) 
+                                 $                                                  
+-->WARNING: Redundant addition ignored. 
+ 
+   Test43:   (NEW,FIRST 3, LAST 2 OF EVERY 10) 
+   Test44:   (NEW 5, RANDOM 3 EVERY 10, SEED=137) 
+   Test45:   ALL 
+ 
+Test 45E1, should get error, more than one of exclusive set: 
+ 
+   Test45E1: (ALL EVERY 6) 
+                      $                                                             
+***More than one of exclusive set at '$`.
+ 
+   Test46:   (NEW,2,4,7-16+3,19-22,25) 
+   Test47:   (NEW,2,4,7-16+3,19-22,25, EVERY 40) 
+   Test48:   (NEW,2,4,7-16+3,19-22,25, EVERY 25) 
+ 
+Normal end of tests.

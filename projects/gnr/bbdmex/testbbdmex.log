@@ -1,0 +1,598 @@
+                                    CNS - V8I Release R63 - Compiled Nov 13 2015                  20 NOV 15    0:00000  Page 1    
+  
+   
+   Using ROCKS Library Revision 58, Plot Library Revision 27, Env Library Revision 21,
+         NSITOOLS Library Revision 8, BBD Library Revision 25
+   Compiled with hardware 64-bit arithmetic
+
+   EXECUTE def1=1, def2=2.0678459
+
+   TITLE CNS Control file for bbdmex test
+
+       *PARMS DEBUG 1
+
+   OUTPRTY 4 NOPG
+   SIMDATA /home/cdr/src/bbdmex/testbbdmex.sd
+
+       **** Group 1 ****
+
+   RESPONSE FUNCTION IMMEDIATE, COMPAT=C
+   PLIMITS SQUARE, SPHGT=6.0, SPWID=6.0, GRIDS=8
+   MODALITY MEX NCS=10, NDS=20
+   SENSE BBD FakeSense (2 10) KP=BFKQ,
+       X=0.5, Y=1.0, H=2.5, W=0.5, CPT=0
+   SENSE BBD IdSense (4 10) KP=BFKQI, MODALITY=MEX,
+       X=1.5, Y=1.0, H=2.5, W=1.0, CPT=0
+   EFFECTOR BBD Results EX=(T1MV,Fwd), IN=(T1MV,Back)
+   CIJPLOT T1MV Back 1 X=4.0, Y=3.5, W=1.0, H=1.0, LTEXT=T1Back
+   CIJPLOT T1MV Fwd  1 X=4.0, Y=2.0, W=1.0, H=1.0, LTEXT=T1Fwd
+   SAVE SNSID=IdSense
+
+       **** Group 2 ****
+
+   REGION MEX-Test T1MV 1 1  1 1  KP=ABG,
+       X=4.0, Y=1.0, W=1.0, H=0.5
+   CELLTYPE Fwd 1 PT=0, NT=0, OPT=J, BITS=8
+   NOISE 0 0 0
+   CONNTYPE BBD FakeSense 10 XAR, YOFF=0, STRIDE=2
+   THRESHOLDS SCALE=0.7
+
+       *
+
+   CELLTYPE Back 1 PT=0, NT=0, OPT=J, BITS=8
+   NOISE 0 0 0
+   CONNTYPE BBD IdSense 10 XAR, XOFF=1, STRIDE=2
+   THRESHOLDS SCALE=0.7
+
+       **** Group 3 ***
+
+REGION/REPERTOIRE SPECIFICATIONS:
+  NAME                SHORT GROUPS C/GP TYPES  CELLS    CONNS NGX NGY   STORAGE
+  MEX-Test             T1MV     1     2    2       2       20   1   1        48
+  Totals               1        1          2       2       20                48
+
+MEMORY ALLOCATION INFORMATION:
+Total space for network tree control blocks                                3564
+Total space for cell and connection statistics                              808
+Total space for s(i) rapid lookup tables                                     16
+Total space for cell and connection data                                    104
+Total space for geometric connection work areas                               0
+Space for trial data (broadcast on parallel computer)
+       IA       TV   Senses   Values  Stim Ids Effectors Autoscale        TOTAL
+        0        0      240        0         0        12         0          252
+
+MODALITY SPECIFICATIONS:
+  MODALITY           NCS   NDS   NTRS  NTCS WDW
+  MEX                 10    20    -1    -1   0
+
+SENSE SPECIFICATIONS:
+  TYPE  SENSE                  Vmin   Vmax   HWID  NVX  NVY  MODALITY
+  BBD   FakeSense                 0   1.00   2.00    2   10  
+  BBD   IdSense                   0   1.00   2.00    4   10  MEX             
+
+EFFECTOR SPECIFICATIONS:
+  EFFECTOR                     NCHGS  EXCIT CELLS   INHIB CELLS    EFT     IFT  ESCALE  ISCALE
+  BBD DEVICE Results               1  T1MV  Fwd     T1MV  Back       0       0   1.000   1.000
+
+CELLTYPE (LAYER) SPECIFICATIONS (PART 1):
+  LNAME  CELLS   Cm     taum  RSPFN    PT     ST     NT     HT   SPIKE   Vrest    upsD  omegaD
+MEX-Test REGION/REPERTOIRE -------------------------------------------------------------------
+   Fwd      1  100.00 100.000  KNEE      0  0.875      0  0.875              0
+   Back     1  100.00 100.000  KNEE      0  0.875      0  0.875              0
+
+CELLTYPE (LAYER) SPECIFICATIONS (PART 2):
+  LNAME    omega1   omega   SiET  SiSCALE  SDAMP  QDAMP UPSPSI ZETAPSI OPTIONS
+MEX-Test REGION/REPERTOIRE ---------------------------------------------------------
+   Fwd    1.00000        0      0      0   0.200  0.100                J
+   Back   1.00000        0      0      0   0.200  0.100                J
+
+CONNECTION SPECIFICATIONS (PART 1):
+                            Type M:   MNO    NKS    NKT
+                            Type L:   C00    C01    C11    C10   sigma  MAPOPT
+  LNAME  SOURCE      NC KGEN    NBC  MEAN  sigma    PP  NRX NRY STR NUX NUY XOF YOF OFF WID
+MEX-Test REGION/REPERTOIRE ----------------------------------------------------------------
+   Fwd   BBD Fake    10 ARX      8  0.500  0.167  0.500           2   0   0   0   0   0    
+   Back  BBD IdSe    10 ARX      8  0.500  0.167  0.500           2   0   0   1   0   0    
+
+CONNECTION SPECIFICATIONS (PART 2):
+  LNAME  SOURCE     ETHI   ETLO  SjREV  SCALE   MNAX   MXAX  RDAMP  OPTIONS
+MEX-Test REGION/REPERTOIRE ------------------------------------------------
+   Fwd   BBD Fake      0 -2.000      0 0.7000      0 16.000         
+   Back  BBD IdSe      0 -2.000      0 0.7000      0 16.000         
+
+RANDOM NUMBER GENERATING SEEDS:
+  LNAME  SOURCE     COEFFICIENT  CONNECTION    DELAY      PHASING     ROUNDING     MASTER
+MEX-Test REGION/REPERTOIRE --------------------------------------------------------------
+   Fwd  Celltype                                                        34350           0
+   Fwd   BBD Fake      171103      178881                  191103      197103       11113
+   Back Celltype                                                       145454      111104
+   Back  BBD IdSe      282207      289985                  302207      308207      122217
+
+INPUT ARRAY PARAMETERS:
+   Input array size    16 x  16    Stim pixels used    10 x  12
+
+Network generation complete in 0 seconds
+
+   DETAIL (T1MV,Fwd)(0),(T1MV,Back)(0)
+   CYCLE 1 10 1 FRZINT=0, DP=CIO, PLOT=S
+
+SIMDATA selector information for segment 1:
+SEGMENT    1           0
+LEVEL 1 SENSE IdSense SNSID
+LENGTH           4 NITS        1
+
+Cycle parameters for this run:
+   Number of series             1    Freeze interval              2
+   Trials/normal series        10    Trials/freeze series        10
+   Cycles/normal trial          1    Cycles/freeze trial          1
+   Mean stim noise              0    Std dev of noise             0
+   Stim noise fraction      1.000    Stim noise seed        9372546
+   Step time (msec)         1.000    Dynamic storage           3564
+
+Series 1  Trial 1 (0 ms)
+BBD SENSE FakeSense RETURNED OBJECT 0 FROM CLASS 0
+BBD SENSE IdSense RETURNED OBJECT 19 FROM CLASS 1
+   
+FakeSense          0.010   0.510
+                   0.035   0.535
+                   0.060   0.560
+                   0.085   0.585
+                   0.110   0.610
+                   0.135   0.635
+                   0.160   0.660
+                   0.185   0.685
+                   0.210   0.710
+                   0.235   0.735
+   
+IdSense            0.010   0.260   0.510   0.760
+                   0.035   0.285   0.535   0.785
+                   0.060   0.310   0.560   0.810
+                   0.085   0.335   0.585   0.835
+                   0.110   0.360   0.610   0.860
+                   0.135   0.385   0.635   0.885
+                   0.160   0.410   0.660   0.910
+                   0.185   0.435   0.685   0.935
+                   0.210   0.460   0.710   0.960
+                   0.235   0.485   0.735   0.985
+
+Series 1  Trial 1 (0 ms) Cycle 1
+==>T1MVFwd  CELL 0  AT   0, 0    Si= 0.019
+Individual input components:
+RA1E  0.250 FA1E  0.250 RA1I -0.231 FA1I -0.231 
+Total inputs by connection class:
+SpEx  0.250 SpHp -0.231 TotE  0.250 TotH -0.231 GTot  0.019 
+
+==>T1MVBack CELL 0  AT   0, 0    Si= 0.549
+Individual input components:
+RA1E  1.206 FA1E  1.206 RA1I -0.657 FA1I -0.657 
+Total inputs by connection class:
+SpEx  1.206 SpHp -0.657 TotE  1.206 TotH -0.657 GTot  0.549 
+
+Changes array:    319.0  8997.0       0
+
+Series 1  Trial 2 (1.000 ms)
+BBD SENSE FakeSense RETURNED OBJECT 0 FROM CLASS 0
+BBD SENSE IdSense RETURNED OBJECT 18 FROM CLASS 2
+   
+FakeSense          0.020   0.520
+                   0.045   0.545
+                   0.070   0.570
+                   0.095   0.595
+                   0.120   0.620
+                   0.145   0.645
+                   0.170   0.670
+                   0.195   0.695
+                   0.220   0.720
+                   0.245   0.745
+   
+IdSense            0.020   0.270   0.520   0.770
+                   0.045   0.295   0.545   0.795
+                   0.070   0.320   0.570   0.820
+                   0.095   0.345   0.595   0.845
+                   0.120   0.370   0.620   0.870
+                   0.145   0.395   0.645   0.895
+                   0.170   0.420   0.670   0.920
+                   0.195   0.445   0.695   0.945
+                   0.220   0.470   0.720   0.970
+                   0.245   0.495   0.745   0.995
+
+Series 1  Trial 2 (1.000 ms) Cycle 1
+==>T1MVFwd  CELL 0  AT   0, 0    Si= 0.028
+Individual input components:
+RA1E  0.272 FA1E  0.272 RA1I -0.244 FA1I -0.244 
+Total inputs by connection class:
+SpEx  0.272 SpHp -0.244 TotE  0.272 TotH -0.244 GTot  0.028 
+
+==>T1MVBack CELL 0  AT   0, 0    Si= 0.557
+Individual input components:
+RA1E  1.226 FA1E  1.226 RA1I -0.670 FA1I -0.670 
+Total inputs by connection class:
+SpEx  1.226 SpHp -0.670 TotE  1.226 TotH -0.670 GTot  0.557 
+
+Changes array:    458.0  9121.0       0
+
+Series 1  Trial 3 (2.000 ms)
+BBD SENSE FakeSense RETURNED OBJECT 0 FROM CLASS 0
+BBD SENSE IdSense RETURNED OBJECT 17 FROM CLASS 3
+   
+FakeSense          0.030   0.530
+                   0.055   0.555
+                   0.080   0.580
+                   0.105   0.605
+                   0.130   0.630
+                   0.155   0.655
+                   0.180   0.680
+                   0.205   0.705
+                   0.230   0.730
+                   0.255   0.755
+   
+IdSense            0.030   0.280   0.530   0.780
+                   0.055   0.305   0.555   0.805
+                   0.080   0.330   0.580   0.830
+                   0.105   0.355   0.605   0.855
+                   0.130   0.380   0.630   0.880
+                   0.155   0.405   0.655   0.905
+                   0.180   0.430   0.680   0.930
+                   0.205   0.455   0.705   0.955
+                   0.230   0.480   0.730   0.980
+                   0.255   0.505   0.755   1.005
+
+Series 1  Trial 3 (2.000 ms) Cycle 1
+==>T1MVFwd  CELL 0  AT   0, 0    Si= 0.037
+Individual input components:
+RA1E  0.294 FA1E  0.294 RA1I -0.258 FA1I -0.258 
+Total inputs by connection class:
+SpEx  0.294 SpHp -0.258 TotE  0.294 TotH -0.258 GTot  0.037 
+
+==>T1MVBack CELL 0  AT   0, 0    Si= 0.564
+Individual input components:
+RA1E  1.247 FA1E  1.247 RA1I -0.683 FA1I -0.683 
+Total inputs by connection class:
+SpEx  1.247 SpHp -0.683 TotE  1.247 TotH -0.683 GTot  0.564 
+
+Changes array:    598.0  9246.0       0
+
+Series 1  Trial 4 (3.000 ms)
+BBD SENSE FakeSense RETURNED OBJECT 0 FROM CLASS 0
+BBD SENSE IdSense RETURNED OBJECT 16 FROM CLASS 4
+   
+FakeSense          0.040   0.540
+                   0.065   0.565
+                   0.090   0.590
+                   0.115   0.615
+                   0.140   0.640
+                   0.165   0.665
+                   0.190   0.690
+                   0.215   0.715
+                   0.240   0.740
+                   0.265   0.765
+   
+IdSense            0.040   0.290   0.540   0.790
+                   0.065   0.315   0.565   0.815
+                   0.090   0.340   0.590   0.840
+                   0.115   0.365   0.615   0.865
+                   0.140   0.390   0.640   0.890
+                   0.165   0.415   0.665   0.915
+                   0.190   0.440   0.690   0.940
+                   0.215   0.465   0.715   0.965
+                   0.240   0.490   0.740   0.990
+                   0.265   0.515   0.765   1.015
+
+Series 1  Trial 4 (3.000 ms) Cycle 1
+==>T1MVFwd  CELL 0  AT   0, 0    Si= 0.045
+Individual input components:
+RA1E  0.316 FA1E  0.316 RA1I -0.271 FA1I -0.271 
+Total inputs by connection class:
+SpEx  0.316 SpHp -0.271 TotE  0.316 TotH -0.271 GTot  0.045 
+
+==>T1MVBack CELL 0  AT   0, 0    Si= 0.572
+Individual input components:
+RA1E  1.268 FA1E  1.268 RA1I -0.696 FA1I -0.696 
+Total inputs by connection class:
+SpEx  1.268 SpHp -0.696 TotE  1.268 TotH -0.696 GTot  0.572 
+
+Changes array:    738.0  9371.0       0
+
+Series 1  Trial 5 (4.000 ms)
+BBD SENSE FakeSense RETURNED OBJECT 0 FROM CLASS 0
+BBD SENSE IdSense RETURNED OBJECT 15 FROM CLASS 5
+   
+FakeSense          0.050   0.550
+                   0.075   0.575
+                   0.100   0.600
+                   0.125   0.625
+                   0.150   0.650
+                   0.175   0.675
+                   0.200   0.700
+                   0.225   0.725
+                   0.250   0.750
+                   0.275   0.775
+   
+IdSense            0.050   0.300   0.550   0.800
+                   0.075   0.325   0.575   0.825
+                   0.100   0.350   0.600   0.850
+                   0.125   0.375   0.625   0.875
+                   0.150   0.400   0.650   0.900
+                   0.175   0.425   0.675   0.925
+                   0.200   0.450   0.700   0.950
+                   0.225   0.475   0.725   0.975
+                   0.250   0.500   0.750   1.000
+                   0.275   0.525   0.775   1.025
+
+Series 1  Trial 5 (4.000 ms) Cycle 1
+==>T1MVFwd  CELL 0  AT   0, 0    Si= 0.054
+Individual input components:
+RA1E  0.339 FA1E  0.339 RA1I -0.285 FA1I -0.285 
+Total inputs by connection class:
+SpEx  0.339 SpHp -0.285 TotE  0.339 TotH -0.285 GTot  0.054 
+
+==>T1MVBack CELL 0  AT   0, 0    Si= 0.580
+Individual input components:
+RA1E  1.288 FA1E  1.288 RA1I -0.709 FA1I -0.709 
+Total inputs by connection class:
+SpEx  1.288 SpHp -0.709 TotE  1.288 TotH -0.709 GTot  0.580 
+
+Changes array:    878.0  9495.0       0
+
+Series 1  Trial 6 (5.000 ms)
+BBD SENSE FakeSense RETURNED OBJECT 0 FROM CLASS 0
+BBD SENSE IdSense RETURNED OBJECT 14 FROM CLASS 6
+   
+FakeSense          0.060   0.560
+                   0.085   0.585
+                   0.110   0.610
+                   0.135   0.635
+                   0.160   0.660
+                   0.185   0.685
+                   0.210   0.710
+                   0.235   0.735
+                   0.260   0.760
+                   0.285   0.785
+   
+IdSense            0.060   0.310   0.560   0.810
+                   0.085   0.335   0.585   0.835
+                   0.110   0.360   0.610   0.860
+                   0.135   0.385   0.635   0.885
+                   0.160   0.410   0.660   0.910
+                   0.185   0.435   0.685   0.935
+                   0.210   0.460   0.710   0.960
+                   0.235   0.485   0.735   0.985
+                   0.260   0.510   0.760   1.010
+                   0.285   0.535   0.785   1.035
+
+Series 1  Trial 6 (5.000 ms) Cycle 1
+==>T1MVFwd  CELL 0  AT   0, 0    Si= 0.062
+Individual input components:
+RA1E  0.361 FA1E  0.361 RA1I -0.299 FA1I -0.299 
+Total inputs by connection class:
+SpEx  0.361 SpHp -0.299 TotE  0.361 TotH -0.299 GTot  0.062 
+
+==>T1MVBack CELL 0  AT   0, 0    Si= 0.587
+Individual input components:
+RA1E  1.309 FA1E  1.309 RA1I -0.722 FA1I -0.722 
+Total inputs by connection class:
+SpEx  1.309 SpHp -0.722 TotE  1.309 TotH -0.722 GTot  0.587 
+
+Changes array:   1017.0  9619.0       0
+
+Series 1  Trial 7 (6.000 ms)
+BBD SENSE FakeSense RETURNED OBJECT 0 FROM CLASS 0
+BBD SENSE IdSense RETURNED OBJECT 13 FROM CLASS 7
+   
+FakeSense          0.070   0.570
+                   0.095   0.595
+                   0.120   0.620
+                   0.145   0.645
+                   0.170   0.670
+                   0.195   0.695
+                   0.220   0.720
+                   0.245   0.745
+                   0.270   0.770
+                   0.295   0.795
+   
+IdSense            0.070   0.320   0.570   0.820
+                   0.095   0.345   0.595   0.845
+                   0.120   0.370   0.620   0.870
+                   0.145   0.395   0.645   0.895
+                   0.170   0.420   0.670   0.920
+                   0.195   0.445   0.695   0.945
+                   0.220   0.470   0.720   0.970
+                   0.245   0.495   0.745   0.995
+                   0.270   0.520   0.770   1.020
+                   0.295   0.545   0.795   1.045
+
+Series 1  Trial 7 (6.000 ms) Cycle 1
+==>T1MVFwd  CELL 0  AT   0, 0    Si= 0.071
+Individual input components:
+RA1E  0.383 FA1E  0.383 RA1I -0.312 FA1I -0.312 
+Total inputs by connection class:
+SpEx  0.383 SpHp -0.312 TotE  0.383 TotH -0.312 GTot  0.071 
+
+==>T1MVBack CELL 0  AT   0, 0    Si= 0.595
+Individual input components:
+RA1E  1.330 FA1E  1.330 RA1I -0.735 FA1I -0.735 
+Total inputs by connection class:
+SpEx  1.330 SpHp -0.735 TotE  1.330 TotH -0.735 GTot  0.595 
+
+Changes array:   1157.0  9744.0       0
+
+Series 1  Trial 8 (7.000 ms)
+BBD SENSE FakeSense RETURNED OBJECT 0 FROM CLASS 0
+BBD SENSE IdSense RETURNED OBJECT 12 FROM CLASS 8
+   
+FakeSense          0.080   0.580
+                   0.105   0.605
+                   0.130   0.630
+                   0.155   0.655
+                   0.180   0.680
+                   0.205   0.705
+                   0.230   0.730
+                   0.255   0.755
+                   0.280   0.780
+                   0.305   0.805
+   
+IdSense            0.080   0.330   0.580   0.830
+                   0.105   0.355   0.605   0.855
+                   0.130   0.380   0.630   0.880
+                   0.155   0.405   0.655   0.905
+                   0.180   0.430   0.680   0.930
+                   0.205   0.455   0.705   0.955
+                   0.230   0.480   0.730   0.980
+                   0.255   0.505   0.755   1.005
+                   0.280   0.530   0.780   1.030
+                   0.305   0.555   0.805   1.055
+
+Series 1  Trial 8 (7.000 ms) Cycle 1
+==>T1MVFwd  CELL 0  AT   0, 0    Si= 0.079
+Individual input components:
+RA1E  0.405 FA1E  0.405 RA1I -0.326 FA1I -0.326 
+Total inputs by connection class:
+SpEx  0.405 SpHp -0.326 TotE  0.405 TotH -0.326 GTot  0.079 
+
+==>T1MVBack CELL 0  AT   0, 0    Si= 0.602
+Individual input components:
+RA1E  1.350 FA1E  1.350 RA1I -0.748 FA1I -0.748 
+Total inputs by connection class:
+SpEx  1.350 SpHp -0.748 TotE  1.350 TotH -0.748 GTot  0.602 
+
+Changes array:   1296.0  9868.0       0
+
+Series 1  Trial 9 (8.000 ms)
+BBD SENSE FakeSense RETURNED OBJECT 0 FROM CLASS 0
+BBD SENSE IdSense RETURNED OBJECT 11 FROM CLASS 9
+   
+FakeSense          0.090   0.590
+                   0.115   0.615
+                   0.140   0.640
+                   0.165   0.665
+                   0.190   0.690
+                   0.215   0.715
+                   0.240   0.740
+                   0.265   0.765
+                   0.290   0.790
+                   0.315   0.815
+   
+IdSense            0.090   0.340   0.590   0.840
+                   0.115   0.365   0.615   0.865
+                   0.140   0.390   0.640   0.890
+                   0.165   0.415   0.665   0.915
+                   0.190   0.440   0.690   0.940
+                   0.215   0.465   0.715   0.965
+                   0.240   0.490   0.740   0.990
+                   0.265   0.515   0.765   1.015
+                   0.290   0.540   0.790   1.040
+                   0.315   0.565   0.815   1.065
+
+Series 1  Trial 9 (8.000 ms) Cycle 1
+==>T1MVFwd  CELL 0  AT   0, 0    Si= 0.088
+Individual input components:
+RA1E  0.427 FA1E  0.427 RA1I -0.339 FA1I -0.339 
+Total inputs by connection class:
+SpEx  0.427 SpHp -0.339 TotE  0.427 TotH -0.339 GTot  0.088 
+
+==>T1MVBack CELL 0  AT   0, 0    Si= 0.610
+Individual input components:
+RA1E  1.371 FA1E  1.371 RA1I -0.761 FA1I -0.761 
+Total inputs by connection class:
+SpEx  1.371 SpHp -0.761 TotE  1.371 TotH -0.761 GTot  0.610 
+
+Changes array:   1437.0  9993.0       0
+
+Series 1  Trial 10 (9.000 ms)
+BBD SENSE FakeSense RETURNED OBJECT 0 FROM CLASS 0
+BBD SENSE IdSense RETURNED OBJECT 10 FROM CLASS 10
+   
+FakeSense          0.100   0.600
+                   0.125   0.625
+                   0.150   0.650
+                   0.175   0.675
+                   0.200   0.700
+                   0.225   0.725
+                   0.250   0.750
+                   0.275   0.775
+                   0.300   0.800
+                   0.325   0.825
+   
+IdSense            0.100   0.350   0.600   0.850
+                   0.125   0.375   0.625   0.875
+                   0.150   0.400   0.650   0.900
+                   0.175   0.425   0.675   0.925
+                   0.200   0.450   0.700   0.950
+                   0.225   0.475   0.725   0.975
+                   0.250   0.500   0.750   1.000
+                   0.275   0.525   0.775   1.025
+                   0.300   0.550   0.800   1.050
+                   0.325   0.575   0.825   1.075
+
+Series 1  Trial 10 (9.000 ms) Cycle 1
+==>T1MVFwd  CELL 0  AT   0, 0    Si= 0.096
+Individual input components:
+RA1E  0.449 FA1E  0.449 RA1I -0.353 FA1I -0.353 
+Total inputs by connection class:
+SpEx  0.449 SpHp -0.353 TotE  0.449 TotH -0.353 GTot  0.096 
+
+==>T1MVBack CELL 0  AT   0, 0    Si= 0.618
+Individual input components:
+RA1E  1.392 FA1E  1.392 RA1I -0.774 FA1I -0.774 
+Total inputs by connection class:
+SpEx  1.392 SpHp -0.774 TotE  1.392 TotH -0.774 GTot  0.618 
+
+Changes array:   1577.0 10118.0       0
+   
+END SERIES 1 at 10.000 ms (sim), 0 sec (CPU)
+
+---ARITHMETIC OVERFLOW COUNTS---
+        0 Total overflows
+
+   
+                              ---SUMMARY STATISTICS FOR MEX-Test REGION---
+
+            HIGHEST    MEAN POS   CELLS POS   A ABOVE PT     LOWEST    MEAN NEG   CELLS NEG   A BELOW NT
+CELL TYPE     A(I)       A(I)     PER TRIAL    PER TRIAL      A(I)       A(I)     PER TRIAL    PER TRIAL
+  Fwd        0.096       0.058       1.000       1.000           0           0           0           0
+  Back       0.618       0.583       1.000       1.000           0           0           0           0
+
+              MEAN     SHARPNESS     PERCENT     PERCENT       S(I) TRUNCATED
+CELL TYPE   RESPONSE   STATISTIC      REFRAC     SPIKING      DEPOL    HYPERPOL
+  Fwd        0.058           0           0           0           0           0
+  Back       0.583           0           0           0           0           0
+
+   
+                                   ---DETAILED STATISTICS FOR MEX-Test REGION, Fwd CELL TYPE---
+
+DISTRIBUTIONS AND RESPONSE COMPONENTS
+S(I) <  0.06    0.13    0.19    0.25    0.31    0.38    0.44    0.50    0.56    0.63    0.69    0.75    0.81    0.88    0.94    1.00
+A(1)   0.041   0.083       0       0       0       0       0       0       0       0       0       0       0       0       0       0
+DIST  0.6000  0.4000       0       0       0       0       0       0       0       0       0       0       0       0       0       0
+CUME  1.0000  0.4000       0       0       0       0       0       0       0       0       0       0       0       0       0       0
+HIGH       6       4       0       0       0       0       0       0       0       0       0       0       0       0       0       0
+
+DISTRIBUTION OF CONNECTION STRENGTHS
+ CIJ   -0.94   -0.81   -0.69   -0.56   -0.44   -0.31   -0.19   -0.06    0.06    0.19    0.31    0.44    0.56    0.69    0.81    0.94
+C(1)       0       0  0.1000       0  0.2000  0.1000       0       0       0       0       0  0.3000  0.1000  0.2000       0       0
+
+DISTRIBUTION OF INPUT Sj
+ mV  <  -112     -96     -80     -64     -48     -32     -16       0      16      32      48      64      80      96     112     256
+OldS < -0.88   -0.75   -0.62   -0.50   -0.38   -0.25   -0.12       0    0.12    0.25    0.38    0.50    0.62    0.75    0.88    2.00
+A(1)       0       0       0       0       0       0       0       0  0.3200  0.5000  0.1800       0       0       0       0       0
+
+   
+                                   ---DETAILED STATISTICS FOR MEX-Test REGION, Back CELL TYPE---
+
+DISTRIBUTIONS AND RESPONSE COMPONENTS
+S(I) <  0.06    0.13    0.19    0.25    0.31    0.38    0.44    0.50    0.56    0.63    0.69    0.75    0.81    0.88    0.94    1.00
+A(1)       0       0       0       0       0       0       0       0   0.553   0.591       0       0       0       0       0       0
+DIST       0       0       0       0       0       0       0       0  0.2000  0.8000       0       0       0       0       0       0
+CUME  1.0000  1.0000  1.0000  1.0000  1.0000  1.0000  1.0000  1.0000  1.0000  0.8000       0       0       0       0       0       0
+HIGH       0       0       0       0       0       0       0       0       2       8       0       0       0       0       0       0
+
+DISTRIBUTION OF CONNECTION STRENGTHS
+ CIJ   -0.94   -0.81   -0.69   -0.56   -0.44   -0.31   -0.19   -0.06    0.06    0.19    0.31    0.44    0.56    0.69    0.81    0.94
+C(1)       0  0.1000       0  0.2000       0       0       0       0       0  0.1000  0.2000  0.1000  0.3000       0       0       0
+
+DISTRIBUTION OF INPUT Sj
+ mV  <  -112     -96     -80     -64     -48     -32     -16       0      16      32      48      64      80      96     112     256
+OldS < -0.88   -0.75   -0.62   -0.50   -0.38   -0.25   -0.12       0    0.12    0.25    0.38    0.50    0.62    0.75    0.88    2.00
+A(1)       0       0       0       0       0       0       0       0       0       0  0.3200  0.1800       0       0  0.3200  0.1800
+   
+Normal CNS termination

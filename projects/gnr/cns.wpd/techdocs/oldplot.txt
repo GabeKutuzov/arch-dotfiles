@@ -1,0 +1,2405 @@
+                        The ROCKS Routines
+                        Plotting Interface
+                        (C Implementation)
+                        Programmer's Guide
+
+
+
+
+
+                                by
+
+
+
+
+                       George N. Reeke, Jr.
+                    The Rockefeller University
+                      New York, N. Y.  10021
+
+
+
+
+
+                          April 24, 1998
+                       Revised, May 2, 2006
+                      Revised, Feb. 28, 2008
+                      Revised, June 19, 2008
+
+
+INTRODUCTION
+
+    This document describes the plotting interface defined for
+the C language implementation of the ROCKS library.  The ROCKS
+plotting routines support generation of a "graphics metafile"
+concurrently with direct graphics output.  Metafile formats are
+defined in this document.  General information about the ROCKS
+routines that are not related to plotting is contained in a
+separate file, APNDX5.CRK.
+
+    The plotting functions represent a considerable extension of
+the set of routines originally described in the CALCOMP manual
+"Programming CALCOMP Electromechanical Plotters" (1974).  The
+ROCKS routines are designed to provide a "lowest common denomi-
+nator" system that can be easily implemented on most graphical
+displays and output devices.  Three-dimensional plotting routines
+are not provided in the current version.
+
+    The interface is designed to permit cross-language invocation
+of ROCKS plotting functions from FORTRAN programs.  In a few
+cases, alternative function names are provided for C and FORTRAN
+invocation.  Details are given below.
+
+
+SUMMARY OF PLOTTING ROUTINES
+
+    As of this writing, the plot library exists in two versions,
+with source code contained in $(HOME)/src/plot (new version) and
+$(HOME)/src/oldplot (old version).  The new version is under
+construction and not currently compatible with the rendering
+program, mfdraw.  Accordingly, at present, the calls for the
+oldplot library must be used in writing new code.  Differences
+are given in the descriptions below.
+
+    Call newplt() to begin each new plot.  Call pencol() to specify a
+color by name and color() to specify a color by its index value.  Call
+ctload() to load a hardware color table, and ctlkup() to look up the
+color() index corresponding to a given name (new lib only).  Call
+pentyp() to specify the type of pen to be used (may be used to select
+dashed or dotted lines on CRT displays), or penset() to combine the
+functions of pentyp() and pencol().  Call retrace() (retrce() from
+FORTRAN programs) to modify the thickness of drawn lines.  Call
+gmode() to set the drawing mode (new lib only).  Call plot() to draw
+points, line() to draw lines, polyln() to draw lines between multiple
+points, and rect() to draw rectangles.  Call arc() to draw arcs,
+arrow() or arrow2() to draw arrows, circle() to draw circles, ellips()
+to draw ellip-ses.  Call symbol() to plot text.  Call font() to vary
+the font used by symbol() (new lib only; on systems where supported).
+Call number() to plot numbers as text.  Call axlin() to draw and label
+a linear graph axis, axlog() to draw and label a logarithmic graph
+axis, and axpol() to draw and label axes for a polar plot (axis() is
+an obsolete version of axlin()).  Call bitmap() or bitmaps() to plot a
+monochrome, gray scale, or colored pixel image.  Call factor() to
+rescale a drawing, gscale() to interrogate the current scaling factor,
+and where() to interrogate the current pen location.  Call endplt() to
+clean up the plotter interface at the end of execution.
+
+    On systems where available, setmovie () controls a user interface
+to hold plots for viewing until a particular keyboard or mouse key is
+pressed and to operate an external film recording device.  Functions
+setmf() (new lib) or setmeta() and setmfd() (old lib) control an
+interface for recording plots in a machine-independent "metafile" for
+later playback or immediate display via X graphics.  These control
+routines are described below--it should be understood that they may
+not be implemented on all systems that implement the standard plotting
+routines.
+
+
+Coordinate Systems
+
+    It is sometimes necessary to generate hardcopy plots to some
+absolute scale, whereas CRT displays of the same plots should nor-
+mally be scaled to the largest size that will fit on the device. 
+The ROCKS plotting routines support both situations.  Absolute-
+scale devices interpret all plotting coordinates as being in
+inches.  Metafile formats represent coordinates up to 64" (binary,
+ASCII encodings) or 100" (decimal encoding), permitting plots up
+to 64" x 64" to be generated.  Relative-scale devices scale the
+coordinates such that the dimensions xsiz,ysiz given in the
+newplt() call will just fit in the available plotting area. 
+Hence, for such devices the plotting units are defined implicitly
+by these parameters.
+
+    X increases to the right and y increases up from the specified
+origin.  Plot objects extending beyond the xsiz,ysiz limits are
+clipped where supported.  A plotting scale may be set by calling
+factor() and an origin may be set by calling plot().  Coordinates
+supplied as arguments to each plotting function are multiplied by
+the current scale and translated to the current plot origin before
+use.  Angle arguments to plotting functions are in degrees.
+
+
+Specifying Colors
+
+    Two methods are available for specifying colors.  Routines
+newplt(), pencol() and penset() specify colors explicitly as En-
+glish names (e.g. "red") or as hexadecimal blue-green-red values. 
+The implementation picks the closest available color to the one
+requested.  These routines can handle literal color names entered
+by users.  However, they may be slow because of the need to match
+the color specified in each call with the available device colors. 
+Routine color() specifies colors as color index values.  For more
+precise control of colors (new lib only), the hardware color lookup
+table can be modified by calling ctload().  Calls to color() then
+refer to the user-specified color values.  This method is not as
+portable as pencol() and should be used with caution.
+
+    In order to understand how color control works in the ROCKS
+plotting library, the following design features should be kept in
+mind:
+
+    (1) All color setting routines specify a "current drawing
+color".  Subsequent plotting commands use that color until a new
+one is specified.  On parallel computers, each computational node
+has its own current drawing color, which is unaffected by color
+changes on other nodes.
+
+    (2) The number of bits used to represent color indexes in the
+metafile can be specified by the application, permitting users to
+trade off metafile size against color resolution (new lib only).
+(The number of bits per pixel in color bitmaps must match the
+number specified for color representation in the metafile header.
+Black and white and grayscale bitmaps are also supported, and
+always use one bit and 8 or 16 bits per pixel, respectively.)
+
+    (3) Metafile rendering programs need to map metafile colors to
+the colors actually supported by any particular device.  Some loss
+of color cannot be avoided if the number of colors actually avail-
+able is less than the number represented in the metafile.  Colors
+specified explicitly in calls to newplt(), pencol(), and penset()
+are stored directly in the metafile without being converted to a
+color index.  If the final output device supports more colors than
+the number required to render the metafile color lookup table, the
+extra colors will be used to render exactly some or all of these
+explicitly defined colors.
+
+    (4) The rendering program may or may not provide a way for
+users to control the mapping of metafile colors to actual colors. 
+(This would generally be done only to distinguish colors that
+would otherwise map to the same device color.)  Therefore, the
+mapping of metafile colors to device colors cannot be known at the
+time the application is running.  Nonetheless, for any specified
+metafile color resolution, a default color lookup table (the table
+that maps color index values to red-green-blue values) is implied. 
+
+    (This paragraph applies to new lib only.)  The application, by
+calling ctload(), is permitted to modify any or all of the values in
+the default color lookup table.  Function ctlkup() is provided to
+permit explicit colors to be converted to color indexes so that the
+faster color() routine may be used in place of pencol() or penset()
+in loops.  To avoid undue complexity, ctlkup() ignores color table
+changes made by ctload().  The application is expected to provide its
+own method of mapping explicit colors to color indexes when ctload()
+is used.  (This restriction may be removed in future versions of this
+library.)
+
+    (5) The default color lookup tables are constructed with a
+sequence of bits for each primary color in the order blue (high
+order), green, red (low order).  Let n and r be the quotient and
+remainder when the number of bits allocated for color indexes is
+divided by three.  If r = 0, allocate n bits for each color.  If
+r = 1, allocate n bits for blue and green, and n + 1 bits for red. 
+If r = 2, allocate n bits for blue, and n + 1 bits for green and
+red.  The available range of values for each color is then repre-
+sented by these bits.  This document is deliberately ambiguous as
+to exactly what colors are provided for each value of each color
+bit string, as some experimentation is contemplated.  In particu-
+lar, it is desirable that equal blue, green, and red values in the
+color index should map to gray levels on the device, that color
+index 0 should map to black and the maximum color index should map
+to white, and also that the pure color specified by the maximum
+value for blue, green, or red alone should be as bright as pos-
+sible.  However, all these conditions cannot be met simultaneously
+if r is not zero.
+
+    (6) The background of a plot is assumed to be black on display
+devices and white on hard copy devices unless explicitly changed
+by the user (by drawing a filled rectangle of the desired size
+before executing any other drawing commands).  For convenience,
+the color name "black" is translated to white when drawing on a
+display device, but is not translated when drawing on a hard copy
+device.  However, color index 0 (referenced in a color() or
+bitmap() call) is not translated, but draws black on the display.
+
+
+GRAPHICS METAFILE FORMATS
+
+    The ROCKS plotting routines support generation of a "graphics
+metafile", which may contain data for one or more graphics frames.
+Graphics metafiles may be viewed with the same program, mfdraw,
+that uses OpenGL and X grphics to render plots generated online
+by applications using the graphics library.  mfprint is an
+obsolete SunOS program that performed this function on SunOS
+workstations.
+
+    To permit compact implementation, a special-purpose metafile
+has been defined, rather than using any of the published standard
+file formats.  Three alternative encodings of the metafile are
+defined:  decimal, binary, and ASCII.  At present, only the decimal
+metafile is implemented; the information in the following para-
+graph is for planning purposes only:
+
+   The decimal encoding is intended primarily for debugging, but may
+also be used for interchange of metafiles between unlike machines.
+It is the least compact of the three, but is portable and human-
+readable.  The binary encoding may be used for storing plots, for
+communication between processors of parallel computer systems, or
+wherever binary transparent communications links are available.  It
+is the most compact of the three.  Finally, the ASCII encoding is
+intended for transmission of metafiles across 7-bit communications
+links.  It uses printable ASCII characters to encode binary plotting
+data.  The ASCII and binary encodings use only two's complement fixed-
+point, not floating point, representations of numbers to permit
+maximum portability in hybrid systems.  However, sending and receiving
+machines must have the same character width.  A particular library may
+support one or more of the three encodings.
+
+    Commands in all three encodings consist of a single ASCII letter
+(upper and lower case letters may have different meanings), plus '@',
+'[', '\', ']', '^') followed by appropriate numeric and string
+parameters.  The same data items are given in the same order in all
+three encodings to simplify support of multiple encodings in one
+library.  All coordinates are in inches (which may be rescaled by
+relative-scale devices as described above).  Angles are in degrees for
+the decimal encoding and in cycles for the binary and ASCII encodings.
+All character strings are encoded in ASCII, even on systems that have
+other native character codes (e.g.  EBCDIC).
+
+    In anticipation of future devices with increased color range and
+spatial resolution, the metafile provides for variable-width repre-
+sentations of color indexes and coordinates.  (In the old library, the
+defaults cannot be changed.)  Color index resolution defaults to 8
+bits, but can be increased up to 24 bits.  (The decimal encoding uses
+the minimum number of hexadecimal digits needed to represent the
+specified number of bits.  Unused bits at the left within each pixel
+are set to zero.)  Coordinate resolution defaults to 3 decimal digits
+(decimal encoding) or 10 bits (binary and ASCII encodings), but can be
+increased up to 24 fraction bits.  (The default is sufficient to
+specify the location of any dot on a 600 dpi laser printer or a 1/720"
+resolution type-setter.  Suggested values are 10 bits or 7 bits:  10
+bits implies a total of 36 bits or 6 ASCII characters for a full-
+length x,y coordinate pair; 7 bits implies a total of 30 bits or 5
+ASCII characters for a full-length x,y coordinate pair.
+
+
+The decimal encoding
+
+    In this encoding, all numbers are decimal or hexadecimal. 
+Record formats are described in a FORTRAN FORMAT-like notation (if
+unfamiliar with this notation, see description of convrt()).  Five
+non-FORTRAN notations are used:  (1) The width specification for
+integer and floating-point fields ('w' in "Iw" and "Fw.d", respec-
+tively) indicates the maximum width of that field.  Leading zeros
+in decimal fields are suppressed except in the three header
+records.  The end of each value is indicated by replacing the last
+digit, 0 through 9, with a letter, 'a' through 'i', respectively. 
+(Metafile versions prior to V1C are not compatible with this
+compression scheme.)  (2) "Fw.d" indicates a floating point value
+scaled by 10 to the power 'd' and stored in up to 'w' digits.  The
+decimal point is suppressed.  If 'd' is given explicitly, e.g.
+"F6.3", that value is used.  Otherwise, the number of fraction
+digits is given by the setmf() parameter 'lcf' (default: 3). 
+(3) "Zc" indicates a color index encoded as a hexadecimal integer
+with c digits.  c = [(lci+3)/4], where 'lci' is a setmf()
+parameter (default: 8 bits, requiring 2 hex digits).  (4) "An"
+indicates a text string of variable length having n characters,
+where 'n' is a variable appearing earlier in the same metafile
+record.  (5) A variable repetition count is indicated by placing
+the value in parentheses before the format code, e.g. (np)Fw.d
+indicates "np" repetitions of format "Fw.d".
+
+    Each record ends with a 'newline' character not indicated in
+the format.  All records are packed into a single data stream in
+UNIX style.  On an IBM system, RECFM=VSB should be used.
+
+
+The binary encoding
+
+    In the binary encoding, each command begins on a character
+boundary, permitting command streams from multiple nodes in a
+parallel computer to be merged without bit shifting, and making
+the initial command letters readable in a dump.  The parameters
+following the command letter vary in length according to their
+types and magnitudes as described next.  These are packed into a
+continuous bit stream following the initial letter.  Extra bits
+required at the end of a command to align the next command on a
+character boundary may contain any values.  The creating and
+reading systems must have the same character width.
+
+    All bit values are encoded in "big-endian" format, that is,
+when the metafile is viewed as a string of bits, the high-order
+bit of each numerical variable comes first (closest to the start
+of the file) and the low-order bit of each variable comes last
+(closest to the end of the file).  On most machines, these bits
+will be collected into 8-bit bytes, and the order of bits in a
+byte in memory must be such that when a byte is set to the
+numerical value of any ASCII character and then recorded in a file
+and read back as a character, that character must be obtained. 
+Software which implements reading or writing of binary metafiles
+on machines which use other bit or byte orders must translate the
+data as required on input and on output to meet this standard.
+
+    The following table indicates the encoding used for each type
+of parameter which may occur in the ROCKS graphics calls.  A type
+indicator is also defined for each.  This type indicator is used
+in the metafile record description to indicate the type of each
+parameter, which in turn implies its recording format.  'lci'
+indicates the user-requested number of bits for color indexes and
+'lcf' indicates that for coordinates.
+
+    Many of the parameters have alternative short and long
+encoding forms.  Metafile interpreter routines must be able to
+read all alternative forms for each type of parameter; metafile
+generating routines should pick the shortest encoding compatible
+with the data in each instance.  One of the encodings allowed for
+x,y coordinates is the 2-bit code '00', which indicates that the
+previous value of the subtype in question is to be reused.  For
+this purpose, metafile handling routines are required to maintain
+a state consisting of the most recent values of the five subtypes: 
+x, y, radius, width, and height (designated by type indicators
+x,y,r,w,h, respectively).  Code '00' can be generated whenever a
+parameter of one of these subtypes in the plot call being proces-
+sed matches the stored value.  Type codes x',y' indicate values
+that can be encoded as '00' if they match the current stored value
+of x or y, respectively, but which themselves do not update these
+stored values.  The stored values are invalidated at the start of
+a new frame and, in parallel libraries, at the start of each new
+metafile buffer to force the full value to be written at its next
+occurrence.  A similar treatment is required in parallel computers
+for the color and retrace parameters, and for all parameters in
+the header portion of bitmap records, to prevent plot calls on one
+node from disturbing parameters set on another node.  Because co-
+lors set by pencol() and color() calls may be mapped differently
+to device colors when a metafile is interpreted, parallel libra-
+ries must keep track on each node of which color-setting routine
+was called most recently, and must use the same method to reset
+the color when a new buffer is initiated.
+
+              TYPE
+PARAMETER   INDICATOR   ENCODING
+---------   ---------   ----------------------------------------
+Coordinate  x,y,r,w,h   00.  Indicates that previous value of
+                        parameter of same type is to be used.
+
+                        01 + lcf fraction bits.  This encoding can
+                        be used for positive parameter values up
+                        to 1.0" (negative values must use the '11'
+                        form).  When used for types r, w, and h, a
+                        zero fraction is interpreted as 1.0"; when
+                        used for types x or y, a zero fraction is
+                        interpreted as 0.0".
+
+                        10 + 6 integer bits + lcf fraction bits. 
+                        This encoding indicates a parameter value
+                        between 0.0" and 64.0".
+
+                        11 + 6 integer bits + lcf fraction bits. 
+                        This encoding indicates a parameter value
+                        between -64.0" and 0.0", expressed as the
+                        two's complement of the absolute value.
+
+Angle          a        0 + sign + 4 fraction bits.  (Angle value
+                        is in cycles.  This notation can express
+                        angles that are commonly used for axis
+                        directions in 1/16 cycle increments.)
+
+                        1 + sign + 16 fraction bits.  (Angle value
+                        in cycles.  This notation can express any
+                        angle with a precision of 2**(-16) cycle,
+                        or approximately 20 arc min.)
+
+Character       c<n>    String of n 8-bit ASCII characters.  'n'
+                        may be a decimal integer or the literal
+                        character 'n', which indicates that the
+                        length of the string is given by a vari-
+                        able appearing earlier in the same meta-
+                        file record.
+
+General         g       Sign + 17 integer bits + 10 fraction bits. 
+                        This notation is used for axis ticks or
+                        other generic floating point values.  It
+                        permits a range of +/-100,000--Axis labels
+                        outside this range should be scaled by the
+                        application.  Resolution is approx. 0.001.
+
+Color index     j       lci integer bits.  This notation is used
+                        for color index values.
+ 
+Unsigned int    k<n>    n unsigned integer bits.  This notation is
+                        used for small unsigned integer arguments
+                        such as the 'ndec' argument of number().
+
+Signed int      s       0 + sign + 4 integer bits.
+                        1 + sign + 10 integer bits.
+                        These notations are used for the string-
+                        length arguments of symbol() and other
+                        routines.  The short form may be used when
+                        the length is less than 16 characters.
+
+    A variable repetition count is indicated by placing the value
+in parentheses before the format code, e.g. "(np)(x,y)" indicates
+"np" repetitions of x,y coordinate pairs.
+
+
+The ASCII encoding
+
+    In this encoding, the initial letter of each command always
+occupies a single character.  The parameters following the command
+letter are encoded exactly as described for the binary encoding,
+then the string of bits produced by this encoding is broken up
+into a series of 6-bit units, each of which may be thought of as a
+digit in a base-64 arithmetic system.  Each such digit is encoded
+as an ASCII printable character according to the table given in
+Appendix 3.  An exception to this procedure is the ASCII data in
+the first three records, which is copied unchanged to the output
+as unpacked characters.  (Note:  This definition permits systems
+with different character widths to exchange ASCII, but not binary
+encoded metafiles.) 
+
+    Each command may be followed optionally by a newline character
+on a byte boundary.
+
+    None of the command letters is used to encode numerical data. 
+Hence, a metafile interpreter program that loses synchronization
+because of dropped data on a modem link can easily locate the
+beginning of the next command.  (Because the bit string encoding
+the parameters is broken into 8-bit units in the binary encoding
+and into 6-bit units in the ASCII encoding, the number of padding
+bits at the end of each command may differ for the two encodings.) 
+Note that data values between 0x20 and 0x3f are encoded directly
+as the corresponding ASCII character, while values between 0x00
+and 0x1f are shifted to the range 0x5f to 0x7e to avoid use of
+control and delete characters.  This encoding changes the normal
+low-order bit values of the latter set of characters, but is
+chosen because it can be accomplished with a single 'if'
+statement.
+
+
+Metafile Data Records:
+
+    Each metafile begins with a header containing three records. 
+The encoding of these records is the same in all three formats:
+
+
+Record 1:  File identification and version number
+
+Format:  13HPLOTDATA V1C ,A1,2I3
+Data:  enc,lci,lcf
+    enc = File encoding:  D = decimal, B = binary, A = ASCII
+    lci = length of color index values in bits (all encodings)
+    lcf = length of coordinate fractions in decimal digits (D
+        encoding) or in bits (B or A encoding)
+Generated by:  newplt()
+Note:  V1C gives the version number of the metafile described
+    in this document and will be updated when the specification
+    changes.  Versions prior to V1C do not have the enc, lci, or
+    lcf fields.  These files may be read by V1C interpreters if
+    the values are taken to be enc = D, lcf = 3, lci = don't care
+    (color indexes were not used in earlier versions).
+
+
+Record 2:  Application title information
+
+Format:  A60
+Data:  title
+    title = user-provided title information for current run
+Generated by:  newplt()
+Note:  The title field is obtained by calling gettit().
+
+
+Record 3:  Time stamp
+
+Format:  6A2
+Data:  year,month,day,hour,min,sec
+Generated by:  newplt()
+Note:  The time stamp is obtained by calling tstamp().
+
+
+    Data for one or more frames follow the header.  Each frame
+begins with a "Start of Frame" record defined as follows:
+
+
+"Start of Frame" record:
+
+Decimal format:  "[",I4,4F5.d,I1,An
+Binary format:   "[",k20,w,h,x,y,s,cn
+Data:  index,xsiz,ysiz,xorg,yorg,nc,chart
+    index = frame number, counting from 1 in each file.  May not
+        be consecutive if different frames are written to the
+        metafile than are plotted online.
+    xsiz = width of plot (maximum value attained by any x coordi-
+        nate in the following plot).  The value is in inches if
+        sent to a device, such as a hard-copy plotter, that
+        maintains absolute scale.
+    ysiz = height of plot (maximum value attained by any y coordi-
+        nate in the following plot).  The value is in inches if
+        sent to a device, such as a hard-copy plotter, that
+        maintains absolute scale.
+    xorg = x origin of plot
+    yorg = y origin of plot
+    nc = number of characters in 'chart' string
+    chart = type of paper or other medium requested for this
+        frame.  Implementations are free to ignore requests for
+        chart types that they do not support.  'DEFAULT' is always
+        supported and yields the default chart type.
+Generated by:  newplt()
+Notes:  xsiz, ysiz, xorg, yorg, and chart are the corresponding
+    arguments to newplt().  Sufficient paper or other resources
+    for a plot of the specified size is requested (absolute scale
+    devices), or the overall scale is adjusted such that xsiz*ysiz
+    in user coordinates will fit in the available plotting space
+    with preservation of the original aspect ratio (relative scale
+    devices).  The current plotting position is set to xorg,yorg
+    and subsequent plotting coordinates are interpreted relative
+    to this origin.  The pen type and pen color arguments of
+    newplt() are recorded separately in Pentype and Pencolor
+    records (see below).
+
+
+    Each frame may contain any desired plotting records construct-
+ed according to the following definitions.  Record formats are
+given in alphabetic order according to the initial command letter. 
+No special record formats are defined for number, axis, and arrow-
+drawing commands--these are expanded in the metafile to plotting
+primitives.
+
+    In the following descriptions, the notation "L"/"i" indicates
+a fixed field which contains the literal string "L" in the decimal
+encoding and the binary value "i" in the binary & ASCII encodings.
+
+
+Arc record:
+
+Decimal format:  "A",A1,4F5.d,F7.3
+Binary format:   "A",k2,x,y,x',y',a
+Data:  type,xc,yc,xs,ys,angle
+    type = the literal value "C"/"00" indicating a circular arc. 
+        The value "E"/"01" is reserved for future use to define
+        elliptical arcs.
+    xc,yc = x,y coordinates of center of circular arc
+    xs,ys = x,y coordinates of start of arc
+    angle = angular extent of arc (drawn counterclockwise from
+        xs,ys if angle > 0, clockwise if angle < 0)
+Generated by:  arc() call
+
+
+Bitmap record (unscaled):
+
+Decimal format:  "B",2Z1,2F5.d,6I4,(wd*ht)Zc
+Binary format:   "B",2k4,x,y,6k14,(wd*ht)j
+Data:  type,mode,x1,y1,rowlen,colht,xoff,yoff,wd,ht,p11,p12,...,
+        p21,p22,...,p(wd,ht)
+Notes: (1) An unscaled bitmap is plotted with one pixel in the bitmap
+        data mapped to one pixel on the graphics display.  This may
+        be most useful for large bitmaps where best performance is the
+        issue.  A scaled bitmap (see below) is scaled to fit a specified
+        width and height.  These dimensions are given in "inches" so
+        vector objects can be accurately superimposed on the bitmap.
+       (2) A bitmap record may contain data for a rectangular fragment
+        of a full bitmap as a result of parallel computation or
+        buffering.  The fragments are recombined during plotting.
+        When a bitmap is divided among two or more physical records
+        in a parallel computer, the bitmap() routine is required to
+        provide a new bitmap record header at the start of each
+        physical record (node to host message) to avoid disruption
+        of the bitmap by intervening data from other nodes.
+    type = a hexadecimal digit encoding the type of bitmap.  Its value
+        is BM_BW (0) if the bitmap contains black-and-white data,
+        BM_GS (1) if the bitmap contains 8-bit grayscale data, BM_GS16
+        (2) if the bitmap contains 16-bit grayscale data, BM_C48 (3)
+        if the bitmap contains 48-bit (16 bits per color) color data,
+        BM_COLOR (4) if the bitmap contains indexed color data, BM_C8
+        (5) if the bitmap contains 8-bit (2-3-3 BGR) color data,
+        BM_C16 (6) is the bitmap contains 16 bit (5 bits per color,
+        leftmost bit ignored) color data, or BM_C24 (7) if the bitmap
+        contains 24 bit (8 bits per color) color data.  Other values
+        may be defined in future versions to indicate bitmap
+        compression.  In a black-and-white bitmap, each pixel value is
+        0 to indicate background color or 1 to indicate foreground
+        color.
+    mode = a hexadecimal digit indicating the drawing mode of the bitmap
+        (see description of bitmap() function).  Values are GM_SET (0)
+        to replace any existing color at each position of the bitmap
+        with the bitmap color, GM_XOR (1) to "xor" the bitmap color
+        with any existing color at each position, GM_AND (2) to "and"
+        the bitmap color with any existing color at each position,
+        and GM_CLR (3) to clear (set to background) each bitmap position
+        at which the bitmap color index is not zero.  The high order
+        bits are reserved for future use and must be 0.
+    x1,y1 = x,y display coordinates (in inches) of lower left-hand corner
+        of full bitmap (of which this metafile record may correspond to
+        only a portion).  These values may be modified by pixel offsets
+        xoff,yoff, respectively.
+    rowlen,colht = width and height of the complete bitmap (not just the
+        portion being plotted by this call) in pixels.
+    xoff,yoff = positive x,y offsets (in pixels) of lower left-hand corner
+        of this bitmap or bitmap fragment from the origin (x1,y1).  These
+        parameters may be set by a bitmap() function in a parallel
+        computer to subdivide bitmaps into rectangular tiles plotted from
+        different processors.  'xoff' is the same as the 'xoffset'
+        parameter of bitmap(), but 'yoff' may differ from 'yoffset'
+        depending on the row scanning order and buffering.
+    wd,ht = width and height of this bitmap segment, in pixels (these
+        parameters do not reset the w,h metafile variables).
+    p11,p12, etc.  Pixel values defining a bit map.  If the 'type'
+        value is BM_BW, there is one bit per pixel.  If the 'type'
+        value is BM_COLOR, there are 'lci' bits per pixel.  Otherwise,
+        there are one of more bytes per pixel as defined by the BM_xxx
+        options in plotdefs.h.  Pixels are arranged in "television"
+        scanning order, horizontally from left to right and then ver-
+        tically from top to bottom.  In all encodings, each successive
+        row in memory is aligned on a byte boundary.  The data
+        transmitted for each row begin with the byte containing the
+        'xoff' pixel and end with the byte containing the 'xoff' +
+        'wd' - 1 pixel.  Any unused bits in the first and last bytes
+        must be discarded by the program reading the metafile.  The
+        bitmap() function may accept alternative orderings of bit
+        maps, but these must be rearranged to the standard order given
+        here for recording in metafiles.
+Generated by:  bitmap() call
+Note:  Bitmaps may be ignored if the output device does not
+    support them.
+
+
+Bitmap record (scaled):
+
+ASCII format:  "b",2Z1,4F5.d,6I4,(wd*ht)Zc
+Binary format:  "b",2k4,x',y',w,h,6k14,(wd*ht)j
+Data:  type,mode,x1,y1,bwd,bht,rowlen,colht,xoff,yoff,wd,ht,[skip],
+        p11,p12,..., p21,p22,...,p(wd,ht)
+Notes: All data items same as for unscaled bitmap except 'bwd', 'bht'.
+    bwd,bht = width and height of full bitmap (of rowlen columns and
+       colht rows) in inches.  The data are scaled to fit in the
+       specified rectangular area.  (The scales in the x and y
+       directions are not necessarily equal.)
+Generated by: bitmaps() call
+Note:  Bitmaps may be ignored if the output device does not support them.
+
+
+Circle record:
+
+Decimal format:  "C",A1,3F5.d
+Binary format:   "C",k2,x,y,r
+Data:  fill,xc,yc,radius
+    fill = the literal value "O"/"00" to plot an outline circle or
+        "F"/"01" to plot a filled circle.  The value "P"/"10" is
+        reserved for future use to define a pattern fill.
+    xc,yc = x,y coordinates of center of circle
+    radius = radius of circle
+Generated by:  circle() call
+Note:  Filled circles may be plotted as open circles if the output
+    device does not support them.  The NCUBE version does not
+    support filled circles.
+
+
+Draw record:
+
+Decimal format:  "D",2F5.d
+Binary format:   "D",x,y
+Data:  x,y
+    x = x coordinate of point to be plotted
+    y = y coordinate of point to be plotted
+Generated by:  plot() called with 'ipen' = PENDOWN
+Note:  This record signifies that a line in the current color
+    should be drawn from the current plotting position to the
+    point x,y and then the current plotting position should be set
+    to x,y.  The line is drawn only once, regardless of the
+    current retrace setting.
+
+
+Ellipse record:
+
+Decimal format:  "E",A1,4F5.d,F7.3
+Binary format:   "E",k2,x,y,w,h,a
+Data:  fill,xc,yc,wd,ht,angle
+    fill = the literal value "O"/"00" to plot an outline ellipse
+        or "F"/"01" to plot a filled ellipse.  The value "P"/"10"
+        is reserved for future use to define a pattern fill.
+    xc,yc = x,y coordinates of center of ellipse
+    wd = width of ellipse (half length of first axis)
+    ht = height of ellipse (half length of second axis)
+    angle = rotation of wd axis from positive x axis
+Generated by:  ellips() call
+Note:  Filled ellipses may be plotted as open ellipses if the
+    output device does not support them.  The NCUBE version does
+    not support filled ellipses.
+
+
+Font record (new lib only):
+
+Decimal format:  "F",I1,An
+Binary format:   "F",s,cn
+Data:  n,font
+    n = number of characters in font name
+    font = name of font to be used for subsequent text plotting
+Generated by:  font() call
+Note:  Font support is device dependent.  The font name 'DEFAULT'
+    is always available and causes the program to plot stroke text
+    using an internal font which produces lettering with the same
+    aspect ratio on all devices (character width = (4/7) * height,
+    spacing = (6/7) * height).  The default font is initially
+    active.  Furthermore, any font request which is not recognized
+    by the implementation is mapped to the default font.
+
+
+Retrace record:
+
+Decimal format: "H",I1
+Binary format:  "H",k4
+Data:  krt = number of times following objects should be retraced. 
+    (0 <= krt <= 9)
+Generated by:  retrace() call
+Note:  The default value of krt is 0, indicating that each open
+    object is drawn once, at standard line thickness.  Increasing
+    values of krt cause objects to be drawn multiple times, such
+    that the total line width is approximately 0.01*krt inches. 
+    Command code "H" may be thought of as standing for "heavi-
+    ness".
+
+
+Color index record:
+
+Decimal format:  "I",Zc
+Binary format:   "I",j
+Data:  index
+    index = color index to be used for following plot commands
+Generated by:  color() call
+
+
+Color table load record (new lib only):
+
+Decimal format:  "J",Zc,3I3
+Binary format:   "J",j,3k8
+Data:  index,blue,green,red
+    index = index of color table entry to be loaded
+    blue = blue value of color identified by index
+    green = green value of color identified by index
+    red = red value of color identified by index
+Generated by:  ctload()
+Note:  Blue, green, red, and index values are usually restricted
+    by hardware to the range 0,...,255.
+
+
+Pen color record:
+
+Decimal format:  "K",I1,An
+Binary format:   "K",s,cn
+Data:  nc,cname
+    nc = number of characters in color name
+    cname = name of color to be used next
+Generated by:  newplt(), pencol(), or penset() call
+Note:  cname may be the English name of a color, e.g. "RED", or it
+    may be a hexadecimal expression defining the desired color as
+    defined in the pencol() description (see below).  Colors may be
+    given as twelve-bit values (4 bits each for blue, green, red)
+    or as twenty-four bit values (8 bits for each primary color).
+    Twelve-bit colors are expressed as "Xbgr" where b, g, and r are
+    single hexadecimal digits expressing the blue, green, and red
+    values respectively on a scale where 'F' (15) is the maximum
+    value for each color.  Twenty-four bit colors are expressed as
+    "Zbbggrr" where the two hexadecimal digits give an eight-bit
+    value for each color on a scale where 'FF" (255) is the maximum
+    value for each color.  Examples are "X5FF" or "Z86A43E". 
+    The routine that interprets the metafile is supposed to select
+    the nearest available color that matches the requested color.
+
+
+Line record:
+
+Decimal format:  "L",4F5.d
+Binary format:   "L",x,y,x,y
+Data:  x1,y1,x2,y2
+    x1,y1 = x,y coordinates of beginning of line
+    x2,y2 = x,y coordinates of end of line
+Generated by:  line() call
+
+
+Move record:
+
+Decimal format:  "M",2F5.d
+Binary format:   "M",x,y
+Data:  x,y
+    x = x coordinate of point to be plotted
+    y = y coordinate of point to be plotted
+Generated by:  plot() called with 'ipen' = PENUP
+Note:  This record signifies that the current plotting position
+    should be moved to point x,y without drawing anything.
+
+
+New origin record:
+
+Decimal format:  "N",A1,2F5.d
+Binary format:   "N",k2,x',y'
+Data:  pen,x,y
+    pen = the literal value "U"/"00" if the drawing point should
+        move to the new origin with "pen up" (i.e. without drawing
+        a line), or the literal value "D"/"01" if the drawing
+        point should move to the new origin with "pen down" (i.e.
+        a line is drawn).
+    x = x coordinate of point to be plotted
+    y = y coordinate of point to be plotted
+Generated by:  plot() called with 'ipen' < 0.
+Note:  This record signifies that the plot origin should be set to
+    point (x,y) relative to the current origin, then the current
+    plotting position should be set to (0,0) relative to the new
+    origin.  If "pen up" is specified, nothing is drawn.  If "pen
+    down" is specified, a line in the current color is drawn from
+    the old current plotting position to the new origin point x,y. 
+    The line is drawn only once, regardless of the current retrace
+    setting.
+
+
+Polyline record:
+
+Decimal format:  "P",A1,I3,(2*np)F5.d
+Binary format:   "P",k2,k12,(np)(x,y)
+Data:  fill,np,x1,y1,x2,y2,...,x(np),y(np)
+    fill = the literal value "O"/"00" to plot a closed, outline
+        polyline, "F"/"01" to plot a closed, filled polyline, or
+        "L"/"11" to plot an open (linear) polyline.  The value
+        "P"/"10" is reserved for future use to define a pattern
+        fill.  With codes 00, 01, and 10, but not with code 11,
+        the last point in the polyline is joined to the first
+        point to form a closed figure.
+    np = number of points in the polyline
+    x1,y1, etc.  x,y coordinates of np points used to form an open
+        polyline or closed polygonal figure.
+Generated by:  polyln() call
+Note:  Filled closed polylines may be drawn as outline closed
+    polylines if filling is not supported by the hardware.  The
+    NCUBE version does not support filled closed polylines.
+
+
+Square record:
+
+Decimal format:  "Q",A1,3F5.d
+Binary format:   "Q",k2,x,y,r
+Data:  fill,x1,y1,size
+    fill = the literal value "O"/"00" to plot an outline square or
+        "F"/"01" to plot a filled square.  The value "P"/"10" is
+        reserved for future use to define a pattern fill.
+    x1,y1 = x,y coordinates of lower left-hand corner of square
+    size = edge of square
+Generated by:  rect() call.  (There is no separate function call
+    to draw a square.  To reduce metafile size, this record is
+    generated by rect() when the two edges of the rectangle are
+    equal).
+
+
+Rectangle record:
+
+Decimal format:  "R",A1,4F5.d
+Binary format:   "R",k2,x,y,w,h
+Data:  fill,x1,y1,wd,ht
+    fill = the literal value "O"/"00" to plot an outline rectangle
+        or "F"/"01" to plot a filled rectangle.  The value
+        "P"/"10" is reserved for future use to define a pattern
+        fill.
+    x1,y1 = x,y coordinates of lower left-hand corner of rectangle
+    wd = width of rectangle
+    ht = height of rectangle
+Generated by:  rect() call
+
+
+Symbol record:
+
+Decimal format:  "S",3F5.d,F7.3,I3,An
+Binary format:   "S",x,y,h,a,s,cn
+Data:  x,y,ht,angle,n,text
+    x,y = coordinates of lower left corner of plotted text
+    ht = height of plotted text
+    angle = rotation angle of text baseline from horizontal
+    n = length of text in characters.  Negative and zero values
+        are permitted and are interpreted as defined in the
+        description of symbol().
+    text = text string to be plotted
+Generated by:  symbol() or number() call
+
+
+Pen type record:
+
+Decimal format:  "T",I1,An
+Binary format:   "T",s,cn
+Data:  n,ptype
+    n = number of characters in pen type name
+    ptype = string describing a particular "pen type"
+Generated by:  newplt(), penset(), or pentyp() call
+Notes:  The allowed values of 'ptype' depend on the eventual
+    output device, for example "FELTTIP" for a pen plotter.  The
+    special names "DOT", "DASH", "DOT-DASH", and "DASH-DOT" will
+    be implemented where possible for CRT displays to specify
+    dotted, dashed, etc. lines.  An implementation is free to
+    ignore pen types it does not support.
+
+
+Graphics mode record (new lib only):
+
+Decimal format:  "X",I1
+Binary format:   "X",k4
+Data:  gm
+    gm = graphics drawing mode:  sets binary function used to com-
+        bine current drawing color with any existing color at each
+        pixel affected by following graphics commands.  0 indi-
+        cates GM_SET mode (draw in the current color, obliterating
+        any previous color), 1 indicates GM_XOR mode (colors are
+        combined with XOR operation), and 2 indicates GM_AND mode
+        (colors are combined with AND operation).  Other values
+        are reserved for future use.  Default is GM_SET mode.
+Generated by:  gmode() call
+Note:  Metafiles containing this command cannot be rendered on pen
+    plotter devices.
+
+    Note:  Command codes U,V,W,Y are reserved for future use for
+unitary transformation matrix, viewpoint transformation, window
+transformation, and hither-yon clipping, respectively.
+
+    The metafile always ends with an End-of-metafile record:
+
+
+End-of-metafile record:
+
+Decimal format:  "]"
+Binary format:   "]"
+Generated by:  endplt()
+
+
+PLOTTING ROUTINES
+
+Header Files for plotting
+
+    The plot routines are prototyped in plots.h.  This file in
+turn #includes plotdefs.h, which defines certain named constants
+used in calling the various plot routines.  plotdefs.h should be
+consulted for the latest names and values of these constants.
+File plotdefs.h also defines a data type "COLOR" for declaration
+of color index values.
+
+    A global data structure (currently called _NCG) contains state
+variables used by the ROCKS plotting routines.  This structure
+should be of no concern to the user.
+
+
+DESCRIPTION OF THE PLOT CALLS
+
+    Unless otherwise specified in the following descriptions, all
+angles are in degrees.  X extends to the right and y extends up-
+ward from a specified origin.  Coordinates are in arbitrary units,
+but any plotting outside the limits (xsiz,ysiz) set by the call to
+newplt() may be clipped.  For output to devices that maintain an
+absolute plotting scale, coordinates must be in inches.  All func-
+tions are prototyped in plots.h.  With respect to retrace control,
+some implementations may draw progressively thicker lines as the
+positive value of the 'krt' parameter increases (up to a maximum
+value of 9), while others may simply provide thick and thin lines.
+
+    The plotting routines maintain a state consisting of at least
+the current color, scale, line thickness, character font, origin,
+plotting position and mode (and, if a binary metafile is being
+written, height, width, and radius).  All of these variables are
+reset to their default values by newplt().  When each plotting
+function returns, the current plotting position is set to the last
+point plotted (or some other point as specified in the description
+of the individual routine given below).  Plotting begins at the
+current plotting position when plot() is called.
+
+    When programming on a parallel computer, note that newplt()
+and endplt() should be called in parallel from all nodes. 
+Routines setgdev(), setmf(), and setmovie() should be called from
+node 0 only.  The other routines work independently on each node.
+
+
+Subroutine arc
+---------- ---
+
+    This routine draws a circular arc in the current color and
+thickness.
+
+Usage:  void arc(float xc, float yc, float xs, float ys, float
+    angle)
+
+Arguments:  (xc,yc) give the x,y coordinates of the center of the
+    circular arc.
+
+        (xs,ys) give the starting point from which the arc is
+    drawn.  These parameters implicitly define the radius.
+
+        'angle' gives the angular length of the arc.  If 'angle' >
+    0, the arc is drawn counterclockwise from (xs,ys).  If 'angle'
+    < 0, the arc is drawn clockwise from (xs,ys).
+
+Current plot position on return:  end of arc
+
+
+Subroutine arrow
+---------- -----
+
+    This routine draws an arrow from (x1,y1) to (x2,y2) in the
+current color and thickness.  The length of the arrowhead is
+adjusted automatically according to the length of the line.  The
+barbs of the arrow are positioned at 30 degree angles from the
+central line and the length of the barbs is scaled according to
+the length of the arrow shaft.  Greater control is given by
+arrow2(), which is preferred for new program development. 
+Subroutine arrow() is obsolete and may be removed from future
+versions of this library.
+
+Usage:  void arrow(float x1, float y1, float x2, float y2)
+
+Arguments:  (x1,y1) and (x2,y2) are the coordinates of the two
+    points between which an arrow is to be drawn.
+
+Current plot position on return:  (x2,y2)
+
+
+Subroutine arrow2
+---------- ------
+
+    This routine draws an arrow from (x1,y1) to (x2,y2) in the
+current color and thickness.  It is similar to arrow() except that
+the length of the arrow barbs can be controlled.
+
+Usage:  void arrow2(float x1, float y1, float x2, float y2, float
+    barb)
+
+Arguments:  (x1,y1) and (x2,y2) are the coordinates of the two
+    points between which an arrow is to be drawn.
+
+        'barb' is the length of the projection of the arrow barbs
+    on the shaft of the arrow.
+
+Current plot position on return:  (x2,y2)
+
+
+Subroutine axis
+---------- ----
+
+    This routine plots an axis in the current color and thickness
+with tick marks at 1 inch intervals, scale values for the tick
+marks, and a label centered along the axis.  Greater control is
+given by axlin(), axlog(), and axpol(), which are preferred for
+new program development.  Subroutine axis() is obsolete and may be
+removed from future versions of the library.
+
+Usage:  void axis(float x, float y, char *label, int n, float
+    axlen, float angle, float firstv, float deltav)
+
+Arguments:  'x', 'y' are the coordinates of the starting point of
+    the axis.  Allow at least half an inch from the edge of the
+    graph for the divisions and label.
+
+        'label' is the label to be plotted along the axis. A
+    height of 0.14 inch is used for all labels.
+
+        'n' gives the number of characters in the label.  If 'n'
+    is positive, the label is plotted on the positive (counter-
+    clockwise) side of the axis (usually used for the y axis).  If
+    'n' is negative, the label is plotted on the negative (clock-
+    wise) side of the axis (usually used for the x axis).
+
+        'axlen' is the length of the axis.
+
+        'angle' is the same as in a symbol() call (0 deg. for x,
+    90 deg. for y).
+
+        'firstv' is the starting value for the first tick mark. 
+    Tick mark divisions are always given with two decimals.  The
+    height of division labels is always 0.105 inch.
+
+        'deltav' is the increment added to 'firstv' for each
+    successive tick mark.
+
+
+Subroutine axlin
+---------- -----
+
+    This routine is used to plot a linear axis in the current
+color and thickness with tick marks at specified intervals. 
+Subroutine axlin() labels the tick marks and plots a label
+centered along the axis as a whole.
+
+Usage:  void axlin(float x, float y, char *label, int n, float
+    axlen, float angle, float firstt, float deltat, float firstv,
+    float deltav, float height, int nd)
+
+Arguments:  'x', 'y' are the coordinates of the starting point of
+    the axis.  Allow at least half an inch from the edge of the
+    graph for the divisions and label.
+
+        'label' is the label to be plotted along the axis.  The
+    height of the lettering is 1.33 times the 'height' parameter.
+
+        'n' gives the number of characters in the label.  If 'n'
+    is positive, the label is plotted on the positive (counter-
+    clockwise) side of the axis (usually used for the y axis).  If
+    'n' is negative, the label is plotted on the negative (clock-
+    wise) side of the axis (usually used for the x axis).
+
+        'axlen' is the length of the axis.
+
+        'angle' is the same as in a symbol() call (0 deg. for x,
+    90 deg. for y).
+
+        'firstt' is the offset along the axis of the first tick
+    mark (normally 0).
+
+        'deltat' is the offset of each successive tick mark along
+    the axis.
+
+        'firstv' is the value of the label for the first tick
+    mark.
+
+        'deltav' is the increment added to 'firstv' for each
+    successive tick mark.
+
+        'height' is the height of the tick mark lettering (the
+    axis label is plotted with letter height 1.33*height).
+
+        'nd' is the number of decimals in the tick mark labels.
+
+
+Subroutine axlog
+---------- -----
+
+    This routine is used to plot a logarithmic axis in the current
+color and thickness with tick marks at specified intervals.  Sub-
+routine axlog() labels the tick marks and plots a label centered
+along the axis as a whole.
+
+Usage:  void axlog(float x, float y, char *label, int n, float
+    axlen, float angle, float declen, float firstv, float height,
+    int nd)
+
+Arguments:  'x', 'y' are the coordinates of the starting point of
+    the axis.  Allow at least half an inch from the edge of the
+    graph for the divisions and label.
+
+        'label' is the label to be plotted along the axis.  The
+    height of the lettering is 1.33 times the 'height' parameter.
+
+        'n' gives the number of characters in the label.  If 'n'
+    is positive, the label is plotted on the positive (counter-
+    clockwise) side of the axis (usually used for the y axis).  If
+    'n' is negative, the label is plotted on the negative (clock-
+    wise) side of the axis (usually used for the x axis).
+
+        'axlen' is the length of the axis.
+
+        'angle' is the same as in a symbol() call (0 deg. for x,
+    90 deg. for y).
+
+        'declen' is the length along the axis of one decade of
+    tick marks.
+
+        'firstv' is the value of the label for the first tick
+    mark.
+
+        'height' is the height of the tick mark lettering (the
+    axis label is plotted with letter height 1.33*height).
+
+        'nd' is the number of decimals in the tick mark labels.
+
+
+Subroutine axpol
+---------- -----
+
+    This routine is used to plot a set of polar coordinate axes in
+the current color and thickness with tick marks along positive x
+at specified intervals.  The tick marks are labelled with values
+and an overall label is centered along the axis as a whole.
+
+Usage:  void axpol(float x, float y, char *label, int n,
+    float radius, float firstv, float deltav, float height,
+    int nc, int ns, int nl, int nt, int nd)
+
+Arguments:  'x', 'y' are the coordinates of the center point of
+    the polar axes.
+
+        'label' is the label to be plotted along the positive x
+    axis.  The height of the lettering is 1.33 times the 'height'
+    parameter.
+
+        'n' gives the number of characters in the label.
+
+        'radius' is the radius of the polar diagram.
+
+        'firstv' is the value of the label for the first full
+    circle.
+
+        'deltav' is the increment added to 'firstv' for each
+    successive full circle.
+
+        'height' is the height of the circle value lettering (the
+    axis label is plotted with letter height 1.33*height).
+
+        'nc' is the number of full circles to be drawn.
+
+        'ns' is the number of short spokes to be drawn around the
+    circle.  Short spokes extend to the outermost full circle and
+    are unlabelled.
+
+        'nl' is the number of long spokes to be drawn around the
+    circle.  Long spokes extend 0.1*(radius/nc) beyond the outer-
+    most full circle and are labelled with angles in degrees.
+
+        'nt' is the number of tick mark intervals between full
+    circles.  Tick marks are inscribed on long spokes and are
+    unlabelled.  
+
+        'nd' is the number of decimals in the tick mark labels.
+
+
+Subroutines bitmap and bitmaps
+----------- ------ --- -------
+
+    These subroutines plot all or parts of bitmaps or raster arrays.
+bitmap() plots the raster data directly, one display pixel per array
+element.  bitmaps() scales the bitmap to a specified size, measured
+in the same "inches" coordinates as vector objects, so that image
+and vector objects can be accurately superimposed.
+
+Usage:  void bitmap(byte *array, int rowlen, int colht, float xc,
+    float yc, int xoffset, int yoffset, int iwd, int iht, int type,
+    int mode)
+	void bitmaps(byte *array, int rowlen, int colht, float xc,
+    float yc, float bwd, float bht, int xoffset, int yoffset,
+    int iwd, int iht, int type, int mode)
+
+Arguments:  'array' is a pointer to a byte array containing the data
+        to be plotted.  Data for each horizontal row must be packed in
+        left-to-right order, with one bit per pixel if the 'type' is
+        BM_BW, one byte per pixel if the 'type' is BM_GS or BM_C8, two
+        bytes per pixel if the 'type' is BM_GS16 or CM_C16, three
+        bytes per pixel if the 'type' is BM_C24, 6 bytes per pixel if
+        the 'type' is BM_C48, or 'lci' bits per pixel if the 'type' is
+        BM_COLOR (i.e.  each value is a color index).  Rows are
+        arranged in memory from top to bottom if 'iht' > 0, and from
+        bottom to top if 'iht' < 0.
+    'rowlen' and 'colht' give the size of the complete bitmap (not
+        just the portion being plotted by this call) in pixels.
+        The length of each row in bytes implied by 'rowlen' may be
+        greater than or equal to the row length implied by the
+        'type', 'xoffset', 'iwd', and 'lci' parameters.
+
+    'xc' and 'yc' are the coordinates in inches of the lower left-
+        hand corner of the complete bitmap relative to the current
+        plot origin.  These coordinates are adjusted during plotting
+        according to the values of 'xoffset', 'yoffset' for this
+        bitmap fragment.
+
+    'bwd' and 'bht' are the width and height of the full bitmap
+        (i.e. a map of 'rowlen' pixels per row and 'colht' pixels
+        per column) in inches (bitmaps() only).
+
+    'xoffset' and 'yoffset' are positive x,y display offsets (in
+        pixels) of this bitmap fragment relative to the full bitmap
+        specified by 'rowlen' and 'colht'.  These parameters allow
+        bitmaps to be plotted in subtiles from different computa-
+        tional nodes in a parallel computer.  If the BM_NSME
+        ('bitmap no submap extraction') bit is specified in the
+        'type' parameter, then the data array ('array' argument)
+        contains only the information to be plotted by this call.
+        In the default case (BM_NSME not specified), the argument
+        array contains the entire bitmap and the data to be plotted
+        are extracted from this full bitmap according to the
+        'xoffset', 'yoffset', 'iwd', and 'iht' parameters.
+        ('yoffset' counts from the top of the bitmap if iht > 0
+        and from the bottom if iht < 0.)
+	
+    'iwd' and 'iht' are the width and height in pixels of the bitmap
+        or portion of a bitmap to be plotted by this call.  If
+        'iht' > 0, the data in 'array' are arranged in top-to-bottom
+        order; if 'iht' < 0, the data are arranged bottom-to-top.
+        (Data are always stored in the metafile in top-to-bottom order.)
+
+	'type' is BM_BW (0) if the bitmap contains black-and-white data,
+        BM_GS (1) if the bitmap contains 8-bit grayscale data, BM_GS16
+        (2) if the bitmap contains 16-bit grayscale data, BM_C48 (3)
+        if the bitmap contains 48-bit (16 bits per color) color data,
+        BM_COLOR (4) if the bitmap contains indexed color data, BM_C8
+        (5) if the bitmap contains 8-bit (2-3-3 BGR) color data,
+        BM_C16 (6) if the bitmap contains 16 bit (5-5-5 RGB) color
+        data, or BM_C24 (7) if the bitmap contains 24 bit (8 bits per
+        color) color data.  Add BM_NSME (8) to this value if submap
+        extrac-tion is not to be performed on the 'array' argument.
+        Other 'type' values may be defined in future versions of this
+        library to specify bitmap data compression.
+
+    'mode' is GM_SET (0) to set the color index at each point of the
+        bitmap unconditionally from the array data, GM_XOR (1) to
+        "xor" the array data with any existing data at each point,
+        GM_AND (2) to "and" the array data with any existing data at
+        each point, and GM_CLR (3) to clear any existing data at
+        points of the bitmap for which the data array is nonzero.
+        Type BM_BW should generally be specified with mode GM_CLR,
+        because all nonzero array values are equivalent in this case.
+
+Current plot position on return:  unchanged
+
+
+Subroutine bmpxsz
+---------- ------
+
+   This subroutine returns the number of bytes needed to store one
+pixel in one of the BM_xxxx color modes defined in plotdefs.h.
+
+Usage:  int bmpxsz(int bmcm)
+
+Argument:  bmcm is a bitmap color mode defined in plotdefs.h, e.g.
+   BM_GS16 (returns 2 bytes) or BM_C24 (returns 3 bytes).
+
+
+Subroutine circle
+---------- ------
+
+    This subroutine plots a circle in the current drawing color.
+
+Usage:  void circle(float xc, float yc, float radius, int kf)
+
+Arguments:  (xc,yc) are the coordinates of the center of the
+    circle.
+
+        'radius' is the radius of the desired circle.
+
+        'kf' is a fill control switch.  A filled circle is drawn
+    if kf = -1 (FILLED).  An unfilled circle is drawn in the
+    current retrace thickness if kf >= 0 (THIN or NORETRACE).
+
+Current plot position on return:  (xc,yc)
+
+
+Subroutine color
+---------- -----
+
+    Subroutine color() changes the drawing color to a particular
+index value.  Using a pen plotter that is capable of changing pens
+under program control, the argument will be interpreted as a pen
+number.  Using a typical CRT device with a color lookup table, the
+argument will be interpreted as an index into the lookup table. 
+(The lookup table can be modified by calling ctload() in the new
+libaray.)  Where the color index is known, a call to color() is
+generally more efficient than a call to pencol() or penset().
+Routine pencol() or penset() should be used if it is desired to
+specify a particular color explicitly by name or by red-green-blue
+value.
+
+Usage:  void color(COLOR index)
+
+Arguments:  'index' is the desired pen number or lookup table
+    index.  The maximum meaningful value depends on the hardware. 
+    The type 'COLOR' is declared in plotdefs.h.
+
+Current plot position on return:  unchanged
+
+
+Function ctlkup (new library only)
+-------- ------ ---- ------- -----
+
+    Function ctlkup() matches an explicit color specifier against
+the colors in the current color lookup table and returns the color
+index which will most nearly give the desired color.  It may be
+used to change calls to pencol() or penset() into calls to color()
+for more efficient performance in loops.
+
+Usage:  COLOR ctlkup(char *expcol)
+
+Argument:  'expcol' specifies the color to be looked up and may
+    contain no more than 8 characters.  The allowed values are
+    device-dependent and should generally be read from user input. 
+    The color may be a literal string (e.g. "RED"--see Appendix 1
+    for a list of color names that will be accepted by all imple-
+    mentations), or a 3-digit hexadecimal specification of blue,
+    green, red values preceded by a letter 'X' (e.g. "XFF0" would
+    specify cyan), or a 6-digit hexadecimal specification (2
+    digits blue, 2 digits green, 2 digits red) preceded by a
+    letter 'Z' (used to obtain 24-bit color values).
+
+Return value:  A color index.  The type 'COLOR' is declared in
+    plotdefs.h.
+
+Note:  The lookup procedure used by ctlkup() is the same as that
+    used internally by newplt(), pencol(), or penset() if plotting
+    is directly to a graphics device.  However, when a metafile is
+    generated, ctlkup() still operates at the time it is called,
+    whereas the latter routines write the 'expcol' argument to the
+    metafile, and lookup occurs when the metafile is plotted.  The
+    results may differ if the user changes the color definitions
+    when the metafile is rendered.  This problem may be avoided by
+    specifying 'lci' = 24 bits, so that no information is lost
+    when color values are converted to color indexes.
+
+        A current restriction is that function ctlkup() does not
+    take into account changes in the default color table that may
+    be made by calls to ctload().  This restriction will be
+    removed in future versions of this library if necessary.
+
+Current plot position on return:  unchanged
+
+
+Subroutine ctload (new library only)
+---------- ------ ---- ------- -----
+
+    Subroutine ctload() allows the user to change a color lookup
+table entry on devices that have loadable color tables.  This call
+will be ignored on devices where it cannot be implemented.
+
+Usage:  void ctload(COLOR index, int blue, int green, int red)
+
+Arguments:  'index' is the index of the color value to be changed. 
+    The type 'COLOR' is declared in plotdefs.h.
+
+        'blue' is the blue value of the desired color.
+
+        'green' is the green value of the desired color.
+
+        'red' is the red value of the desired color.
+
+Note:  Blue, green, red, and index values are usually restricted
+    by hardware to the range 0,...,255.
+
+Restriction:  When ctload() has been called, ctlkup() returns
+    undefined results.
+
+Current plot position on return:  unchanged
+
+
+Subroutine ellips
+---------- ------
+
+    Subroutine ellips() draws an ellipse using the current color.
+
+Usage:  void ellips(float xc, float yc, float hw, float hh,
+    float angle, int kf)
+
+Arguments:  (xc,yc) are the center coordinates of the desired
+    ellipse.
+
+        (hw,hh) are the half-width and half-height of the ellipse.
+    
+        'angle' is the counterclockwise rotation angle between the
+    positive x axis and the axis defined by the 'hw' parameter.
+
+        'kf' is a fill control switch.  If kf = -1 (FILLED), a
+    filled ellipse is drawn.  An unfilled ellipse is drawn in the
+    current retrace thickness if kf >= 0 (THIN or NORETRACE).
+
+Current plot position on return:  (xc,yc)
+
+Note:  Earlier versions of this routine did not have the 'angle'
+    parameter.
+
+
+Function endplt
+-------- ------
+
+    Function endplt() must be called at the end of every run in
+which plots are drawn to close the device interface and/or plot
+output metafile.
+
+Usage:  int endplt(void)
+
+Value returned:  Same as for newplt().
+
+
+Subroutine factor
+---------- ------
+
+    This routine enables the user to enlarge or reduce the size of
+an entire plot or parts of a plot.  All pen motions (including
+those used to set a new plot origin) after the call to factor()
+and until the next call to factor() or newplt() are multiplied by
+the given scale factor.  If a new origin has been set prior to the
+call to factor(), its location is not affected.  If factor() is
+called before the first newplt() call in a run, all plots in the
+run are scaled.
+
+Usage:  void factor(float fac)
+
+Argument:  'fac' is the scale factor to be used.
+
+Current plot position on return:  unchanged
+
+
+Function finplt
+-------- ------
+
+    This function may be called to indicate to the plot library
+that all drawing commands relating to the current plot frame have
+been completed.  This allows the plot to be produced on an online
+display even if newplt() or endplt() is not called immediately.
+In addition, finplt() can be called multiple times during a long
+calculation to determine whether user interface buttons (QUIT or
+INTERRUPT) have been activated.
+
+Usage:  int finplt(void)
+
+Value returned:  Same as for newplt().
+
+
+Function font (new library only)
+-------- ---- ---- ------- -----
+
+    This function specifies a font to be used by subsequent calls
+to symbol() or number().  Font names are device-dependent and so
+should be provided from user input.
+
+Usage:  void font(char *fname)
+
+Argument:  'fname' is the name of the new font.  The name 'DEFAULT'
+is always accepted and switches to the default stroke font.
+
+Current plot position on return:  unchanged
+
+
+Function gmode (new library only)
+-------- ----- ---- ------- -----
+
+    This function is used to change the drawing mode for all
+following graphics commands except bitmaps, which have their own
+drawing mode parameter.  XOR mode permits limited animation
+through nondestructive erasing of objects already drawn.  Use of a
+drawing mode other than the default limits the portability of the
+application and should be avoided.
+
+Usage:  void gmode(int mode)
+
+Arguments:  'mode' is GM_SET (0) to set the color index at each
+    point drawn unconditionally to the current drawing color,
+    GM_XOR (1) to XOR the current drawing color with any existing
+    color index at each point, GM_AND (2) to AND the current
+    drawing color with any existing data at each point, and GM_CLR
+    (3) to clear any existing color at points where drawing
+    occurs, regardless of the current drawing color.  Additional
+    modes may be defined in later versions of this library.
+
+Default:  GM_SET mode
+
+Current plot position on return:  unchanged
+
+
+Function gscale
+-------- ------
+
+    This function returns the absolute scale factor used to
+convert coordinates provided to ROCKS plotting routines into
+whatever internal units are used by the plotting interface (e.g.
+pixels on a CRT).  It is useful when routines outside the defined
+ROCKS plotting routines are used and the scale must be kept the
+same for intermixed plotting calls.
+
+Usage:  float gscale(void)
+
+Value returned:  Scale factor as described above.
+
+Caution:  The value returned by gscale() is only meaningful in
+    connection with direct on-line plotting.  The absolute scale
+    for metafile devices cannot be ascertained at run time.
+
+Current plot position on return:  unchanged
+
+
+Subroutine line
+---------- ----
+
+    This routine draws a line from (x1,y1) to (x2,y2) in the
+current color and thickness.
+
+Usage:  void line(float x1, float y1, float x2, float y2)
+
+Arguments:  (x1,y1) gives the x,y coordinates of the beginning of
+    the desired line.  (x2,y2) gives the ending coordinates of the
+    line.
+
+Current plot position on return:  (x2,y2)
+
+
+Function newplt
+-------- ------
+
+    This function begins a new graph and specifies initialization
+parameters.  It must be called once for each graph, before any
+other plotting calls (except factor(), setgdev(), setmf(), or
+setmovie() for setting global controls).  On parallel computers,
+newplt() should be called in parallel from all nodes.
+
+Usage:  int newplt(float xsiz, float ysiz, float xorg, float yorg,
+    char *pentyp, char *expcol, char *chart, int kout)
+
+Arguments:  'xsiz' is the x direction size of the total graph in-
+    cluding all labels, etc.  On devices that maintain an absolute
+    scale, the coordinates are taken to be in inches.  On other
+    devices, the coordinates may be given in arbitrary units; the
+    graph will be scaled such that a rectangle of size (xsiz,ysiz)
+    just fits the available plotting area.
+
+        'ysiz' is the y direction size of the total graph
+    including all labels, etc.  See discussion of 'xsiz'.
+
+        'xorg' and 'yorg' define the plot origin.  The initial x
+    and y plotting position is set to (xorg,yorg) relative to a
+    reference origin at the lower left corner of the plotting
+    area, and this point becomes the origin for all subsequent
+    plotting calls.
+
+        'pentyp' specifies the type of pen to be used (e.g. "FELT-
+    TIP").  The allowed values are device-dependent (obtain them
+    from user input) and may contain no more than 8 characters.
+    On CRT devices, this parameter is often used to indicate a
+    line type (e.g. "SOLID", "DASHED", "DOTTED", etc.)
+
+        'expcol' is the same as in the ctlkup() or pencol() call.
+
+        'chart' specifies the kind of chart paper to be used (e.g.
+    "ALLWHITE") and may contain no more than 8 characters.  This
+    argument has no effect on CRT devices.
+
+        'kout' specifies which plot outputs are to be produced.
+    This is intended to allow only a subset of online graphs to
+    be written to a metafile.  The value of 'kout' should be the
+    logical OR of whichever of the following named constants
+    (defined in plotdefs.h) are desired:  SKIP_META causes writing
+    of the metafile to be skipped for this plot, even if metafile
+    writing has been enabled by setmf() (old setmeta()).  SKIP_XG
+    causes online X graphics to be omitted.  DO_MVEXP causes this
+    frame to be exposed by a movie recording device if one is
+    attached to the system.
+
+Current plot position on return:  (0,0).  These coordinates will
+    refer to the absolute position specified by the (xorg,yorg)
+    arguments for subsequent plotting.
+
+Value returned:  0 is returned for normal completion.  BUT_INTX
+    (defined as 1 in plotdefs.h) is returned if the user activated
+    a device (keypress or mouse click) defined by the implementation
+    as indicating that the application should be interrupted, for
+    example, to read new input from its terminal.  BUT_QUIT (defined
+    as 2 in plotdefs.h) is returned if the user activated a button
+    or keypress indicating that the application should be terminated.
+
+
+Subroutine number
+---------- ------
+
+    This call is used to plot a floating point value as a decimal
+string (i.e. it is plotted as a label, not as a point).
+
+Usage:  void number(float x, float y, float ht, double val,
+    float angle, int ndec)
+
+Arguments:  'x', 'y', 'ht', and 'angle' are the same as the cor-
+    responding symbol() arguments.
+
+        'val' is the floating point variable to be converted and
+    plotted.
+
+        'ndec'  is the number of places after the decimal to be
+    plotted.  If ndec = 0, the integer portion of the number is
+    plotted with a decimal point; if ndec = -1, it is plotted
+    without a decimal; if ndec < -1, abs(ndec)-1  digits are
+    dropped from the right of the number before plotting.
+
+
+Subroutine pencol
+---------- ------
+
+    This routine changes the current plotting color to a specified
+name or explicit red-green-blue value.  The implementation will
+select the nearest available color to the color requested.  Plot-
+ting from all previous plot() calls is completed before the new
+'expcol' argument takes effect.  Keep in mind that pen changes may
+not be supported on some devices; operator intervention may be
+required with others.  Subroutine color() may be used to request a
+change to a particular pen or color index.
+
+Usage:  void pencol(char *expcol)
+
+Argument:  'expcol' is the same as in the ctload() or newplt() call.
+
+Current plotting position on return:  unchanged
+
+
+Subroutine penset
+---------- ------
+
+    This call requests a pen type or color change while a graph is
+being plotted.  Plotting from all previous plot() calls is com-
+pleted before the new 'pentyp' and 'expcol' arguments take effect. 
+Keep in mind that pen changes may not be supported on some
+devices; operator intervention may be required with others.  Note
+that newplt() implicitly calls penset()--after each newplt() call
+the pen type and expcol arguments given there will be in effect.
+
+Usage:  void penset(char *pentyp, char *expcol)
+
+Arguments:  'pentyp' and 'expcol' are as in the newplt() call.
+
+Current plotting position on return:  unchanged
+
+
+Subroutine pentyp
+---------- ------
+
+    This routine changes the type of pen used on a pen plotter and
+may change the style of line drawing on a CRT display depending on
+the implementation.  Keep in mind that pen changes may not be
+supported on some devices; operator intervention may be required
+with others.
+
+Usage:  void pentyp(char *pentyp)
+
+Argument:  'pentyp' is the same as in the newplt() call.
+
+Current plotting position on return:  unchanged
+
+
+Subroutine plot
+---------- ----
+
+    This routine moves the CRT beam or pen to a new location.  The
+third argument indicates whether or not a line is to be drawn from
+the current position to the new position and whether or not the
+new position is to become the origin for subsequent plotting.  Any
+line that is drawn is drawn once only, regardless of the current
+retrace setting.
+
+Usage:  void plot(float x, float y, int ipen)
+
+Arguments:  (x,y) give the coordinates of the point to which the
+    pen is to be moved relative to the most recent origin set by a
+    newplt() or plot() call with 'ipen' < 0.
+
+        'ipen' controls drawing vs moving:
+    ipen = PENDOWN (2) beam is on (pen is down) while moving, thus
+        drawing a line.
+    ipen = PENUP (3) beam is off (pen is up) during movement.
+    ipen = -2 or -3 is same as +2 or +3, respectively, except the
+        final location of the beam or pen becomes the origin from
+        which coordinates are measured in subsequent plot() calls.
+
+Current plotting position on return:  (x,y)
+
+
+Subroutine polyln
+---------- ------
+
+    This routine draws an open or closed polyline (a series of
+points connected by lines) in the current color.
+
+Usage:  void polyln(int kf, int np, float *x, float *y)
+
+Arguments:  'kf' is a fill control switch.  If kf = 0 or 1, a
+    closed, outline polyline is drawn in the current retrace
+    thickness.  If kf = -1 (FILLED), a closed, filled polyline is
+    drawn.  In these cases, the first and last points are connect-
+    ed by a line to form a closed figure.  In the FILLED case, the
+    polyline must be non-self-intersecting.  If kf = 3 (LINEAR),
+    an open (linear) polyline is drawn.  In this case, the first
+    and last points are not joined (unless np = 2).
+
+        'np' is the number of points in the polyline.
+
+        'x' is an array of dimension 'np' containing the x
+    coordinates of the points to be plotted.
+
+        'y' is an array of dimension 'np' containing the y
+    coordinates of the points to be plotted.
+
+Current plot position on return:  x[np-1],y[np-1] if kf = LINEAR,
+    otherwise, x[0],y[0].
+
+
+Subroutine rect
+---------- ----
+
+    This routine draws a rectangular box using the current color.
+If the width and height parameters are equal, a more compact
+square-drawing command is issued to the metafile.
+
+Usage:  void rect(float x, float y, float wd, float ht, int kf)
+
+Arguments:  (x,y) give the location of the lower left-hand corner
+    of the rectangle.
+
+        'wd' is the width of the desired rectangle.
+
+        'ht' is the height of the desired rectangle.
+
+        'kf' is a fill control switch.  If kf = -1 (FILLED), a
+    filled rectangle is drawn.  If kf >= 0, the rectangle is drawn
+    using the current retrace thickness.
+
+
+Subroutine retrace
+---------- -------
+
+    Subroutine retrace() changes the thickness of all subsequent
+lines (including arcs, ellipses, circles, rectangles, and symbols
+drawn with stroke fonts).  It does not affect solid objects (rect-
+angles, circles, ellipses), bitmaps or bitmap fonts, or individual
+lines drawn by calling plot().
+
+Usage:  void retrace(int krt)
+
+Argument:  'krt' is the retrace parameter.  If krt = 0 (THIN or
+    NORETRACE), subsequent lines are drawn once only.  If krt > 0
+    (THICK or RETRACE), subsequent lines are retraced for greater
+    density.  In some implementations, the numeric value of krt
+    (0 <= krt <= 9) may control the thickness of subsequent lines
+    in approximately 0.01 inch intervals.
+
+Current plotting position on return:  unchanged
+
+
+Subroutine setmeta (old library only)
+---------- ------- ---- ------- -----
+
+    Subroutine setmeta() is used in the old library to initialize the
+plot library to prepare a metafile.  Subroutine setmf() should be used
+instead of setmeta() with the new library.
+
+Usage:  void setmeta(char *fname, long buflen)
+
+Arguments:  'fname' is the name of the file to be written.
+
+        'buflen' is the length of the buffer to be allocated for
+    metafile data.  This should normally be at least equal to the
+    hardware blocksize on the device where the file is written. 
+    If this parameter is 0, no metafile is written.
+
+
+Subroutine setmf (new library only)
+---------- ----- ---- ------- -----
+
+    Subroutine setmf() initializes the plot library for metafile
+graphics.  Metafile graphics may be plotted immediately if an X
+server is available, and may optionally be stored in a real file. 
+The two functions are independent--metafile output may be created
+and sent to a file alone, an X windows server alone, or to both
+devices.  If used, setmf() should be called before the first
+newplt() call in the run.  On parallel computers, setmf() only
+needs to be called from node 0.  If called on other nodes, no
+error occurs, but the call is ignored.  Subroutines setmeta() and
+setmfd() are the corresponding routines used in the old library.
+
+Usage:  void setmf(long buflen, char enc, int lci, int lcf,
+    char *fname, char *station, char *title, char *icon)
+
+Arguments:  'buflen' is the length of the buffer to be allocated
+    for metafile data.  This should normally be at least equal to
+    the hardware blocksize on the device where the file is writ-
+    ten.  If this parameter is 0, no metafile is written.
+
+        'enc' indicates the metafile encoding to be used.  'A'
+    indicates ASCII, 'B', binary, and 'D', decimal encoding.  If
+    'A' is specified, binary encoding may be used internally, but
+    any externally visible metafile data will be provided in the
+    ASCII encoding.
+
+        'lci' is the length of all color index values, in bits.
+    This variable may range from 1 to 24.  If this parameter is 0,
+    color indexes will have 8 bits.
+
+        'lcf' is the length of coordinate fractions, in decimal
+    digits if enc = 'D', otherwise in bits.  If this parameter is
+    0, 3 digits (decimal encoding) or 10 bits (binary encoding)
+    will be provided.
+
+        'fname' is the name of the file to be written.  If 'fname'
+    is a null pointer or a pointer to a null string, no file is
+    written.
+
+        'station' is the name of a graphics station where X win-
+    dows output should be displayed, e.g. "acteon:0.0".  A null
+    string indicates that the login host should be used. 
+    
+        'title' is a text string to be displayed in the window
+    title bar for the graphics output.  It should generally be the
+    name of the application program.
+
+        'icon' is the name of a file containing an icon image to
+    be used when the X graphics window is minimized.  A null
+    string indicates that a generic icon should be used. 
+
+
+Subroutine setmfd (old library only)
+---------- ------ ---- ------- -----
+
+    Subroutine setmfd() selects an X windows display station for on-
+line display of metafile output.  Subroutine setmf() should be used
+instead of setmfd() with the new library.
+
+Usage:  void setmfd(char *station, char *wtitl, long buflen, long
+    dbgmask)
+
+Arguments:  'station' is the name of a graphics station where X
+    windows output should be displayed, e.g. "acteon:0.0".  A
+    pointer to a null string indicates that the login host should
+    be used.
+
+        'wtitl' is a title to be displayed in the title bar of the
+    graphics window.  Typically, it is the name and version of the
+    application program.
+
+        'buflen' is the length of the buffer to be allocated for
+    metafile data.  This should normally be at least equal to the
+    hardware blocksize on the device where the file is written. 
+    If this parameter is 0, no X windows output is created.
+
+        'dbgmask' contains undefined data which may be used during
+    debugging.  It is OR'd bitwise with any debugging mask passed
+    from the driver program in a parallel computer and transmitted
+    to mfdraw.  Currently, the bit setting '0xc0000000' will cause
+    mfdraw to enter a "spin-wait" loop, waiting for a debugger to
+    be attached.
+
+
+Subroutine setmovie
+---------- --------
+
+    Subroutine setmovie() sets the plot library to display frames
+as fast as they are computed (batch or movie mode) or to hold each
+frame on the display until the operator takes some implementation-
+dependent action, such as typing a particular key or pressing a
+mouse button (still mode).  In batch mode, the application termi-
+nates at once when endplt() is called, even if this causes the
+last frame to disappear.  This mode permits unattended generation
+of movies from script files.  Movie mode is the same as batch mode
+on systems that leave the last frame on the display device. 
+Otherwise, movie mode pauses when endplt() is called until the
+user gives permission for termination.  This mode assures that the
+last frame can be viewed by the user before termination.  On
+X-windows systems, a dialog box appears with two choices:  QUIT
+causes the application to terminate, while CONTINUE simply deletes
+the dialog box so the last frame can be viewed.  QUIT must then be
+chosen from the background menu to complete termination.
+
+    In addition, setmovie() sets the plot library to generate
+output on an attached film recorder, or to activate the beeper on
+the login terminal when each frame is complete (this may be used
+to expose one frame of film on a movie camera placed in front of
+the terminal).  On parallel computers, this routine only needs to
+be called from node 0.  If called on other nodes, no error occurs,
+but the call is ignored.
+
+Usage:  void setmovie(int mmode, int device, int nexpose)
+
+Arguments:  'mmode' specifies the desired movie mode.  A value of
+    MM_NOCHG (0) leaves the previous setting unchanged.  A value
+    of MM_STILL (1) changes to still mode.  A value of MM_MOVIE
+    (2) changes to movie mode.  A value of MM_BATCH (3) changes to
+    batch mode.  The initial default is still mode.  Use of
+    MM_NOCHNG permits an application to change 'nexpose' without
+    knowing the current movie mode, which may have been modified
+    as a result of user interaction with an X window server.
+
+        'device' specifies the desired movie output device.  A
+    value of MD_MATRIX (0) indicates that a MATRIX film plotter is
+    to be used.  A value of MD_BEEPER (1) indicates that the NSI
+    electrically driven movie camera is to be used.  Other values
+    may be defined locally.
+
+        'nexpose' specifies the number of exposure to be made of
+    each frame.
+
+Current plotting position upon return:  unchanged
+
+
+Subroutine symbol
+---------- ------
+
+    This call is used to plot labels or other alphanumeric infor-
+mation.  If font() has been called, and the specified font is
+available, that font is used.  (If fonts are not scalable, the
+nearest size to the specified letter height is chosen.)  Other-
+wise, lettering is drawn as individual strokes using an internal
+font.  Use of the default font assures that the aspect ratio and
+appearance of the lettering is the same on all supported devices.
+
+Usage:  void symbol(float x, float y, float ht, char *text,
+    float angle, int n)
+
+Arguments:  'x', 'y' are the coordinates, of the lower left-hand
+    corner (before rotation) of the first character to be
+    produced.  The pen is up while moving to this point.
+
+        'ht' is the character height.  If negative or zero, height
+    and angle from the previous call are used.  If negative, the
+    current string is concatenated to the end of the previous
+    string.  With the default font, characters are plotted on a 7
+    x 4 grid with spacing of an additional 2 units to the right of
+    each character (i.e. total character width is 6/7 times 'ht'). 
+    Best results will be obtained if the height is a multiple of 7
+    times the plotter increment size (usually 0.01 inches).
+
+        'text' is the label to be plotted.  It may be given as a
+    literal or as a pointer to an array containing a character
+    string.  Special characters (such as Greek letters) are avail-
+    able and are listed in Appendix 2.  These characters are not
+    necessarily available in all fonts.  Note that for historical
+    reasons, the length of the string must be encoded in the 'n'
+    parameter, and the normal C end-of-string indication is
+    ignored.
+
+        'angle' is the angle at which the text will be plotted, in
+    degrees, measured counter-clockwise up from the horizontal.
+
+        'n', if positive, is the number of characters drawn from
+    the string defined by 'text'.  If n <= 0, a single character
+    is drawn, centered on (x,y).  If n = -1 or 0, the pen is up
+    while moving to the character position; if n < -1, it is down. 
+    Centered characters are intended for use in making line graphs
+    with markers.
+
+Note:  Characters are assumed to be coded in the native character
+    set of the host system, i.e. EBCDIC for IBM370 and ASCII for
+    all others.  All character strings are converted to ASCII for
+    encoding in metafiles.
+
+
+Subroutine where
+---------- -----
+
+    This routine returns the current plotting position and scale
+factor.  Keeping in mind that the current plotting position is
+undefined when not specified in the individual subroutine descrip-
+tion, where() may be used to retrieve the plotting position in
+these cases (when e.g. symbol(), number(), or axis() has been
+called).  Knowledge of the current plotting position may be useful
+for optimizing pen motion in certain cases.
+
+Usage:  void where(float *x, float *y, float *fac)
+
+Arguments:  'x', 'y' are variables to receive the last
+    coordinates.
+
+        'fac' is a variable to receive the last scale factor.
+
+Current plotting position on return:  unchanged
+
+
+APPENDIX 1:  COLOR NAMES ALWAYS ACCEPTED BY penset AND pencol
+
+    The following color names will be recognized by all implemen-
+tations of penset() and pencol().  However, if the device does not
+support the specified color, a similar color may be chosen by the
+implementation.  Implementations are free to support additional
+color names not listed here.
+
+    WHITE, BLACK, BLUE, CYAN, MAGENTA, VIOLET, ORANGE, GREEN,
+    YELLOW, RED.
+
+    White and black are defined with respect to a pen plotter,
+i.e. white is the background color and black is the darkest
+drawing color.  On a CRT display, black will generally be mapped
+to white and white to black.
+
+
+APPENDIX 2:  SPECIAL CHARACTERS AVAILABLE WITH SYMBOL ROUTINE
+
+    The following characters are supported by all implementations
+of symbol() at the ASCII code points given.  Characters marked
+with an asterisk (*) are specifically designed for centered
+plotting, i.e. for use as graph markers.  These characters are
+mapped to the same positions in the ASCII and EBCDIC implementa-
+tions so that programs may invoke them using their integer values. 
+Characters marked with two asterisks (**) are not plotted, but
+rather cause the current plotting position (carriage return,
+backspace) or character size and plotting position (subscript,
+superscript) to be changed.  Because of the fixed mapping of the
+centered characters, the backspace and carriage return characters
+cannot be mapped to their expected ASCII values.  These and the
+remaining special action codes are mapped to alternative control
+characters in the range 0x10-0x1f.  The up, down, left, and right
+arrow characters are mapped to their positions in the IBM PC
+character set.  Greek letters and other special characters are
+mapped to positions following character 0x7f in the ASCII set. 
+Upper and lower 128 character EBCDIC maps are folded together to
+avoid need for a 256-character symbol table--as a result, lower
+case letters are unavailable.  Unless otherwise stated, Greek
+letters are lower case.  Characters not defined in the official
+ASCII or EBCDIC codes are mapped arbitrarily.
+
+Dec Code  Hex Code   ASCII character         EBCDIC character
+    0        00      Centered square*        Centered square*
+    1        01      Centered octagon*       Centered octagon*
+    2        02      Centered triangle*      Centered triangle*
+    3        03      Centered plus*          Centered plus*
+    4        04      Centered X*             Centered X*
+    5        05      Centered diamond*       Centered diamond*
+    6        06      Small centered square*  Small centered
+                                                 square*
+    7        07      Centered Z*             Centered Z*
+    8        08      Centered Y*             Centered Y*
+    9        09      Centered square with    Centered square with
+                         rays at corners*        rays at corners*
+   10        0a      Centered asterisk*      Centered asterisk*
+   11        0b      Cntrd double bar X*     Cntrd double bar X*
+   12        0c      Cntrd vertical bar*     Cntrd vertical bar*
+   13        0d      And (inverted v)        And (inverted v)
+   14        0e      Star                    Star
+   15        0f      Horizontal line         Horizontal line
+   16        10      Vertical line           Vertical line
+   17        11      Backspace**             Backspace**
+   18        12      Superscript**           And (inverted v)
+   19        13      Equivalence             Equivalence
+   20        14      Subscript**             Right arrow
+   21        15      Carriage return**       Carriage return**
+   22        16      Not equals              Not equals
+   23        17      Plus-minus              Plus-minus
+   24        18      Up arrow                Underscore
+   25        19      Down arrow              Double underscore
+   26        1a      Right arrow             Overscore
+   27        1b      Left arrow              Integral
+   28        1c      Implication             Implication
+   29        1d      Inclusion               Inclusion
+   30        1e      Squiggle                Squiggle
+   31        1f      Double squiggle         Double squiggle
+   32        20      Blank                   Right brace
+   33        21      Exclamation point       Left brace
+   34        22      Quotation marks         Mu
+   35        23      Pound sign              Pi
+   36        24      Dollar sign             Phi
+   37        25      Percent                 Theta
+   38        26      Ampersand               Psi
+   39        27      Apostrophe              Chi
+   40        28      Left parenthesis        Omega
+   41        29      Right parenthesis       Lambda
+   42        2a      Asterisk                Alpha
+   43        2b      Plus                    Delta
+   44        2c      Comma                   Epsilon
+   45        2d      Minus                   Eta
+   46        2e      Period                  Superscript**
+   47        2f      Slash                   Subscript**
+   48        30      0                       Summation
+   49        31      1                       Division
+   50        32      2                       Less than or equals
+   51        33      3                       Greater or equals
+   52        34      4                       Upper case delta
+   53        35      5                       Left bracket
+   54        36      6                       Right bracket
+   55        37      7                       Backslash
+   56        38      8                       Gamma
+   57        39      9                       Square root
+   58        3a      Colon                   Double dagger
+   59        3b      Semicolon               Triple dagger
+   60        3c      Less than               Left arrow
+   61        3d      Equals                  Times
+   62        3e      Greater than            Up arrow
+   63        3f      Question mark           Down arrow
+   64        40      At                      Blank
+   65        41      A                       A
+   66        42      B                       B
+   67        43      C                       C
+   68        44      D                       D
+   69        45      E                       E
+   70        46      F                       F
+   71        47      G                       G
+   72        48      H                       H
+   73        49      I                       I
+   74        4a      J                       Cents
+   75        4b      K                       Period
+   76        4c      L                       Less than
+   77        4d      M                       Left parenthesis
+   78        4e      N                       Plus
+   79        4f      O                       Vertical bar
+   80        50      P                       Ampersand
+   81        51      Q                       J
+   82        52      R                       K
+   83        53      S                       L
+   84        54      T                       M
+   85        55      U                       N
+   86        56      V                       O
+   87        57      W                       P
+   88        58      X                       Q
+   89        59      Y                       R
+   90        5a      Z                       Exclamation point
+   91        5b      Left bracket            Dollar sign
+   92        5c      Backslash               Asterisk
+   93        5d      Right bracket           Right parenthesis
+   94        5e      Caret                   Semicolon
+   95        5f      Underscore              Not
+   96        60      Back apostrophe         Minus
+   97        61      a                       Slash
+   98        62      b                       S
+   99        63      c                       T
+  100        64      d                       U
+  101        65      e                       V
+  102        66      f                       W
+  103        67      g                       X
+  104        68      h                       Y
+  105        69      i                       Z
+  106        6a      j                       Infinity
+  107        6b      k                       Comma
+  108        6c      l                       Percent
+  109        6d      m                       Dash
+  110        6e      n                       Greater than
+  111        6f      o                       Question mark
+  112        70      p                       0
+  113        71      q                       1
+  114        72      r                       2
+  115        73      s                       3
+  116        74      t                       4
+  117        75      u                       5
+  118        76      v                       6
+  119        77      w                       7
+  120        78      x                       8
+  121        79      y                       9
+  122        7a      z                       Colon
+  123        7b      Left brace              Pound
+  124        7c      Vertical bar            At
+  125        7d      Right brace             Apostrophe
+  126        7e      Tilde (= squiggle)      Equals
+  127        7f      Delete (ignored)        Quotation marks
+  128        80      Double underscore
+  129        81      Overscore
+  130        82      Integral
+  131        83      Mu
+  132        84      Pi
+  133        85      Phi
+  134        86      Theta
+  135        87      Psi
+  136        88      Chi
+  137        89      Omega
+  138        8a      Lambda
+  139        8b      Alpha
+  140        8c      Delta
+  141        8d      Epsilon
+  142        8e      Eta
+  143        8f      Summation
+  144        90      Division
+  145        91      Less than or equals
+  146        92      Greater than or equals
+  147        93      Upper case delta
+  148        94      Gamma
+  149        95      Square root
+  150        96      Double dagger
+  151        97      Triple dagger
+  152        98      Times
+  153        99      Cents
+  154        9a      Not
+  155        9b      Infinity
+  156        9c      Dash
+
+
+APPENDIX 3:  DATA ENCODINGS FOR ASCII METAFILE FORMAT
+
+     Value  Hex Code  Character       Value  Hex Code  Character
+       00      5f         _             20      20      (space)
+       01      60         `             21      21         !
+       02      61         a             22      22         "
+       03      62         b             23      23         #
+       04      63         c             24      24         $
+       05      64         d             25      25         %
+       06      65         e             26      26         &
+       07      66         f             27      27         '
+       08      67         g             28      28         (
+       09      68         h             29      29         )
+       0a      69         i             2a      2a         *
+       0b      6a         j             2b      2b         +
+       0c      6b         k             2c      2c         ,
+       0d      6c         l             2d      2d         -
+       0e      6d         m             2e      2e         .
+       0f      6e         n             2f      2f         /
+       10      6f         o             30      30         0
+       11      70         p             31      31         1
+       12      71         q             32      32         2
+       13      72         r             33      33         3
+       14      73         s             34      34         4
+       15      74         t             35      35         5
+       16      75         u             36      36         6
+       17      76         v             37      37         7
+       18      77         w             38      38         8
+       19      78         x             39      39         9
+       1a      79         y             3a      3a         :
+       1b      7a         z             3b      3b         ;
+       1c      7b         {             3c      3c         <
+       1d      7c         |             3d      3d         =
+       1e      7d         }             3e      3e         >
+       1f      7e         ~             3f      3f         ?
+
+
+
+SUMMARY OF PLOTTING SUBROUTINE CALLS
+
+void arc(float xc, float yc, float xs, float ys,
+     float angle)
+
+void arrow(float x1, float y1, float x2, float y2)
+
+void arrow2(float x1, float y1, float x2, float y2,
+     float barb)
+
+void axis(float x, float y, char *label, int n,
+     float axlen, float angle, float firstv, float deltav)
+
+void axlin(float x, float y, char *label, int n,
+     float axlen, float angle, float firstt, float deltat,
+     float firstv, float deltav, float height, int nd)
+
+void axlog(float x, float y, char *label, int n,
+     float axlen, float angle, float declen, float firstv,
+     float height, int nd)
+
+void axpol(float x, float y, char *label, int n,
+     float radius, float firstv, float deltav,
+     float height, int nc, int ns, int nl,
+     int nt, int nd)
+
+void bitmap(byte *array, int rowlen, float xc, float yc,
+     int xoff, int yoff, int iwd, int iht, int type,
+     int mode)
+
+void bitmaps(byte *array, int rowlen, float xc, float yc,
+     float bwd, float bht, int xoff, int yoff, int iwd,
+     int iht, int type, int mode)
+
+void circle(float xc, float yc, float radius, int kf)
+
+void color(COLOR index)
+
+COLOR ctlkup(char *expcol)
+
+void ctload(COLOR index, int blue, int green, int red)
+
+void ellips(float xc, float yc, float hw, float hh,
+     float angle, int kf)
+
+int endplt(void)
+
+void factor(float fac)
+
+int finplt(void)
+
+void font(char *fname)
+
+void gmode(int mode)
+
+float gscale(void)
+
+void line(float x1, float y1, float x2, float y2)
+
+int newplt(float xsiz, float ysiz, float xorg, float yorg,
+     char *pentyp, char *expcol, char *chart, int kout)
+
+void number(float x, float y, float ht, double val,
+     float angle, int ndec)
+
+void pencol(char *expcol)
+
+void penset(char *pentyp, char *expcol)
+
+void pentyp(char *pentyp)
+
+void plot(float x, float y, int ipen)
+
+void polyln(int kf, int np, float *x, float *y)
+
+void rect(float x, float y, float wd, float ht, int kf)
+
+void retrace(int krt)
+
+void setmeta(char *fname, long buflen)
+
+void setmf(long buflen, char enc, int lci, int lcf,
+     char *fname, char *station, char *title, char *icon)
+
+void setmfd(char *station, char *wtitl, long buflen,
+     long dbgmask)
+
+void setmovie(int mmode, int device, int nexpose)
+
+void symbol(float x, float y, float ht,
+     char *text, float angle, int n)
+
+void where(float *x, float *y, float *fac)
+
+
+                              - End -

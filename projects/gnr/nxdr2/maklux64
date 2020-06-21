@@ -1,0 +1,32 @@
+# (c) Copyright 2000-2018, The Rockefeller University *11202* 
+# UNIX make file for NXDR2
+#
+# V2A, 02/05/00, GNR
+# V2C, 10/03/15, GNR - Change output LIB to pclux64
+# Rev, 08/03/18, GNR - Incorporate LCLHOME
+
+# Define directory where all this stuff is stored
+LCLHOME ?= $(HOME)
+# Define directory where include files are stored
+IN=$(LCLHOME)/include
+# Define directory where ROCKS library is stored
+LIB=$(LCLHOME)/lib/pclux64
+
+# Compilation rule for .c files
+%.o:		%.c
+	$(CC) -g -I$(IN) -DPCLUX64 -D_ISOC99_SOURCE -c $<
+
+# Target definition for nxdr
+
+nxdr2:		nxdr2.o nxdrscan.o nxdrfunc.o $(LIB)/libcrk.a
+	$(CC) -g -o nxdr2 nxdr2.o nxdrscan.o nxdrfunc.o $(LIB)/libcrk.a -lm
+	cp nxdr2 $(LCLHOME)/bin
+
+nxdr2.o:	nxdr2.c nxdr2.h $(IN)/sysdef.h $(IN)/rocks.h \
+                $(IN)/rkxtra.h $(IN)/rkhash.h
+
+nxdrscan.o:	nxdrscan.c nxdr2.h $(IN)/sysdef.h $(IN)/rocks.h \
+                $(IN)/rkhash.h
+
+nxdrfunc.o:	nxdrfunc.c nxdr2.h $(IN)/sysdef.h $(IN)/rocks.h \
+                $(IN)/rkhash.h $(IN)/rksubs.h

@@ -1,0 +1,409 @@
+# LINUX	MAKE file for ROCKS tests -- 32-bit version
+#
+# V1A, 07/11/99, GNR - Generate	this make file from the	TURBOC version
+# Rev, 07/04/09, GNR - Make separate 32-bit and	64-bit versions
+
+# Define subdirectory for this type of make
+DIR := pclinux
+
+# Define directory where ROCKS library is stored
+LIB := $(HOME)/lib/$(DIR)
+
+# Define directory where include files are stored
+INC := $(HOME)/include
+
+# Define directory where crk object files are stored
+# (Can be used to test a new version instead of	version	in LIB)
+OBJ := $(HOME)/src/crk/$(DIR)
+
+.SUFFIXES:
+.SUFFIXES: .c .s .o
+
+# Compilation macros for LINUX
+CC := gcc
+CFLGS := -g -Wall
+DEFS :=	PCLINUX	_ISOC99_SOURCE
+
+#Compile for Linux
+$(DIR)/%.o:	%.c makefile
+	$(CC) $(CFLGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o	$(DIR)
+
+# Targets for making various test programs
+# (Note: Each invocation of rocks.h brings in rockv.h and rfdef.h)
+
+algntest:	$(DIR)/algntest.o
+	$(CC) $(CFLGS) -o algntest $(DIR)/algntest.o
+
+$(DIR)/algntest.o:	algntest.c
+
+bcditest:	$(DIR)/bcditest.o $(OBJ)/bcdin.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o bcditest $(DIR)/bcditest.o $(OBJ)/bcdin.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/bcditest.o:	bcditest.c $(INC)/sysdef.h $(INC)/rkxtra.h
+
+bcdotest:	$(DIR)/bcdotest.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o bcdotest $(DIR)/bcdotest.o -L$(LIB) -lcrk -lm
+
+$(DIR)/bcdotest.o:	bcdotest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/rkxtra.h
+
+bitortst:	$(DIR)/bitortst.o $(OBJ)/bitor.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o bitortst $(DIR)/bitortst.o $(OBJ)/bitor.o \
+		-L$(LIB) -lcrk
+
+$(DIR)/bitortst.o:	bitortst.c $(INC)/sysdef.h $(INC)/bapkg.h \
+		$(INC)/rkarith.h $(INC)/swap.h
+
+blemtest:	$(DIR)/blemtest.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o blemtest $(DIR)/blemtest.o -L$(LIB) -lcrk
+
+$(DIR)/blemtest.o:	blemtest.c $(INC)/sysdef.h $(INC)/swap.h
+
+convtest:	$(DIR)/convtest.o $(OBJ)/convrt.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o convtest $(DIR)/convtest.o $(OBJ)/convrt.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/convtest.o:	convtest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/rkxtra.h
+
+cryitest:	$(DIR)/cryitest.o $(OBJ)/cryin.o $(OBJ)/sprmpt.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o cryitest $(DIR)/cryitest.o $(OBJ)/cryin.o \
+		$(OBJ)/sprmpt.o	-L$(LIB) -lcrk -lm
+
+$(DIR)/cryitest.o:	cryitest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h
+
+cryitst2:	$(DIR)/cryitst2.o $(OBJ)/cryin.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o cryitst2 $(DIR)/cryitst2.o $(OBJ)/cryin.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/cryitst2.o:	cryitst2.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/rkxtra.h
+
+cryotest:	$(DIR)/cryotest.o $(OBJ)/cryout.o $(OBJ)/ermark.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o cryotest $(DIR)/cryotest.o $(OBJ)/cryout.o \
+		$(OBJ)/ermark.o	-L$(LIB) -lcrk -lm
+
+$(DIR)/cryotest.o:	cryotest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/rkxtra.h
+
+eqsctest:	$(DIR)/eqsctest.o $(OBJ)/kwscan.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o eqsctest $(DIR)/eqsctest.o $(OBJ)/kwscan.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/eqsctest.o:	eqsctest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/rkxtra.h
+
+erfctest:	$(DIR)/erfctest.o $(OBJ)/rerfc.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o erfctest $(DIR)/erfctest.o $(OBJ)/rerfc.o -lm
+
+$(DIR)/erfctest.o:	erfctest.c $(INC)/sysdef.h $(INC)/rkarith.h
+
+fwtest:		$(DIR)/fwtest.o	$(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o fwtest $(DIR)/fwtest.o -L$(LIB) -lcrk	-lm
+
+$(DIR)/fwtest.o:	fwtest.c $(INC)/sysdef.h $(INC)/rocks.h	$(INC)/rockv.h \
+		$(INC)/rfdef.h
+
+getptest:	$(DIR)/getptest.o $(OBJ)/getprime.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o getptest $(DIR)/getptest.o $(OBJ)/getprime.o -lm
+
+$(DIR)/getptest.o:	getptest.c $(INC)/sysdef.h $(INC)/rkarith.h
+
+hashtest:	$(DIR)/hashtest.o $(OBJ)/hashtbl.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o hashtest $(DIR)/hashtest.o $(OBJ)/hashtbl.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/hashtest.o:	hashtest.c $(INC)/rkhash.h $(INC)/rksubs.h
+
+ilsttest:	$(DIR)/ilsttest.o $(OBJ)/ilstread.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -z muldefs -o ilsttest $(DIR)/ilsttest.o	$(OBJ)/ilstread.o -L$(LIB) -lcrk -lm
+
+$(DIR)/ilsttest.o:	ilsttest.c $(INC)/rkilst.h $(INC)/sysdef.h $(INC)/rocks.h \
+		$(INC)/rockv.h $(INC)/rfdef.h $(INC)/rkxtra.h
+
+itcrctst:	$(DIR)/itcrctst.o $(LIB)/libcrk.a $(LIB)/libserplot.a
+	$(CC) $(CFLGS) -o itcrctst $(DIR)/itcrctst.o -L$(LIB) -lserplot -lcrk -lm
+
+$(DIR)/itcrctst.o:	itcrctst.c $(INC)/itercirc.h $(INC)/sysdef.h $(INC)/rocks.h \
+		$(INC)/rockv.h $(INC)/rkxtra.h $(INC)/plots.h
+
+itepgtst:	$(DIR)/itepgtst.o $(LIB)/libcrk.a $(LIB)/libserplot.a
+	$(CC) $(CFLGS) -o itepgtst $(DIR)/itepgtst.o -L$(LIB) -lserplot -lcrk -lm
+
+$(DIR)/itepgtst.o:	itepgtst.c $(INC)/iterepgf.h $(INC)/sysdef.h $(INC)/rocks.h \
+		$(INC)/rockv.h $(INC)/rkxtra.h $(INC)/plots.h
+
+itpgftst:	$(DIR)/itpgftst.o $(LIB)/libcrk.a $(LIB)/libserplot.a
+	$(CC) $(CFLGS) -o itpgftst $(DIR)/itpgftst.o -L$(LIB) -lserplot -lcrk -lm
+
+$(DIR)/itpgftst.o:	itpgftst.c $(INC)/iterpgfg.h $(INC)/sysdef.h $(INC)/rocks.h \
+		$(INC)/rockv.h $(INC)/rkxtra.h $(INC)/plots.h
+
+itpoltst:	$(DIR)/itpoltst.o $(LIB)/libcrk.a $(LIB)/libserplot.a
+	$(CC) $(CFLGS) -o itpoltst $(DIR)/itpoltst.o -L$(LIB) -lserplot -lcrk -lm
+
+$(DIR)/itpoltst.o:	itpoltst.c $(INC)/iterpoly.h $(INC)/sysdef.h $(INC)/rocks.h \
+		$(INC)/rockv.h $(INC)/rkxtra.h $(INC)/plots.h
+
+itrectst:	$(DIR)/itrectst.o $(LIB)/libcrk.a $(LIB)/libserplot.a
+	$(CC) $(CFLGS) -o itrectst $(DIR)/itrectst.o -L$(LIB) -lserplot -lcrk -lm
+
+$(DIR)/itrectst.o:	itrectst.c $(INC)/iterrect.h $(INC)/sysdef.h $(INC)/rocks.h \
+		$(INC)/rockv.h $(INC)/rkxtra.h $(INC)/plots.h
+
+itroitst:	$(DIR)/itroitst.o $(LIB)/libcrk.a $(LIB)/libserplot.a
+	$(CC) $(CFLGS) -o itroitst $(DIR)/itroitst.o -L$(LIB) -lserplot -lcrk -lm
+
+$(DIR)/itroitst.o:	itroitst.c $(INC)/iterrect.h $(INC)/sysdef.h $(INC)/rocks.h \
+		$(INC)/rockv.h $(INC)/rkxtra.h $(INC)/plots.h
+
+itsectst:	$(DIR)/itsectst.o $(LIB)/libcrk.a $(LIB)/libserplot.a
+	$(CC) $(CFLGS) -o itsectst $(DIR)/itsectst.o -L$(LIB) -lserplot -lcrk -lm
+
+$(DIR)/itsectst.o:	itsectst.c $(INC)/itersect.h $(INC)/sysdef.h $(INC)/rocks.h \
+		$(INC)/rockv.h $(INC)/rkxtra.h $(INC)/plots.h
+
+itsh2tst:	$(DIR)/itsh2tst.o $(LIB)/libcrk.a $(LIB)/libserplot.a
+	$(CC) $(CFLGS) -o itsh2tst $(DIR)/itsh2tst.o -L$(LIB) -lserplot -lcrk -lm
+
+$(DIR)/itsh2tst.o:	itsh2tst.c $(INC)/itershl2.h $(INC)/sysdef.h $(INC)/rocks.h \
+		$(INC)/rockv.h $(INC)/rkxtra.h $(INC)/plots.h
+
+ittaptst:	$(DIR)/ittaptst.o $(LIB)/libcrk.a $(LIB)/libserplot.a
+	$(CC) $(CFLGS) -o ittaptst $(DIR)/ittaptst.o -L$(LIB) -lserplot -lcrk -lm
+
+$(DIR)/ittaptst.o:	ittaptst.c $(INC)/itertape.h $(INC)/sysdef.h $(INC)/rocks.h \
+		$(INC)/rockv.h $(INC)/rkxtra.h $(INC)/plots.h
+
+jacotest:	$(DIR)/jacotest.o $(OBJ)/jacobi.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o jacotest $(DIR)/jacotest.o $(OBJ)/jacobi.o -lm
+
+$(DIR)/jacotest.o:	jacotest.c
+
+jfintest:	$(DIR)/jfintest.o $(OBJ)/jfind.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o jfintest $(DIR)/jfintest.o $(OBJ)/jfind.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/jfintest.o:	jfintest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/rkxtra.h
+
+kwsctest:	$(DIR)/kwsctest.o $(OBJ)/kwscan.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o kwsctest $(DIR)/kwsctest.o $(OBJ)/kwscan.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/kwsctest.o:	kwsctest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/rkxtra.h
+
+matctest:	$(DIR)/matctest.o $(OBJ)/match.o $(OBJ)/smatch.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o matctest $(DIR)/matctest.o $(OBJ)/match.o \
+		$(OBJ)/smatch.o	-L$(LIB) -lcrk -lm
+
+$(DIR)/matctest.o:	matctest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/rkxtra.h
+
+mcodtest:	$(DIR)/mcodtest.o $(OBJ)/mcodes.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o mcodtest $(DIR)/mcodtest.o $(OBJ)/mcodes.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/mcodtest.o:	mcodtest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/rkxtra.h
+
+myiptest:	$(DIR)/myiptest.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o myiptest $(DIR)/myiptest.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/myiptest.o:	myiptest.c $(INC)/sysdef.h $(INC)/rksubs.h
+
+ndivtest:	$(DIR)/ndivtest.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o ndivtest $(DIR)/ndivtest.o -L$(LIB) -lcrk -lm
+
+$(DIR)/ndivtest.o:	ndivtest.c $(INC)/sysdef.h $(INC)/rksubs.h $(INC)/rkarith.h
+
+nmtestd:	$(DIR)/nmtestd.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o nmtestd $(DIR)/nmtestd.o -L$(LIB) -lcrk -lm
+
+$(DIR)/nmtestd.o:	nmtestd.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rksubs.h \
+			$(INC)/rkarith.h $(INC)/nelmead.h
+
+nmtestf:	$(DIR)/nmtestf.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o nmtestf $(DIR)/nmtestf.o -L$(LIB) -lcrk -lm
+
+$(DIR)/nmtestf.o:	nmtestf.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rksubs.h \
+			$(INC)/rkarith.h $(INC)/nelmead.h
+
+pxqtest:	$(DIR)/pxqtest.o $(OBJ)/pxq.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o pxqtest $(DIR)/pxqtest.o $(OBJ)/pxq.o	\
+		-L$(LIB) -lcrk -lreadline -lm
+
+$(DIR)/pxqtest.o:	pxqtest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h	\
+		$(INC)/rfdef.h
+
+randtest:	$(DIR)/randtest.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o randtest $(DIR)/randtest.o -L$(LIB) -lcrk -lm
+
+randctst:	$(DIR)/randtest.o $(DIR)/udev.o	$(DIR)/ndev.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o randctst $(DIR)/randtest.o $(DIR)/udev.o $(DIR)/ndev.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/randtest.o:	randtest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/rkarith.h
+
+rfqstest:	$(DIR)/rfqstest.o $(OBJ)/rfqsame.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o rfqstest $(DIR)/rfqstest.o $(OBJ)/rfqsame.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/rfqstest.o:	rfqstest.c $(INC)/sysdef.h $(INC)/rfdef.h $(INC)/rocks.h \
+		$(INC)/rockv.h
+
+rfrwtest:	$(DIR)/rfrwtest.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o rfrwtest $(DIR)/rfrwtest.o -L$(LIB) -lcrk -lm
+
+$(DIR)/rfrwtest.o:	rfrwtest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rkxtra.h	$(INC)/rfdef.h $(INC)/rkarith.h
+
+rftest:		$(DIR)/rftest.o	$(OBJ)/rfread.o	$(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o rftest $(DIR)/rftest.o $(OBJ)/rfread.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/rftest.o:	rftest.c $(INC)/sysdef.h $(INC)/rocks.h	$(INC)/rockv.h \
+		$(INC)/rkxtra.h	$(INC)/rfdef.h
+
+rkpftest:	$(DIR)/rkpftest.o $(LIB)/librkpf.a $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o rkpftest $(DIR)/rkpftest.o \
+		-L$(LIB) -lrkpf -lcrk -lm
+
+$(DIR)/rkpftest.o:	rkpftest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rkxtra.h
+	$(CC) $(CFLGS) -Wno-format $(DEFS:%=-D%) -I$(INC) -c $<
+	mv rkpftest.o	$(DIR)
+
+rwtest:		$(DIR)/rwtest.o	$(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o rwtest $(DIR)/rwtest.o -L$(LIB) -lcrk	-lm
+
+$(DIR)/rwtest.o:	rwtest.c $(INC)/sysdef.h $(INC)/rocks.h	$(INC)/rockv.h \
+		$(INC)/rfdef.h
+
+scantest:	$(DIR)/scantest.o $(OBJ)/cdscan.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o scantest $(DIR)/scantest.o $(OBJ)/cdscan.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/scantest.o:	scantest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/rkxtra.h
+
+sectest:	$(DIR)/sectest.o $(OBJ)/second.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o sectest $(DIR)/sectest.o $(OBJ)/second.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/sectest.o:	sectest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h	\
+		$(INC)/rfdef.h $(INC)/rkarith.h
+
+sibctest:	$(DIR)/sibctest.o $(OBJ)/sibcdin.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o sibctest $(DIR)/sibctest.o $(OBJ)/sibcdin.o \
+		-L$(LIB) -lcrk
+
+$(DIR)/sibctest.o:	sibctest.c $(INC)/sysdef.h $(INC)/rkxtra.h
+
+sorttest:	$(DIR)/sorttest.o $(OBJ)/sort.o	$(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o sorttest $(DIR)/sorttest.o $(OBJ)/sort.o
+
+$(DIR)/sorttest.o:	sorttest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h
+
+sort2tst:	$(DIR)/sort2tst.o $(OBJ)/sort2.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o sort2tst $(DIR)/sort2tst.o $(OBJ)/sort2.o \
+	-L$(LIB) -lcrk -lm
+
+$(DIR)/sort2tst.o:	sort2tst.c $(INC)/sysdef.h $(INC)/rkarith.h \
+		$(INC)/rksubs.h
+
+ssmatest:	$(DIR)/ssmatest.o $(OBJ)/ssmatch.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o ssmatest $(DIR)/ssmatest.o $(OBJ)/ssmatch.o \
+		-L$(LIB) -lcrk
+
+$(DIR)/ssmatest.o:	ssmatest.c $(INC)/rocks.h $(INC)/rockv.h $(INC)/rfdef.h
+
+sspftest:	$(DIR)/sspftest.o $(OBJ)/ssprintf.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o sspftest $(DIR)/sspftest.o $(OBJ)/ssprintf.o \
+		-L$(LIB) -lcrk
+
+$(DIR)/sspftest.o:	sspftest.c $(INC)/sysdef.h
+
+su64test:	$(DIR)/su64test.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o su64test $(DIR)/su64test.o -L$(LIB) -lcrk
+
+$(DIR)/su64test.o:	su64test.c $(INC)/sysdef.h $(INC)/rkarith.h
+
+swaptest:	$(DIR)/swaptest.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o swaptest $(DIR)/swaptest.o -L$(LIB) -lcrk
+
+$(DIR)/swaptest.o:	swaptest.c $(INC)/sysdef.h $(INC)/swap.h $INC)/rkarith.h
+
+symbtest:	$(DIR)/symbtest.o \tc\plot\$(DIR)/symbol.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o symbtest $(DIR)/symbtest.o \tc\plot\$(DIR)/symbol.o
+
+$(DIR)/symbtest.o:	symbtest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/plots.h
+
+texttest:	$(DIR)/texttest.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o texttest $(DIR)/texttest.o -L$(LIB) -lcrk
+
+$(DIR)/texttest.o:	texttest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rkxtra.h
+
+udevskt2:	$(DIR)/udevskt2.o $(OBJ)/udevskip.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o udevskt2 $(DIR)/udevskt2.o $(OBJ)/udevskip.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/udevskt2.o:	udevskt2.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/rkxtra.h $(INC)/rkarith.h
+
+udevskts:	$(DIR)/udevskts.o $(OBJ)/udevskip.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o udevskts $(DIR)/udevskts.o $(OBJ)/udevskip.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/udevskts.o:	udevskts.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rfdef.h $(INC)/rkarith.h
+
+upowtest:	$(DIR)/upowtest.o $(OBJ)/ui32pow.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o upowtest $(DIR)/upowtest.o $(OBJ)/ui32pow.o \
+		-L$(LIB) -lcrk -lm
+
+$(DIR)/upowtest.o:	upowtest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rkarith.h
+
+wdevskts:	$(DIR)/wdevskts.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o wdevskts $(DIR)/wdevskts.o -L$(LIB) -lcrk -lm
+
+$(DIR)/wdevskts.o:	wdevskts.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rkwdev.h $(INC)/rkarith.h
+
+wdevtest:	$(DIR)/wdevtest.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o wdevtest $(DIR)/wdevtest.o -L$(LIB) -lcrk -lm
+
+$(DIR)/wdevtest.o:	wdevtest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rkwdev.h $(INC)/rkarith.h
+
+wdevtst2:	$(DIR)/wdevtst2.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o wdevtst2 $(DIR)/wdevtst2.o -L$(LIB) -lcrk -lm
+
+$(DIR)/wdevtst2.o:	wdevtst2.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rkxtra.h $(INC)/rkwdev.h $(INC)/rkarith.h
+
+wintest:	$(DIR)/wintest.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o wintest $(DIR)/wintest.o -L$(LIB) -lcrk -lm
+
+$(DIR)/wintest.o:	wintest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rkxtra.h	$(INC)/rkarith.h
+
+wouttest:	$(DIR)/wouttest.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o wouttest $(DIR)/wouttest.o -L$(LIB) -lcrk -lm
+
+$(DIR)/wouttest.o:	wouttest.c $(INC)/sysdef.h $(INC)/rocks.h $(INC)/rockv.h \
+		$(INC)/rkxtra.h	$(INC)/rkarith.h
+
+xx64test:	$(DIR)/xx64test.o $(LIB)/libcrk.a
+	$(CC) $(CFLGS) -o xx64test $(DIR)/xx64test.o -L$(LIB) -lcrk -lm
+
+$(DIR)/xx64test.o:	xx64test.c $(INC)/sysdef.h $(INC)/rkarith.h

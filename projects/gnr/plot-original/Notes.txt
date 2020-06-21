@@ -1,0 +1,46 @@
+On 08/01/17 some error numbers in abexit calls in oldplot library
+were found not to agree with errtab texts.  These were fixed.
+All abexit calls in new plot library should now be checked and
+if possible, when wrong, fix without changed errtab again.
+
+Currently plan for registered names is:  These are even on PAR0,
+odd elsewhere, so mfdraw can keep separate defs for odd ones per
+node.  But maybe they should just all be registered on node 0.
+
+Install preregistered colors, fonts, and pens per doc.
+Possibly the old color() routine should just be removed or use
+it for the predefined colors and have all registered color
+numbers free (incompatible with pen numbers).
+
+Maybe factor() should be redefined to just rescale subsequent
+plotting commands in the current frame.  Apparently its original
+use was to rescale a whole plot for paper output.
+
+Possibly the arguments in the arc() calls should be changed to
+the ones used in fltk, viz, radius and starting and ending angle
+instead of starting coordinate and ending angle.  Old style was
+never used as far as I know, except maybe in a test program.
+
+When a window is closed, its Win should be put on the available list.
+Ditto Frame array.
+
+but_msg bits that say a frame was dragged or coord transform
+modified need to initiate an interaction to transfer this
+information back to the host (allowing storage in some
+configuration file).  The change actually needs to be made
+on mfdraw so user can drag windows even when running from a
+stored metafile.
+
+Closing a window in mfdraw possibly should initiate passing
+that information back to the running app (if online) so
+future calls to write graphics to that window can be bypassed.
+
+N.B.  Following removed from rkginit, 06/27/15 -- now should
+be done each time a new frame is defined:
+   _RKG.cgmode = GM_SET;
+   strncpy(_RKG.ccolnm, "BLACK", MAXLCOLOR);
+   strncpy(_RKG.cfontn, "DEFAULT", MAXLFONT);
+   strncpy(_RKG.cpennm, "DEFAULT", MAXLPEN);
+frmdef() should also set all the following to zero or
+other default values:  cx,cy,ht,wd,rad,gmode,font,thickness,kreset 
+

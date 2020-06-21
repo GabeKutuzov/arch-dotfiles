@@ -1,0 +1,1 @@
+gcc -m64 -g -Wcomment -Wformat -Wimplicit -Wsequence-point -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized -Wundef -Wcast-qual -Wunreachable-code -DPCLUX64 -D_ISOC99_SOURCE -DSVNVRS='"68"' -I/home/gmk/include -c rfopen.c

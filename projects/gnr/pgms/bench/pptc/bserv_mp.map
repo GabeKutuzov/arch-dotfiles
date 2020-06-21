@@ -1,0 +1,550 @@
+*****************************************************
+MVP COFF Linker             Version 1.10
+*****************************************************
+Fri Oct 20 18:08:18 1995
+
+OUTPUT FILE NAME:   <bserv_mp.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 21688684
+
+
+MEMORY CONFIGURATION
+
+           name      origin     length     attributes     fill
+         --------   --------   ---------   ----------   --------
+         PP_RAM0    00000000   000000800      RW        
+         PP_RAM1    00000800   000000800      RW        
+         PP_RAM2    00008000   000000400      RW        
+         PP_BSS     00008400   0000002b0      RW        
+         PP_COMM    000086b0   000000010      RW        
+         PP_TCTL    000086c0   000000140      RW        
+         PP_TRAM    01000000   000000180      RW        
+         PP_VECT    01000180   000000080      RW        
+         PP_CMDB    01000200   000000040      RW        
+         PP_PRAM    01000240   0000005b4      RW        
+         PP_CTXT    010007f4   00000000c      R         
+         MP_TRAM0   01010000   000000180      RW        
+         MP_VECTS   01010180   0000000a0      RW        
+         MP_TRAM1   01010220   000000080      RW        
+         MP_QUEUE   010102a0   0000000a8      RW        
+         MP_PRAM0   01010348   0000000b8      RW        
+         MP_PKTRQ   01010400   000000400      RW        
+         TC_REGS    01820000   000000200      RW        
+         VC_REGS    01820200   000000200      RW        
+         FCODE      21000000   000200000      R         
+         COMM       21200000   000000004      RWI       
+         EXT_REG    21400000   00000000b      RWI       
+         BT_REG     2140000b   000000002      RW        
+         VRAM       21600000   000080000      RWIX      
+         RAM        21680000   00017ff40      RWIX      
+         HOST       217fff40   0000000b8      RWI       
+         BOOT       217ffff8   000000008      RWI       
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.text      0    21680000    0000c4f0     
+                  21680000    00008c98     sip80knl.obj (.text)
+                  21688c98    00000000     bserv_pp.o (.text)
+                  21688c98    00000000     mp_ptreq.lib : pktglobs.obj (.text)
+                  21688c98    00000000     pp_rts.lib : memset.o (.text)
+                  21688c98    00001bf0     bserv_mp.obj (.text)
+                  2168a888    00000cc8     mp_cio.lib : doscan.obj (.text)
+                  2168b550    00000258     mp_rts.lib : strtod.obj (.text)
+                  2168b7a8    000001e0     mp_ptreq.lib : pktinit.obj (.text)
+                  2168b988    00000190     mp_task.lib : allocmsg.obj (.text)
+                  2168bb18    00000128                 : relay.obj (.text)
+                  2168bc40    00000114                 : bindport.obj (.text)
+                  2168bd54    000000fc                 : sendmsg.obj (.text)
+                  2168be50    000000e4                 : openport.obj (.text)
+                  2168bf34    000000e0     mp_cio.lib : ungetc.obj (.text)
+                  2168c014    000000d8     mp_task.lib : receive.obj (.text)
+                  2168c0ec    000000b8                 : waitevts.obj (.text)
+                  2168c1a4    000000b0                 : freemsg.obj (.text)
+                  2168c254    000000a8     mp_ptreq.lib : pktissue.obj (.text)
+                  2168c2fc    000000a4     mp_cio.lib : scanf.obj (.text)
+                  2168c3a0    00000098     mp_task.lib : reclaim.obj (.text)
+                  2168c438    0000005c     mp_int.lib : msetsema.obj (.text)
+                  2168c494    00000020     mp_rts.lib : atof.obj (.text)
+                  2168c4b4    0000001c                : memset.obj (.text)
+                  2168c4d0    00000010                : isspace.obj (.text)
+                  2168c4e0    00000010                : isxdigit.obj (.text)
+
+.ptext     0    2168c500    00000870     
+                  2168c500    000004a8     bserv_pp.o (.ptext)
+                  2168c9a8    00000058     --HOLE-- [fill = 00000000]
+                  2168ca00    000002e0     sip80knl.obj (.ptext)
+                  2168cce0    00000090     pp_rts.lib : memset.o (.ptext)
+
+.cinit     0    2168cd70    000005d8     
+                  2168cd70    000005b0     sip80knl.obj (.cinit)
+                  2168d320    00000018     bserv_mp.obj (.cinit)
+                  2168d338    0000000c     mp_ptreq.lib : pktglobs.obj (.cinit)
+                  2168d344    00000004     --HOLE-- [fill = 00000000]
+
+.pcinit    0    21680000    00000000     UNINITIALIZED
+                  21680000    00000000     sip80knl.obj (.pcinit)
+
+.const     0    2168d348    00000790     
+                  2168d348    00000480     bserv_mp.obj (.const)
+                  2168d7c8    00000268     sip80knl.obj (.const)
+                  2168da30    000000a8     mp_rts.lib : strtod.obj (.const)
+
+.switch    0    21680000    00000000     UNINITIALIZED
+                  21680000    00000000     sip80knl.obj (.switch)
+
+.pswitch   0    21680000    00000000     UNINITIALIZED
+                  21680000    00000000     sip80knl.obj (.pswitch)
+
+.data      0    2168c4f0    00000004     
+                  2168c4f0    00000004     sip80knl.obj (.data)
+                  2168c4f4    00000000     mp_task.lib : openport.obj (.data)
+                  2168c4f4    00000000                 : bindport.obj (.data)
+                  2168c4f4    00000000                 : allocmsg.obj (.data)
+                  2168c4f4    00000000                 : relay.obj (.data)
+                  2168c4f4    00000000                 : reclaim.obj (.data)
+                  2168c4f4    00000000                 : receive.obj (.data)
+                  2168c4f4    00000000     mp_int.lib : msetsema.obj (.data)
+                  2168c4f4    00000000     bserv_pp.o (.data)
+                  2168c4f4    00000000     bserv_mp.obj (.data)
+                  2168c4f4    00000000     mp_cio.lib : ungetc.obj (.data)
+                  2168c4f4    00000000                : doscan.obj (.data)
+                  2168c4f4    00000000                : scanf.obj (.data)
+                  2168c4f4    00000000     mp_ptreq.lib : pktinit.obj (.data)
+                  2168c4f4    00000000     mp_rts.lib : strtod.obj (.data)
+                  2168c4f4    00000000                : memset.obj (.data)
+                  2168c4f4    00000000     pp_rts.lib : memset.o (.data)
+                  2168c4f4    00000000     mp_ptreq.lib : pktglobs.obj (.data)
+                  2168c4f4    00000000                  : pktissue.obj (.data)
+                  2168c4f4    00000000     mp_task.lib : freemsg.obj (.data)
+                  2168c4f4    00000000                 : waitevts.obj (.data)
+                  2168c4f4    00000000                 : sendmsg.obj (.data)
+                  2168c4f4    00000000     mp_rts.lib : isxdigit.obj (.data)
+                  2168c4f4    00000000                : isspace.obj (.data)
+                  2168c4f4    00000000                : atof.obj (.data)
+
+.bss       0    2168db00    00001694     UNINITIALIZED
+                  2168db00    00001568     sip80knl.obj (.bss)
+                  2168f068    00000000     mp_task.lib : receive.obj (.bss)
+                  2168f068    00000000                 : openport.obj (.bss)
+                  2168f068    00000000                 : reclaim.obj (.bss)
+                  2168f068    00000000                 : sendmsg.obj (.bss)
+                  2168f068    00000000                 : relay.obj (.bss)
+                  2168f068    00000000                 : bindport.obj (.bss)
+                  2168f068    00000000     mp_int.lib : msetsema.obj (.bss)
+                  2168f068    00000000     bserv_pp.o (.bss)
+                  2168f068    00000000     mp_cio.lib : scanf.obj (.bss)
+                  2168f068    00000000     mp_task.lib : allocmsg.obj (.bss)
+                  2168f068    00000000     mp_cio.lib : ungetc.obj (.bss)
+                  2168f068    00000000     mp_rts.lib : strtod.obj (.bss)
+                  2168f068    00000000                : memset.obj (.bss)
+                  2168f068    00000000     mp_ptreq.lib : pktinit.obj (.bss)
+                  2168f068    00000000     pp_rts.lib : memset.o (.bss)
+                  2168f068    00000000     mp_ptreq.lib : pktissue.obj (.bss)
+                  2168f068    00000000     mp_task.lib : freemsg.obj (.bss)
+                  2168f068    00000000                 : waitevts.obj (.bss)
+                  2168f068    00000000     mp_rts.lib : atof.obj (.bss)
+                  2168f068    00000000                : isxdigit.obj (.bss)
+                  2168f068    00000000                : isspace.obj (.bss)
+                  2168f068    00000098     mp_ptreq.lib : pktglobs.obj (.bss)
+                  2168f100    0000008c     bserv_mp.obj (.bss)
+                  2168f18c    00000008     mp_cio.lib : doscan.obj (.bss)
+
+.pbss      0    00008400    00000000     UNINITIALIZED
+                  00008400    00000000     sip80knl.obj (.pbss)
+
+.ext       0    21680000    00000000     UNINITIALIZED
+                  21680000    00000000     sip80knl.obj (.ext)
+
+.stack     0    2168f198    00008000     UNINITIALIZED
+                  2168f198    00000000     sip80knl.obj (.stack)
+
+.pstack    0    01000240    00000080     UNINITIALIZED
+                  01000240    00000000     sip80knl.obj (.pstack)
+
+.sysmem    0    21697198    00140000     UNINITIALIZED
+                  21697198    00000000     sip80knl.obj (.sysmem)
+
+.psysmem   0    00008400    00000080     UNINITIALIZED
+                  00008400    00000000     sip80knl.obj (.psysmem)
+
+.cio       0    217d7198    00000120     UNINITIALIZED
+                  217d7198    00000120     sip80knl.obj (.cio)
+
+host       0    217fff40    00000080     UNINITIALIZED
+                  217fff40    00000080     sip80knl.obj (host)
+
+sysque     0    010102a0    000000a8     UNINITIALIZED
+                  010102a0    000000a8     sip80knl.obj (sysque)
+
+vram       0    21600000    00080000     UNINITIALIZED
+                  21600000    00080000     sip80knl.obj (vram)
+
+mpram0     0    01010348    00000000     UNINITIALIZED
+                  01010348    00000000     sip80knl.obj (mpram0)
+
+ppram0     0    00000000    00000000     UNINITIALIZED
+                  00000000    00000000     sip80knl.obj (ppram0)
+
+ppram1     0    00000800    00000000     UNINITIALIZED
+                  00000800    00000000     sip80knl.obj (ppram1)
+
+ppram2     0    00008000    00000000     UNINITIALIZED
+                  00008000    00000000     sip80knl.obj (ppram2)
+
+ppcomm     0    000086b0    00000008     UNINITIALIZED
+                  000086b0    00000008     sip80knl.obj (ppcomm)
+
+.pbss      0    00000000    00000000     PASS SECTION
+                  00000000    00000000     sip80knl.obj (.pbss)
+
+
+GLOBAL SYMBOLS
+
+address  name                             address  name
+-------- ----                             -------- ----
+2168cb40 $ISR_PKTBUSY                     00000080 $_STACK_SIZE
+2168cb88 $ISR_PPMSG                       00000080 $_SYSMEM_SIZE
+2168cc70 $PPCMD_SHUTDOWN                  00008000 __STACK_SIZE
+2168ca00 $PpCmdInterp                     000086b0 __ppArgs
+2168cbe8 $WaitCmdBuf                      00140000 __SYSMEM_SIZE
+217d7198 $_CIOBUF_                        010102a0 __MVP_SYSQUE
+21600000 $_K_vramBuf                      01010340 __QUEHEAD
+00000080 $_STACK_SIZE                     01010344 __QUETAIL
+00000080 $_SYSMEM_SIZE                    21600000 $_K_vramBuf
+2168c500 $bserv_pp                        21600000 __K_vramBuf
+2168cce0 $memset                          21680000 .text
+2168db00 .bss                             21680000 _clean_1x2x
+2168c4f0 .data                            21680000 _clean
+21680000 .text                            216800c0 _flush_1x2x
+21688088 C$$EXIT                          216800c0 _flush
+216878f8 C$$IO$$                          21680280 __doprnt
+21688bc0 I_MOD                            216818ac _HostServer
+2168f138 _AvQueueSema                     216819bc __S_commInit
+2168f168 _AvailCSum                       21681c3c __S_TaskInit
+2168f154 _AvailMsg                        21681c74 __S_TaskExit
+2168f130 _Available                       21681cb0 __S_commIntrHdlr
+2168f140 _CalcPP                          21681eec __S_commQueInit
+2168ee00 _DSPTAB                          21681f98 __S_commQueProc
+21689e3c _Dispatch                        216820e8 __S_InitMutex
+2168f150 _DoneCellType                    21682170 __S_SignalMutex
+2168f13c _DoneIteration                   216821ec __S_WaitMutex
+2168f100 _Done                            216822fc __S_SetIndex
+21685c34 _GICTimerGet                     216823cc __S_GetIndex
+21685b54 _GICTimerInit                    21682440 __S_RetReceipt
+21685bc0 _GICTimerStart                   2168252c __S_commMsgSend
+21685044 _HOSTclose                       21682708 _hostRouteMsg
+216851ec _HOSTlseek                       21682748 _hostReceiveMsg
+21684fa0 _HOSTopen                        2168284c __S_hostPutString
+216850bc _HOSTread                        21682994 _syslog
+21685348 _HOSTrename                      21682a50 _commNodeControl
+216852cc _HOSTunlink                      21682b94 _hostReclaimMsg
+2168515c _HOSTwrite                       21682c58 __S_commUpdatePriv
+216818ac _HostServer                      21682c70 __S_InitRWaitlist
+216871e4 _InterruptInit                   21682c74 __S_AddRWaitlist
+2168884c _InterruptSetVect                21682c8c __S_getPrintPeriod
+2168f124 _Load                            21682c98 __S_setPrintPeriod
+2168ee04 _NUM_DSPS                        21682cc0 _printf
+2168cc70 _PPCMD_SHUTDOWN                  21682d0c _puts
+2168f158 _PPDoneSema                      21682d30 _devDeviceCopy
+2168f11c _PPPrio                          21682ed8 __dspInstallISR
+2168f16c _PPWaitSema                      21683018 __dspRestoreISR
+216860b8 _PpCmdBufBusy                    216830f8 __dspInstallCMD
+21686108 _PpCmdBufGetArgs                 216831cc __dspRemoveCMD
+21686128 _PpCmdBufInit                    2168331c __mp_ppmsgISR
+21686280 _PpCmdBufIssue                   21683450 __mp_setPpMsgIntrSema
+216862a4 _PpCmdBufNext                    216834c4 _dspAPIInit
+216862c4 _PpCmdBufNotifyIssue             21683620 _dspInit
+216862f4 _PpCmdBufSetArgs                 21683880 _dspExec
+2168631c _PpCmdBufSetFunc                 21683ab4 _dspRelease
+2168ca00 _PpCmdInterp                     21683c3c _main
+21686344 _PpCmdReadMbox                   21684008 _heapMalloc
+21686364 _PpCmdWriteMbox                  21684058 _heapFree
+2168c438 _PpMsgIntSetSema                 2168409c _heapMemalign
+2168a7b8 _ProcessorFinish                 216840f8 _knlAddrInHeap
+2168a67c _ProcessorSched                  21684140 _knlGetStack
+2168b8ec _PtReqInit                       21684148 _knlSleep
+2168c254 _PtReqIssue                      216841a0 _knlInitAbort
+2168c4f0 _SYSQUE_ELEMENTS                 216841e8 __abort_msg
+2168f120 _TCSema                          2168421c __K_SetIdString
+21687974 _TaskAddFuncList                 21684294 _knlGetIdString
+2168b988 _TaskAllocMsg                    216842f0 _knlAllocVRAM
+2168bc40 _TaskBindPort                    2168432c _knlFreeVRAM
+216885f8 _TaskCheckSema                   21684464 _minit
+21687344 _TaskCloseSema                   2168448c _malloc
+21686f24 _TaskCreate                      21684544 _calloc
+21687464 _TaskExit                        216845ac _realloc
+2168c1a4 _TaskFreeMsg                     2168474c _free
+21688c3c _TaskGetPriority                 216848cc _memalign
+21688ab4 _TaskGetPrivate                  21684a20 __cleanup
+21688c2c _TaskGetTask                     21684a7c _fclose
+216867e0 _TaskInitTasking                 21684b4c _fflush
+21688b88 _TaskInstallMalloc               21684c58 __flsbuf
+2168be50 _TaskOpenPort                    21684dd0 __xflsbuf
+21687f70 _TaskOpenSema                    21684e6c __wrtchk
+2168c014 _TaskReceiveMsg                  21684f08 __findbuf
+2168c3a0 _TaskReclaimMsg                  21684fa0 _HOSTopen
+2168bb18 _TaskRelayMsg                    21685044 _HOSTclose
+2168870c _TaskResetSema                   216850bc _HOSTread
+21688398 _TaskResume                      2168515c _HOSTwrite
+2168bd54 _TaskSendMsg                     216851ec _HOSTlseek
+21687684 _TaskSetPriority                 216852cc _HOSTunlink
+21688a78 _TaskSetPrivate                  21685348 _HOSTrename
+21687d14 _TaskSignalSema                  21685404 _getenv
+21687084 _TaskSuspend                     21685494 _getnexfildes
+216887e4 _TaskValidateSema                216854d4 _tabinit
+2168c0ec _TaskWaitEvents                  21685530 _finddevice
+21687c38 _TaskWaitSema                    216855ac _getdevice
+21688258 _TaskYield                       2168561c _add_device
+216859f0 _TimeMgr                         216856f4 _remove_device
+21687584 _TimerAddTicks                   21685724 _open
+21688c0c _TimerGetClock                   216857d0 _read
+21687de0 _TimerInit                       216857f8 _write
+21688c5c _TimerSetClock                   21685820 _lseek
+2168a300 _TransferControl                 21685848 _close
+2168f17c _WBack                           216858a0 _unlink
+2168f10c _WaitPP                          216858d0 _rename
+217d7198 __CIOBUF_                        21685914 __isrTimer
+217fff80 __HOST_SYSMSG                    216859f0 _TimeMgr
+2168ef0c __K_HostCommPrivate              21685b54 _GICTimerInit
+2168421c __K_SetIdString                  21685bc0 _GICTimerStart
+21600000 __K_vramBuf                      21685c34 _GICTimerGet
+217fff40 __MVP_SYSMSG                     21685d20 __isrMpSelfInterrupt
+010102a0 __MVP_SYSQUE                     21685e1c __isrFpuException
+01010340 __QUEHEAD                        21685e90 __isrGeneral
+01010344 __QUETAIL                        21685f58 __isrPpMsg
+00008000 __STACK_SIZE                     21686050 __trapDefault
+00140000 __SYSMEM_SIZE                    216860b8 _PpCmdBufBusy
+21682c74 __S_AddRWaitlist                 21686108 _PpCmdBufGetArgs
+216823cc __S_GetIndex                     21686128 _PpCmdBufInit
+216820e8 __S_InitMutex                    21686280 _PpCmdBufIssue
+21682c70 __S_InitRWaitlist                216862a4 _PpCmdBufNext
+21682440 __S_RetReceipt                   216862c4 _PpCmdBufNotifyIssue
+216822fc __S_SetIndex                     216862f4 _PpCmdBufSetArgs
+21682170 __S_SignalMutex                  2168631c _PpCmdBufSetFunc
+21681c74 __S_TaskExit                     21686344 _PpCmdReadMbox
+21681c3c __S_TaskInit                     21686364 _PpCmdWriteMbox
+216821ec __S_WaitMutex                    2168638c _fcvt
+216819bc __S_commInit                     216865bc _ecvt
+21681cb0 __S_commIntrHdlr                 216867e0 _TaskInitTasking
+2168252c __S_commMsgSend                  216869f4 _sprintf
+21681eec __S_commQueInit                  21686a30 ___nofunct
+21681f98 __S_commQueProc                  21686a34 _led_on
+21682c58 __S_commUpdatePriv               21686a6c _led_toggle
+21682c8c __S_getPrintPeriod               21686aa4 _led_off
+2168284c __S_hostPutString                21686adc _led_set
+21682c98 __S_setPrintPeriod               21686b08 _led_get
+2168ec60 __TASKTAB                        21686b14 _led_blink
+21686a30 ___nofunct                       21686bd8 _fwrite
+216841e8 __abort_msg                      21686db0 __filbuf
+216880f4 __blockTask                      21686f24 _TaskCreate
+2168e67c __bufendtab                      21687084 _TaskSuspend
+21684a20 __cleanup                        216871e4 _InterruptInit
+2168ee0c __cleanup_ptr                    21687344 _TaskCloseSema
+2168e9f8 __clearMpSelfInterrupt           21687464 _TaskExit
+21688908 __closeResource                  21687584 _TimerAddTicks
+2168e9fc __ctypes_                        21687684 _TaskSetPriority
+2168de40 __currentTask                    21687784 _getc
+2168db20 __defaultTask                    216877c4 _putc
+216889f4 __dequeueResource                2168780c _getchar
+21688490 __dequeueTimer                   21687830 _putchar
+2168eca0 __device                         21687854 _clearerr
+21680280 __doprnt                         21687868 _feof
+2168a888 __doscan                         21687874 _ferror
+2168edf0 __dspAPISemaId                   21687880 _writemsg
+2168edf4 __dspInitFLAGS                   216878f8 C$$IO$$
+216830f8 __dspInstallCMD                  21687900 _readmsg
+21682ed8 __dspInstallISR                  21687974 _TaskAddFuncList
+2168ed70 __dspPpMsgIntrSemaTAB            21687a68 __reenterTask
+216831cc __dspRemoveCMD                   21687b54 __openResource
+21683018 __dspRestoreISR                  21687c38 _TaskWaitSema
+2168edf8 __dspTaskCounter                 21687d14 _TaskSignalSema
+2168de3c __exitListIndex                  21687de0 _TimerInit
+2168ddb0 __exitList                       21687eac __launchTask
+2168dde0 __exitTaskQueue                  21687f70 _TaskOpenSema
+21686db0 __filbuf                         21688034 _exit
+21684f08 __findbuf                        21688088 C$$EXIT
+21684c58 __flsbuf                         21688090 _atexit
+216889ac __getResource                    216880d4 _abort
+2168db00 __ieSave                         216880f4 __blockTask
+2168e504 __initList                       216881a8 __readyTask
+2168dcac __initListIndex                  21688258 _TaskYield
+2168877c __initMsgPool                    216882f8 __switchTasks
+21688438 __insertTimer                    21688398 _TaskResume
+2168e8f0 __interruptSema                  21688438 __insertTimer
+2168e538 __iob                            21688490 __dequeueTimer
+21685e1c __isrFpuException                216884d0 _ltoa
+21685e90 __isrGeneral                     21688564 _memcpy
+21688bf4 __isrMemoryFault                 216885f8 _TaskCheckSema
+21685d20 __isrMpSelfInterrupt             21688684 _c_int00
+21685f58 __isrPpMsg                       2168870c _TaskResetSema
+2168b7a8 __isrPtDone                      2168877c __initMsgPool
+21685914 __isrTimer                       216887e4 _TaskValidateSema
+2168de38 __lastBadMsg                     2168884c _InterruptSetVect
+2168e678 __lastbuf                        216888b0 _vsprintf
+21687eac __launchTask                     21688908 __closeResource
+2168f064 __memory_size                    2168895c _setjmp
+2168331c __mp_ppmsgISR                    2168895c __setjmp
+21683450 __mp_setPpMsgIntrSema            21688980 _longjmp
+2168de80 __msgBuf                         216889ac __getResource
+2168dde8 __msgPool                        216889f4 __dequeueResource
+2168ddf4 __msgRoutingTable                21688a38 _strncpy
+2168db04 __myNodeNum                      21688a78 _TaskSetPrivate
+21687b54 __openResource                   21688ab4 _TaskGetPrivate
+2168e480 __portTable                      21688aec __setNewStack
+000086b0 __ppArgs                         21688b1c _memchr
+2168e970 __ppMsgIntSema                   21688b44 _strcmp
+2168e500 __privateIndex                   21688b68 _strchr
+2168f06c __ptReqIeSave                    21688b88 _TaskInstallMalloc
+2168f0fc __ptReqIn                        21688ba4 _strlen
+2168f0f8 __ptReqOut                       21688bc0 I_MOD
+2168f068 __ptReqPool                      21688bdc _strcpy
+2168f070 __ptReqQueue                     21688bf4 __isrMemoryFault
+2168dc28 __readyMask                      21688c0c _TimerGetClock
+2168dcb0 __readyQueue                     21688c1c _isdigit
+216881a8 __readyTask                      21688c2c _TaskGetTask
+21687a68 __reenterTask                    21688c3c _TaskGetPriority
+2168db08 __resInfo                        21688c4c _isupper
+2168e9f4 __saveIeRegister                 21688c5c _TimerSetClock
+2168e9f0 __saveMpSelfIntVect              21688c6c _disable
+2168dc2c __semaTable                      21688c78 _lmo
+2168ddf0 __sequenceNum                    21688c84 _rmo
+21688aec __setNewStack                    21688c90 _command
+2168895c __setjmp                         21688c98 _mallocv
+2168e6d0 __smbuf                          21688cd0 _rand
+2168f198 __stack                          21688cfc _srand
+2168ed18 __stream                         21688d18 _userMain
+216882f8 __switchTasks                    21689e3c _Dispatch
+21697198 __sys_memory                     2168a300 _TransferControl
+2168dbc8 __taskTable                      2168a67c _ProcessorSched
+2168ddec __taskingFree                    2168a7b8 _ProcessorFinish
+2168de34 __taskingMalloc                  2168a888 __doscan
+2168e8e8 __timerHead                      2168b550 _strtod
+2168e778 __timerPool                      2168b7a8 __isrPtDone
+2168e8ec __timerSemaId                    2168b8ec _PtReqInit
+2168e8e0 __timerTail                      2168b988 _TaskAllocMsg
+2168ed6c __tmpdel_ptr                     2168bb18 _TaskRelayMsg
+21686050 __trapDefault                    2168bc40 _TaskBindPort
+21684e6c __wrtchk                         2168bd54 _TaskSendMsg
+21684dd0 __xflsbuf                        2168be50 _TaskOpenPort
+216880d4 _abort                           2168bf34 _ungetc
+2168561c _add_device                      2168c014 _TaskReceiveMsg
+21688090 _atexit                          2168c0ec _TaskWaitEvents
+2168c494 _atof                            2168c1a4 _TaskFreeMsg
+2168c500 _bserv_pp                        2168c254 _PtReqIssue
+21688684 _c_int00                         2168c2fc _scanf
+21684544 _calloc                          2168c328 _fscanf
+21680000 _clean_1x2x                      2168c34c _sscanf
+21680000 _clean                           2168c3a0 _TaskReclaimMsg
+21687854 _clearerr                        2168c438 _PpMsgIntSetSema
+21685848 _close                           2168c494 _atof
+21682a50 _commNodeControl                 2168c4b4 _memset
+21688c90 _command                         2168c4d0 _isspace
+21682d30 _devDeviceCopy                   2168c4e0 _isxdigit
+21688c6c _disable                         2168c4f0 _SYSQUE_ELEMENTS
+216834c4 _dspAPIInit                      2168c4f0 .data
+21683880 _dspExec                         2168c4f0 etext
+21683620 _dspInit                         2168c4f4 edata
+21683ab4 _dspRelease                      2168c500 $bserv_pp
+216865bc _ecvt                            2168c500 _bserv_pp
+2168e534 _errno                           2168ca00 $PpCmdInterp
+21688034 _exit                            2168ca00 _PpCmdInterp
+21684a7c _fclose                          2168cb40 $ISR_PKTBUSY
+2168638c _fcvt                            2168cb88 $ISR_PPMSG
+21687868 _feof                            2168cbe8 $WaitCmdBuf
+21687874 _ferror                          2168cc70 _PPCMD_SHUTDOWN
+21684b4c _fflush                          2168cc70 $PPCMD_SHUTDOWN
+21685530 _finddevice                      2168cce0 $memset
+216800c0 _flush                           2168cd70 cinit
+216800c0 _flush_1x2x                      2168db00 .bss
+2168474c _free                            2168db00 __ieSave
+2168c328 _fscanf                          2168db04 __myNodeNum
+21686bd8 _fwrite                          2168db08 __resInfo
+21687784 _getc                            2168db20 __defaultTask
+2168780c _getchar                         2168dbc8 __taskTable
+216855ac _getdevice                       2168dc28 __readyMask
+21685404 _getenv                          2168dc2c __semaTable
+21685494 _getnexfildes                    2168dcac __initListIndex
+21684058 _heapFree                        2168dcb0 __readyQueue
+21684008 _heapMalloc                      2168ddb0 __exitList
+2168409c _heapMemalign                    2168dde0 __exitTaskQueue
+21682748 _hostReceiveMsg                  2168dde8 __msgPool
+21682b94 _hostReclaimMsg                  2168ddec __taskingFree
+21682708 _hostRouteMsg                    2168ddf0 __sequenceNum
+21688c1c _isdigit                         2168ddf4 __msgRoutingTable
+2168c4d0 _isspace                         2168de34 __taskingMalloc
+21688c4c _isupper                         2168de38 __lastBadMsg
+2168c4e0 _isxdigit                        2168de3c __exitListIndex
+216840f8 _knlAddrInHeap                   2168de40 __currentTask
+216842f0 _knlAllocVRAM                    2168de80 __msgBuf
+2168432c _knlFreeVRAM                     2168e480 __portTable
+21684294 _knlGetIdString                  2168e500 __privateIndex
+21684140 _knlGetStack                     2168e504 __initList
+216841a0 _knlInitAbort                    2168e534 _errno
+2168ebd4 _knlRELEASE                      2168e538 __iob
+21684148 _knlSleep                        2168e678 __lastbuf
+2168ebd0 _knlVERSION                      2168e67c __bufendtab
+21686b14 _led_blink                       2168e6d0 __smbuf
+21686b08 _led_get                         2168e778 __timerPool
+21686aa4 _led_off                         2168e8e0 __timerTail
+21686a34 _led_on                          2168e8e8 __timerHead
+21686adc _led_set                         2168e8ec __timerSemaId
+21686a6c _led_toggle                      2168e8f0 __interruptSema
+21688c78 _lmo                             2168e970 __ppMsgIntSema
+21688980 _longjmp                         2168e9f0 __saveMpSelfIntVect
+21685820 _lseek                           2168e9f4 __saveIeRegister
+216884d0 _ltoa                            2168e9f8 __clearMpSelfInterrupt
+21683c3c _main                            2168e9fc __ctypes_
+21688c98 _mallocv                         2168ebc8 _parmbuf
+2168448c _malloc                          2168ebd0 _knlVERSION
+2168f134 _mcells                          2168ebd4 _knlRELEASE
+216848cc _memalign                        2168ec60 __TASKTAB
+21688b1c _memchr                          2168eca0 __device
+21688564 _memcpy                          2168ed18 __stream
+2168c4b4 _memset                          2168ed6c __tmpdel_ptr
+2168f108 _mibatch                         2168ed70 __dspPpMsgIntrSemaTAB
+21684464 _minit                           2168edf0 __dspAPISemaId
+2168f104 _next                            2168edf4 __dspInitFLAGS
+2168f180 _niterations                     2168edf8 __dspTaskCounter
+2168f128 _niterbatch                      2168ee00 _DSPTAB
+21685724 _open                            2168ee04 _NUM_DSPS
+2168ebc8 _parmbuf                         2168ee0c __cleanup_ptr
+2168f188 _play1                           2168ef0c __K_HostCommPrivate
+21682cc0 _printf                          2168f064 __memory_size
+216877c4 _putc                            2168f068 __ptReqPool
+21687830 _putchar                         2168f06c __ptReqIeSave
+21682d0c _puts                            2168f070 __ptReqQueue
+21688cd0 _rand                            2168f0f8 __ptReqOut
+21687900 _readmsg                         2168f0fc __ptReqIn
+216857d0 _read                            2168f100 _Done
+216845ac _realloc                         2168f104 _next
+216856f4 _remove_device                   2168f108 _mibatch
+216858d0 _rename                          2168f10c _WaitPP
+21688c84 _rmo                             2168f11c _PPPrio
+2168c2fc _scanf                           2168f120 _TCSema
+2168895c _setjmp                          2168f124 _Load
+216869f4 _sprintf                         2168f128 _niterbatch
+21688cfc _srand                           2168f130 _Available
+2168c34c _sscanf                          2168f134 _mcells
+21688b68 _strchr                          2168f138 _AvQueueSema
+21688b44 _strcmp                          2168f13c _DoneIteration
+21688bdc _strcpy                          2168f140 _CalcPP
+21688ba4 _strlen                          2168f150 _DoneCellType
+21688a38 _strncpy                         2168f154 _AvailMsg
+2168b550 _strtod                          2168f158 _PPDoneSema
+21682994 _syslog                          2168f168 _AvailCSum
+216854d4 _tabinit                         2168f16c _PPWaitSema
+2168bf34 _ungetc                          2168f17c _WBack
+216858a0 _unlink                          2168f180 _niterations
+21688d18 _userMain                        2168f188 _play1
+216888b0 _vsprintf                        2168f194 end
+21687880 _writemsg                        2168f198 __stack
+216857f8 _write                           21697198 __sys_memory
+2168cd70 cinit                            217d7198 __CIOBUF_
+2168c4f4 edata                            217d7198 $_CIOBUF_
+2168f194 end                              217fff40 __MVP_SYSMSG
+2168c4f0 etext                            217fff80 __HOST_SYSMSG
+
+[341 symbols]

@@ -1,0 +1,115 @@
+# @(#)cshrc	1.21 SMI 
+# CSH Run Commands file.
+# 10/16/13, GNR - Version for Linux on marengo2
+
+limit coredumpsize 1600m
+umask 027
+set histdup prev
+set ignoreeof history=600
+set savehist=0 notify
+set dunique dextract filec
+unset autolist
+
+# Environment variables
+setenv ABXERRTABLE '/home/gmk/src/crk/errtab'
+setenv CRFLAGS -mgnr
+setenv CRPATH "/home/gmk/.Crisp/macros;+"
+setenv CR_FILE_SEARCH_PATH "/home/gmk/include;/home/gmk/src/crk"
+# CR_NAT_LICENSE 1 allows Crisp to run when offline
+setenv CR_NAT_LICENSE 1
+setenv JAVA_HOME /usr/java/latest
+setenv LMCRISP_HOST localhost
+setenv MAIL /var/spool/mail/gmk
+setenv MANSECT 1:3:3p:2:4:5:6:7:8:9:tcl:l:n:p:o
+setenv MFPLOT_SAV on
+setenv TMPDIR ~gmk/temp
+setenv UNZIP -L
+setenv WAI MAR
+
+# Set path
+set path=( ~/bin /opt/Crisp/11.0.28/bin.linux-x86_64 \
+   /usr/local/bin /usr/local/Qt-4.6.2/bin /bin /usr/bin \
+   /usr/bin/X11 /usr/lib64/openmpi-1.10/bin )
+
+#****************************************************************
+#*** CODE BELOW THIS POINT SKIPPED FOR NON-INTERACTIVE SHELLS ***
+#****************************************************************
+
+if ($?prompt == 0) exit
+
+# Don't stty if not interactive--makes rcp choke
+stty erase ^H
+
+# user aliases
+alias .      'echo $cwd'
+alias 80     cat $HOME/.80cols
+alias acro   /usr/bin/acroread
+alias b      'unsetenv XMODIFIERS; crisp \!* &'
+alias bl     '/usr/bin/xrandr --output LVDS-0 --brightness'
+alias Cd     'diff junk v8tout/\!* | more'
+alias Cd4    'diff junk.1.0 v8tout/\!* | more'
+alias cls    clear
+alias cnsdoc '/usr/bin/firefox file:/home/gmk/src/cns.wpd/cnsR79.html &'
+alias comp   cmp
+alias cp     cp -p
+alias crk    pushd /home/gmk/src/crk
+alias dir    ls -AlF
+alias dird   'ls -l \!* | grep ^d'
+alias docs   pushd /home/gmk/docs
+alias doj    lpr -Phoj
+alias dt     pushd /home/gmk/Desktop
+alias env    pushd /home/gmk/src/env
+alias fltkdoc '/usr/bin/firefox file:/opt/fltk/fltk-1.3.2/documentation/html/index.html &'
+alias fltkpdf 'evince -p 1 /opt/fltk/fltk-1.3.2/documentation/fltk.pdf'
+alias fluid  '/usr/local/bin/fluid'
+alias g      'grep \!* *.[hc]'
+alias ga     'grep \!* *.cxx *.c *.h *.fl'
+alias gdbdoc 'evince -p 1 /home/gmk/docs/linux/gdb.pdf'
+alias gm     'grep \!* *.m'
+alias h      history
+alias ijdoc  '/usr/bin/firefox file:/opt/ImageJ/guide/index.html &'
+alias impress libreoffice -impress
+alias incl   pushd /home/gmk/include
+alias la     ls -AF
+alias links  'ls -l \!* | egrep -e "\->"'
+alias lj     lpr -Plj
+alias ljps   lpr -Pljps
+alias ll     ls -lF
+alias lock   lockscreen
+alias logoff logout
+alias ls     ls -F --group
+alias lsd    ls -dF
+alias lt     ls -lFrt
+alias ltt    'ls -lFrt \!* | tail'
+alias more   less
+alias mroe   less
+alias oo       libreoffice --writer
+alias oocalc   libreoffice --calc
+alias oowriter libreoffice --writer
+alias pcns   pushd ~gmk/cns
+alias pcrk   pushd ~gmk/src/crk
+alias pd3    pushd ~gmk/src/d3
+alias pgil   pushd ~gmk/docs/grants/GilbertBRAIN17
+alias pp     'ps -ef | grep \!$'
+alias pplot  pushd ~gmk/src/plot
+alias pwd    'echo $cwd'
+alias rlyx   'setenv LD_LIBRARY_PATH /usr/local/Qt-4.6.2/lib; /usr/local/bin/lyx'
+alias quit   exit
+alias sigs   'grep "#define SIG" /usr/include/asm/signal.h'
+alias svndoc 'evince -p 1 /home/gmk/docs/subversion/svn-book.pdf &'
+alias tools  pushd /home/gmk/src/mpitools
+alias up     cd ..
+alias v      view
+alias vhtml  '/usr/bin/firefox file:$cwd/\!*'
+alias vin    'vi -c ":set number"'
+alias vm     'sudo -H -u vmware -b /usr/bin/vmware'
+alias vmman  'evince -p 1 /home/vmware/downloads/ws6_manual.pdf &'
+alias vpdf   '/usr/bin/evince -p 1'
+alias vpn    '/opt/firefox-2.0.0.18/firefox "https://sslvpn.rockefeller.edu/my.logon.php3?check=1" &'
+alias xpdf   /usr/bin/evince
+alias rkgtestf 'pushd ~gmk/src/plot && make SERPLOT && make Rkgtest'
+# Remove any rm alias from an outer shell
+unalias rm
+ 
+# Set prompt last--is tested here and there above
+set prompt='%/[\!]: '

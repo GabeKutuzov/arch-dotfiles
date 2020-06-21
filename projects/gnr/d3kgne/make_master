@@ -1,0 +1,163 @@
+########################################################################
+#                   Make file for CNS (D3) program                     #
+#                              08/08/90                                #
+#                                                                      #
+# Rev, 06/10/92, ABP - Allow compilation of variants                   #
+# Rev, 08/12/92, GNR - Support multiple graphics options               #
+# Rev, 05/26/94, GNR - Add hybd to "all" and "tnm" targets             #
+# Rev, 05/13/96, GNR - Add new routines, structs for V8A, d1sparc      #
+# Rev, 12/20/96, GNR - Remove ncube native graphics and overlays,      #
+#                      combine makefiles for external,internal nodes   #
+# Rev, 01/30/98, GNR - Add solaris and solhost                         #
+# Rev, 09/05/99, GNR - Remove all remaining NCUBE support              #
+# V8B, 12/16/00, GNR - Move to new memory management routines          #
+#                                                                      #
+# This version allows compilation of CNS variants with different       #
+# combinations of features.  This may involve definition of different  #
+# preprocessor variables, inclusion of different object files, and/or  #
+# linking to different libraries.  The object files and executables    #
+# for a specific variant may reside in directories that are private    #
+# to that variant, or they may reside in shared directories such as    #
+# the general purpose "experimental" subdirectories exp0/expn.  When-  #
+# ever two variants are stored in the same directories, and a variant  #
+# is made that is not the same as the one made previously in those     #
+# directories, then all object files will be re-compiled.  When this   #
+# becomes a problem, additional directories should be established to   #
+# hold the more common variants.                                       #
+#                                                                      #
+# Currently, all parallel versions are "hybrid" versions, i.e. there   #
+# is assumed to be a host program (corresponding to the old NCUBE      #
+# "node 0" overlay programs) and a processor array program, which      #
+# in turn has an external node variant that communicates with the      #
+# host, and an internal node variant that does not.  Operation of      #
+# these programs is coordinated by a driver program.  All parallel     #
+# variants currently support only "NSI metafile" graphics.  Serial     #
+# variants can be made to work with other ROCKS graphics libraries     #
+# simply by linking to the appropriate library.                        #
+#                                                                      #
+# Executable files for serial versions are named "Cns".  The driver    #
+# program for parallel versions is named "cns".                        #
+#                                                                      #
+# The hybrid driver (hybd) program may be configured to support any    #
+# one or more of the available processor arrays by using "COMPXX"      #
+# preprocessor variables.  Note that the processor array itself need   #
+# not be present at link time, only the necessary support libraries.   #
+# This make file at present makes a "universal" driver that is the     #
+# same for all variants, however, this can be changed if necessary.    #
+# Similarly, the host program is supposed to be maintained in such     #
+# a way as to be indifferent to the architecture of the attached       #
+# processor array.  Run-time tests may be used where needed.           #
+#                                                                      #
+# To include Darwin I support, prepend "d1" to the target name.  To    #
+# include profiling timers, append "t" to the target.  To use full     #
+# compile-time optimizations, append "opt" to the target name.  Not    #
+# all combinations of these options are currently supported in this    #
+# makefile, however, it should be relatively clear how to add them.    #
+# The following table shows the variants currently defined and the     #
+# directories where the object and executable files are placed:        #
+#                                                                      #
+# Variant    dirs         description                                  #
+# -----------------------------------------------------------------    #
+# sparc,sun  sparc        Execute on sun host directly (serial)        #
+# sparcopt   sparc        Execute on sun host directly (optimized)     #
+# d1sparc    sparc        Execute on sun host directly (with D1)       #
+# d1sparct   sparc        Serial sparc version with D1 and timers      #
+# solaris    solaris      Execute on solaris host directly (serial)    #
+# solhost    solhost      Host program for solaris, runs vers. below   #
+# tnm        host,xpext,xpint,hybd  Transputer/NeuMachine and driver   #
+# tnmopt     host,xpext,xpint,hybd  Optimized transputer version       #
+# d1tnm      host,xpext,xpint,hybd  Transputer version with D1         #
+# d1tnmt     exph,expxx,expxi,hybd  Transputers with D1 and timers     #
+#                                                                      #
+# Just plain 'make' will make 'sparc' only; 'make all' will make       #
+# sparc and tnm                                                        #
+########################################################################
+
+.SUFFIXES:
+
+first_target: sparc
+
+HELP Help H h help man:
+	@echo Commands for making different cns variants:
+	@echo
+	@echo "-- make sparc: serial cns for sun"
+	@echo "-- make sun or just plain make: same as make sparc"
+	@echo "-- make sparcopt: optimized serial cns for sun"
+	@echo "-- make d1sparc: sparc cns with darwin 1"
+	@echo "-- make d1sparct: sparc cns with darwin 1 and timers*"
+	@echo "-- make solaris: serial cns for sparc-solaris"
+	@echo "-- make solhost: host program for parallel versions"
+	@echo "   listed below, but running on solaris"
+	@echo "-- make tnm: makes Transputer/NeuMachine cns"
+	@echo "-- make tnmopt: optimized T/NM cns"
+	@echo "-- make d1tnm: T/NM cns with darwin 1"
+	@echo "-- make d1tnmt: T/NM cns with darwin 1 and timers*"
+	@echo "-- make all: makes sparc and tnm"
+	@echo
+	@echo " * indicates variants placed in 'exp[0n]' directories"
+
+########################################################################
+#  Make targets and rules for building them                            #
+#  Note that since the makefiles for external and internal nodes have  #
+#     been consolidated, different target names are used for each.     #
+########################################################################
+
+.KEEP_STATE:
+
+all: sparc tnm
+
+sparc sun Sparc SPARC Sun SUN: sparccns
+
+# We seem to need an indirect target to trigger the rule
+solaris: solarism
+
+solhost: solhostm
+
+sparccns:
+	$(MAKE) -f sparc/makefile runnxdr2_acc
+	cd sparc;  $(MAKE)
+
+sparcopt:
+	$(MAKE) -f sparc/makefile runnxdr2_acc
+	cd sparc;  $(MAKE) optimized
+
+d1sparc:
+	$(MAKE) -f sparc/makefile runnxdr2_acc
+	cd sparc;  $(MAKE) d1sparc
+
+d1sparct:
+	$(MAKE) -f sparc/makefile runnxdr2_acc
+	cd sparc;  $(MAKE) d1sparct
+
+solarism:
+	$(MAKE) -f solaris/makefile runnxdr
+	cd solaris; $(MAKE) solaris
+
+solhostm:
+	$(MAKE) -f solaris/makefile runnxdr
+	cd solhost; $(MAKE) solaris
+
+tnm:
+	cd hybd;   $(MAKE)
+	cd host;   $(MAKE)
+	cd xpext;  $(MAKE) tnmext
+	cd xpint;  $(MAKE) tnmint
+
+tnmopt:
+	cd hybd;   $(MAKE)
+	cd host;   $(MAKE) optimized
+	cd xpext;  $(MAKE) tnmoptext
+	cd xpint;  $(MAKE) tnmoptint
+
+d1tnm:
+	cd hybd;   $(MAKE)
+	cd host;   $(MAKE) d1host
+	cd xpext;  $(MAKE) d1tnmext
+	cd xpint;  $(MAKE) d1tnmint
+
+d1tnmt:
+	cd hybd;   $(MAKE)
+	cd exph;   $(MAKE) d1hostt
+	cd expxx;  $(MAKE) d1tnmtext
+	cd expxi;  $(MAKE) d1tnmtint
+

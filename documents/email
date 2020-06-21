@@ -1,0 +1,31 @@
+Dear Doctor Reeke,
+   How are you? Here is a small update on the project,
+and attached are my time sheets.
+   As for dumpmf, everything works as I would like it to.
+I moved all of the metafile reading functionality to a library
+that I just called "mfreader" for now. I might change the way
+it works a little later (check design notes in mfreader.c).
+I also made another test program for the plot library called
+'cli-test' which is just every plotting command done in
+sequential order, as well as some unit tests for the bitstream
+reading to make sure it works, as I had some trouble with
+values. Dumpmf itself works and prints all the operations
+properly, but one small issue is that there are still some
+problems with the incorrect values in some places. One other
+thing I have to do alongside that is re-implement bitmaps. I just
+remembered that dumpmf can't read those yet but I'll get to that
+before anything else.
+   My next update will be a graphics test for the new mfdraw using
+'libmfreader'. Like I mentioned before, I will probably change the way
+the library reads operations too.
+   By the way, is there a certain limit to the amount of times I could
+login to bucephalus per day or something before it blacklists my IP?
+I am not sure why this keeps happening. I remember I logged in and
+out a couple of times because I was trying to fix something with urxvt,
+so maybe that's why I am blacklisted again. I was at my neighbors
+doing work there and I logged in once but then the connection timed
+out after about five minutes. Just going to use Box right now of course.
+   Also, please do let me know if the formatting for this email is
+correct and single-spaced as you would like it.
+Thanks,
+  Gabe

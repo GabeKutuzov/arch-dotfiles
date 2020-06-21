@@ -1,0 +1,405 @@
+diary on
+mdkststd
+
+For k = 2, n = 200, uniform distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 1.598768, sigma MDKS1s = 0.333620, time = 0.001237
+   Brick method mean MDKS1s = 1.598768, sigma MDKS1s = 0.333620, time = 0.000668
+   Equi-partition method mean MDKS1s = 0.901915, sigma MDKS1s = 0.300389, time = 0.000211
+   Center-gravity method mean MDKS1s = 3.093592, sigma MDKS1s = 0.587012, time = 0.000191
+
+For k = 2, n = 200, uniform distribution, divs = (3,3)
+   Brick method mean MDKS2s = 1.598768, sigma MDKS2s = 0.333620, time = 0.000618
+   Equi-partition method mean MDKS2s = 1.221527, sigma MDKS2s = 0.342668, time = 0.000415
+   Center-gravity method mean MDKS2s = 1.936765, sigma MDKS2s = 0.358856, time = 0.000373
+
+For k = 2, n = 200, normal distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 1.665944, sigma MDKS1s = 0.326648, time = 0.001236
+   Brick method mean MDKS1s = 1.665944, sigma MDKS1s = 0.326648, time = 0.000667
+   Equi-partition method mean MDKS1s = 0.951235, sigma MDKS1s = 0.306904, time = 0.000212
+   Center-gravity method mean MDKS1s = 3.198951, sigma MDKS1s = 0.605039, time = 0.000191
+
+For k = 2, n = 200, normal distribution, divs = (3,3)
+   Brick method mean MDKS2s = 1.665944, sigma MDKS2s = 0.326648, time = 0.000614
+   Equi-partition method mean MDKS2s = 1.250695, sigma MDKS2s = 0.324664, time = 0.000415
+   Center-gravity method mean MDKS2s = 2.000405, sigma MDKS2s = 0.372582, time = 0.000373
+
+For k = 2, n = 200, gamma distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 1.642609, sigma MDKS1s = 0.437146, time = 0.001247
+   Brick method mean MDKS1s = 1.642609, sigma MDKS1s = 0.437146, time = 0.000674
+   Equi-partition method mean MDKS1s = 0.969090, sigma MDKS1s = 0.388522, time = 0.000213
+   Center-gravity method mean MDKS1s = 3.237842, sigma MDKS1s = 0.661441, time = 0.000195
+
+For k = 2, n = 200, gamma distribution, divs = (3,3)
+   Brick method mean MDKS2s = 1.642609, sigma MDKS2s = 0.437146, time = 0.000616
+   Equi-partition method mean MDKS2s = 1.263600, sigma MDKS2s = 0.413056, time = 0.000414
+   Center-gravity method mean MDKS2s = 1.969292, sigma MDKS2s = 0.445446, time = 0.000374
+
+For k = 2, n = 1000, uniform distribution, divs = (3,3)
+   Brute-force mex mean MDKS1s = 1.793328, sigma MDKS1s = 0.380651, time = 0.030047
+   Brick method mean MDKS1s = 1.793328, sigma MDKS1s = 0.380651, time = 0.008052
+   Equi-partition method mean MDKS1s = 1.272421, sigma MDKS1s = 0.385839, time = 0.001850
+   Center-gravity method mean MDKS1s = 3.182516, sigma MDKS1s = 0.427715, time = 0.001548
+
+For k = 2, n = 1000, uniform distribution, divs = (4,4)
+   Brick method mean MDKS2s = 1.793328, sigma MDKS2s = 0.380651, time = 0.006704
+   Equi-partition method mean MDKS2s = 1.503189, sigma MDKS2s = 0.378992, time = 0.003807
+   Center-gravity method mean MDKS2s = 2.092163, sigma MDKS2s = 0.383675, time = 0.003229
+
+For k = 2, n = 1000, normal distribution, divs = (3,3)
+   Brute-force mex mean MDKS1s = 1.700673, sigma MDKS1s = 0.351636, time = 0.029950
+   Brick method mean MDKS1s = 1.699092, sigma MDKS1s = 0.352218, time = 0.008024
+   Equi-partition method mean MDKS1s = 1.162849, sigma MDKS1s = 0.331682, time = 0.001845
+   Center-gravity method mean MDKS1s = 3.216985, sigma MDKS1s = 0.479264, time = 0.001544
+
+For k = 2, n = 1000, normal distribution, divs = (4,4)
+   Brick method mean MDKS2s = 1.699092, sigma MDKS2s = 0.352218, time = 0.006728
+   Equi-partition method mean MDKS2s = 1.395434, sigma MDKS2s = 0.354054, time = 0.003815
+   Center-gravity method mean MDKS2s = 2.011209, sigma MDKS2s = 0.362650, time = 0.003237
+
+For k = 2, n = 1000, gamma distribution, divs = (3,3)
+   Brute-force mex mean MDKS1s = 1.745893, sigma MDKS1s = 0.329870, time = 0.029974
+   Brick method mean MDKS1s = 1.745893, sigma MDKS1s = 0.329870, time = 0.008029
+   Equi-partition method mean MDKS1s = 1.218979, sigma MDKS1s = 0.304167, time = 0.001842
+   Center-gravity method mean MDKS1s = 3.196746, sigma MDKS1s = 0.543615, time = 0.001545
+
+For k = 2, n = 1000, gamma distribution, divs = (4,4)
+   Brick method mean MDKS2s = 1.745893, sigma MDKS2s = 0.329870, time = 0.006711
+   Equi-partition method mean MDKS2s = 1.440576, sigma MDKS2s = 0.323736, time = 0.003814
+   Center-gravity method mean MDKS2s = 2.065284, sigma MDKS2s = 0.336851, time = 0.003235
+
+For k = 2, n = 5000, uniform distribution, divs = (5,5)
+   Brute-force mex mean MDKS1s = 1.811890, sigma MDKS1s = 0.341537, time = 0.743475
+   Brick method mean MDKS1s = 1.811890, sigma MDKS1s = 0.341537, time = 0.085645
+   Equi-partition method mean MDKS1s = 1.607006, sigma MDKS1s = 0.338745, time = 0.038936
+   Center-gravity method mean MDKS1s = 2.114391, sigma MDKS1s = 0.331653, time = 0.032463
+
+For k = 2, n = 5000, uniform distribution, divs = (6,6)
+   Brick method mean MDKS2s = 1.811890, sigma MDKS2s = 0.341537, time = 0.095615
+   Equi-partition method mean MDKS2s = 1.703951, sigma MDKS2s = 0.338066, time = 0.076323
+   Center-gravity method mean MDKS2s = 1.883732, sigma MDKS2s = 0.342451, time = 0.068516
+
+For k = 2, n = 5000, normal distribution, divs = (5,5)
+   Brute-force mex mean MDKS1s = 1.819386, sigma MDKS1s = 0.315789, time = 0.744436
+   Brick method mean MDKS1s = 1.818820, sigma MDKS1s = 0.315613, time = 0.085572
+   Equi-partition method mean MDKS1s = 1.601420, sigma MDKS1s = 0.318435, time = 0.038935
+   Center-gravity method mean MDKS1s = 2.102936, sigma MDKS1s = 0.308784, time = 0.032512
+
+For k = 2, n = 5000, normal distribution, divs = (6,6)
+   Brick method mean MDKS2s = 1.818820, sigma MDKS2s = 0.315613, time = 0.095721
+   Equi-partition method mean MDKS2s = 1.708016, sigma MDKS2s = 0.327512, time = 0.076761
+   Center-gravity method mean MDKS2s = 1.868742, sigma MDKS2s = 0.326896, time = 0.068837
+
+For k = 2, n = 5000, gamma distribution, divs = (5,5)
+   Brute-force mex mean MDKS1s = 1.799304, sigma MDKS1s = 0.327574, time = 0.743460
+   Brick method mean MDKS1s = 1.799304, sigma MDKS1s = 0.327574, time = 0.085220
+   Equi-partition method mean MDKS1s = 1.590849, sigma MDKS1s = 0.343377, time = 0.038808
+   Center-gravity method mean MDKS1s = 2.078894, sigma MDKS1s = 0.355545, time = 0.032450
+
+For k = 2, n = 5000, gamma distribution, divs = (6,6)
+   Brick method mean MDKS2s = 1.799304, sigma MDKS2s = 0.327574, time = 0.095288
+   Equi-partition method mean MDKS2s = 1.685849, sigma MDKS2s = 0.335351, time = 0.076370
+   Center-gravity method mean MDKS2s = 1.849933, sigma MDKS2s = 0.340028, time = 0.068515
+
+For k = 3, n = 200, uniform distribution, divs = (1,1)
+   Brute-force mex mean MDKS1s = 1.801001, sigma MDKS1s = 0.356959, time = 0.001799
+   Brick method mean MDKS1s = 1.801001, sigma MDKS1s = 0.356959, time = 0.001693
+   Equi-partition method mean MDKS1s = 0.599361, sigma MDKS1s = 0.203666, time = 0.000218
+   Center-gravity method mean MDKS1s = 5.483613, sigma MDKS1s = 1.083829, time = 0.000203
+
+For k = 3, n = 200, uniform distribution, divs = (2,2)
+   Brick method mean MDKS2s = 1.801001, sigma MDKS2s = 0.356959, time = 0.001452
+   Equi-partition method mean MDKS2s = 1.134376, sigma MDKS2s = 0.320671, time = 0.000731
+   Center-gravity method mean MDKS2s = 2.382950, sigma MDKS2s = 0.457761, time = 0.000658
+
+For k = 3, n = 200, normal distribution, divs = (1,1)
+   Brute-force mex mean MDKS1s = 1.749382, sigma MDKS1s = 0.316646, time = 0.001798
+   Brick method mean MDKS1s = 1.749382, sigma MDKS1s = 0.316646, time = 0.001688
+   Equi-partition method mean MDKS1s = 0.547212, sigma MDKS1s = 0.203047, time = 0.000216
+   Center-gravity method mean MDKS1s = 5.565637, sigma MDKS1s = 1.030411, time = 0.000202
+
+For k = 3, n = 200, normal distribution, divs = (2,2)
+   Brick method mean MDKS2s = 1.749382, sigma MDKS2s = 0.316646, time = 0.001447
+   Equi-partition method mean MDKS2s = 1.066936, sigma MDKS2s = 0.289236, time = 0.000724
+   Center-gravity method mean MDKS2s = 2.391435, sigma MDKS2s = 0.381038, time = 0.000648
+
+For k = 3, n = 200, gamma distribution, divs = (1,1)
+   Brute-force mex mean MDKS1s = 1.807365, sigma MDKS1s = 0.354953, time = 0.001802
+   Brick method mean MDKS1s = 1.807365, sigma MDKS1s = 0.354953, time = 0.001687
+   Equi-partition method mean MDKS1s = 0.605991, sigma MDKS1s = 0.216347, time = 0.000217
+   Center-gravity method mean MDKS1s = 5.493513, sigma MDKS1s = 1.134611, time = 0.000203
+
+For k = 3, n = 200, gamma distribution, divs = (2,2)
+   Brick method mean MDKS2s = 1.807365, sigma MDKS2s = 0.354953, time = 0.001441
+   Equi-partition method mean MDKS2s = 1.103175, sigma MDKS2s = 0.317199, time = 0.000725
+   Center-gravity method mean MDKS2s = 2.435983, sigma MDKS2s = 0.429161, time = 0.000650
+
+For k = 3, n = 1000, uniform distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 1.919503, sigma MDKS1s = 0.351145, time = 0.043161
+   Brick method mean MDKS1s = 1.919503, sigma MDKS1s = 0.351145, time = 0.023387
+   Equi-partition method mean MDKS1s = 1.061774, sigma MDKS1s = 0.284691, time = 0.003297
+   Center-gravity method mean MDKS1s = 4.165668, sigma MDKS1s = 0.750648, time = 0.002705
+
+For k = 3, n = 1000, uniform distribution, divs = (3,3)
+   Brick method mean MDKS2s = 1.919503, sigma MDKS2s = 0.351145, time = 0.022278
+   Equi-partition method mean MDKS2s = 1.455122, sigma MDKS2s = 0.320530, time = 0.014158
+   Center-gravity method mean MDKS2s = 2.262926, sigma MDKS2s = 0.366896, time = 0.012087
+
+For k = 3, n = 1000, normal distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 1.977372, sigma MDKS1s = 0.360624, time = 0.044797
+   Brick method mean MDKS1s = 1.977056, sigma MDKS1s = 0.359699, time = 0.024529
+   Equi-partition method mean MDKS1s = 1.098338, sigma MDKS1s = 0.283894, time = 0.003454
+   Center-gravity method mean MDKS1s = 4.361097, sigma MDKS1s = 0.675354, time = 0.002867
+
+For k = 3, n = 1000, normal distribution, divs = (3,3)
+   Brick method mean MDKS2s = 1.977372, sigma MDKS2s = 0.359642, time = 0.023803
+   Equi-partition method mean MDKS2s = 1.514533, sigma MDKS2s = 0.326486, time = 0.015050
+   Center-gravity method mean MDKS2s = 2.322693, sigma MDKS2s = 0.333466, time = 0.012793
+
+For k = 3, n = 1000, gamma distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 1.905272, sigma MDKS1s = 0.340629, time = 0.044860
+   Brick method mean MDKS1s = 1.905272, sigma MDKS1s = 0.340629, time = 0.024434
+   Equi-partition method mean MDKS1s = 1.065174, sigma MDKS1s = 0.295790, time = 0.003441
+   Center-gravity method mean MDKS1s = 4.141319, sigma MDKS1s = 0.652887, time = 0.002836
+
+For k = 3, n = 1000, gamma distribution, divs = (3,3)
+   Brick method mean MDKS2s = 1.905272, sigma MDKS2s = 0.340629, time = 0.023288
+   Equi-partition method mean MDKS2s = 1.441406, sigma MDKS2s = 0.317380, time = 0.014789
+   Center-gravity method mean MDKS2s = 2.245217, sigma MDKS2s = 0.365591, time = 0.012631
+
+For k = 3, n = 5000, uniform distribution, divs = (3,3)
+   Brute-force mex mean MDKS1s = 2.148533, sigma MDKS1s = 0.437196, time = 1.069083
+   Brick method mean MDKS1s = 2.148533, sigma MDKS1s = 0.437196, time = 0.367758
+   Equi-partition method mean MDKS1s = 1.556438, sigma MDKS1s = 0.381395, time = 0.073816
+   Center-gravity method mean MDKS1s = 3.346544, sigma MDKS1s = 0.464987, time = 0.056835
+
+For k = 3, n = 5000, uniform distribution, divs = (4,4)
+   Brick method mean MDKS2s = 2.148533, sigma MDKS2s = 0.437196, time = 0.381634
+   Equi-partition method mean MDKS2s = 1.833067, sigma MDKS2s = 0.380464, time = 0.273282
+   Center-gravity method mean MDKS2s = 2.298311, sigma MDKS2s = 0.423518, time = 0.236109
+
+For k = 3, n = 5000, normal distribution, divs = (3,3)
+   Brute-force mex mean MDKS1s = 2.106535, sigma MDKS1s = 0.432726, time = 1.058343
+   Brick method mean MDKS1s = 2.108464, sigma MDKS1s = 0.431553, time = 0.364258
+   Equi-partition method mean MDKS1s = 1.505655, sigma MDKS1s = 0.391758, time = 0.073053
+   Center-gravity method mean MDKS1s = 3.419397, sigma MDKS1s = 0.445231, time = 0.056603
+
+For k = 3, n = 5000, normal distribution, divs = (4,4)
+   Brick method mean MDKS2s = 2.109107, sigma MDKS2s = 0.431155, time = 0.383365
+   Equi-partition method mean MDKS2s = 1.793855, sigma MDKS2s = 0.416533, time = 0.274273
+   Center-gravity method mean MDKS2s = 2.273241, sigma MDKS2s = 0.414612, time = 0.236935
+
+For k = 3, n = 5000, gamma distribution, divs = (3,3)
+   Brute-force mex mean MDKS1s = 2.020611, sigma MDKS1s = 0.344384, time = 1.059760
+   Brick method mean MDKS1s = 2.020611, sigma MDKS1s = 0.344384, time = 0.367729
+   Equi-partition method mean MDKS1s = 1.442819, sigma MDKS1s = 0.327075, time = 0.073133
+   Center-gravity method mean MDKS1s = 3.252477, sigma MDKS1s = 0.421933, time = 0.056600
+
+For k = 3, n = 5000, gamma distribution, divs = (4,4)
+   Brick method mean MDKS2s = 2.020611, sigma MDKS2s = 0.344384, time = 0.384108
+   Equi-partition method mean MDKS2s = 1.702842, sigma MDKS2s = 0.357975, time = 0.273641
+   Center-gravity method mean MDKS2s = 2.174889, sigma MDKS2s = 0.352403, time = 0.236492
+
+For k = 4, n = 200, uniform distribution, divs = (1,1)
+   Brute-force mex mean MDKS1s = 1.801001, sigma MDKS1s = 0.330817, time = 0.002370
+   Brick method mean MDKS1s = 1.801001, sigma MDKS1s = 0.330817, time = 0.002358
+   Equi-partition method mean MDKS1s = 0.632242, sigma MDKS1s = 0.186747, time = 0.000394
+   Center-gravity method mean MDKS1s = 4.468208, sigma MDKS1s = 0.855505, time = 0.000355
+
+For k = 4, n = 200, uniform distribution, divs = (2,2)
+   Brick method mean MDKS2s = 1.801001, sigma MDKS2s = 0.330817, time = 0.002629
+   Equi-partition method mean MDKS2s = 1.148341, sigma MDKS2s = 0.296787, time = 0.001785
+   Center-gravity method mean MDKS2s = 2.020204, sigma MDKS2s = 0.334280, time = 0.001834
+
+For k = 4, n = 200, normal distribution, divs = (1,1)
+   Brute-force mex mean MDKS1s = 1.692107, sigma MDKS1s = 0.282710, time = 0.002378
+   Brick method mean MDKS1s = 1.692107, sigma MDKS1s = 0.282710, time = 0.002366
+   Equi-partition method mean MDKS1s = 0.556714, sigma MDKS1s = 0.161112, time = 0.000392
+   Center-gravity method mean MDKS1s = 4.309816, sigma MDKS1s = 0.695757, time = 0.000355
+
+For k = 4, n = 200, normal distribution, divs = (2,2)
+   Brick method mean MDKS2s = 1.692814, sigma MDKS2s = 0.282453, time = 0.002624
+   Equi-partition method mean MDKS2s = 1.072504, sigma MDKS2s = 0.247199, time = 0.001774
+   Center-gravity method mean MDKS2s = 1.948786, sigma MDKS2s = 0.304399, time = 0.001831
+
+For k = 4, n = 200, gamma distribution, divs = (1,1)
+   Brute-force mex mean MDKS1s = 1.814436, sigma MDKS1s = 0.322274, time = 0.002376
+   Brick method mean MDKS1s = 1.814436, sigma MDKS1s = 0.322274, time = 0.002364
+   Equi-partition method mean MDKS1s = 0.609747, sigma MDKS1s = 0.202759, time = 0.000395
+   Center-gravity method mean MDKS1s = 4.290017, sigma MDKS1s = 0.852273, time = 0.000355
+
+For k = 4, n = 200, gamma distribution, divs = (2,2)
+   Brick method mean MDKS2s = 1.814436, sigma MDKS2s = 0.322274, time = 0.002636
+   Equi-partition method mean MDKS2s = 1.144629, sigma MDKS2s = 0.275081, time = 0.001791
+   Center-gravity method mean MDKS2s = 2.018083, sigma MDKS2s = 0.344278, time = 0.001841
+
+For k = 4, n = 1000, uniform distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 2.015003, sigma MDKS1s = 0.309156, time = 0.056638
+   Brick method mean MDKS1s = 2.015003, sigma MDKS1s = 0.309156, time = 0.042130
+   Equi-partition method mean MDKS1s = 1.143578, sigma MDKS1s = 0.259550, time = 0.013614
+   Center-gravity method mean MDKS1s = 2.911193, sigma MDKS1s = 0.397589, time = 0.012669
+
+For k = 4, n = 1000, uniform distribution, divs = (3,3)
+   Brick method mean MDKS2s = 2.015003, sigma MDKS2s = 0.309156, time = 0.048606
+   Equi-partition method mean MDKS2s = 1.557481, sigma MDKS2s = 0.274693, time = 0.042080
+   Center-gravity method mean MDKS2s = 2.066232, sigma MDKS2s = 0.317955, time = 0.042631
+
+For k = 4, n = 1000, normal distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 2.052002, sigma MDKS1s = 0.310649, time = 0.056534
+   Brick method mean MDKS1s = 2.052002, sigma MDKS1s = 0.312723, time = 0.042039
+   Equi-partition method mean MDKS1s = 1.203879, sigma MDKS1s = 0.262518, time = 0.013549
+   Center-gravity method mean MDKS1s = 3.006061, sigma MDKS1s = 0.421824, time = 0.012714
+
+For k = 4, n = 1000, normal distribution, divs = (3,3)
+   Brick method mean MDKS2s = 2.052634, sigma MDKS2s = 0.313343, time = 0.048539
+   Equi-partition method mean MDKS2s = 1.597938, sigma MDKS2s = 0.289198, time = 0.041970
+   Center-gravity method mean MDKS2s = 2.117145, sigma MDKS2s = 0.310437, time = 0.042674
+
+For k = 4, n = 1000, gamma distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 2.083309, sigma MDKS1s = 0.320015, time = 0.056474
+   Brick method mean MDKS1s = 2.083309, sigma MDKS1s = 0.320015, time = 0.042028
+   Equi-partition method mean MDKS1s = 1.198760, sigma MDKS1s = 0.224708, time = 0.013621
+   Center-gravity method mean MDKS1s = 3.042111, sigma MDKS1s = 0.473116, time = 0.012711
+
+For k = 4, n = 1000, gamma distribution, divs = (3,3)
+   Brick method mean MDKS2s = 2.083309, sigma MDKS2s = 0.320015, time = 0.048576
+   Equi-partition method mean MDKS2s = 1.638534, sigma MDKS2s = 0.259835, time = 0.041954
+   Center-gravity method mean MDKS2s = 2.136751, sigma MDKS2s = 0.342400, time = 0.042615
+
+For k = 4, n = 5000, uniform distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 2.192597, sigma MDKS1s = 0.359795, time = 1.386484
+   Brick method mean MDKS1s = 2.192597, sigma MDKS1s = 0.359795, time = 0.917847
+   Equi-partition method mean MDKS1s = 1.171588, sigma MDKS1s = 0.318432, time = 0.068998
+   Center-gravity method mean MDKS1s = 5.383911, sigma MDKS1s = 0.822675, time = 0.059358
+
+For k = 4, n = 5000, uniform distribution, divs = (3,3)
+   Brick method mean MDKS2s = 2.192597, sigma MDKS2s = 0.359795, time = 0.847544
+   Equi-partition method mean MDKS2s = 1.598344, sigma MDKS2s = 0.355264, time = 0.518865
+   Center-gravity method mean MDKS2s = 2.504289, sigma MDKS2s = 0.380224, time = 0.472772
+
+For k = 4, n = 5000, normal distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 2.207587, sigma MDKS1s = 0.299690, time = 1.389154
+   Brick method mean MDKS1s = 2.209002, sigma MDKS1s = 0.299796, time = 0.917877
+   Equi-partition method mean MDKS1s = 1.221067, sigma MDKS1s = 0.292618, time = 0.069086
+   Center-gravity method mean MDKS1s = 5.144909, sigma MDKS1s = 0.697318, time = 0.059751
+
+For k = 4, n = 5000, normal distribution, divs = (3,3)
+   Brick method mean MDKS2s = 2.208153, sigma MDKS2s = 0.300123, time = 0.854101
+   Equi-partition method mean MDKS2s = 1.672148, sigma MDKS2s = 0.356790, time = 0.519977
+   Center-gravity method mean MDKS2s = 2.507118, sigma MDKS2s = 0.344793, time = 0.474659
+
+For k = 4, n = 5000, gamma distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 2.149887, sigma MDKS1s = 0.269535, time = 1.386822
+   Brick method mean MDKS1s = 2.149887, sigma MDKS1s = 0.269535, time = 0.914377
+   Equi-partition method mean MDKS1s = 1.172966, sigma MDKS1s = 0.289355, time = 0.068973
+   Center-gravity method mean MDKS1s = 5.343465, sigma MDKS1s = 0.661349, time = 0.059640
+
+For k = 4, n = 5000, gamma distribution, divs = (3,3)
+   Brick method mean MDKS2s = 2.149887, sigma MDKS2s = 0.269535, time = 0.848885
+   Equi-partition method mean MDKS2s = 1.627159, sigma MDKS2s = 0.275950, time = 0.519491
+   Center-gravity method mean MDKS2s = 2.433013, sigma MDKS2s = 0.274538, time = 0.473753
+
+For k = 5, n = 200, uniform distribution, divs = (1,1)
+   Brute-force mex mean MDKS1s = 1.757867, sigma MDKS1s = 0.267049, time = 0.002949
+   Brick method mean MDKS1s = 1.757867, sigma MDKS1s = 0.267049, time = 0.003159
+   Equi-partition method mean MDKS1s = 0.558835, sigma MDKS1s = 0.136517, time = 0.000788
+   Center-gravity method mean MDKS1s = 3.466237, sigma MDKS1s = 0.592033, time = 0.000681
+
+For k = 5, n = 200, uniform distribution, divs = (2,2)
+   Brick method mean MDKS2s = 1.757867, sigma MDKS2s = 0.267049, time = 0.003717
+   Equi-partition method mean MDKS2s = 1.083796, sigma MDKS2s = 0.188080, time = 0.002738
+   Center-gravity method mean MDKS2s = 1.807365, sigma MDKS2s = 0.256889, time = 0.003248
+
+For k = 5, n = 200, normal distribution, divs = (1,1)
+   Brute-force mex mean MDKS1s = 1.703420, sigma MDKS1s = 0.259194, time = 0.002946
+   Brick method mean MDKS1s = 1.703420, sigma MDKS1s = 0.259194, time = 0.003148
+   Equi-partition method mean MDKS1s = 0.584380, sigma MDKS1s = 0.152002, time = 0.000782
+   Center-gravity method mean MDKS1s = 3.312088, sigma MDKS1s = 0.538678, time = 0.000693
+
+For k = 5, n = 200, normal distribution, divs = (2,2)
+   Brick method mean MDKS2s = 1.704127, sigma MDKS2s = 0.258883, time = 0.003721
+   Equi-partition method mean MDKS2s = 1.057368, sigma MDKS2s = 0.218627, time = 0.002723
+   Center-gravity method mean MDKS2s = 1.772010, sigma MDKS2s = 0.282274, time = 0.003240
+
+For k = 5, n = 200, gamma distribution, divs = (1,1)
+   Brute-force mex mean MDKS1s = 1.702713, sigma MDKS1s = 0.254193, time = 0.002955
+   Brick method mean MDKS1s = 1.702713, sigma MDKS1s = 0.254193, time = 0.003159
+   Equi-partition method mean MDKS1s = 0.603317, sigma MDKS1s = 0.151676, time = 0.000786
+   Center-gravity method mean MDKS1s = 3.302896, sigma MDKS1s = 0.531654, time = 0.000694
+
+For k = 5, n = 200, gamma distribution, divs = (2,2)
+   Brick method mean MDKS2s = 1.702713, sigma MDKS2s = 0.254193, time = 0.003726
+   Equi-partition method mean MDKS2s = 1.108103, sigma MDKS2s = 0.208568, time = 0.002728
+   Center-gravity method mean MDKS2s = 1.767060, sigma MDKS2s = 0.265622, time = 0.003248
+
+For k = 5, n = 1000, uniform distribution, divs = (1,1)
+   Brute-force mex mean MDKS1s = 2.006465, sigma MDKS1s = 0.266870, time = 0.069378
+   Brick method mean MDKS1s = 2.006465, sigma MDKS1s = 0.266870, time = 0.068558
+   Equi-partition method mean MDKS1s = 0.578440, sigma MDKS1s = 0.143999, time = 0.003653
+   Center-gravity method mean MDKS1s = 7.245727, sigma MDKS1s = 1.107911, time = 0.002925
+
+For k = 5, n = 1000, uniform distribution, divs = (2,2)
+   Brick method mean MDKS2s = 2.006465, sigma MDKS2s = 0.266870, time = 0.072717
+   Equi-partition method mean MDKS2s = 1.164716, sigma MDKS2s = 0.206732, time = 0.040061
+   Center-gravity method mean MDKS2s = 2.359375, sigma MDKS2s = 0.296917, time = 0.044071
+
+For k = 5, n = 1000, normal distribution, divs = (1,1)
+   Brute-force mex mean MDKS1s = 1.966304, sigma MDKS1s = 0.274225, time = 0.069407
+   Brick method mean MDKS1s = 1.966620, sigma MDKS1s = 0.274421, time = 0.068605
+   Equi-partition method mean MDKS1s = 0.586721, sigma MDKS1s = 0.159686, time = 0.003658
+   Center-gravity method mean MDKS1s = 6.920961, sigma MDKS1s = 0.982062, time = 0.002954
+
+For k = 5, n = 1000, normal distribution, divs = (2,2)
+   Brick method mean MDKS2s = 1.966937, sigma MDKS2s = 0.273732, time = 0.072688
+   Equi-partition method mean MDKS2s = 1.125909, sigma MDKS2s = 0.230208, time = 0.040044
+   Center-gravity method mean MDKS2s = 2.286643, sigma MDKS2s = 0.318097, time = 0.044237
+
+For k = 5, n = 1000, gamma distribution, divs = (1,1)
+   Brute-force mex mean MDKS1s = 1.966937, sigma MDKS1s = 0.299596, time = 0.069453
+   Brick method mean MDKS1s = 1.966937, sigma MDKS1s = 0.299596, time = 0.068635
+   Equi-partition method mean MDKS1s = 0.608096, sigma MDKS1s = 0.151712, time = 0.003665
+   Center-gravity method mean MDKS1s = 7.127141, sigma MDKS1s = 1.145706, time = 0.002953
+
+For k = 5, n = 1000, gamma distribution, divs = (2,2)
+   Brick method mean MDKS2s = 1.966937, sigma MDKS2s = 0.299596, time = 0.072836
+   Equi-partition method mean MDKS2s = 1.200351, sigma MDKS2s = 0.247784, time = 0.040142
+   Center-gravity method mean MDKS2s = 2.303719, sigma MDKS2s = 0.323128, time = 0.044279
+
+For k = 5, n = 5000, uniform distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 2.201577, sigma MDKS1s = 0.314934, time = 1.696737
+   Brick method mean MDKS1s = 2.201577, sigma MDKS1s = 0.314934, time = 1.439550
+   Equi-partition method mean MDKS1s = 1.159335, sigma MDKS1s = 0.262834, time = 0.292670
+   Center-gravity method mean MDKS1s = 3.545433, sigma MDKS1s = 0.588638, time = 0.300131
+
+For k = 5, n = 5000, uniform distribution, divs = (3,3)
+   Brick method mean MDKS2s = 2.201577, sigma MDKS2s = 0.314934, time = 1.503110
+   Equi-partition method mean MDKS2s = 1.640930, sigma MDKS2s = 0.282961, time = 1.144079
+   Center-gravity method mean MDKS2s = 2.233397, sigma MDKS2s = 0.320038, time = 1.248844
+
+For k = 5, n = 5000, normal distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 2.202991, sigma MDKS1s = 0.253033, time = 1.698362
+   Brick method mean MDKS1s = 2.201223, sigma MDKS1s = 0.253641, time = 1.435890
+   Equi-partition method mean MDKS1s = 1.211793, sigma MDKS1s = 0.214167, time = 0.292939
+   Center-gravity method mean MDKS1s = 3.478965, sigma MDKS1s = 0.487200, time = 0.304620
+
+For k = 5, n = 5000, normal distribution, divs = (3,3)
+   Brick method mean MDKS2s = 2.201577, sigma MDKS2s = 0.253436, time = 1.512147
+   Equi-partition method mean MDKS2s = 1.693985, sigma MDKS2s = 0.206357, time = 1.144916
+   Center-gravity method mean MDKS2s = 2.249307, sigma MDKS2s = 0.253326, time = 1.252235
+
+For k = 5, n = 5000, gamma distribution, divs = (2,2)
+   Brute-force mex mean MDKS1s = 2.188849, sigma MDKS1s = 0.303154, time = 1.700286
+   Brick method mean MDKS1s = 2.188849, sigma MDKS1s = 0.303154, time = 1.443509
+   Equi-partition method mean MDKS1s = 1.192491, sigma MDKS1s = 0.264543, time = 0.293732
+   Center-gravity method mean MDKS1s = 3.425225, sigma MDKS1s = 0.424218, time = 0.304140
+
+For k = 5, n = 5000, gamma distribution, divs = (3,3)
+   Brick method mean MDKS2s = 2.188849, sigma MDKS2s = 0.303154, time = 1.510467
+   Equi-partition method mean MDKS2s = 1.690825, sigma MDKS2s = 0.299102, time = 1.142707
+   Center-gravity method mean MDKS2s = 2.254610, sigma MDKS2s = 0.294303, time = 1.249729
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('mdksallod')" style="font-weight:bold">mdksallod</a>
+mdksallod MDKSCOM arg is not current work area.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('mdkststd', '/home/cdr/src/mdks/mdkststd.m', 284)" style="font-weight:bold">mdkststd</a> (<a href="matlab: opentoline('/home/cdr/src/mdks/mdkststd.m',284,0)">line 284</a>)
+   mdksallod(MDKSCOM, 0);
+} 
+diary off

@@ -1,0 +1,342 @@
+.! E Program Notes, Shu 11/12/85
+.! Revised 03/11/87 JCP, 04/02/87, 04/22/87, 9/3/87, 11/28/89 GNR
+ 
+PROGRAMMERS' NOTES FOR THE DARWIN3 ENVIRONMENT PROGRAM
+------------ ----- --- --- ------- ----------- -------
+ 
+1. Program purpose: Create a sensory environment for Darwin III.
+         (1) Provides a library of standard stimulus objects.
+         (2) Provides a way to select a series of stimuli from the
+              library for sequential presentation.
+         (3) Provides a way to build up complex stimuli from indi-
+              vidual stimulus objects from the library or entered
+              by the user.
+         (4) Stimulus objects may be selected to appear at arbitrary
+              times in arbitrary positions and orientations on the
+              input array and may be removed at arbitrary times.
+         (5) Stimuli may be made to move in linear or oscillatory
+              motion, to rotate, or to take a random walk.
+         (6) Noise may be added to the input array after all of the
+              stimulus objects have been processed.
+         (7) Individual shapes may be assigned adaptive values when
+              added to the stimulus array and these values are made
+              available to the model as a function of position.
+         (8) Stimuli may be assigned z coordinates such that stimuli
+              closer to the viewer eclipse those behind.
+         (9) The state of the input array at each cycle may be dis-
+              played on- or off-line.
+        (10) The display may include a representation of the motor
+              output produced by the model.  At present, this display
+              consists of: (a) one or more rectangular windows, repre-
+              senting the "field of view" of the model, and (b) one or
+              more multijointed arms which can move over the input
+              array.
+        (11) The state of the environment may be saved at any time
+              for later replay.
+ 
+ 
+2. Description of stimulus objects:
+         (1) Stimuli are generated on an input array provided by the
+              caller.  The size of this array is specified by the vari-
+              ables 'KX' and 'KY' in common block /ENVC/.  The x size
+              is 2**KX pixels and the y size is 2**KY pixels.  Boundary
+              conditions for stimulus motion can be set by the user to
+              mirror or toroidal or "zero" (meaning items moving off
+              the edge simply disappear).  There is one byte per pixel,
+              permitting 256 gray levels.  Older style shape records,
+              having only one bit per pixel, are still supported.
+         (2) The input array is stored columnwise.  After every column
+              is an empty column, used for the internal workings of the
+              'Wallace' prosthesis.  These extra columns are not in-
+              cluded in the dimensions KX and KY nor are they used in
+              any x,y coordinates that may be passed between programs.
+         (3) Library shapes are stored as pixel arrays.  The same
+              input and storage formats are used for shapes entered
+              at run time.  A subset of the stored array may be
+              selected for actual use (see /ENVC/ variables EUX, EUY).
+              With any of the new shape formats, the subset is chosen
+              from the upper left corner of the object.  With old format
+              shapes, the following scheme is used for compatibility:
+              horizontally, the EUX bits to be used run from MAX(NX-2,
+              EUX)-EUX+1 to MAX(NX-2,EUX) (counting from 1 at the left);
+              vertically, the EUY bits to be used run from NY-EUY+1 to
+              NY (counting from 1 at the top).  Each shape will be con-
+              sidered to ride on an EUX x EUY background, such that when
+              shapes overlap, the one at higher z will block out the one
+              at lower z over the entire EUX x EUY area.  Pixels with
+              value zero will be treated as transparent to information
+              at lower z coordinates.
+         (4) Provision has been made to read byte-mapped stimuli from
+              an external file such as might be produced by Optronics
+              scans of transparencies.  These stimuli must be the same
+              size as the input array.  A utility, D3PXLPRP, is used to
+              convert a scanner tape into a suitable direct access file.
+ 
+ 
+3. Description of the motor output representation:
+         (1) At present, output consists of rectangular windows and
+              multijointed arms as described above.  Arms may be
+              attached to either the window or the frame (the edge of
+              the input array) at a corner or edge-center position
+              selected by the user.
+         (2) Initial parameters for these objects are given in the
+              /ENVCOM/ common block as described below.
+         (3) As the model runs, cells in designated output repertoires
+              may become active.  The ENVCYC caller must compute the
+              appropriate changes in the arm and window parameters from
+              the activity of these cells.  A floating point array must
+              be defined in which these changes are passed as parameters
+              to ENVCYC.  This array contains arm entries, then window
+              entries.  The number of entries for each arm equals NJNTS
+              for that arm.  The number of entries for each window
+              depends on ECHWDW for that window.  The five possible
+              options are:  ECHWDW=0, leave window unchanged; =1,
+              translate only (uses 2 cells per window); =2 translate
+              and dilate (change width and height, 4 cells/window); =3,
+              translate, dilate, and rotate (not yet implemented); =4,
+              make same changes as previous window (and omit test for
+              collision with edge of window).  Any joint or window for
+              which the JARBW or WARBW parameter is zero is skipped.
+              At each cycle, values from the change parameter array are
+              scaled by ESCLA for for joint rotations, ESCLX for window
+              translations, and ESCLR for window rotations.
+         (4) If the number of arms is zero, no arms will be drawn.  If
+              the number of windows is zero, no windows will be drawn
+              and any arms will be attached to the frame.  The arm and
+              window outputs may be used separately or together.
+ 
+ 
+4. Required input DDnames (files) for this program:
+ 
+         (1) FT18F001 - Stimulus Library.  The stimulus library must be
+              a direct-access data set with fixed-length records of 80
+              characters (RECFM=F,BLKSIZE=80).  It is prepared by
+              running the utility program D3LIBPRP with a stimulus data
+              file as input on FT08F001 and the library as output on
+              FT09F001.  D3LIBPRP has an INPUT control card that may
+              be used to provide default dimensions for Darwin II-style
+              stimuli.
+                  The stimulus data file read by D3LIBPRP consists of
+              card images that can be edited manually.  There is a
+              record consisting of one or more lines for each stimulus
+              object.  The format of these records may be any of the
+              formats allowed for the SHAPE card, with or without the
+              word SHAPE, and the name of the object must be in columns
+              1-4. These data records are sorted and packed by D3LIBPRP.
+              ROCKS comments and continuations can be used at will. The
+              following line is an example of a library record (starting
+              in column 1):
+ 
+A02  27 000,0F0,108,108,108,108,3FC,108,108,108,108,000
+ 
+                  In this example, A02 is the object name (up to 4
+              alphanumeric characters), 27 is the category number
+              assigned to this object, and 000,0f0,...  are 12 groups of
+              three hexadecimal digits each which specify a 12 x 12 bit
+              array describing the shape of this particular object.
+         (2) FT14F001 - Stimuli for sequential reading (DSORG=PS) under
+              control of a SELECT card.  Any kind of SHAPE cards allowed
+              for construction of a library may be read from this file.
+              Because the FT14F001 file is not a direct-access library,
+              bit 128 should be set in the ESVFIA flag to save environ-
+              mental objects as pixel maps when preparing or playing
+              back a replay file based on FT14F001 stimuli.
+         (3) FT13F001 - Stimuli in pixel format read under control of a
+              SELECT card with "KIND=PIXEL".  This is a direct access
+              file prepared by D3PXLPRP from an Optronics scanner tape.
+              There is one byte per pixel and one record per column.
+              The number of records per stimulus equals the number of
+              columns in the input array.  The records for successive
+              stimuli are packed together so that the first record
+              associated with stimulus 'p' is NSX*(p-1)+1.  This file
+              can be accessed during a replay.
+         (4) All instructions to control the 'E' program are read from
+              the current CRYIN input unit.  Since these instructions
+              may be intermixed with control cards for the model in
+              the same input stream, both programs must follow the
+              convention of reading records until an unrecognized
+              one is found.  RDAGN is then called to permit the
+              record to be read by the other program.  The calling
+              program must screen input records for valid E control
+              cards to avoid an infinite loop in case of input error.
+ 
+ 
+5. Control cards:
+         (1) The control cards take effect when read; the
+              calling program stalls reading at CYCLE cards as
+              needed to synchronize stimulation with model cycles.
+         (2) SHAPE cards are used to enter user-defined stimulus
+              objects.  These cards may be entered by the user at
+              any time, to permit creation of new shapes during an
+              interactive session.  The maximum number of user-
+              defined shapes is determined by the available memory.
+         (3) The remaining cards may be intermixed as needed to estab-
+              lish the desired environment.
+         (4) All cards are scanned according to ROCKS format rules,
+              rule 6b for positional parameters, rule 6a for keyword
+              parameters.  Card names may be abbreviated to the first
+              four letters, other keywords to the first three.  All
+              variables are integers unless otherwise stated.
+         (5) Current control card descriptions are now in the file
+              DARWIN3 MEMO and have been erased from this file to avoid
+              inconsistent updates to the two files.  An exception is
+              the description of the ENOISE card, which is not used in
+              DARWIN3.
+ 
+ 
+ENOISE <UNOISE=unoise>,<ANOISE=anoise>,<SNOISE=snoise>,<USEED=useed>,
+    <ASEED=aseed>,<KPIXEL=kpixel>
+ 
+    Action: This card sets the parameters of the 'receptor' noise of
+         the input array.  This noise is added to the array after
+         all of the stimulus objects have been processed.
+ 
+         unoise   Average fraction of pixels that have noise added
+                   to them.  If unoise=0 the noise procedure is not
+                   executed.  (Default: 0)
+         anoise   Mean amplitude of the noise (0--->1.).  (Default: 0)
+         snoise   Std. dev. of the noise.  Parameters anoise and snoise
+                   define a Gaussian distribution as determined by
+                   subroutine RANNOR.  (Default: 0)
+         useed    Random number seed used by subroutine RANDOM to
+                   select the pixels that noise is added to.
+                   (Default= 3950291)
+         aseed    Random number seed used by subroutine RANNOR to
+                   set the noise amplitude.  (Default= 4756103)
+         kpixel   Kind of graphic symbol used to represent the pixels
+                   (0= circle; 1= box).  The size of the symbol scales
+                   linearly with the value of the pixel.  (Default: 0)
+ 
+6. Entry points in the E program:
+ 
+    ENVSET():  Opens the library file, makes a directory of library
+         records, and performs any other needed initialization.
+ 
+    ENVCTL():  Interprets one control card.  The card is assumed to have
+         been read by the caller into the ROCKS common array 'CARD' and
+         CDPRT1 has already been called to print it in the run log.
+ 
+         Note:  In Darwin III, control card names will be checked by
+         the caller, and ENVCTL called only for legitimate instructions.
+         As a precaution, if an unrecognized control card is found,
+         ENVCTL prints a message, sets IEXIT=IOR(IEXIT,2) and returns
+         to the caller.  When an error is found in a control card
+         parameter, the EONLIN logical variable in /ENVC/ is inspected.
+         If true, the user is prompted to reenter the instruction.  If
+         false, execution is terminated with return code 8.
+ 
+     ENVCYC(inparray,changes):  To be called once at start of each time
+         cycle.  The first argument is a 1-byte integer array (FORTRAN
+         LOGICAL*1); the second is a floating point (FORTRAN REAL)
+         array.  ENVCYC refreshes the input array (inparray) according
+         to previous instructions.  The status of the output
+         representation is changed according to the values in the
+         'changes' array, which are applied in order to the arm joints
+         (if present), then the window parameters (if present) under
+         control of ECHWDW.  The positions of the arm joints and windows
+         are updated in the dynamic ARM array and the x,y positions of
+         the ends of the arms are returned in ARMX, ARMY.
+ 
+    ENVVAL(x,y,val,ign,isn,dist):  Returns the adaptiveness value (val,
+         FS8), the class or stimulus group number (ign), the relative
+         stimulus number (isn), and the distance (dist, E) for the ob-
+         ject closest to position (x,y) (real) on the input array.  The
+         relative stimulus number is defined as the reference number for
+         created stimuli, the trial number for SEQUENTIAL stimuli, and
+         the position in the library minus the position of the first
+         stimulus for selected library or pixel stimuli.  Distance is
+         defined as the distance from the center of gravity of the
+         stimulus to the point (x,y). (If two objects are overlapped at
+         position (x,y), the information returned is for the object at
+         the highest z coordinate.)
+ 
+    ENVPLO(inpary,x0,y0,wd,ht):  Plots the current state of the environ-
+         ment and output devices.  'inpary' is the input array. 'x0',
+         'y0' are the plotter coordinates of the lower left corner of
+         the input array, 'wd' is the width of the input array in
+         inches, and 'ht' is the height of the input array in inches
+         (a title is added above the area defined by these arguments).
+         ENVPLO is called from ENVCYC when plotting is requested by
+         EPLOT in the /ENVC/ common block, but may be called directly by
+         the user if desired.  ENVPLO does -not- call NGRAPH, permitting
+         the user to create special graphs overlapping environment plots
+         on other plots.
+ 
+    ENVSAV(iu,inpary,*err):  Saves the current status of the IA, arms,
+         and windows for a replay.  Data are saved via calls to MDFO.
+         'iu' gives the MDFO unit to be used, 'inpary' points to IA.
+         File opening and positioning must be handled by the calling
+         program.  The amount of data saved will depend on variables
+         in the /ENVC/ common block: (1) If ESVFIA bit 128 is off,
+         saved object data will consist of 2+10*NOBJ bytes, where NOBJ
+         is the number of active objects present; (2) If ESVFIA bit 128
+         is on, saved data will consist of 2**(EKX+EKY) bytes; (3) Arm
+         data consist of 4*NJNTS bytes per arm; and (4) Window data
+         consist of 16*NWDWS bytes.  The caller must assure that the
+         output records will hold the amount of data given above,
+         allowing for MXOBJ objects.  If NOBJ<MXOBJ, unused bytes will
+         be left at the end of each direct-access record.  The error
+         exit will be taken if MDFO returns to its error exit.
+ 
+    ENVSHP(linker,tux,tuy,alloc):  Interpret a SHAPE card and return a
+         data structure anchored at the DSLB array in common block
+         /OBJECT/.  The data structure is created and the pointer
+         stored in 'linker' if 'alloc' = 1; if 'alloc' = 0 the block
+         already exists and the linker gives its location.  'tux' and
+         'tuy' give the maximum object size to be stored--if the input
+         object is larger, it is truncated.  The data structure for
+         stored shapes is:
+              1) Linker (0 at end of list)
+              2) Name   (CL4)
+              3) Group  (FL2)
+              4) Format (FL2)      (+256 if any transparent pixels)
+              5) x-size (FL2)
+              6) y-size (FL2)
+              7) pixel array in column order
+ 
+    ENVGET(iu,inpary,*bounds_error,*other_error):  Restores state of the
+         environment from data in a replay file.  Data are restored via
+         calls to MDIN.  'iu' is the MDIN unit number, and 'inpary' is
+         the input array.  File opening and positioning must be handled
+         by the calling program.  This routine will be called instead of
+         ENVCYC for a replay cycle and will leave the environment in the
+         same state as the corresponding ENVCYC call would have done.
+         It will pass over the same number of data bytes as the corre-
+         sponding ENVSAV call.  The bounds_error exit is taken if MDIN
+         returns a bounds error (attempt to read data not written in
+         the replay file); the other_error exit is taken for all other
+         I/O errors.
+ 
+ 
+7. Common block /ENVC/ is used to communicate unchanging parameters
+         between the E program and the calling program.  The definition
+         of this common block is in the ENVCOM INCLUDE file (FORTRAN)
+         or the ENVDEF MACRO (Assembler definition).  A second INCLUDE
+         file, ENVCO2, contains all definitions that are global to E
+         but hidden from the caller.
+ 
+    To include these definitions in a program, use the CMS command:
+         GLOBAL MACLIB DARWIN3
+    and the VS FORTRAN compiler instruction:
+         INCLUDE (ENVCOM)
+ 
+ 
+8. Functions and subroutines used internally by E:
+ 
+    ENVARM()
+         positions the arm attachment point according to JPOS and JATT
+ 
+    ENVDEL(IOBJ,IPRE)
+         deletes the object pointed to by IOBJ.  IPRE points to the
+         previous object.
+ 
+    handle = ENVLOC(id):
+         searches for the ID location in library and any loaded
+         SHAPE records.
+ 
+    ENVLOD(handle,iobj):
+         loads the shape identified by the handle into the object
+         at LINK(IOBJ).
+ 
+    ENVPIA(inpary,iobj)
+         places the image of the object on the input array

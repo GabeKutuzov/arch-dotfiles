@@ -1,0 +1,3 @@
+#!/bin/csh
+# Debug nxdr2
+gdb ../nxdr2 -f testincl.h -b testobj -c "gcc -I/home/cdr/include -DPCLINUX"

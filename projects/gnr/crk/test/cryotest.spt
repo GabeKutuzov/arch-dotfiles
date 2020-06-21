@@ -1,0 +1,23 @@
+             $                                                                     
+***Incorrect punctuation.
+***Keyword unrecognized or invalid in context.
+***Field is too long.
+This is a spouted line with a zero
+This is a spouted line with an overstrike
+This is a spouted line with a blank
+This is a spouted line with a minus
+***Error message should spout.
+-->Warning should also spout.
+This is a subtitle continued thus
+and this should trigger subtitle spout
+This is a no-trigger subtitle continued thus
+and this should trigger subtitle spout
+This is a spouted line with two LF
+This is a spouted line with no final LF
+This is a spouted line with an overstrike
+This is a spouted line with three LFs, then xx
+xx
+This is a subtitle continued thus (not ended)
+and this should trigger subtitle spout
+This is a no-trigger subtitle continued thus
+and this should trigger subtitle spout

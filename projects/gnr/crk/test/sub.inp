@@ -1,0 +1,13 @@
+DEFAULTS x=0,y=2
+control test &x=&y
+Here, 
+* is a comment between a card and its continuation
+    is * a (second) = test
+He\\re is_an\\escaped backslash
+Stuff   ; with \
+        continued comment \
+        and another
+Stuff,  ;continued
+        and ; comment
+Field 'in*,=quotes'=2
+Em'bed'ded quotes are data

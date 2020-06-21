@@ -1,0 +1,62 @@
+
+Subroutines PXON, PXQ, and PXOFF
+
+    These routines provide an interface by which a user running an
+application interactively can interrupt it at controlled points to
+enter control cards or other information.  The operation of this
+interface is operating-system dependent.  Under CMS, the user enters
+"PX string" (PX = "pause execution") and the entire string is passed
+to the application when it is next able to process it.  Under MS-DOS,
+the user must press the Ctrl-Break key to get the program's attention.
+A '>' prompt is given, to which the user may enter any command
+acceptable to the program.  For compatibility with CMS, the command
+should begin with "PX".
+
+    To establish the PX interface:
+
+Usage:  int pxon(void)
+
+Prototyped in:  rocks.h
+
+Value returned:  0 if the interactive interface was successfully
+established, otherwise, -1.  (Some implementations may terminate with
+abexit code 9 if execution is unsuccessful.)
+
+    After this call is completed, the user may at any time enter an
+immediate command as prescribed above.  The string 'string' will be
+read and passed to the user program at the next pxq call.
+
+Usage:  int pxq(char *string, int maxstr)
+
+Prototyped in:  rocks.h
+
+Arguments:  'string' is a pointer to a string which will receive the
+command string if one has been entered.  If no command has been
+entered, the first character of the string will be set to the standard
+C end-of-string character.  The string should be long enough to
+contain the longest command line that the operating system permits to
+be entered (CDSIZE in sysdef.h).
+
+    'maxstr' gives the number of characters (not including the end-of-
+string marker) that will fit in 'string'.  Function pxq will truncate
+the input command, if necessary, to fit in 'string'.
+
+Value returned:  If pxon was not called or failed to install the
+interface, or if no interactive command has been issued, -1 is
+returned.  Otherwise, pxq returns the number of characters in the
+complete command string, including the "PX" but not the end-of-string
+character.  If this value is larger than 'maxstr', truncation has
+occurred.  The pending command state is cleared so that one command
+from the terminal can only give one positive pxq return.
+
+    To cancel an existing pause command interface:
+
+Usage:  void pxoff(void)
+
+Prototyped in:  rocks.h
+
+    After this call is completed, interactive user commands will no
+longer be recognized.  The "PX" command is also automatically
+cancelled when the program terminates.  If pxon was not called or was
+called but returned -1, pxoff is treated as a no-operation.
+

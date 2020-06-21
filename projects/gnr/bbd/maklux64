@@ -1,0 +1,109 @@
+# (c) Copyright 2010-2018, The Rockefeller University *11225* 
+# $Id: maklux64 30 2018-08-15 19:46:51Z  $
+########################################################################
+#            Make file for BBD client and server libraries             #
+#                        Linux 64-bit version                          #
+#                                                                      #
+# V1A, 04/09/10, GNR - New makefile, based on maklinux                 #
+# ==>, 04/09/10, GNR - Last mod before committing to svn repository    #
+# V1C, 11/10/10, GNR - Add bbdcrsid, bbdcrtid                          #
+#                      Add msg to build bbdcminp,bbcmlog in bbdmex dir #
+# Rev, 01/15/11, GNR - Add bbdsquit source file                        #
+# Rev, 05/06/16, GNR - Comment out bbdcaztv, bbdcrngr (needs allegro)  #
+# Rev, 08/03/18, GNR - Incorporate LCLHOME                             #
+########################################################################
+
+LCLHOME ?= $(HOME)
+LIBDIR   = $(LCLHOME)/lib
+INC      = $(LCLHOME)/include /usr/local/include
+CLIBNAME = libbbdc.a
+SLIBNAME = libbbds.a
+
+# Linux common pathnames
+DIR := pclux64
+LL  := $(LIBDIR)/$(DIR)
+
+CFILES = \
+bbdcinit \
+bbdcrege \
+bbdcregs \
+bbdcrsid \
+bbdcregt \
+bbdcrtid \
+bbdcregv \
+bbdcchk  \
+bbdcevnt \
+bbdcexsi \
+bbdcgete \
+bbdcgetm \
+bbdcputs \
+bbdcputt \
+bbdcputv \
+bbdvers
+
+# The following were used with the allegro library--
+# not required for Cns:  bbdcaztv, bbdcrngr
+
+SFILES = \
+bbdsinit \
+bbdsquit \
+bbdsrege \
+bbdsregs \
+bbdsregt \
+bbdsregv \
+bbdschk  \
+bbdspute \
+bbdsputm \
+bbdsgets \
+bbdsgett \
+bbdsgetv \
+bbdsevnt \
+bbdvers
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+# Target dependent macro definitions:
+CC := gcc
+CFLAGS := -m64 -g -O2 -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := PCLUX64 _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(CPPFLAGS) $(INC:%=-I%) $< \
+	| sed '\''s/^\(.*\)\.o[ :]*/$(DIR)\/\1.o $(DIR)\/\1.d : /g'\'' > $@; \
+	[ -s $@ ] || rm -f $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d maklux64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) -c $<
+	mv $*.o $(DIR)
+
+.PHONY : pclux64 client server depend
+pclux64: server client
+client:  $(LL)/$(CLIBNAME)
+server:  $(LL)/$(SLIBNAME)
+depend:  $(CFILES:%=$(DIR)/%.d) $(SFILES:%=$(DIR)/%.d)
+
+$(LL)/$(CLIBNAME):	$(CFILES:%=$(DIR)/%.o)
+	ar r $(CLIBNAME) $(CFILES:%=$(DIR)/%.o)
+	ranlib $(CLIBNAME)
+	mv $(CLIBNAME) $(LL)
+	@echo Also make bbdcmlog and bbdcminp in $(LCLHOME)/src/bbdmex
+
+$(LL)/$(SLIBNAME):	$(SFILES:%=$(DIR)/%.o)
+	ar r $(SLIBNAME) $(SFILES:%=$(DIR)/%.o)
+	ranlib $(SLIBNAME)
+	mv $(SLIBNAME) $(LL)
+
+vbbdtest:	$(DIR)/vbbdtest.o $(LL)/$(CLIBNAME) $(LL)/libcrk.a
+	$(CC) -g $(DIR)/vbbdtest.o -o $@ $(LL)/$(CLIBNAME) $(LL)/libcrk.a
+	mv $@ ~/bin
+
+clean:
+	rm -f $(DIR)/*.o $(LL)/$(CLIBNAME) $(LL)/$(SLIBNAME)
+
+-include $(CFILES:%=$(DIR)/%.d) $(SFILES:%=$(DIR)/%.d)

@@ -1,0 +1,880 @@
+/***********************************************************************
+*               PP worker function for d3benchmark test                *
+*             Version for TI MVP chip, 08/09/95, LC, GNR               *
+*                                                                      *
+*   THIS VERSION USES TRANSFER CONTROLLER TO BRING NEEDED DATA INTO    *
+*      AND OUT OF ON-CHIP MEMORY AS NEEDED TO MINIMIZE PP STALLS       *
+*   INTERRUPTS ARE USED TO MAXIMIZE OVERLAP OF TC AND PP OPERATIONS    *
+*                                                                      *
+*  WARNING:  Code assumes DPtReqIssue is a macro--it is called from    *
+*  both mainline and interrupt code.                                   *
+*                                                                      *
+*  Some of the long comments in the standard benchmark have been       *
+*     removed to make this file a little easier to work with.  -GNR    *
+***********************************************************************/
+
+/***********************************************************************
+*             SOME ISSUES TO BE SETTLED DURING DEBUGGING               *
+*                                                                      *
+*  The GIC standard linker control file (sip80.lnk) puts .pbss globals *
+*  (like WBQ, WBQ0) at 0x0400 in PPRAM2, followed at 0x06b0 by PP_COMM *
+*  and at 0x6c0 by PP_TCTL.  In general, bserv_pp lives dangerously by *
+*  doing its own allocations, assuming all of PPRAMs 0 and 1 and up to *
+*  0x0400 in PPRAM2 are freely available.   It also places its own TC  *
+*  PTREQs in the PP_TCTL area, assuming this is OK because GIC library *
+*  calls are not made to do transfers.   But where does memtrans() put *
+*  its PTREQ?  It may be necessary to define user control sections and *
+*  a supplementary linker command file to avoid nasty surprises here.  *
+*                                                                      *
+*  Remaining off-chip references are marked "OCR" in comments to       *
+*  make it easier to find them and remove them if it will help speed.  *
+*                                                                      *
+***********************************************************************/
+
+/* Include standard library functions */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "mvp_hw.h"           /* MVP hardware defs */
+#include "timemgr.h"          /* Timer functions */
+#include "dspAPI.h"           /* DSP Command interface */
+#include "param.h"            /* System dependent, and compatibility */
+#include "ptreq.h"            /* Programmable memory transfers */
+
+#ifdef _MVP_PP
+interrupt
+#endif
+void int_handler(void);        /* Declare interrupt service routine */
+
+#ifndef max
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#endif
+
+#ifndef min
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+#endif
+
+/* Parameters needed to allocate on-chip memory */
+
+/* Note:  A PTREQ is a TC parameter block, defined by the hardware.
+*  A PTWBH is a structure defined below that is used to hold the
+*  minimum parameters necessary to create a PTREQ for writing some
+*  loaded data back to off-chip memory after it has been updated. */
+
+#define PPRAM_SIZE      2048  /* See xfer.h and sip80.lnk  */
+#define RAM0Base  0x00000000  /* CONNDATA swapping, PTREQs */
+#define RAM1Base  0x00000800  /* CONNDATA swapping, PTWBHs */
+#define RAM2Base  0x00008000  /* CELLBLKs, CONNBLKs, guides */
+#define RAMPitch      0x1000  /* Spacing between nodes in RAM */
+
+#define NWriteBackQReq     3  /* Max # write-back queue requests */
+#define NumPTREQ           4  /* Max number of PTREQ's needed */
+#define NumPTWBH           6  /* Max number of PTWBH's needed */
+#define NLijGuides       256  /* Max number of "guide-table" entries
+                              *  that will fit below .pbss in RAM 2 */
+#define PTWBH_SIZE (sizeof(struct PTWBH))
+#define NConnDatPerPPRAM (0x0400/sizeof(struct CONNDATA))
+
+#define TRGenericIn  pPTReq0
+#define TRConnDatIn  (pPTReq0+1)
+#define TRLijToLUT   (pPTReq0+2)
+#define TRSjIn       (pPTReq0+3)
+#define WBConnDatRd  pPTWbh1
+#define WBConnDatWk  (pPTWbh1+1)
+#define WBConnBlkRd  (pPTWbh1+2)
+#define WBConnBlkWk  (pPTWbh1+3)
+#define WBCellBlkRd  (pPTWbh1+4)
+#define WBCellBlkWk  (pPTWbh1+5)
+
+/* Define simulation parameters that aren't specified in input file
+*     PT = positive firing threshold for a cell
+*     MTI = modification threshold on output of a cell
+*     MTJ = modification threshold on input to a connection
+*     ET = excitatory threshold for an input to a connection  */
+
+#define  PT  0.25
+#define MTI  0.3
+#define MTJ  0.4
+#define  ET  0.2
+
+   typedef unsigned char byte;
+   typedef long FixedGuide;
+
+   struct CONNDATA {          /* Data for a single connection */
+      short int lij;          /* Number of source cell */
+      byte cij;               /* Strength of connection (S7) */
+      byte sj;                /* Looked up by transfer controller */
+      };
+
+#define NDAS 4                /* Number of words of DAS stats */
+   struct CONNBLK {           /* Connection-type information block */
+      struct CONNBLK *pct;    /* Pointer to next CONNBLK */
+      struct CELLBLK  *psrc;  /* Pointer to source cell type */
+#ifdef _MVP_PP
+      byte *psj;              /* Working storage for psj */
+      double pad;             /* Fill out to size of chunksize on MP */
+#else
+      double chunksize;       /* Range of a generated connection */
+#endif
+      long int nconns;        /* Number of connections */
+      int source;             /* Serial number of source cell type */
+      int rule;               /* Connection generating rule */
+      long int scale;         /* Scale factor (S8) */
+      long int das[NDAS];     /* Detailed amp stats */
+      long int ax;            /* Intermediate afferent sum (S15) */
+      };
+
+   struct CELLBLK {           /* Cell-type information block */
+      struct CELLBLK *play;   /* Pointer to next CELLBLK */
+      struct CONNBLK *pct1;   /* Pointer to first CONNBLK */
+      struct CONNDATA *prd;   /* Pointer to actual connection data */
+      long int ncells;        /* Number of cells of this type */
+      long int nconntypes;    /* Number of connection types */
+      long int nconntotal;    /* Total number of connections */
+      long int delta;         /* Amplification factor (S10) */
+      byte *psi;              /* Pointer to s(i) data */
+      byte *ps2;              /* Pointer to alternate (new) s(i) */
+      };
+
+   typedef struct PTWBH {     /* Write-back request hold block */
+      char *ursrc;            /* Original source of data (off-chip) */
+      char *wkloc;            /* Location of working data (on-chip) */
+      int len;                /* Length of data (bytes) */
+      } PTWBH;
+
+/*=====================================================================*
+*                          Global Variables                            *
+*                                                                      *
+*  These are assumed to be loaded on parameter RAM.  Some are used     *
+*  to communicate between user-level and interrupt code.  State of     *
+*  interrupt service routine is kept here between interrupts.          *
+*=====================================================================*/
+
+   static struct CELLBLK *iil0,*iil1;  /* il0,il1 for interrupt svc. */
+   static struct CONNBLK *iix0,*iix1;  /* ix0,ix1 for interrupt svc. */
+   static PTWBH *pPTWbh1;           /* Ptr to my PTWBH blocks */
+   static PTREQ *pPTReq0;           /* Ptr to my PTREQ blocks */
+   static PTREQ *WBQ0;              /* Ptr to top of write-back-queue */
+   static PTREQ *WBQ;               /* Ptr to write-back queue */
+   static volatile PTREQ *PTRHd;    /* Ptr to waiting PTREQ */
+   static unsigned long CompStage;           /* Computation stage */
+   static volatile unsigned long IntStage;   /* Interruption stage */
+   static enum {
+      DoneCellBlk, DoneZeroStat, DoneConnBlk, DoneConnData,
+      DoneAllData, DoneWriteBack
+      } DispatchState;
+   static int incr,incb;            /* Interrupt level ncr,ncb */
+   static int ijs;                  /* Interrupt level cell ct */
+   static volatile int RqstLevel;   /* Used by interrupt code to
+                                    *  request that main code run
+                                    *  a PTREQ when ready */
+   static int NConnsPerBatch;       /* Connections per batch */
+
+
+/*=====================================================================*
+*                  Local Functions for Mainline Code                   *
+*                                                                      *
+*              DO NOT CALL FROM INTERRUPT SERVICE CODE!!               *
+*                                                                      *
+*  (Many of these are candidates for inlining by the optimizer.)       *
+*=====================================================================*/
+
+
+/*---------------------------------------------------------------------*
+*                               MkPTWBH                                *
+*                                                                      *
+*  This routine fills in a PTWBH from source, dest, length arguments.  *
+*  It should be compiled in-line if possible.                          *
+*---------------------------------------------------------------------*/
+
+#ifdef _MVP_PP
+inline
+#endif
+void MkPTWBH(PTWBH *WBH, char *src, char *dst, int ll) {
+
+   WBH->ursrc = src;
+   WBH->wkloc = dst;
+   WBH->len   = ll;
+
+   } /* End MkPTWBH() */
+
+
+/*---------------------------------------------------------------------*
+*                              Mk1DPTReq                               *
+*                                                                      *
+*  This routine fills in a PTREQ to do an original load with source,   *
+*  dest, and len from a PTWBH.  Nifty stuff like alternating targets   *
+*  is not done, because the PTREQ will be recycled before it can be    *
+*  reused.                                                             *
+*---------------------------------------------------------------------*/
+
+#ifdef _MVP_PP
+inline
+#endif
+void Mk1DPTReq(PTREQ *PTR, PTWBH *WBH) {
+
+   memset((char *)PTR, 0, PTREQ_SIZE);
+   PTR->options = PTOPT_S_LINKEND;
+   PTR->srcAddr = WBH->ursrc;
+   PTR->dstAddr = WBH->wkloc;
+   PTR->srcACnt = PTR->dstACnt = WBH->len;
+
+   } /* End Mk1DPTReq() */
+
+
+/*---------------------------------------------------------------------*
+*                           WaitForTransfer                            *
+*                                                                      *
+*  This routine holds up the mainline code in a spin wait until the    *
+*  interrupt level code has reached the same stage.                    *
+*---------------------------------------------------------------------*/
+
+#ifdef _MVP_PP
+inline
+#endif
+void WaitForTransfer(void) {
+
+   ++CompStage;
+   while (IntStage < CompStage) ;
+
+   } /* End WaitForTransfer() */
+
+
+/*---------------------------------------------------------------------*
+*                        RestartTransferChain                          *
+*                                                                      *
+*  This routine checks whether the interrupt processor has relinquish- *
+*  ed control to allow the mainline code to reach a specified point,   *
+*  whereupon the next waiting PTREQ must be initiated.                 *
+*---------------------------------------------------------------------*/
+
+/* Note:  RqstLevel is declared volatile so compiler will not retain
+*  value in a register between calls to RestartTransferChain.  Inside
+*  the interrupt-disabled block it is, of course, not volatile.  */
+
+#ifdef _MVP_PP
+inline
+#endif
+void RestartTransferChain(int rqst) {
+
+   int flip = rqst<<3;
+   int mask = -flip;
+   asm(" dint");        /* Disable interrupts */
+   if (PTRHd && (((RqstLevel ^ flip) & mask) == (0x8888 & mask))) {
+      DPtReqIssue(PTRHd); PTRHd = NULL; }
+   RqstLevel += rqst;
+   asm(" nop");
+   asm(" eint");        /* Enable interrupts */
+
+   } /* End RestartTransferChain() */
+
+
+/*=====================================================================*
+*                       PP server main program                         *
+*=====================================================================*/
+
+#pragma SHARED (bserv_pp)
+void bserv_pp(DSPARG *argBuf) {
+
+   int mynode = (COMM & 7);   /* Number of this PP processor */
+
+   FixedGuide *pLijGuides;   /* Ptr to my Lij guide list */
+   struct CELLBLK *play1;     /* Location of network info */
+   struct CELLBLK *il;        /* Pointer to current CELLBLK */
+   struct CONNBLK *ix;        /* Pointer to current CONNBLK */
+   struct CONNDATA *ic;       /* Pointer to current connection data */
+
+   struct CELLBLK *il0,*il1;  /* Ptrs to two swappable CELLBLK blks */
+   struct CONNBLK *ix0,*ix1;  /* Ptrs to two swappable CONNBLK blks */
+   struct CONNDATA *ic0,*ic1; /* Ptrs to two swappable CONNDATA blks */
+
+   byte *is=NULL,*is2;        /* Pointers to state variables */
+
+   short et,mti,mtj;          /* Use 16-bit multiply where possible */
+   short simmti;              /* s(i) - mti (S8) */
+   int ji,jl,jc,js;           /* Iteration, layer, cell, data ctrs */
+   int ncb;                   /* Num conns in batch */
+   int ncr;                   /* Num conns remaining in batch */
+   int niterations;           /* Number of interations to do */
+   int pt;                    /* Positive firing threshold */
+
+/* Get parameters passed from MP program on PP invocation */
+
+   niterations = (int)argBuf->argv[0];
+   play1 = (struct CELLBLK *)argBuf->argv[1];
+
+/* Generate needed pointers to on-chip memory.
+*  (RAMs are declared char* rather than void* so
+*  we can do allocation arithmetic on them.)  */
+
+   NConnsPerBatch = min(NConnDatPerPPRAM,NLijGuides);
+
+   {  char *myRAM0 = (char *)(RAM0Base + RAMPitch*mynode);
+      char *myRAM1 = (char *)(RAM1Base + RAMPitch*mynode);
+      char *myRAM2 = (char *)(RAM2Base + RAMPitch*mynode);
+      /* Use half of RAM0 for CONNDATA, rest for CELLBLKs, CONNBLKs */
+      char *pRAM = myRAM0 + 0x0400;
+      ic0 = (struct CONNDATA *)myRAM0;
+      ic1 = (struct CONNDATA *)myRAM1;
+      pPTReq0 = (PTREQ *)(myRAM0 + PPRAM_SIZE - NumPTREQ*PTREQ_SIZE);
+      pPTWbh1 = (PTWBH *)(myRAM1 + PPRAM_SIZE - NumPTWBH*PTWBH_SIZE);
+      pLijGuides = (FixedGuide *)myRAM2;
+      il0 = (struct CELLBLK *)pRAM; pRAM += sizeof(struct CELLBLK);
+      il1 = (struct CELLBLK *)pRAM; pRAM += sizeof(struct CELLBLK);
+      ix0 = (struct CONNBLK *)pRAM; pRAM += sizeof(struct CONNBLK);
+      ix1 = (struct CONNBLK *)pRAM; pRAM += sizeof(struct CONNBLK);
+
+/* WARNING:
+*  A necessary amenity here is to check that the bottom-up allocations
+*  ending at pRAM do not overlap the top-down allocations at WBQ.
+*  Add this as soon as the proof-of-concept is accomplished.  */
+
+      /* Establish empty write-back queue */
+      WBQ0 = WBQ = (PTREQ *)(myRAM2 + PPRAM_SIZE);
+      } /* End mem alloc local scope */
+
+/* Clear all the PTREQs, PTWBHs, and LijGuides (because we will
+*  stick short Lij values into long guide offsets)  */
+
+   memset((char *)pPTReq0, 0, NumPTREQ*PTREQ_SIZE);
+   memset((char *)pPTWbh1, 0, NumPTWBH*PTWBH_SIZE);
+   memset((char *)pLijGuides, 0, NLijGuides*sizeof(FixedGuide));
+
+/* Set up the unchanging parameters in the chain that will handle
+*  the CONNDATA and s(j) input.  In all these blocks, the B counts
+*  must be filled in at the time the chain is executed.  */
+
+   /* Read some CONNDATA */
+   TRConnDatIn->options = PTOPT_SUM_ADDB + PTOPT_DUM_ADDCT;
+   TRConnDatIn->dstAddr = ic0;
+   TRConnDatIn->srcACnt = TRConnDatIn->dstACnt =
+      TRConnDatIn->w32.srcBPitch = TRConnDatIn->dstBPitch =
+      sizeof(struct CONNDATA);
+   TRConnDatIn->w44.dstCPitch = RAM1Base - RAM0Base;
+   TRConnDatIn->next = TRLijToLUT;
+
+   /* Copy Lij from CONNDATA just loaded into LijGuides.
+   *  This code assumes we are in big-endian mode.  */
+   TRLijToLUT->options = PTOPT_SUM_ADDCT;
+   TRLijToLUT->srcAddr = &ic0->lij;
+   TRLijToLUT->dstAddr = (char *)pLijGuides +
+      (sizeof(FixedGuide) - sizeof(short));
+   TRLijToLUT->srcACnt = TRLijToLUT->dstACnt = sizeof(short);
+   TRLijToLUT->w32.srcBPitch = sizeof(struct CONNDATA);
+   TRLijToLUT->dstBPitch = sizeof(FixedGuide);
+   TRLijToLUT->w40.srcCPitch = RAM1Base - RAM0Base;
+   TRLijToLUT->next = TRSjIn;
+
+   /* Now use the LijGuides table to bring in the s(j) values.
+   *  There just happens to be space in the CONNDATA array.
+   *  srcAddr has to be filled in from current CONNBLK.  */
+   TRSjIn->options = PTOPT_STM_FIXOFF + PTOPT_DUM_ADDCT +
+      PTOPT_S_LINKEND;
+   TRSjIn->dstAddr = &ic0->sj;
+   TRSjIn->srcACnt = TRSjIn->dstACnt = 1; /* Size of sj */
+   TRSjIn->dstBPitch = sizeof(struct CONNDATA);
+   TRSjIn->w40.srcGuide = pLijGuides;
+   TRSjIn->w44.dstCPitch = RAM1Base - RAM0Base;
+
+/*--------------------------------------------------------------------*/
+/*                                                                    */
+/*                  PERFORM THE ACTUAL SIMULATION                     */
+/*                                                                    */
+/*--------------------------------------------------------------------*/
+
+/* Prepare to use TC-completion interrupts */
+
+   /* Install interrupt vector */
+   {  void (**ISR)(void);
+      ISR = (void *)(0x010001cc + ((COMM & 7)<<12));
+      *ISR = int_handler; }
+   asm(" inten = 1\\\\19");      /* Enable tc interrupt only, also
+                                 *  set bit 0 = 0 to clear intflg */
+   asm(" intflg = intflg");      /* Clear interrupt flags */
+
+/* Generate simulation parameters from global definitions */
+
+   pt  = 8388608.0*PT;           /* PT with 23 fraction bits */
+   mti = 256.0*MTI;
+   mtj = 256.0*MTJ;
+   et  = 256.0*ET;
+
+/* Perform 'niterations' iterations */
+
+   for (ji=1; ji<=niterations; ji++) {
+
+/* Initialize communications with interrupt routine */
+
+      RqstLevel = 0x8888;        /* Nothing is pending */
+      PTRHd = NULL;
+      CompStage = IntStage = 0;  /* Wait control */
+      DispatchState = DoneCellBlk;
+      iil0 = il0, iil1 = il1;
+      iix0 = ix0, iix1 = ix1;
+      asm(" eint");              /* Enable interrupts */
+      
+/* Initiate transfer of first cell block into PPRAM */
+
+      MkPTWBH(WBCellBlkRd, (char *)play1, (char *)il0,
+         sizeof(struct CELLBLK));
+      Mk1DPTReq(TRGenericIn, WBCellBlkRd);
+      DPtReqIssue(TRGenericIn);
+
+/* Loop over cell blocks until hit end of linked list */
+
+      for (jl=0; ; jl++) {
+         
+         WaitForTransfer();      /* CELLBLK */
+         /* This little flip-flop and the others like it
+         *  are needed because we are reusing the PTREQ
+         *  block for other purposes, so the destination
+         *  cannot be maintained there with ADDCT mode.  */
+         il = il0; il0 = il1; il1 = il;
+
+/* For each iteration, the "DAS" statistics are collected in the
+*  CONNBLKs.  When we start running more than one PP in parallel,
+*  the clearing of these stats should be done from the MP, which
+*  will then need to synchronize with the PPs at start of each
+*  iteration.  However, for now, just zero them from here with
+*  a "fill-with-value" transfer rqst.
+*  At the same time, we put the current psj into the CONNBLK
+*  so we don't have to look it up with an OCR for every new cell.
+*  A problem here is that the CELLBLK for the previous cell type
+*  probably has not been written back yet as this code executes,
+*  so in this case we use the psi value still remaining in 'is'.
+*  We maintain 'jl' as the current cell type - 1 for this test.  */
+
+
+         memset((char *)TRGenericIn, 0, PTREQ_SIZE);
+         TRGenericIn->options = PTOPT_S_LINKEND + PTOPT_STM_FILL;
+         TRGenericIn->dstACnt = NDAS*sizeof(int);
+         asm(" dint");
+
+         /* OCR:  ix linked list is off-chip */
+         for (ix=il->pct1; ix; ix=ix->pct) {
+            TRGenericIn->dstAddr = ix->das;
+            DPtReqIssue(TRGenericIn);
+            ix->psj = (ix->source == jl) ? is : ix->psrc->psi;
+            DPtReqWait();
+            }
+
+/* Evaluate responses for all cells of this type */
+         
+         TRConnDatIn->srcAddr = il->prd;
+         asm(" eint");           /* Allow I/O sequence to continue */
+
+         for (js=1,is=il->psi,is2=il->ps2; js<=il->ncells; js++) {
+
+/*DEBUG*/   int siold = (int)(*is);
+            long int wksum = 0;     /* Working sum for s(i) */
+
+            /* OCR:  Picking up s(i) from previous iteration */
+            simmti = *is++ - mti;   /* (si - mti) term for amplif */
+
+/* Evaluate inputs for all connection types input to this cell type */
+
+            do {
+
+               WaitForTransfer();   /* CONNBLK */
+               ix = ix0; ix0 = ix1; ix1 = ix;
+
+               /* Clear the connection-type sum, which is stored in
+               *  the connection data block, emulating CNS.  In the
+               *  real program, there would be other setup here to
+               *  overlap with the input of the first data batch.  */
+               ix->ax = 0;
+
+/* Perform loop over connection batches */
+
+               ncr = ix->nconns;
+               while (ncr) {
+                  
+                  WaitForTransfer();   /* CONNDATA batch */
+                  ic = ic0; ic0 = ic1; ic1 = ic;
+                  ncb = min(ncr,NConnsPerBatch);
+
+/* Calculate contributions of all connections in current batch.
+*  Arrange to use fast 16-bit multiplication where possible.  */
+
+#if 1
+
+                  for (jc=0; jc<ncb; jc++,ic++) {
+                     short wksj  = ic->sj;      /* (S8) */
+                     short sjmet = wksj - et;   /* (S8) */
+                     short wkcij =              /* (S7) */
+                        (ic->cij >= 128) ? ic->cij - 256 : ic->cij;
+                     if (sjmet > 0) ix->ax += sjmet*wkcij;
+
+   /* Perform amplification if delta != zero.  Only the "4-way" rule
+      is implemented in this "benchmark".  To make life simpler,
+      the 'phi' factor is ignored (i.e. taken to be 1.0), and scaling
+      is fudged to make intermediate results fit in 32-bit registers.
+      "DAS" statistics are always collected.                             */
+
+                     if (il->delta) {
+                        short sjmmtj = wksj - mtj; /* (S8) */
+                        short sdelta = il->delta;
+                        int ampcase = 0;
+                        if (simmti < 0) ampcase += 2;
+                        if (sjmmtj < 0) ampcase += 1;
+                        ix->das[ampcase]++;
+                        sjmmtj *= simmti;
+                        wkcij += (long)(sdelta*sjmmtj)>>19;
+                        if (wkcij > 127) wkcij = 127;
+                        if (wkcij <-127) wkcij =-127;
+                        ic->cij = (byte)wkcij;
+                        }
+
+                     } /* End loop over individual connections */
+
+#else
+
+/* Alternative version of inner loop, doing just what is
+*  needed to get das.  */
+
+                  for (jc=0; jc<ncb; jc++,ic++) {
+                     short sjmmtj = ic->sj - mtj; /* (S8) */
+                     int ampcase = 0;
+                     if (simmti < 0) ampcase += 2;
+                     if (sjmmtj < 0) ampcase += 1;
+                     ix->das[ampcase]++;
+                     } /* End loop over individual connections */
+
+#endif
+
+                  /* Rendezvous with interrupt routine to write
+                  *  previous batch back and read new one in.  */
+                  RestartTransferChain(0x0001);
+                  ncr -= ncb;
+                  } /* End loop over connection batches */
+
+               /* Scale the connection-type contribution and add it in */
+               ix->ax *= ix->scale;
+               wksum += ix->ax;
+
+               /* Rendezvous with interrupt routine to write
+               *  previous CONNBLK out and read new one in.  */
+               RestartTransferChain(0x0010);
+               } while (ix->pct);   /* End loop over connection types */
+
+            /* Force the final s(i) into range 0 to 255 */
+            if (wksum < pt) wksum = 0;
+            else { wksum = wksum>>15; if (wksum > 255) wksum = 255; }
+
+            /* OCR:  Store the new cell state off-chip */
+            /* *is2++ = (byte)wksum; */
+/*DEBUG*/      *is2++ = (byte)(256-siold);
+            } /* End loop over cells of current type */
+
+         /* Reverse the new and old states of the cells */
+         is = il->ps2; il->ps2 = il->psi; il->psi = is;
+
+         /* Rendezvous with interrupt routine to write
+         *  previous CELLBLK out and read new one in.  */
+         RestartTransferChain(0x0100);
+
+         if (!il->play) break;
+         } /* End loop over cell types */
+
+      /* Rendezvous with interrupt routine to complete
+      *  write-back of last CONNDATA, CONNBLK, CELLBLK.  */
+      RestartTransferChain(0x1000);
+      WaitForTransfer();
+
+      } /* End loop over requested number of iterations */
+
+   /* Clear all interrupt flags and disable to leave things clean */
+   asm(" dint");                 /* Disable interrupts globally */
+   asm(" inten = 0");            /* Disable all interrupt classes */
+   asm(" intflg = intflg");      /* Clear interrupt flags */
+
+   } /* End bserv_pp main program */
+
+
+/*=====================================================================*
+*                 Local Functions for Interrupt Code                   *
+*                                                                      *
+*                  DO NOT CALL FROM MAINLINE CODE!!                    *
+*                                                                      *
+*  (Many of these are candidates for inlining by the optimizer.)       *
+*=====================================================================*/
+
+
+/*---------------------------------------------------------------------*
+*                             IntMkPTWBH                               *
+*                                                                      *
+*  This routine fills in a PTWBH from source, dest, length arguments.  *
+*  It should be compiled in-line if possible.                          *
+*---------------------------------------------------------------------*/
+
+#ifdef _MVP_PP
+inline
+#endif
+void IntMkPTWBH(PTWBH *WBH, char *src, char *dst, int ll) {
+
+   WBH->ursrc = src;
+   WBH->wkloc = dst;
+   WBH->len   = ll;
+
+   } /* End IntMkPTWBH() */
+
+
+/*---------------------------------------------------------------------*
+*                            IntMk1DPTReq                              *
+*                                                                      *
+*  This routine fills in a PTREQ to do an original load with source,   *
+*  dest, and len from a PTWBH.  Nifty stuff like alternating targets   *
+*  is not done, because the PTREQ will be recycled before it can be    *
+*  reused.                                                             *
+*---------------------------------------------------------------------*/
+
+#ifdef _MVP_PP
+inline
+#endif
+void IntMk1DPTReq(PTREQ *PTR, PTWBH *WBH) {
+
+   memset((char *)PTR, 0, PTREQ_SIZE);
+   PTR->options = PTOPT_S_LINKEND;
+   PTR->srcAddr = WBH->ursrc;
+   PTR->dstAddr = WBH->wkloc;
+   PTR->srcACnt = PTR->dstACnt = WBH->len;
+
+   } /* End IntMk1DPTReq() */
+
+
+/*---------------------------------------------------------------------*
+*                         QueueWriteBackRqst                           *
+*                                                                      *
+*  Given a ptr to a PTWBH, this routine generates a write-back PTREQ   *
+*  on the write back queue                                             *
+*---------------------------------------------------------------------*/
+
+void QueueWriteBackRqst(PTWBH *WBH) {
+
+   if (WBH->len) {
+      PTREQ *WBQprev = WBQ--;
+      IntMk1DPTReq(WBQ, WBH);
+      WBQ->options |= PTOPT_S_LINKEND + PTOPT_X_SWAP;
+      if (WBQprev != WBQ0) {
+         WBQ->next = WBQprev;
+         WBQ->options &= ~PTOPT_S_MASK;
+         }
+      WBH->len = 0;           /* Kill any reuse of this WBH */
+      } /* Here if WBH not in use */
+
+   } /* End QueueWriteBackRqst() */
+
+
+/*---------------------------------------------------------------------*
+*                          WriteBackThenRead                           *
+*                                                                      *
+*  This routine causes the TC to execute whatever write-back requests  *
+*  are currently on the write-back queue, followed by whatever request *
+*  is pointed to by its argument, which may be NULL.  If the mainline  *
+*  code has already reached the appropriate stage, initiate transfer   *
+*  from here, otherwise exit and mainline code must restart I/O.       *
+*---------------------------------------------------------------------*/
+
+void WriteBackThenRead(PTREQ *PTR, int rqst) {
+
+   /* If no writeback info exists, can initiate PTR at once
+   *  if it exists */
+
+   if (WBQ == WBQ0) {
+      if (PTR) DPtReqIssue(PTR);
+      }
+
+   /* Otherwise, append new PTR to writeback queue if it exists.
+   *  Entire chain can be initiated only if mainline code already
+   *  passed this point, as determined by checking RqstLevel.  */
+
+   else {
+      if (PTR) {     /* Append PTR to WBQ chain */
+         PTREQ *WBQ1 = WBQ0 - 1;
+         WBQ1->next = PTR;
+         WBQ1->options &= ~PTOPT_S_MASK;
+         }
+      PTR = WBQ;
+      if (RqstLevel & rqst) { DPtReqIssue(PTR); }
+      else PTRHd = PTR;
+
+      /* Indicate that writeback queue is now empty */
+      WBQ = WBQ0;
+
+      } /* End case where writeback info exists */
+
+   return;
+   } /* End WriteBackThenRead() */
+
+
+/*=====================================================================*
+*                    PP interrupt service routine                      *
+*=====================================================================*/
+
+void int_inner(void) {
+
+   struct CELLBLK *il;           /* Pointer to current CELLBLK */
+   struct CONNBLK *ix;           /* Pointer to current CONNBLK */
+
+   switch (DispatchState) {
+
+/*---------------------------------------------------------------------*
+*  Finished reading in a CELLBLK.  Do nothing until mainline code      *
+*  handles zeroing statistics and setting up psj.                      *
+*---------------------------------------------------------------------*/
+
+case DoneCellBlk:
+
+      ++IntStage;
+
+      DispatchState = DoneZeroStat;
+      break;
+
+/*---------------------------------------------------------------------*
+*  Finished zeroing statistics.  Queue CELLBLK writeback if any,       *
+*  store info on current block for writeback, read first CONNBLK.      *
+*---------------------------------------------------------------------*/
+
+case DoneZeroStat:
+
+      il = iil0; iil0 = iil1; iil1 = il;
+      ijs = il->ncells;
+      QueueWriteBackRqst(WBCellBlkWk);
+      *WBCellBlkWk = *WBCellBlkRd;
+
+      /* Read first CONNBLK belonging to this CELLBLK */
+      IntMkPTWBH(WBConnBlkRd, (char *)il->pct1, (char *)iix0,
+         sizeof(struct CONNBLK));
+      IntMk1DPTReq(TRGenericIn, WBConnBlkRd);
+      DPtReqIssue(TRGenericIn);
+
+      DispatchState = DoneConnBlk;
+      break;
+
+/*---------------------------------------------------------------------*
+*  Finished reading a CONNBLK.  Queue CONNBLK writeback if any,        *
+*  store info on current block for writeback, read first data batch.   *
+*---------------------------------------------------------------------*/
+
+case DoneConnBlk:
+
+      ++IntStage;
+      ix = iix0; iix0 = iix1; iix1 = ix;
+      QueueWriteBackRqst(WBConnBlkWk);
+      *WBConnBlkWk = *WBConnBlkRd;
+
+      /* Determine size of current batch */
+      incr = ix->nconns;
+      incb = min(incr,NConnsPerBatch);
+
+      /* Set input chain to read first data batch */
+      TRConnDatIn->srcBCnt = TRConnDatIn->dstBCnt = 
+         TRLijToLUT->srcBCnt = TRLijToLUT->dstBCnt =
+         TRSjIn->dstBCnt = incb-1;
+      TRSjIn->srcAddr = ix->psj;
+      TRSjIn->srcCCnt = incb; /* Actually number of lookups */
+      IntMkPTWBH(WBConnDatRd, TRConnDatIn->srcAddr,
+         TRConnDatIn->dstAddr, incb*sizeof(struct CONNDATA));
+      DPtReqIssue(TRConnDatIn);
+
+      DispatchState = DoneConnData;
+      break;
+
+/*---------------------------------------------------------------------*
+*  Finished reading a CONNDATA batch.  Queue writeback information     *
+*  and decide what to do next in anticipation of mainline code.        *
+*---------------------------------------------------------------------*/
+
+case DoneConnData:
+
+      ++IntStage;
+      il = iil1;
+      ix = iix1;
+      QueueWriteBackRqst(WBConnDatWk);
+      *WBConnDatWk = *WBConnDatRd;
+
+/* Now here is the tricky part of the transfer management.
+*  We are going to bring in the next batch of CONNDATA blocks if
+*  there are any more, otherwise the next CONNBLK if there are
+*  any, otherwise the first CONNBLK if there are any more cells,
+*  otherwise the next CELLBLK if there are any.  In all cases, save
+*  the new writeback info, then read in the new data.  This tactic
+*  maximizes the overlap of transfers and calculation.  */
+        
+      RqstLevel -= 0x0001;
+      if (incr -= incb) {    /* Assignment intended */
+         incb = min(incr, NConnsPerBatch);
+         TRConnDatIn->srcBCnt = TRConnDatIn->dstBCnt = 
+            TRLijToLUT->srcBCnt = TRLijToLUT->dstBCnt =
+            TRSjIn->dstBCnt = incb-1;
+         TRSjIn->srcCCnt = incb;
+         IntMkPTWBH(WBConnDatRd, TRConnDatIn->srcAddr,
+            TRConnDatIn->dstAddr,
+            incb*sizeof(struct CONNDATA));
+         WriteBackThenRead(TRConnDatIn, 0x0008);
+         break;
+         }
+
+      RqstLevel -= 0x0010;
+      if ((ix = ix->pct) || (ix=il->pct1, --ijs)) {
+         IntMkPTWBH(WBConnBlkRd, (char *)ix,
+            (char *)iix0, sizeof(struct CONNBLK));
+         IntMk1DPTReq(TRGenericIn, WBConnBlkRd);
+         WriteBackThenRead(TRGenericIn, 0x0080);
+         DispatchState = DoneConnBlk;
+         break;
+         }
+
+      RqstLevel -= 0x0100;
+      if (il->play) {
+         IntMkPTWBH(WBCellBlkRd, (char *)il->play,
+            (char *)iil0, sizeof(struct CELLBLK));
+         IntMk1DPTReq(TRGenericIn, WBCellBlkRd);
+         WriteBackThenRead(TRGenericIn, 0x0800);
+         DispatchState = DoneCellBlk;
+         break;
+         }
+
+      RqstLevel -= 0x1000;
+         if (WBQ == WBQ0) goto CaseDoneAllData;
+         WriteBackThenRead(NULL, 0x8000);
+         DispatchState = DoneAllData;
+         break;
+
+/*---------------------------------------------------------------------*
+*  Finished reading in all the data.  All that's left to do is to set  *
+*  up final requests to write back last batch to off-chip memory.  We  *
+*  can't use WriteBackThenRead here, because RqstLevel is not changed. *
+*---------------------------------------------------------------------*/
+
+CaseDoneAllData:
+case DoneAllData:
+
+      QueueWriteBackRqst(WBConnDatWk);
+      QueueWriteBackRqst(WBConnBlkWk);
+      QueueWriteBackRqst(WBCellBlkWk);
+      /* Initiate only if mainline code got far enough */
+      if (RqstLevel & 0x8000) {
+         PTRHd = WBQ; DPtReqIssue(PTRHd); }
+      /* Empty writeback queue */
+      WBQ = WBQ0;
+      DispatchState = DoneWriteBack;
+      break;
+
+/*---------------------------------------------------------------------*
+*  Finished writing back the last data.  Set for next iteration cycle. *
+*---------------------------------------------------------------------*/
+
+case DoneWriteBack:
+
+      ++IntStage;
+
+      DispatchState = DoneCellBlk;
+      break;
+
+      } /* End dispatch switch */
+
+   } /* End interrupt service routine */
+

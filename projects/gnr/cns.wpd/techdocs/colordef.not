@@ -1,0 +1,10 @@
+*    WHITE   0,  0,  0      White ==> background                       *
+*    BLACK   C0, C0, C0                                                *
+*    BLUE    C0, 0,  0                                                 *
+*    CYAN    C0, C0, 0                                                 *
+*    MAGENTA C0, 0,  C0                                                *
+*    VIOLET  C0, 0,  80                                                *
+*    ORANGE  0,  40, E0                                                *
+*    GREEN   0,  E0, 0                                                 *
+*    YELLOW  0,  E0, E0                                                *
+*    RED     0,  0,  E0                                                *

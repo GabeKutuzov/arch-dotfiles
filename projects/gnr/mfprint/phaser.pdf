@@ -1,0 +1,22 @@
+##############################################################
+#                           phser
+#
+# Default file for Tektronix Phaser II PXe color laser printer
+# Version 1, 01/06/93  ROZ
+##############################################################
+
+# Printer name and alias
+name: Tektronix Phaser II PXe
+alias: phaser
+
+# Page control
+tmargin: 1.09
+lmargin: 0.20
+width: 8.10
+height: 8.825
+
+# Visual
+color: 24
+
+# Special
+lwidth: 1

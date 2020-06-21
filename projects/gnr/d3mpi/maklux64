@@ -1,0 +1,200 @@
+# (c) Copyright 1999-2018, The Rockefeller University *11225* 
+# $Id: maklux64 66 2016-04-15 21:16:58Z  $
+########################################################################
+#         MAKE file for CNS (DARWIN III) running on PC Linux           #
+#                        64-bit serial version                         #
+#                                                                      #
+# This makefile makes the following target:                            #
+#	Cnsm	The test serial version (this is the default target)   #
+#                                                                      #
+# The following options are always selected by this makefile:          #
+# include BBDS, no timers.                                             #
+#                                                                      #
+# V1A, 08/08/99, GNR - Derived from IRIX makefile                      #
+# V8D, 02/14/07, GNR - Remove PNS, add BBDS                            #
+# ==>, 12/29/07, GNR - Last mod before committing to svn repository    #
+# Rev, 12/28/08, GNR - Add clean target, dependency on makefile itself #
+# Rev, 02/16/16, GNR - Derive this 64-bit version from maklux32        #
+# Rev, 02/18/16, GNR - Make separate nxdr outputs for 32- and 64-bits  #
+# Rev, 02/24/16, GNR - Simpler dependency mechanism, no sed needed     #
+# Rev, 03/21/16, GNR - Now just make one Cns with BBDS turned on       #
+#                      Add selection of warning flags, compdate        #
+# Rev, 08/03/18, GNR - Incorporate LCLHOME                             #
+########################################################################
+
+# Common pathnames
+LCLHOME ?= $(HOME)
+INC	 := $(LCLHOME)/include
+L	    := $(LCLHOME)/lib/pclux64
+
+# Path for object files
+DIR := pclux64
+
+# Object files to build standard version of CNS
+CNSOBJ := \
+darwin3 \
+d3abort \
+d3ajw  \
+d3allo \
+d3autsc \
+d3bgis \
+d3bxvp \
+d3cchk \
+d3chng \
+d3cij  \
+d3clst \
+d3cnmd \
+d3cpli \
+d3cond \
+d3ctbl \
+d3decay \
+d3dflt \
+d3dij  \
+d3dprt \
+d3echo \
+d3elij \
+d3epsi \
+d3evtm \
+d3exit \
+d3fchk \
+d3g1g3 \
+d3g1imin \
+d3g2cell \
+d3g2cond \
+d3g2conn \
+d3g3prob \
+d3g3rset \
+d3g3timr \
+d3genr \
+d3gfcl \
+d3gfhd \
+d3gfrl \
+d3gfsh \
+d3gfsv \
+d3go   \
+d3grex \
+d3grp0 \
+d3grp1 \
+d3grp2 \
+d3grp3 \
+d3gvin \
+d3i3vr \
+d3ijpi \
+d3ijpl \
+d3imgt \
+d3inhb \
+d3inhi \
+d3kij  \
+d3lij  \
+d3lani \
+d3lime \
+d3lkni \
+d3lplt \
+d3mark \
+d3master \
+d3mchk \
+d3mset \
+d3news \
+d3ngph \
+d3nset \
+d3nxt64 \
+d3oafs \
+d3oflw \
+d3parm \
+d3perr \
+d3phase \
+d3plot \
+d3regenr \
+d3resetn \
+d3resetz \
+d3rlnm \
+d3rplt \
+d3rpsi \
+d3rstr \
+d3salf \
+d3save \
+d3schk \
+d3sfhm \
+d3sj   \
+d3snsa \
+d3start \
+d3stat \
+d3tchk \
+d3tsvp \
+d3uprg \
+d3valu \
+d3vchk \
+d3vitp \
+d3vjnt \
+d3vplt \
+d3vtch \
+d3woff \
+d3zsta \
+findln \
+findmdlt \
+findpcf \
+findvc \
+getthr \
+rfdmtx \
+stubs  \
+tvplot
+
+# Add following object files to support D1:
+#        d1genr   d1go   d1nset   d1rplt
+
+# NSI home-grown libraries (note: order is NOT arbitrary)
+NSILIBS := \
+$(L)/libbbds.a \
+$(L)/libenv.a \
+$(L)/libserplot.a \
+$(L)/libsertools.a \
+$(L)/libcrk.a
+
+# Compile-time and target-dependent definitions
+CC := gcc
+CFLAGS := -g -m64 -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+#  Insert the following for stdout testing:
+#   DBGOUT='"/home/cdr/dbgout.test"'
+DEFS := PCLUX64 _ISOC99_SOURCE BBDS SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+.SUFFIXES:
+.SUFFIXES: .o .c .s .d
+VPATH = $(DIR)
+
+.PHONY: all cdate
+all:	cdate Cns64
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:		%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d d3nxd64.h maklux64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) -c $< ; \
+	mv $(*F).o $(DIR)
+	
+$(DIR)/%.o:	%.s maklux64
+	as $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) $*.s; \
+	mv $(*F).o $(DIR)
+
+# Put it all together
+
+# Compile cdate every time the make file is run
+cdate:
+	$(CC) $(CFLAGS) -DPCLUX64 $(INC:%=-I%) -o $(DIR)/compdate.o -c compdate.c
+
+Cns64:	$(CNSOBJ:%=$(DIR)/%.o) d3nxt64.c d3nxd64.h $(NSILIBS) maklux64
+	echo $(DIR); \
+	$(CC) $(CFLAGS) $(CNSOBJ:%=$(DIR)/%.o) $(DIR)/compdate.o $(NSILIBS) \
+		-lm -ldl -o $@; \
+	cp $@ $(LCLHOME)/bin/Cns;
+
+clean:
+	rm -f $(DIR)/*.[do]
+	rm $(LCLHOME)/bin/Cns
+
+-include $(CNSOBJ:%=$(DIR)/%.d)

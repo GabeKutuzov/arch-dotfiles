@@ -1,0 +1,6 @@
+cell  10.0        12.34567890 20.0        90.0        90.0       120.0
+cell  129.74563,29.7,-14.32,opt1=398.26482
+'Text string for testing T format' 1009 (9876,54321)
+ 36.2mV 33 ACC=47.25cm/sec2 BSCL=80.4mV
+PData (1) (too many in parens) 2 (not enough)
+end of deck

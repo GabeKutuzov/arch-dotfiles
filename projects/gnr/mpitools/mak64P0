@@ -1,0 +1,159 @@
+# (c) Copyright 1992-2018, The Rockefeller University *21224* 
+# $Id: mak64P0 8 2018-08-15 20:01:33Z  $
+########################################################################
+#                  MAKE file for MPI tools utilities                   #
+#                                                                      #
+# These utilities support node-to-node messaging and shared memory on  #
+# parallel computers.  They replace the earlier "nctools" and          #
+# "nsitools" libraries.  This is the sub-makefile called from the      #
+# top-level makefile to make the PAR0 ("host") version of the library. #
+#                                                                      #
+# Call with 'make CFLAGS=-O2 <target>' to get optimized compilations.  #
+#                                                                      #
+# N.B.  All libraries now contain the stattmr() function, but calls to #
+# it in an application are nulled out by a macro in mpitools.h unless  #
+# TIMERS is pound-defined before mpitools is included in the source.   #
+#                                                                      #
+# Versions of ROCKS routines abexit(), abexitm(), and abexitme() that  #
+# call appexit() are provided in libmpitP0 and libmpitPn so they will  #
+# be automatically loaded into parallel programs when one of these     #
+# libraries is included before the standard libcrk, which will contain #
+# the serial versions.                                                 #
+#                                                                      #
+# (Some obsolete history removed here)                                 #
+# V1A, 12/15/92, ABP - Initial version                                 #
+# Rev, 05/04/99, GNR - New directory layout                            #
+# Rev, 08/26/99, GNR - Add allocp*, imax, isum, nnget*, nnput*         #
+# Rev, 10/24/99, GNR - Add nn{get|put}[iu]8                            #
+# Rev, 03/04/00, GNR - Remove allocs/frees routines, add libsertools   #
+# Rev, 04/22/00, GNR - Add abexit                                      #
+# Rev, 12/09/00, GNR - Add blkbcst                                     #
+# V1F, 06/30/01, GNR - Add chngpool                                    #
+# Rev, 12/27/08, GNR - Add 'clean' target, dependency on mak64P0       #
+# Rev, 06/29/16, GNR - Update for mpi version                          #
+# ==>, 08/09/16, GNR - Last mod before committing to svn repository    #
+# Rev, 08/03/18, GNR - Incorporate LCLHOME                             #
+########################################################################
+
+# Directory where this stuff is kept
+LCLHOME ?= $(HOME)
+# Directories for include files:
+INC := $(LCLHOME)/include
+# Directory where object and dependency files are to be stored
+DIR := pc64P0
+# Directory where result library is to be stored:
+LD := $(LCLHOME)/lib/pclux64
+# Name of output library
+LN = mpitP0
+
+# Object files required for all parallel libraries:
+MPIT_OBJ := \
+abexit   \
+abscom   \
+allolink \
+aninit   \
+appexit  \
+blkbcst  \
+collect  \
+coppack  \
+dbgprt   \
+imax     \
+isum     \
+isynch   \
+jmax     \
+jsum     \
+membcst  \
+memdump  \
+memsize  \
+mpgather \
+mpirwex  \
+nncom    \
+nnget    \
+nngeti2  \
+nngeti4  \
+nngeti8  \
+nngetil  \
+nngetiz  \
+nngetr4  \
+nngetr8  \
+nngetu8  \
+nngetul  \
+nnput    \
+nnputi2  \
+nnputi4  \
+nnputi8  \
+nnputil  \
+nnputiz  \
+nnputr4  \
+nnputr8  \
+nnputu8  \
+nnputul  \
+nxtupush \
+stattmr  \
+wmax     \
+wsum
+
+# Object files for PAR0 (parallel host) nodes:
+MPIHOST_OBJ := $(MPIT_OBJ) \
+allocpc  \
+allocpcv \
+allocpm  \
+allocpmv \
+allocpr  \
+allocprv \
+chngpool \
+freep    \
+freepv   \
+mpitvers
+
+# Compilation flags
+CC := mpicc
+CFLAGS := -g
+CFLGS := $(CFLAGS) -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code -pthread -m64
+SVNV := $(shell gnrversn)
+DDEFS := PCLUX64 _ISOC99_SOURCE USE_MPI SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+.SUFFIXES:
+.SUFFIXES: .c .d .o
+
+# PAR0TOOLS - Tools for the PAR0 (head) node
+OBJ = $(MPIHOST_OBJ)
+DEFS = $(DDEFS) PAR PAR0
+
+.PHONY: PAR0TOOLS
+
+P0stuff: PAR0TOOLS andmsg mfsr
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+#Compile for mpi Linux
+$(DIR)/%.o:   %.c $(DIR)/%.d mak64P0
+	$(CC) $(CFLGS) $(DEFS:%=-D%) $(INC:%=-I%) -c $<
+	mv $*.o $(DIR)
+
+# Make PAR0TOOLS
+PAR0TOOLS:	$(OBJ:%=$(DIR)/%.o)
+	ar r lib$(LN).a $(OBJ:%=$(DIR)/%.o)
+	ranlib lib$(LN).a
+	mv lib$(LN).a $(LD)
+
+# Make andmsg
+andmsg:	$(DIR)/andmsg.o $(LD)/libmpitP0.a $(LD)/libcrk.a mak64P0
+	$(CC) -g -o $@ $(DIR)/andmsg.o $(LD)/libmpitP0.a $(LD)/libcrk.a
+	cp $@ $(LCLHOME)/bin
+
+# Make mfsr
+mfsr:	$(DIR)/mfsr.o $(LD)/libmpitP0.a $(LD)/libcrk.a mak64P0
+	$(CC) -g -o $@ $(DIR)/mfsr.o $(LD)/libmpitP0.a $(LD)/libcrk.a
+	cp $@ $(LCLHOME)/bin
+
+clean:
+	rm -f $(DIR)/*.[od] $(LD)/lib$(LN).a
+
+include $(OBJ:%=$(DIR)/%.d)
+

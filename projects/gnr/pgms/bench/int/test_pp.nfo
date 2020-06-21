@@ -1,0 +1,20 @@
+MVP PP ANSI C Optimizer    Version 1.10
+Copyright (c) 1993-1995    Texas Instruments Incorporated 
+
+
+		======File-level Optimization Summary======
+
+
+extern void int_handler() is called from 0 sites in this file
+    It calls these functions:
+	<NONE>
+
+extern void test_pp() is called from 0 sites in this file
+    It calls these functions:
+	memset()
+
+>>>> WARNING - Function is not called and will not be compiled: test_pp()
+
+These external functions are called but not defined here:
+	memset()
+

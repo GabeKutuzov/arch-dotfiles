@@ -1,0 +1,410 @@
+# (c) Copyright 1999-2018, The Rockefeller University *11224* 
+# $Id: makmac64 68 2018-08-15 19:33:46Z  $
+########################################################################
+#          Make file for ROCKS library - Mac 64-bit version            #
+#                                                                      #
+# Note that the "verbose" allocation routines mallocv, callocv,        #
+# reallocv, and freev must be provided on all systems.  On systems     #
+# where cryout() is not available, the user must provide versions      #
+# of abexit(), etc. to intercept error messages.                       #
+#                                                                      #
+########################################################################
+# Rev, 04/18/99, GNR - New version for PCLINUX (GNU make)              #
+# Rev, 02/19/16, GNR - Version for MacOS derived from maklux64         #
+# Rev, 03/02/16, GNR - Add {bem|lem}{fm|to}[iu]l family for long|ulng  #
+# Rev, 03/29/16, GNR - Add dbgout, [iyz]mulup, udevwskp                #
+# Rev, 05/13/16, GNR - Add ja[su]lo[de], jauz[de]                      #
+# Rev, 10/21/16, GNR - Add wbcdwtPn, bcdoutPn                          #
+# Rev, 08/28/17, GNR - Add dmrswwqd, dmrswwqe, 10/07/17 envout         #
+# Rev, 10/30/17, GNR - Add jsrr[su]j, 02/21/18 mrsrsl                  #
+# Rev, 08/31/18, GNR - Add dsrswjqd, dsrswjqe                          #
+########################################################################
+
+#----------------------------------------------------------------------#
+#                         MUY IMPORTANTE !!!                           #
+#                                                                      #
+#   The macro LIBDIR defines the parent directory for user libraries.  #
+#   There should be a subdirectory under LIBDIR for each architecture  #
+#   (e.g. pclinux, sparc, etc.) for which libraries are to be built.   #
+#   The LL macro should point to the specific subdirectory for the     #
+#   current build.                                                     #
+#                                                                      #
+#----------------------------------------------------------------------#
+
+LIBDIR	= $(HOME)/lib
+INC	 = $(HOME)/include
+
+# Linux common pathnames
+DIR := macos64
+LL  := $(LIBDIR)/$(DIR)
+
+# Object code to be included in ROCKS library:
+
+FILES_NOIO = \
+amssw   \
+amsswd  \
+amsswe  \
+amsuw   \
+amsuwd  \
+amsuwe  \
+amuwwd  \
+amuwwe  \
+bcdout  \
+bcdoutPn \
+bemfmi8 \
+bemfmil \
+bemfmr4 \
+bemfmr8 \
+bemfmu8 \
+bemfmul \
+bemtoi8 \
+bemtoild \
+bemtoile \
+bemtor4 \
+bemtor8 \
+bemtou8 \
+bemtould \
+bemtoule \
+bessi0  \
+bitcnt  \
+bitior  \
+bitpack \
+bitpkg  \
+bitszs32 \
+bitszsw \
+bitszu32 \
+bitszuw \
+bytpkg  \
+callocv \
+cntrl   \
+crkvers \
+dbl2swd \
+dbl2swe \
+dbl2uwd \
+dbl2uwe \
+dmfsd   \
+dmrswjwd \
+dmrswjwe \
+dmrswwqd \
+dmrswwqe \
+drswq   \
+dsinv   \
+dsrsjqd \
+dsrsjqe \
+dsrswjqd \
+dsrswjqe \
+dsrswq  \
+dsrswqd \
+dsrswqe \
+dsrswwjd \
+dsrswwje \
+dsrswwqd \
+dsrswwqe \
+dsruwq  \
+dsruwqd \
+dsruwqe \
+dsruwwjd \
+dsruwwje \
+dsruwwqd \
+dsruwwqe \
+e64set  \
+freev   \
+getprime \
+hashtbl  \
+ibcdwt   \
+imulup   \
+ilstitct \
+ilstiter \
+ilstsrch \
+itercirc \
+itercyl  \
+iterepgf \
+iterpgfg \
+iterpoly \
+iterrect \
+iterroi  \
+itersect \
+itershl  \
+itershl2 \
+itersph  \
+itertape \
+jacobi  \
+jasld   \
+jasle   \
+jaslod  \
+jasloe  \
+jaswd   \
+jaswe   \
+jauld   \
+jaule   \
+jaulod  \
+jauloe  \
+jauwd   \
+jauwe   \
+jauzd   \
+jauze   \
+jdswb   \
+jdswbd  \
+jdswbe  \
+jdswqd  \
+jdswqe  \
+jduwb   \
+jduwqd  \
+jduwqe  \
+jmsld   \
+jmsle   \
+jmuld   \
+jmule   \
+jmuwb   \
+jmuwjd  \
+jmuwje  \
+jmuwwd  \
+jmuwwe  \
+jmuzjd  \
+jmuzje  \
+jnswd   \
+jnswe   \
+jrsld   \
+jrsle   \
+jrswd   \
+jrswe   \
+jruld   \
+jrule   \
+jruwd   \
+jruwe   \
+jslswd  \
+jslswe  \
+jsluwd  \
+jsluwe  \
+jsrrsj  \
+jsrruj  \
+jsrrsw  \
+jsrruw  \
+jssw    \
+jsswd   \
+jsswe   \
+jsuw    \
+jsuwd   \
+jsuwe   \
+lemfmi8 \
+lemfmil \
+lemfmr4 \
+lemfmr8 \
+lemfmu8 \
+lemfmul \
+lemtoi8 \
+lemtoild \
+lemtoile \
+lemtor4 \
+lemtor8 \
+lemtou8 \
+lemtould \
+lemtoule \
+lmulup  \
+mallocv \
+mlsswjd \
+mlsswje \
+mlsuwjd \
+mlsuwje \
+mrsrsl  \
+mrsrsld \
+mrsrsle \
+mrsrswd \
+mrsrswe \
+mrsrswj \
+mrsrul  \
+mrsruld \
+mrsrule \
+mrsruwd \
+mrsruwe \
+mrsruwj \
+mrssld  \
+mrssle  \
+mrsswd  \
+mrsswe  \
+mrsuld  \
+mrsule  \
+mrsuwd  \
+mrsuwe  \
+nwdev   \
+nwdevd  \
+nwdevf  \
+nwdevi  \
+nwdevs  \
+nwndev  \
+nwndevd \
+nwndevf \
+qwhite  \
+rand    \
+rannor  \
+rannum  \
+reallocv \
+rerfc   \
+rksleep \
+rktext  \
+shsortus \
+sibcdin  \
+si16perm \
+si32perm \
+sort     \
+sort2    \
+ssmatch  \
+ssprintf \
+strncpy0 \
+strnlen \
+swlod   \
+swloe   \
+sw2ld   \
+sw2le   \
+tstamp  \
+udevskip \
+udevwskp \
+ui32powd \
+ui32powe \
+umulup \
+uwlod  \
+uwloe  \
+uw2ld  \
+uw2le  \
+vdivl  \
+wbcdwt \
+wbcdwtPn \
+wdev   \
+wdevd  \
+wdevf  \
+wdevi  \
+wdevs  \
+wdevskip \
+wndev  \
+wndevd \
+wndevf \
+wntype \
+ymulup \
+zmulup
+
+OTHERFILES = \
+abexit  \
+abexitm \
+abexitme \
+abexitmq \
+abexitq \
+bcdin   \
+cdscan  \
+convrt  \
+cryin   \
+cryout  \
+dbgout  \
+dvalck  \
+envin   \
+envout  \
+ermark  \
+fvalck  \
+getmyip \
+ibcdin  \
+ilstread \
+ivalck  \
+jfind   \
+kwscan  \
+match   \
+mcodes  \
+mcodprt \
+muscan  \
+nelmeadf \
+nelmeadd \
+nmitrnaf \
+nmitrnad \
+nmitrsaf \
+nmitrsad \
+pxq     \
+qonlin  \
+rfallo  \
+rfclose \
+rfdups  \
+rfflush \
+rfopen  \
+rfqsame \
+rfread  \
+rfseek  \
+rftell  \
+rfwrite \
+rfri2   \
+rfri4   \
+rfri8   \
+rfru8   \
+rfrr4   \
+rfrr8   \
+rfwi2   \
+rfwi4   \
+rfwi8   \
+rfwu8   \
+rfwr4   \
+rfwr8   \
+second  \
+smatch  \
+sprmpt  \
+ubcdin  \
+uvalck  \
+valck   \
+vckmsg  \
+wbcdin  \
+wseedin \
+wseedout \
+wvalck
+#pxq     \
+
+# Assembly language files--sometimes need underscore, sometimes not
+
+ASMFILES = \
+#_dm64nb \
+#_ds64nq \
+#_jm64nb \
+#_jm64sb \
+#_jm64sh \
+#_jm64sl \
+#_ndev   \
+#_udev
+
+# The following are currently macros in all comps
+# dm64nb, dm64nq, ds64nq, jm64nh, jm64sh, jm64sl, dm64nr (HAS_I64 only)
+ASMNULFILES = \
+jm64nb \
+jm64sb \
+ndev   \
+udev
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+# Target dependent macro definitions:
+CC := gcc
+CFLAGS := -m64 -g -O2 -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS :=	MACOS64 _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+FILES := $(FILES_NOIO) $(OTHERFILES) $(ASMNULFILES)
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(CPPFLAGS) -I$(INC) $< \
+	| sed '\''s/^\(.*\)\.o[ :]*/$(DIR)\/\1.o $(DIR)\/\1\.d : /g'\'' > $@; \
+	[ -s $@ ] || rm -f $@'
+
+# Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d makmac64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+.PHONY : macos64 depend
+macos64:   $(LL)/libcrk.a
+depend:	   $(FILES:%=$(DIR)/%.d)
+
+$(LL)/libcrk.a:	$(FILES:%=$(DIR)/%.o)
+	ar r libcrk.a $(FILES:%=$(DIR)/%.o)
+	ranlib libcrk.a
+	mv libcrk.a $(LL)
+
+clean:
+	rm -f $(DIR)/*.o $(LL)/libcrk.a
+
+-include $(FILES:%=$(DIR)/%.d)

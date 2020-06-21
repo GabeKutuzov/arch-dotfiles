@@ -1,0 +1,1963 @@
+0
+$Id: errtab 68 2018-08-15 19:33:46Z  $
+This is a table of all the abexit error codes for all routines
+developed in the G. Reeke laboratory at The Rockefeller University.
+The format of the errtab is the following:
+The first line    ->(column 0)<error number>(space)<program name>(\n)
+Remaining lines   -><description of the error>
+The program name is terminated by a comma or blank--use slash to list
+more than one program.  The description is terminated by a line that
+begins with a digit (the next error code).
+Lines beginning with '#' are comments.
+001  IHCFIOSH (Obsolete)
+Unable to open error message unit.
+002  IHCIBCOM (Obsolete)
+Attempt to use object-time format.
+003  RFREAD/RFSEEK
+Read error on input file.
+004  RFSEEK
+Error attempting to perform file seek.
+005  RFWRITE
+Write error on output file.
+006  BDAMIO
+Output skip exceeds buffer length.
+007  QSAMIO
+RECFM in SETAUT call incompatible with DD card.
+008  IPCMD/NPCMD
+Attempt to execute CP/CMS command in MVS.
+009  PAUSQ
+Unable to install PX as CMS immediate command.
+010  E64SET/NDRFLW
+Argument to e64set() is not one of the specified constants, or an
+attempt was made to push down more than 4 (plus default) states of
+the arithmetic overflow handling system, or a specific termination
+action was requested but a necessary pointer needed to perform that
+action had not been stored.
+011  CONVRT
+Format does not begin with left parenthesis.
+012  CONVRT/EQSCAN/INFORM/KWSCAN
+Invalid or unrecognized format code.
+013  CONVRT
+End of I/O list picking up data or T, R, or # parameter or
+an array dimension or brackets were encountered before a
+previously specified array had been fully processed.
+014  CONVRT
+Digit not found when required in format, or a number in a format
+was outside acceptable bounds, for example, an 'iexit' error
+code outside the range 1 <= iexit <= 8.
+015  CONVRT
+Input-only function on output or vice-versa, or trying to read
+a wide (one or two integers) random number seed from input that
+is not scanned (has fortran-style input format).
+016  CONVRT
+Number of characters in line exceeds 132.
+017  CONVRT
+Negative repeat count picked up from I/O list.
+018  CONVRT
+Attempted I/O from sconvrt or sinform.
+019  CONVRT
+Unmatched quotes or parens or square brackets in a conversion
+format, or parens and brackets are intermixed.
+020  CONVRT/NUMBER
+Invalid decimal or binary point specification.
+021  MUSCAN
+The default unit specification starts with an unknown multiplier.
+022  CDSCAN
+Begin column is beyond end of card.
+024  EQSCAN/KWSCAN
+Digit not found when required in action code.
+025  MCODES/MCODPRT
+More than 32 keys or codes.
+026  MATCH
+Invalid iscn code.
+027  NNCOM
+A received message contained fewer bytes than required to
+read one complete base-type object.
+028  HOSTNIO
+Unsupported node communication function called.  One example would
+be trying to combine floating point values by an OR operation across
+nodes in a parallel computer.
+029  NNCOM
+An unrecognized type code was encountered while converting data
+formats for transmission between processors.
+030  ACORE/ANGETPV
+Incorrect item length or zero items for memory allocation, or
+requested memory was not available.
+031  FREEP/FREEPV/ANRELPV/FCORE
+Attempt to free a memory area that was not allocated to this
+program or not allocated in the same memory class.
+032  MALLOCV/CALLOCV/REALLOCV/ALLOCPMV/ALLOCPCV/ALLOCPRV
+Unable to allocate requested dynamic memory.
+033  REALLOCV/ALLOCPR/ALLOCPRV/WHATPOOL
+Attempt to reallocate or determine the pool of a memory area
+that was not allocated to the program.
+034  ALLOCPM/ALLOCPC/ALLOCPR/FREEP
+Attempt to allocate or free shared memory on a comp node.
+This error indicates that routines from the allocp family were
+incorrectly compiled, linked, and called on a comp node.  The
+program should be changed to make all calls to these routines
+from the host program.
+035  ALLOCPM/ALLOCPC/ALLOCPR/FREEP
+Memory pool specification is not valid.
+036  ALLOCPM/ALLOCPC/ALLOCPR/FREEP
+Allocation change in StaticTree after first broadcast.
+037  MEMBCST
+On a parallel computer, indicates that there was not enough memory
+on some computational node to contain all the memory allocated on
+the host as shared memory, either initially or during an attempt to
+recover from memory fragmentation by reallocating all shared memory.
+038  MEMBCST/CHNGPOOL
+During a shared memory broadcast or an attempt to move a memory block
+to a different memory pool, an mblkdef control block had an operation
+code that should never occur at this point.  This situation is due to
+a programming error in the memory management routines and should be
+reported to G.N. Reeke for correction.
+039  MEMBCST
+An attempt was made to translate a host pointer to node address
+space, but the corresponding memory block does not exist on the node.
+The most likely cause of this problem is that a union conversion
+routine incorrectly determined the current state of a union, and
+a variable that was treated as a pointer was actually something else.
+040  IBCDWT/UBCDWT/WBCDWT/CKVADJ
+Invalid parameters given to decimal output or adjustment routine.
+Hexadecimal or octal output specified a decimal or binary scale
+parameter.
+041  WBCDWT
+A program requested hexadecimal output with the full width of
+the variable type, but the width provided was insufficient.
+042  KWSCAN/EQSCAN
+Application was reading user input text.  The variable used to hold
+a locator for this text was not large enough to contain locators for
+all the text inputs encountered.  Please report this problem to G.N.
+Reeke for correction.  Workaround:  Use fewer than 255 (or 65535)
+unique input text strings in your application if possible.
+043  KWSCAN/INFORM
+Program attempted to invoke an application-specific conversion
+routine, but no routine was registered.  Please report this problem
+to G.N. Reeke for correction.
+044  KWSREG
+An attempt was made to register an input conversion routine outside
+the range of 10 allowed registrations.  Please report this problem
+to G.N. Reeke for correction.
+045  GENERIC
+Can not read pipe.
+046  GENERIC
+Can not write to pipe.
+047  NNPUTP/NNPSK
+Attempted to write a contiguous block longer than the
+maximum message length or the reserved buffer length.
+048  ANREAD/ANTEST/MPI_Recv
+Error reading a message from another node.  On MPI systems, if
+text output is available, a message will be produced giving the
+numeric MPI error code.
+049  ANWRITE/MPI_Send
+Error transmitting a message to another node.  On MPI systems, if
+text output is available, a message will be produced giving the
+numeric MPI error code.
+050  CRYOUT
+Subtitle too long.
+051  CRYOUT
+Incorrect subtitle code.
+052  CRYOUT/RFQSAME
+Attempt to access an I/O device that does not exist
+or was not opened.
+055  SIBCDIN
+Attempt to input from NULL field or
+invalid number base specification.
+056  SIBCDIN
+Nonnumeric character found in numeric field.
+057  SIBCDIN, SHSORTUS, MDKS
+Invalid numeric value (negative or zero not allowed here).
+058  SSPRINTF
+Length specification missing in output format.
+059  SSPRINTF
+Format code was not s,d,m,p,P,x, or X.
+060  CRYIN
+Control card record longer than 80 characters.
+062  CRYIN
+Unable to allocate card file control block or buffer.
+063  CRYIN
+Unable to allocate requested space for symbols.
+064  CRYIN
+Syntax error on EXECUTE or DEFAULTS card.
+065  PARMQ
+More than 79 columns of parameter data.
+066  RKSLEEP
+System returned error state on attempt to sleep.
+067  ITERRECT/ITERCIRC/etc.
+A parameter to a geometrical lattice iteration routine was invalid
+(for example, negative size of a rectangle, or a lattice was so
+large that rounding errors would be excessive).
+068  ITERPOLY/ITERPGFG/ITEREPGF
+A vertex of a polygon that was to be filled (or its complement
+filled) is located outside the space in which the object is to
+be placed.  This space comprises a specified rectangle and a
+margin zone around the rectangle of equal height and width in
+all directions.
+Alternatively, a call was made to a routine that is used to
+find all the points inside a (mostly-) convex polygon, but the
+polygon was either degenerate or had concavities that would
+cause generation of points outside the polygon.
+069  E64ACT
+An arithmetic overflow was detected and the application had
+specified that termination should take place for this error.
+070  UDEVSKIP/WDEVSKIP
+Count argument to random number skip routine is negative or
+exceeds 2**31 in 32-bit, 2**48 in 64-bit systems.
+071  RANNUM/RANNOR
+Zero or negative count argument.
+072  JDSW/JDUW/etc.
+Attempted division by zero.
+073  JDSW/JDUW/etc.
+Division quotient overflowed size of long integer.
+074  DSRSWWQE/DSRUWWQE,JSRRSW, etc.
+A fixed-point variable was to be shifted left or right, but the
+shift shift exceeded the max for which the code was written or
+was zero.
+075  DSRSWQ/DSRUWQ
+A left shift operation overflowed while preparing for 64-bit
+division.  This error cannot be masked off by the program.
+076  UI32POW
+A fixed-point value taken to an integer power overflowed the
+size (32-bits) allocated to hold the result.
+077  IMULUP/LMULUP/UMULUP/YMULUP/ZMULUP
+An attempt was made to find a value which is a multiple of
+some base value and that is greater than or equal to some other
+value, and either the base was zero or the result overflowed.
+078  GETPRIME
+An attempt was made to get a prime integer greater than or equal
+to some specified value, but no such prime exists that can be
+represented by an unsigned long integer.  This error most likely
+indicates that a hash table is too large to store in the avail-
+able RAM memory.  If in a 32-bit environment, consider using a
+ 64-bit version of the application.
+079  SI32PERM
+An attempt was made to generate a permuation of a sequence of
+integers, but the size of the permutation was less than 2.
+080  RMBF10
+Negative arguement to I1(x)/I0(x) function.
+081  ILSTREAD
+Invalid default mode argument to ilstread().  Application
+program logic error.
+082  ILSTREAD
+Attempted to delete more items from an iteration list than
+were contained in the list.  Program logic error.
+083  ILSTREAD
+Attempted to add items to an empty list.  Program logic error.
+084  ILSTCHK
+Array size for iteration exceeds 1,073,741,823.  Iteration list
+processing routines must be rewritten to handle arrays this large.
+085  NMALLO
+The program attempted to use Nelder-Mead optimization on a problem
+of two or fewer dimensions.  This procedure requires at minimum a
+three-dimensional problem.
+086  NNCOM/MPITOOLS
+The length of an interprocessor message to be sent or received
+was calculated to be longer than the size of the largest 32-bit
+integer, which is the largest allowed message length on this system.
+Problem coding error.
+087  SW2LE/UW2LE
+A routine was called to shorten a 64-bit integer to a 32-bit long,
+but a long is 64 bits on this machine.  This must be a link-time
+error, probably caused by an error in a makefile.
+088  BITPACK/BITUNPK
+The number of bits requested to be stored in or retrieved from a
+packed bit-string array exceeded the length of that array.
+089  SETBPACK/SETBUNPK
+An attempt was made to initiate storage of packed bit-string
+data beyond the end of the space allocated.
+091  NCINFO (Obsolete FSETUP definition removed, 06/28/16)
+A node on a a parallel program while starting up was unable to
+obtain its node number (rank) or other information about the
+cluster.
+092  NNCOM
+A message was received on a compute node containing 64-bit long
+integer data, but on this node a long has room for only 32 bits
+and the value of the number exceeded 32-bits.
+093  GETTXT
+An attempt was made to retrieve text using the given
+text locator, but that text was not found in the cache.
+094  HASHDEL
+Tried to delete an item from a hash table that was not there.
+095  HASHINIT
+While attempting to create a hash table, the hashinit routine found
+that the location of hash keys or hash links within a user data
+structure was beyond the first 65536 bytes.  Program logic error.
+096  CRYMPLOT/SETMF
+Attempt to plot before initialization call has been executed.
+097  RFCLOSE
+Unable to close file.
+098  RFALLO
+Unable to allocate space for file information or
+obtain a socket for a network file.
+Reason codes are as follows:
+Error 1: Unable to allocate space for RFdef block.
+Error 2: Unable to allocate space for file name.
+Error 3: Could not obtain or connect to a socket.
+Error 4: Trying to listen to a socket,
+         but socket number not given.
+Error 5: Could not bind port to socket.
+Error 6: Listen call on specified port failed.
+Error 7: Sockets not supported on non-UNIX systems.
+Error 8:
+099  RFOPEN
+Unable to open a file.  Reason codes are as follows:
+Error 1: No RFdef file definition block specified.
+Error 2: File was already open, error closing it.
+Error 3: Attempt to change access method of existing file.
+Error 4: Could not allocate buffer space.
+Error 5: Attempt to change host name specified in rfallo() call.
+Error 6: Could not allocate storage for host name.
+Error 7: Could not obtain name of current host.
+Error 8: Attempt to change socket specified in rfallo() call
+         or valid socket number not specified.
+Error 9: Could not obtain IP address of specified host.
+Error 10: Could not connect to specified host.
+Error 11: accept() call on specified socket failed.
+Error 12: Socket communication not supported on non-UNIX host.
+Error 13: System open call failed.
+Error 14: System fdopen call failed.
+Error 15: System fopen call failed.
+Error 16: Access method not specified in rfallo or rfopen or
+          was specified in rfallo but as deferred in rfopen.
+Error 17: Attempt to create a uniquely named temporary file
+          failed.
+Error 18: Attempt to unlink a temporary file failed.
+100  ABEXIT
+Under UNIX, a termination code greater than 255 was issued.
+The operating system cannot recognize a code this large.
+The code was printed and code 100 returned to the system.
+101  BBD-client-application
+A network simulation (CNS) terminated normally, possibly as
+a result of user action, and signalled the BBD client that it
+should terminate.
+102  Application
+A subprocess terminated for one of the following reasons:
+--It stopped because it received a signal, such as a kill signal,
+that it was not prepared to handle.
+--A Matlab mex file terminated with an error and a further error 
+occurred while attempting to display the termination message for
+the first error.
+--The Matlab error handling routine returned without terminating
+the Matlab script.
+--An MPI parallel program attempted to perform an abnormal exit
+but a signal sent from the node where the error occurred to the
+host node was not delivered.  Most likely this would be because
+the hos node process had already terminated.
+103  Application
+Unexpected end-of-file encountered while copying user data
+on termination of application.
+104  Application
+Error detected by FORTRAN or C library routine while attempting
+to copy a data tape, close files, or perform other termination
+actions designed to preserve user data.
+105  Application
+This code is used by a subprocess to indicate to its parent that
+it has terminated for some reason that is neither an error nor a
+normal termination, but rather some understood contingency that
+the parent application is prepared to deal with.  If this code
+ever occurs as an abexit error, there is a coding error in the
+application that should be brought to the attention of the author.
+106  Application
+An error was detected by a main program or by a library routine
+and an ERROR DUMP REQUESTED card had been read.
+Note:  In UNIX, Linux, and similar systems, error dumps may be
+implemented in a manner that does not return an exit code.
+107  Application
+Arithmetic interrupt occurred and a dump was requested.
+Note:  In UNIX, Linux, and similar systems, error dumps may be
+implemented in a manner that does not return an exit code.
+108  DBGOUT, ENVOUT, ENVIN
+The dbgout orenvout routine was called to divert standard output
+to a file, or envin was called to divert standard input from a
+file, but no path argument was given or the given path name was
+of length 0 or 1, or memory could not be allocated to copy the
+path name.
+109  RFALLO
+Program was attempting to bind to an internet socket but
+the specified port number was already in use.  You can use
+'lsof -i :10003' [or whatever port you are using] to find
+out what program is listening on the port.  Let that program
+complete, or kill it if it is not doing anything useful, and
+try the run again.
+110  SSMATCH
+A key contained more than one period--only one prefix is allowed.
+111  GETVALCK
+A numeric parameter for a range value check was longer than 16
+characters.
+112  GETVALCK
+A range check specified both '<' and '<=' or '>' and '>=' tests.
+113  UVALCK
+A range check on an unsigned value specified a maximum or
+minimum of 0.  The first is impossible, the second is redundant.
+114  IVCKMSG0
+An invalid error code was passed to a routine that was supposed
+to print an error message for an invalid value of input variable.
+115  GETMYIP
+The program called function 'getmyip' to determine the (or an) IP
+address for the system.  The error occurred as 'getmyip' tried to
+run the system utility 'ifconfig' in a subprocess.  Either an
+attempt to create, renumber, or close a pipe failed, or an attempt
+to fork a subprocess failed, or the subprocess was unable to find
+or to execute 'infconfig'.  The last of these is most likely.
+116  GETMYIP
+The program called function 'getmyip' to determine the (or an) IP
+address for the system.  'getmyip' ran the system utility 'ifconfig'
+in a subprocess.  Either a system error occurred while waiting for
+'ifconfig' to terminate, or 'ifconfig' terminated with a nonzero
+return code, indicating an error.
+117  GETMYIP
+The program called function 'getmyip' to determine the (or an) IP
+address for the system.  'getmyip' ran the system utility 'ifconfig'
+in a subprocess.  The error occurred while trying to read the
+results returned by 'ifconfig'.  Either the pipe file written by
+'ifconfig' could not be opened, or it could not be read, or it did
+not contain at least two lines.
+118  GETMYIP
+The program called function 'getmyip' to determine the (or an) IP
+address for the system.  'getmyip' ran the system utility 'ifconfig'
+in a subprocess.  'ifconfig' returned a result that was not in the
+expected format.  For example, the IP address was not terminated by
+a blank character, or it was longer than the 19 character maximum
+expected for an address of the form "xxx.xxx.xxx.xxx".
+119  MUSCAN
+The program called function 'muscan' to interpret user-entered
+metric units and an attempt was made to apply a binary scale that
+was outside the programmed range 0 - 63.  Program coding error.
+# 120-132 TURTLE graph tracing package
+120  TURTINIT/HARRINIT
+A parameter to the turtinit() or harrinit() function was out of
+range.  The accompanying message should indicate the cause, for
+example, image size in x or y direction exceeds 65535, a specified
+cosine or curvature value exceeds 1.0, or a length value is negative
+or greater than the size of the image.
+121  TURTLE/HARROW
+A call was made to a routine in the "turtle" image tracing package,
+but the required TRTL common data block was invalid or damaged.
+122  TGLIST
+While listing the results of an image trace, the number of lines
+or junctions or strip density blocks found in the data structure
+did not match the count provided by the trace routine.  This
+represents a coding error.
+123  TURTLE
+A line or junction had no pixels.  This represents a coding error.
+124  TURTLE
+No line node for point assigned that line number.
+Line node can't be found when trying to delete that line.
+This represents a coding error.
+125  TURTLE/ELIANAL
+User error:  elianal() was called after harrow(), but this cannot
+work because harrow() destroys information in the TRTL block that
+is needed by elianal().  Fix:  Call elianal() before harrow().
+Internal error:  A function was called, but some items in the
+TRTL common block were not set up appropriately for that function.
+Either a call was made to disambiguate points or to generate
+junctions, but no TGRAPH had been created; or on entry to the
+disambiguation routine, the number of ambiguous points found
+in the image did not match the count in the TRTL common area;
+or an attempt was made to free up a list of pixels, but the
+pointer to the end of the list was NULL.
+126  TURTLE/HARROW
+Too many lines or junctions or divisions of a "harrow" scan.
+The number of lines or junctions generated by a trace exceeded
+the maximum allowed by the type definitions in the program
+(currently 65535) or else the number of divisions of a single
+harrow scan exceeded 255.
+127  TRACE
+A table of which pixels belong to which lines was found to be
+inconsistent with the image pixel assignment array.
+128  TMEXxxxx/HMEXxxxx
+A call to a Matlab mex-function version of one of the "turtle"
+or "harrow" image analysis routines had an incorrect number or
+types of arguments.  The error message should indicate the exact
+cause.
+129  TURTMEX
+An error occurred creating or accessing a semaphore used by the
+Matlab mex-function interface to the "turtle" image analysis
+routines.  The error message should indicate the exact cause.
+130  TURTMEX
+Two calls were made to tmexinit to initialize Matlab use of the
+"turtle" graph analysis package without an intervening tmexclse
+call (or 'clear mex' on the command line in case a script did not
+finish).  The interface to Matlab exit cleanup is not written to
+handle two independent TRTLComm structures.  If it is not possible
+to write the Matlab script to use only one common graph analyusis
+setup, contact the author to remove this restriction.
+131  HARROW
+A pixel above cutoff was located, but when an attempt to begin a
+harrow scan at that point, code indicated that the pixel was
+out-of-bounds.  This can only be a coding error.
+132  TFEAVEC
+Graph features based on ELI distribution were requested, but ELI
+values were not computed for this graph.
+133  BBDCEXSI
+Either an attempt was made to store more than one control card
+to be passed to a CNS server, or bbdcexsi() was called after
+bbdcinit().
+134  BBDCMEX
+An error occurred using a POSIX semaphore to coordinate
+execution of the bbdcminp and bbdcmlog subprocesses with
+the main Matlab process.  Please contact GNR.
+# 135-139 BBD server
+135  BBDSEVNT
+An attempt to check whether data were available on a socket
+from a BBD client gave a system error--details are in message
+text if available.
+136  BBDSREGE/BBDSREGS/BBDSREGT/BBDSREGV
+A parameter from CNS being used to establish a link to a BBD
+is outside the valid ranger for that parameter.
+137  BBDSFHNM
+CNS is running as a BBD server, but it did not receive the
+IP address and port for communicating with the BBD.
+138  BBDSFHNM
+A port number specified for a BBD client contained a
+nonnumeric character.
+139  BBDSCHK/BBDSGETS/BBDSGETT/BBDSGETV
+Incorrect confirmation data was received from the BBD client.
+# 140-150 BBD client
+140  BBDCINIT
+The network process (CNS) terminated.  The CNS termination
+code is given in the text for this message.
+141  BBDCINIT
+Unable to create a socket to invoke CNS.
+142  BBDCINIT
+Unable to locate IP address for given CNS host or unable
+to open a connection to the CNS server.
+143  BBDCINIT
+Unable to open specified log file for CNS output or to fork a
+process to maintin the log.
+144  BBDCINIT
+Unable to install a termination signal handler for the log process,
+error receiving log data from CNS, error writing to the log, or
+error closing the log file on BBD termination.
+145  BBDCINIT
+Error while sending CNS control file to CNS server from a vBBD.
+146  BBDCREGE/BBDCREGS/BBDCREGT/BBDCREGV
+A parameter being passed from a BBD to CNS is outside the valid
+range for that parameter.
+147  BBDCCHK
+An error occurred while checking the configuration with the
+neural network simulator.  Either configuration data could not
+be read at all, or was read and disagreed with BBD configuration.
+148  BBDCGET/BBDCPUT
+An error occurred while the BBD was exchanging data with the
+neural system server.  Either a protocol control integer did
+not have the expected value, a zero-length message was received
+from the server, or an I/O error occurred on the socket.
+149  BBDMEX
+A Matlab program using the bbdmex interface to run CNS as a
+BBD client passed an incorrect number or type of arguments to
+the bbdmex routine.
+150  BBDCINIT (MAX OS)
+bbdcinit was unable to locate the home directory of the user.
+It is expected that the executables for the bbdcminp and bbdcmlog
+processes are located in ${HOME}/bin.
+151  DUMPGMF
+Either too few or too many command-line parameters were provided.
+152  DUMPGMF
+An unrecognized command-line switch was entered.  (If the name of
+the input file begins with a minus sign, enter a minus sign and a
+single space before it to prevent interpretation as an option switch.)
+153  DUMPGMF
+More than one apparent file name was entered on the command line.
+154  DUMPGMF
+The name of the graphics metafile to be dumped must be entered.
+155  DUMPGMF
+The file does not have "PLOTDATA V1C" in the header.
+156  RNGRINIT
+A range-finder parameter is outside the allowe range or
+incompatible with the specified bitmap.  The specific cause
+is given in the error message.
+157  RNGRGET
+An error occurred attempting to sense virtual range-finder objects
+in a bitmap.  The specific cause is given in the error message.
+158  AZTVCCHK
+There is an incompatibility between the definition of a camera,
+its geometry, and the bitmap it is supposed to access.  The
+specific cause is given in the error message.
+159  AZTVINIT
+The opening angle of an rotating camera receptive field is
+less than 15 degrees, which probably is not what is intended.
+160  ENVLIM
+Asked to place or find bounds of nonexistent shape.
+161  WDW_NARB or WDW_NVWR
+A window in the environment had an invalid kchng specification.
+162  ENVCYC
+A computed object coordinate exceeded an internal program limit
+(32767 pixels in x or y).
+163  LIBPREP
+Error writing record in library file.
+165  CrkParse
+Invalid command-line parameters.  The correct syntax is:
+CrkParse [+r] [-r] [+e] [-e] filename
+166  CrkParse
+CrkParse received an invalid or unexpected prompt from
+the application that called it.
+167  CrkParse
+The level of nested parentheses on a control card exceeds the
+maximum that CrkParse was compiled for.  This can be increased
+without needing to change anything in the ROCKS library.
+168  NNPFL/NNGFL
+On a parallel computer, a call was made to broadcast a block
+of information from the host node to the comp nodes and the
+function MPI_Bcast returned the error code given in the message.
+169  ANTEST
+A call in a parallel program to test whether a particular
+message had been received from another node returned an error
+code.  If text error output is available, the specific error
+code will be printed.
+170  mffm
+Unable to allocate the amount of memory requested for frame
+data storage.
+171  mffm
+Attempt to append data to a frame before an mffm_store() call.
+172  mffm
+An error was returned by a semaphore operation.
+173  mffm
+Attempt to load data to or from a frame that has not been created.
+174  mffm
+Unable to release frames because oldest frame is locked.
+175  mffm
+The frame specified for storing data is not write-locked.
+176  mffm
+The frame specified for retrieving data is not read-locked.
+177  mffm
+An pointer argument was NULL or count or frame argument was <= 0.
+# 180-198 Codes for obsolete GAMPLOT package now allocated for
+# 180-197 CRK support of traditional printf(), etc. output.
+180  RKPRINTF/PRINTF/FPRINTF/RFPRINTF/SPRINTF/SNPRINTF
+A '%' code in an output format was unrecognized in context.
+181  RKPRINTF/PRINTF/FPRINTF/RFPRINTF/SPRINTF/SNPRINTF
+The length of an output buffer (internal or user-provided)
+was exceeded.
+182  RKPRINTF/PRINTF/FPRINTF/RFPRINTF/SPRINTF/SNPRINTF
+A negative count was picked up from the argument list by a '*'
+repeat code or a repeat count in the format overflowed (unlikely).
+183  RKPRINTF/PRINTF/FPRINTF/RFPRINTF/SPRINTF/SNPRINTF
+A zero repeat count was specified for a format string encolsed in
+parentheses or angle brackets.
+184  RKPRINTF/PRINTF/FPRINTF/RFPRINTF/SPRINTF/SNPRINTF
+An array dimension or brackets was specified in a format before
+a previous array had been fully processed.
+185  RKPRINTF/PRINTF/FPRINTF/RFPRINTF/SPRINTF/SNPRINTF
+A digit was found in a format where not allowed (viz. before
+'N','O','S','V','0','%%',';',')','>','~','#','&','-','+',' ','?' codes).
+186  RKPRINTF/PRINTF/FPRINTF/RFPRINTF/SPRINTF/SNPRINTF
+A digit was not found in a format where one is required (viz. before
+'b','B','R','r','T','Z','=','<','^','.' or '|' or '/' codes when used to
+delimit binary scales).
+187  RKPRINTF/PRINTF/FPRINTF/RFPRINTF/SPRINTF/SNPRINTF
+A number in a format was outside the acceptable range, e.g.
+'n' in '%nP' (priority) was outside the range 1 <= n <= 5, or
+'n' in '%n!' (error level) was outside 1 <= n <= 8, or
+'n' in '%nY' (spout count) was greater than 255, or
+'n' in '%nr' (repeat count) was 0, or
+a width was negative or greater than 32.
+188  RKPRINTF/PRINTF/FPRINTF/RFPRINTF/SPRINTF/SNPRINTF
+A string was being output with a '%s' format code within an
+indexing structure (angle brackets) and no width was specified.
+This is because different strings can have different lengths,
+but when indexing is used, all must be coerced to the same length.
+189  RKPRINTF/PRINTF/FPRINTF/RFPRINTF/SPRINTF/SNPRINTF
+A format code ('~') specified that an item should be skipped and
+replaced with blanks, but the width of the item was not specified.
+190  RKPRINTF/PRINTF/FPRINTF/RFPRINTF/SPRINTF/SNPRINTF
+A format code specified an incompatible length modifier,
+for example, 'jQ'.
+191  RKPRINTF/PRINTF/FPRINTF/RFPRINTF/SPRINTF/SNPRINTF
+A 'K' format was given to output option keys, but the end of the
+argument list was reached attempting to read the key string.
+198  VECOLLECT
+A negative data length was passed to the vector collect routine.
+This may have been left from an obsolete usage of this routine.
+199  IBCDWT/UBCDWT/WBCDWT
+An internal check error occurred in a decimal output routine.
+Please contact the author with details.
+# 200-208 COPPACK/COPUNPK
+200  COPPACK
+Program that gathers statistics requested concatenation of statistical
+blocks being collected to PAR0 node, but there was no previous block
+to join.
+201  COPPACK
+Program that gathers statistics requests repetition of an operation
+on an array, but the number of repeated operations was larger than
+the number of operations provided in the COPDEF list.
+202  COPPACK
+Program that gathers statistics encountered a repeat operation code
+while executing a series of repeats -- nesting is not implemented.
+203  COPPACK
+Data being gathered to PAR0 node were broken up into more than 1023
+separate blocks, a program memory limitation.  See author if this
+is really needed--seems very unlikely.
+204  COPPACK
+Program that gathers statistics found that data from different
+nodes at the same location were of different types.  Probable
+programming error, please report to the author.
+205  COPPACK
+Program that gathers statistics attempted to reuse or free a CPKDEF
+block that had already been freed by a call to copfree() 
+206  COPPACK
+The buffer size argument to coppini was too small for any practical
+use.  It should be an absolute minimum of 200 bytes.
+207  COPPACK
+An internode message being received as part of a statistics
+collection operation gave an error.  The error code is reported
+in the message.
+208  COPPACK
+An internode message being sent as part of a statistics
+collection operation gave an error.  The error code is reported
+in the message.
+209  MFSR
+The MFSR process, which gathers graphics commands from nodes on
+a parallel computer and passes them to mfdraw, terminated without
+a valid error code.  Probably a programming error, please report
+to the author.
+# 210-237 MFSR or plot startup traditional messages
+# (Use ranges 238-239 (exit) and 260-289 (abexit) for new msgs)
+210  PLOT_PKG
+Unable to allocate memory for metafile buffers, etc.
+211  PLOT_PKG
+Cannot identify host where graphics server resides.
+212  PLOT_PKG
+Cannot find HOME in environment.
+213  PLOT_PKG
+Error reading button message from graphics user interface (mfdraw).
+214  PLOT_PKG
+The buffer allocated for a plot metafile was too small to contain
+information that must be kept together, such as plotting state or
+one row of a bitmap.
+215  PLOT_PKG
+An error occurred while trying to read acknowledgement of a graphics
+frame from MFSR, the process that gathers graphics commands from
+nodes on a parallel computer and passes them to mfdraw.
+216  MFSR
+The MFSR process, which gathers graphics commands from nodes on
+a parallel computer and passes them to mfdraw, was not able to
+parse the startup message sent to it by the application.  This
+is probably a programming error, please report to the author.
+217  PLOT_PKG
+Overflow--a parameter to mfdraw (e.g. screen size, buffer length) is
+larger than the space allowed in the initialization message.
+218  PLOT_PKG
+The graphics library received from the graphics server more
+acknowledgements of frames received than the number of frames
+sent to the server.
+219  PLOT_PKG
+Error reading interprocessor message from graphics user
+interface program (mfdraw).
+220  PLOT_PKG
+Error, presumably in a graphics system call, returned to
+application from graphics interface server program (mfdraw).
+221  PLOT_PKG
+Error returned by select system call or MPI probe call attempting
+to determine whether an acknowledgment or button press information
+was received from the mfdraw or mfsr graphics server.
+222  PLOT_PKG
+Error writing socket to graphics user interface program (mfdraw).
+223  PLOT_PKG
+Error creating socket for writing graphics commands to
+graphics user interface program (mfdraw).
+224  PLOT_PKG
+Error opening graphics metafile.
+225  PLOT_PKG
+Error connecting socket to graphics user interface program (mfdraw).
+226  PLOT_PKG
+Error closing graphics metafile.
+227  PLOT_PKG
+Error writing to graphics metafile.
+228  PLOT_PKG
+Error closing socket to graphics user interface program (mfdraw).
+229  PLOT_PKG
+A program (mfsr or mfdraw) that was reading a metafile encountered an
+unsupported/undocumented format or instruction code.
+230  PLOT_PKG
+mfsr plot serializer process got an error trying to send an ack
+message to the host (PAR0) node, or the host node had an error
+reading an acknowledgement for graphics buffer sent to mfsr.
+231  MFSR
+mfsr process got an error trying to read a graphics command buffer
+from a node on a parallel computer.  The MPI error code is reported.
+232  MFWRITE,MFSR
+Size of metafile exceeds 2GB and running on a 32-bit operating
+system.  May also occur with the old plot library on a 64-bit system.
+233  PLOT_PKG
+Cannot find or open specified display.
+234  SETMF/MFSR
+NULL name given for metafile.
+235  MFSYNCH/MFSR
+A message acknowledging writing of graphics information to mfsr
+or mfdraw contained user button press information for a window
+that does not exist.
+236  NEWPLTW/NEWWIN
+An attempt was made to start a plot on a window that had not
+previously been opened by a call to newwin(), or some node(s)
+in a parallel computer got out of synch and did not agree on
+the number of the next window to be opened.
+237  NEWWIN
+An attempt was made to open more than 65535 graphics windows.
+# 238-239 Space for future messages reported via mfckerr
+# 240-259 GDITOOLS
+240  GDITOOLS
+File does not appear to be V.3 SIMDATA.
+241  GDITOOLS
+Found data while reading level names in SIMDATA file.
+242  GDITOOLS
+Found data while reading variable defs in SIMDATA file.
+243  GDITOOLS
+Type or length of variable in SIMDATA file is invalid.
+244  GDITOOLS
+Expected segment header in SIMDATA file not found.
+245  GDITOOLS
+SIMDATA file does not contain requested segment.
+246  GDITOOLS
+Found data before LENGTH record in SIMDATA file.
+247  GDITOOLS
+Reached end of header, but no data items were defined.
+248  GDITOOLS
+Record length recorded in header does not match length of data items.
+249  GDITOOLS
+Expecting selector id followed by blank in SIMDATA selector.
+250  GDITOOLS
+Expecting level num followed by blank in SIMDATA selector.
+251  GDITOOLS
+Expecting selector at level 1 in SIMDATA file.
+252  GDITOOLS
+Invalid level structure in SIMDATA file.  Node had two
+successors at same level or no legal attachment point.
+253  GDITOOLS
+Expecting level name followed by blank in SIMDATA selector.
+254  GDITOOLS
+Encountered level name not listed in SIMDATA file header.
+255  GDITOOLS
+End of range is below start in SIMDATA selector.
+256  GDITOOLS
+Bad punctuation in variable list in SIMDATA selector.
+257  GDITOOLS
+Undefined variable in SIMDATA selector.
+259  GDITOOLS
+Expected selector continuation not found.
+# 260-289 Obsolete plot package codes -- available for reuse
+# for messages reported via abexit (above 256 iexit limit)
+260  MFSR
+The given error code occurred when mfsr, the graphics command
+collator, tried to read its startup message.
+261  NEWPLT/NEWPLTW
+The application called newplt() to start a new plot, but endplt()
+had already been called, which shut down the mfdraw interface and
+metafile writing.
+262  NXTUPUSH/NXTUPOP
+While attempting to specify a pair of structure/union conversion
+tables for interprocessor transfer, either the depth of the
+pushdown stack (3) was exceeded, or the stack was empty when popped.
+263  MFCKERR
+More than one error was detected in a single call to the graphics
+package.  The hexadecimal error code is printed.  Bits in this code
+can be compared to definitions in header file mfio.h to identify
+the errors.
+264  BMPXSZ
+A function was called to determine how many bytes are needed to store
+one pixel in an image, but the color mode specified was not one
+defined in plotdefs.h.
+265  SYMBC
+A call was made to plot text continuing at the current plotting
+position, but there was no previous call that left this information.
+283  ENDPLT
+In a parallel computer, endplt() was called to terminate plotting
+before newplt() was called (probably due to an earlier control
+file error), but it was still necessary to shut down the mfsr
+process if it was running.  This error occurs if communication
+with mfsr was unsuccessful even though status codes indicated
+it had been started by aninit().
+284  MFCREATE
+At parallel startup, routine mfcreate() attempted to send setmf
+information (host, display, etc.) to mfsr or mfdraw and the
+MPI_Send returned the error code given in the message.
+285  PLOT_PKG
+Application requested an unsupported graphics metafile format.
+286  CHGWIN
+Program attempted to draw in a graphics window that was not
+yet defined.
+287  PENCOL
+A hexadecimal blue-green-red value passed to the pencol()
+routine did not have either exactly 3 hex digits (12-bit 'X'
+color format) or exactly 6 hex digits (24-bit 'Z' color format).
+288  POLYLN
+An unsupported or undefined polyline plot type was requested.
+289  BITMAP,BIMAPS
+An unsupported color format was requested for plotting a bitmap.
+# 290-295 GNRVERSN
+290  GNRVERSN
+An error occurred while performing a routine setup operation
+needed for gnrversn to execute and communicate with the
+svnversion component of the subversion version control system.
+The exact cause is given in the error message and is one of:
+--Unable to create a pipe
+--Unable to fork
+--Unable to duplicate a pipe file descriptor to act as
+stdout for svnversion.
+--Unable to close a pipe file descriptor after duplicating it.
+291  GNRVERSN
+An error occurred while trying to run svnversion other than
+not finding the program on the path.
+292  GNRVERSN
+An error occurred while waiting for svnversion to return,
+or it exited abnormally, or an error occurred reading the
+version number returned by svnversion through a pipe or
+closing the pipe.
+293  GNRVERSN
+An error occurred opening, writing to, or closing the hidden
+file .gnrsvvsn to hold version information for this project.
+294  GNRVERSN
+An error occurred opening, reading from, or closing the hidden
+file .gnrsvvsn that holds version information for this project
+when it has been copied to a folder where svnversion is not
+accessible.
+295  GNRVERSN
+An error occurred while writing the result of gnrversn to stdout
+or closing stdout.
+298  MLBITCNT
+A call to mlbitcnt (a mex file for counting the number of one
+bits in a matlab array) had incorrect argument numbers of types.
+299  LMBITSEL
+A call to lbitsel (a mex file for creating a matlab logical
+selector array) had incorrect argument numbers or types.
+# 300-329 GETGD3 (Matlab reader for SIMDATA files)
+300  GETGD3
+Internal error trap--invalid node data structure found.
+301  GETGD3
+An apparent selector name in a cell array was not a string.
+302  GETGD3
+A name-type selector was longer than allowed (12 characters).
+303  GETGD3
+Exactly one result array is required.
+304  GETGD3
+Not enough arguments--
+at least one selector and one time must be given.
+305  GETGD3
+The first argument must be a valid file name.
+306  GETGD3
+The second argument must be a segment number.
+307  GETGD3
+The third argument must be a valid variable name.
+308  GETGD3
+The number of selectors does not match
+the level of the data item in the SIMDATA file.
+309  GETGD3
+Time selectors must be numeric.
+310  GETGD3
+A level name in a full-form selector is not a simple string.
+311  GETGD3
+A level name in a full-form selector is too long.
+312  GETGD3
+A range must begin with a positive integer.
+313  GETGD3
+A range must be in ascending order.
+314  GETGD3
+A range increment must be nonzero.
+315  GETGD3
+A selector argument has bad type or dimension.
+316  GETGD3
+Requested variable not found in SIMDATA file.
+317  GETGD3
+Requested time point not found.
+# 330-359 nxdr2
+330  NXDR
+An incorrect number of command-line parameters was found.
+A synopsis showing the allowed arguments is printed.
+331  NXDR
+An unrecognized command-line switch option was found.
+332  NXDR
+The required input include file (-f option) was not specified.
+333  NXDR
+The required input object list file (-b option) was not specified
+or the file had no valid object names in it.
+334  NXDR
+Unable to create a temporary script file for running the
+C preprocessor to process the include file (-f option).
+Check permissions in the current working directory.
+335  NXDR
+An error was returned while trying to process the specified
+include file (-f option) with the C preprocessor.
+336  NXDR
+Unable to open the specified .c output file.
+Check permissions in the current working directory.
+337  NXDR
+Unable to open the specified .h output file.
+Check permissions in the current working directory.
+338  NXDR
+Unable to open the output file produced by running the file
+named in the -f option with the C proprocessor.
+339  NXDR
+The result of evaluating an array dimension expression is longer
+than an internal limit (32 chars) in the nxdr program.  This
+problem is most likely due to a coding error in the input file.
+340  NXDR
+Unable to open the specified object list file (-b option).
+341  NXDR
+Invalid tokens or punctuation were found in the object list file
+(-b option).  Key names should be separated only by whitespace.
+342  NXDR
+A C syntax error has been detected in the input file (-f option).
+Some information to help locate the error is printed.
+343  NXDR
+While scanning the user's C code to find a matching curly, round,
+or square bracket, an unmatching right bracket of another type or
+the end of the input file was reached.
+344  NXDR
+One or more of the specified key names was not found in the input
+data.  A list of the undefined items is printed.
+345  NXDR
+A function was specified as a key name.  Functions cannot be
+copied between unlike processors, therefore, a conversion table
+cannot be generated for this item.
+346  NXDR
+The named key type has an incomplete dimension or a dimension
+that is not a constant expression.  It is not possible to
+construct a conversion table for this item.
+347  NXDR
+Unable to create, compile, or run a temporary .c program file
+that is needed to evaluate a complex dimension expression.
+348  NXDR
+Unable to open or read the specified include file (-f option)
+while trying to copy it into the output .c file.
+349  NXDR
+Unable to position the preprocessor output file at a previously
+saved newline position while trying to print context for a
+source code error.
+350  NXDR
+An I/O error occurred while trying to read the preprocessor
+output file.
+351  NXDR
+An object is defined more than once in the source program.
+352  NXDR
+Unable to open a temporary file used to redirect output from
+the C compiler while trying to evaluate a complex dimension
+expression.  Check permissions in the current working directory.
+353  NXDR
+The definition of the object was started but never completed.
+354  NXDR
+A conversion table for an anonymous structure or union requires
+the size of that object.  Revise the source program to give
+a tag or typedef name to the specified type.
+355  NXDR
+A conversion table is being constructed for a type that is or
+contains an item of type 'void'.  Because the program cannot
+determine how to convert this item to or from message format,
+a conversion table cannot be generated for this type.
+357  NXDR
+Internal error--processing an element of a union, a name should
+have been created for the conversion table, but it was not.
+358  NXDR
+Internal error--attempted to create a type definition record for
+an object with no components.
+359  NXDR
+Internal error--attempting to generate a name for an anonymous
+structure or union, the parent did not have a name, or the name
+of a declarator of the object was not saved.
+# 360-369 MEMTEST
+361  MEMTEST
+Some memory blocks were allocated on host and comp nodes if
+testing in a parallel computer.  The length of the allocated
+memory did not match the lengths of the various blocks.
+362  MEMTEST
+Contents of memory was not correct after a membcst() call.
+363  MEMTEST
+Integer data or pointers were not updated correctly when new
+blocks were added to existing dynamic data structures.
+364  MEMTEST
+Data or pointers were not updated correctly when an existing
+block was expanded by use of allocprv().
+365  MEMTEST
+Data or pointers were not updated correctly when an existing
+block was contracted by use of allocprv().
+367  MEMTEST
+The resend mode of membcst() was tested by faking a situation
+where memory was too fragmented to allocate a new block.  A
+list is provided of data items that did not survive this process.
+368  MEMTEST
+A test failed that involved changing the pool to which an
+existing memory block belonged.
+371  GD2TO3
+Command line does not have two arguments: <infile> and <outfile>.
+372  GD2TO3
+Input and output files are the same.
+373  GD2TO3
+Input file is not in SIMDATA V.2 format.
+374  GD2TO3
+An item is typed as real, but it's length is not 4 or 8.
+380  ELIBDUMP
+Incorrect or wrong number of command line parameters.
+381  ELIBDUMP
+Display not found in environment.
+382  ELIBDUMP
+Input file apparently is not a shape library.
+383  ELIBDUMP
+The name of an item in a shape library file does not match
+the name in the index of that file.  The file is probably
+corrupt beyond all repair and should be rebuilt.
+384  ELIBDUMP
+An item in the shape library file has an unrecognized format
+code.  The file is probably corrupt beyond all repair and
+should be rebuilt.
+385  ELIBDUMP
+An item in the shape library file has a negative x or y
+dimension.  The file is probably corrupt beyond all repair and
+should be rebuilt.
+390  D1INPREP
+A control card is placed at an invalid location in the input
+file.  This card must come before any cycling is initiated.
+391  D1INPREP
+A generated D1 block number exceeded the number of blocks
+that were supposed to be generated.
+392  D1INPREP
+The program was terminated due to errors in the control file.
+A specific message should precede this one.
+393  D1INPREP
+The program was terminated due to errors discovered in
+setup processing.  A specific message should precede this one.
+400  snv8dump
+The snv8dump command syntax is:  snv8dump <savenet-file-path>.
+401  snv8dump
+The file specified for an snv8dump does not appear to be
+a CNS Version 8 SAVENET file.
+402  snv8dump
+While dumping a CNS SAVENET file, a format error was found.
+A particular header was not found where it was expected based
+on the counts of different header types contained earlier in
+the file.
+# 410-499 CNS
+410 CNS
+A library routine exited.  The error code is printed in the
+text of the error 410 message.
+411 CNS
+The input file specified more objects of the kind listed in the
+error message than could be accommodated by the variable type
+used in the program to access those objects.  The program must
+be recompiled with a larger type for counters and indexes for
+those objects.
+412 CNS
+The size of an array requested in CNS is larger than a program
+limit.  If the requested number of items is really necessary for
+the model, CNS be reprogrammed to eliminate the current size
+limit for the variable in question (should be named in the
+error message).
+413 CNS
+You asked to restore data from a save file with a higher number
+than the number of save files specified in Group 0.
+414 CNS
+Ran out of connection list files.
+415 CNS
+Error checking input file.
+416 CNS
+Replay file structure wrong.
+417 CNS
+The magnitude of a value read from an external source (BBD)
+was outside the allowed range (0 to 1).
+418 CNS
+CONNLIST bad value (cell too large, etc.).
+419 CNS
+Attempting to reset Cij to their initial values,
+but the initial values (Cij0) were not saved.  Use SAVECIJ0
+option on RESET card before first trial series begins.
+420 CNS
+Error exit flag set by library I/O routine.
+Possible causes are:
+  (1) Error in control file
+  (2) Error interpreting input data file
+  (3) Bad command-line parameter
+  (4) Error accessing external device
+421 CNS
+Parallel run requires more than 1 node but only 1 node was available.
+422 CNS
+In a parallel run, the number of unique stimuli encountered in a
+trial series exceeded 32767, which is the maximum that can be
+handled by the current code for gathering statistics from comp
+nodes.  This could be fixed by expanding the coppack calls to
+a loop over blocks of < 32768 stimuli.
+423 CNS
+The area of a geometric connection arbor exceeds the area of the
+source cell array.
+424 CNS
+Premature EOF on replay file.
+425 CNS
+Value-modulated amplification bounds exceeded.
+426 CNS
+Arithmetic overflow in calc of s(i).  Try lower scales.
+427 CNS
+An image preprocessor gave an error exit.  The reason code is printed.
+428 CNS
+The length of the items requested to be recorded in a SIMDATA file
+for one simulation trial exceeds 32 bits.  Probable input error.
+429 CNS
+Video driver error--see /home/nsi/incl/vvuser.h.
+430 CNS
+User requested that pixel values in an image be rescaled, but the
+image was so large that the calculation could not be completed
+on a 32-bit machine.
+431 CNS
+Attempt to pause but not running in ONLINE mode.
+432 CNS
+Error in pause message.
+433 CNS (Obsolete)
+Video disk generic error.
+434 CNS (Obsolete)
+Video disk disp recorder error.
+435 CNS (Obsolete)
+Video disk env recorder error.
+436 CNS
+Requested cell number does not exist.
+437 CNS (Obsolete)
+Bad pointer detected while printing control blocks.
+438 CNS
+Required item not found in RESTORE file.  You are probably
+reading a SAVENET file prepared with an incompatible earlier
+version of CNS.  The KEY given indicates the nature of the
+missing item and can be looked up in source file savblk.h.
+439 CNS
+Item in restore file had incompatible type, i.e. type that is
+not compatible with the type defined in current versions of CNS.
+440 CNS
+A CIJPLOT or similar plot required mapping of connection source
+locations onto the plot, but this information is not available.
+441 CNS
+Run-time calls to user programs are not supported by this
+operating system.
+442 CNS
+Problem connecting to BBD.
+443 CNS
+Problem trying to open, read, or write the .cnsrunno file which
+records the current run number in the current directory.
+444 CNS
+An imput image is too small to apply the requested preprocessor
+(for example, image smaller than modification kernel to be
+applied).
+445 CNS
+Error involving writing a CNS version information file
+(perhaps bad CNS_VERSFILE environment variable).
+447 CNS
+Node-node communication read error.
+448 CNS
+Node-node communication write error.
+449 CNS
+CNS encountered an error that allowed it to continue to the end
+of the current trial, print statistics, and save accumulated data
+in SIMDATA and SAVENET files.  The error is reported in the standard
+output file at the point of occurrence; this error 449 is given at
+the end of execution to emphasize that the run was not complete.
+450 CNS/FATALE/FATALPE
+Exit requested by some component of a parallel program.
+If the system state is sufficiently intact at the time
+of the error, this code will be accompanied by a message
+giving a more specific error code and text.
+482 CNS
+A bad format string was passed to the getthr routine.
+483 CNS
+Effector control blocks were incorrectly threaded to the
+appropriate cell type blocks.
+484 CNS
+An array to contain value signals was not allocated.
+485 CNS
+A line generated by the detailed print routine was too long
+for the output buffer.
+486 CNS
+An Lij generating routine for code B ("Box") connections was
+asked to generate a number of connections larger than the
+specified size of the box.
+487 CNS
+A color selector was encountered that is not defined,
+488 CNS
+A conductance referenced a nonexistent connection type
+as its activation source.
+491 CNS
+Tried to initialize more s(i)'s than implied by specified delay.
+492 CNS
+Number of cell variables to be restored is inconsistent.
+493 CNS
+Unexpected end of cijplot communication with comp node at
+give celltype and cell number.
+494 CNS
+ION on CELLTYPE has no REGION.
+495 CNS
+Unsupported Lij generating option selected.
+496 CNS
+Detail print got out of synchronization with stored cell data.
+497 CNS
+Finkel amplification requested is not yet supported.
+498 CNS
+An attempt was made to connect a modulatory input or virtual touch
+pad to a one-dimensional signal source or a source with a color
+mode that is not currently handled (type code in message).
+499 CNS (Obsolete, now is 450)
+Library function called abexit with no code.
+# 500-509 GRFEDIT
+501 GRFEDIT
+This program does not accept any command-line arguments.
+The control file should be provided via stdin.
+502 GRFEDIT
+Unaccepted control statement to grfedit.
+The recognized statements are OUTPUT and INCLUDE.
+503 GRFEDIT
+Uninterpretable input data format.
+504 GRFEDIT
+The named input file does not appear to be a saved game
+or is an earlier, incompatible, version.
+505 GRFEDIT
+An INCLUDE card has been read, but no OUTPUT file has been
+specified.
+506 GRFEDIT
+The length of a path name recorded in the game file header
+is longer than an internal program limit (255 chars).
+507 GRFEDIT
+An INCLUDE file did not have the same game parameters as
+another INCLUDE file being merged into the same output.
+The details of which parameters differ are printed in
+the error message.
+508 GRFEDIT
+End-of-file was found on an INCLUDE file before a specified
+numbered game was reached.
+# 510-519 GRFDUMP
+511 GRFDUMP
+The syntax to run the grfdump command is
+grfdump [-v] <grf-file-name>
+The [-v] option dumps the whole file, default is just header.
+512 GRFDUMP
+Please provide just one file name to the grfdump command.
+514 GRFDUMP
+The named input file does not appear to be a saved game
+or is an earlier or later incompatible, version.
+518 GRFDUMP
+End-of-file was found reading a TankWar game replay file header
+or an embedded file name of a bitmap or sound file.
+# 520-529 SPP2SIM
+520 SPP2SIM
+A numeric value passed to the SPP2 simulator for setting a
+register or memory value exceeded 16 bits.
+521 SPP2SIM
+A numeric value passed to the SPP2 simulator for setting the
+program counter (i.e. jump address) or for storing a program
+instruction into program memory exceeded the memory size
+allocated for the program being simulated or the maximum
+address that can be accommodated in a jump command (10 bits).
+522 SPP2SIM
+A call was made to the SPP2 simulator that attempted to
+assign a value to an accumulator stack or return address
+stack beyond the stack depth provided by the SPP2 hardware
+(currently 5 for accumulator, 2 for CALL return address).
+523 SPP2SIM
+A call was made to the SPP2 simulator that attempted to
+assign a value to an operand register beyond the number
+of registers provided by the SPP2 hardware (currently 16).
+524 SPP2SIM
+A call was made to the SPP2 simulator that attempted to
+assign a value to a memory location beyond the number of
+memory locations assigned to this virtual machine or beyond
+the maximum address that can be accommodated in a data
+access instruction (11 bits).
+525 SPP2SIM
+[Unassigned]
+526 SPP2SIM
+A call was made to the SPP2 simulator to execute an instruction,
+but the instruction is not defined in the current op code list.
+527 SPP2SIM
+A call was made to the SPP2 simulator to execute an instruction,
+but a field in the instruction that is defined to be always zero
+was not zero.
+# 530-539 SPP2DBG
+530 SPP2DBG
+A request was made to run a program or to execute an instruction
+from a program, but no program was loaded.
+531 SPP2DBG
+An attempt was made to load an SPP2 memory data (.bin) file.
+Either the file did not exist, or it could not be opened
+(possibly a permissions problem), or it could not be closed
+or repositioned to the top.
+532 SPP2DBG
+The specified SPP2 memory data (.bin) file did not appear to be
+in the format of an SPP2 .bin file, or it did not contain enough
+records to load the record specified in the 'mdr' command.
+533 SPP2DBG
+An internal bookkeeping error occurred such that it appeared that
+memory above the maximum data memory space of the NPU had been
+modified, when other tests prevent this.  Please bring to
+attention of G.N.R.
+534 SPP2DBG
+An attempt was made to load a nas symbol table (.sym) file.
+Either the file did not exist, or it could not be opened
+(possibly a permissions problem).
+535 SPP2DBG
+The specified symbol table (.sym) file did not appear to be
+in the format of the symbol table output by the nas assembler.
+Assembler version 2.6 or later is required.
+# 540-549 DUMPNORB
+540 DUMPNORB
+Wrong number of arguments.  Only the name of the file to be
+dumped should be given on the command line.
+541 DUMPNORB
+Unable to open category file.
+542 DUMPNORB
+Unable to read category file.
+543 DUMPNORB
+Unable to close category file.
+544 DUMPNORB
+Unable to open information file.
+545 DUMPNORB
+Unable to read information file.
+546 DUMPNORB
+Unable to close information file.
+547 DUMPNORB
+Did not reach end-of-file simultaneously on info
+and category files.
+548 DUMPNORB
+Unable to allocate memory.
+549 DUMPNORB
+Information out of documented range in a header file.
+# 550-557 mklijS1.
+550 MKLIJS1
+The command line must specify just one argument, the name of
+the output file.  The input is read from stdin (and may be
+redirected from a file).
+551 MKLIJS1
+Any of various input errors was detected.  There should be
+a line of output explaining the particular error.
+552 MKLIJS1
+An internal calculation found that the size of at least one
+template was so large that it would not fit on the specified
+source image size.  This is probably an input error.
+553 MKLIJS1
+A location was topographically selected to place a rotated
+template on an input image, but this location was outside
+the boundaries of the image.  This is probably due to an
+error in the code.  Please bring to attention of GNR.
+554 MKLIJS1
+A template was rotated to a new position to form the center
+of a new subarbor.  This location was outside the image.
+A method of moving it to the edge of the image that is
+mathematically guaranteed to find a solution did not.
+This is probably due to an error in the code.  Please
+bring to attention of GNR.
+555 MKLIJS1
+In the absence of COMPAT=2 compilation, the program is
+trying to move each rotated template to the corresponding
+rotated feature detector in the source, but the number of
+source rotations (nfd) is not an even multiple of the
+number of target rotations (ntmr).
+558 DUMPCLST
+The command line must specify just one argument, the name of
+the input file to be dumped.
+559 SORT2TST malloc failed to allocate data or work space.
+# 560-569  BBDCINIT mex file errors
+560 BBDCINIT
+The bbdcinit mex call must have at least 2 at not more
+than 6 arguments.
+561 BBDCINIT
+A value passed to Cns in a variable definition must be a
+MATLAB string.  Convert numeric values with sprintf.
+562 BBDCINIT
+The name of a variable being passed to Cns in a variable
+definition is longer than the name length limit
+(currently 7 characters).
+563 BBDCINIT
+The string passed to Cns in a variable definition must not
+exceed the current length for a scanned value in the Cns
+control file syntax (currently 16 characters).
+564 BBDCINIT
+The call to bbdcinit that is expected to be a path to a
+CNS control file is not a character string or is empty.
+565 BBDCINIT
+The call to bbdcinit that is expected to be a path to a
+CNS output log file is not a character string or is empty.
+566 BBDCINIT
+The call to bbdcinit contained a retver argument that did
+not fit the requirement of being a 32-bit integer scalar.
+567 BBDCINIT
+The call to bbdcinit contained a host name argument that is
+not a character string or is empty.
+568 BBDCINIT
+The call to bbdcinit contained a port number argument that
+did not fit the requirement of being a 32-bit integer scalar.
+569 BBDCMINP
+A variable definition was received that is too long to fit on
+a standard crk library input line.  Perhaps this could be
+shortened to two or more variables whose values can be
+concatenated in the control file.  Otherwise, see GNR for
+a possible increase in the compiled maximum line length.
+# 570-579  DUMPGD
+570 DUMPGD
+A SIMDATA file appeared to have more simulation cycles (NTC)
+than specified in the header.  This is probably a defective
+file.
+571 DUMPGD
+A SIMDATA file header defines a variable with a width that
+is not 1,2,4, or 8 bytes.  This is probably a defective file.
+572 DUMPGD
+End-of-file was reached during a SIMDATA file dump before
+reaching the end of the data described in the headers.
+This is probably a defective file.
+# 580-589 MPGATHER
+587  MPGATHER
+A block of data was being collected on the host node by
+routine mpgather().  The offset in the final array of a
+block of data received in one cycle of data collection
+did not match the ending location of the data already
+collected in earlier cycles.  This is due to a coding
+error, please contact the author.
+588  MPGATHER
+A block of data was being collected on the host node by
+routine mpgather().  The number of data blocks received
+in one cycle of data collection did not match the number
+specified in the header for that data transmission.  This
+is due to a coding error, please contact the author.
+# 590-599 SHOWMOVIE
+590  ShowMovie
+Unable to open the specified metafile.
+591  ShowMovie
+Unable to read one of the three header records from
+the specified metafile.
+592  ShowMovie
+The specified metafile did not have header coding that
+is expected in a proper metafile.
+# 600-629 NORBMEX/NORFMEX
+The error codes in the NORBMEX/NORFMEX series are not abexit
+codes, but rather Matlab error message Id codes.
+601 NORBMEXSET/NORFMEXSET
+The norbmexset routine decides what type of call it is getting based
+on the number of arguments:  One argument for the close-out call, two
+for the revised-udata and reset calls, and six for the initialization
+call.  The argument for the closeout call should be the NorbMexComm
+array from a previous initialization call.  The arguments for the
+revised-udata and reset calls are NorbMexComm and the new selector
+string or the word 'reset', respectively.  These calls have no
+return value.  The initialization call should have one return value
+(the NorbMexComm array) and 6 arguments--a file name, four integers,
+and a selection string.
+602 NORBMEXSET/NORBMEXGET/NORFMEXSET/NORFMEXGET
+The first argument to a NORBMEX function was not a NorbMexComm
+array created by an earlier call to norbmexset().
+603 NORBMEX/NORFMEX
+An argument to a NORBMEX function did not have the type
+or length specified in the documentation.
+604 NORBMEXSET/NORFMEXSET
+An error was generated trying to copy the 'fname' or 'udata'
+argument.  This means either the program ran out of memory
+(very unlikely) or there is some coding error with the string.
+605 NORBMEXSET
+The specified x or y size of the portion of a NORB image to be
+sampled was either negative or greater than the size of the
+images in the dataset (96 x 96).
+606 NORBMEXSET/NORBMEXGET
+The program ran out of memory trying to allocate space for an
+internal image selection table, an image, or image id info.
+607 NORBMEXSET/NORFMEXSET
+A selector string for the variable named was missing a required
+left paren.
+608 NORBMEXSET/NORFMEXSET
+More than one selector was given for some image specifier.
+609 NORBMEXSET/NORFMEXSET
+A selector specification for the variable named had one of the
+following errors:
+The selector had characters other than digits, minus signs, and
+commas.
+A range had more than one '-'.
+A comma was not followed by a value or range.
+The end of a range was a less than the start of the range.
+A selector or range had values larger than the maximum
+allowed for the variable named.
+610 NORBMEXSET/NORFMEXSET
+The total number of images selected exceeds the number of
+images in the dataset.
+611 NORBMEXSET/NORFMEXSET
+Specified probabilities add to more than 1.0, or do not add to
+near 1.0 (if all given), or do add to near 1.0 when not all are
+given.
+612 NORBMEXSET/NORFMEXSET
+Random number seed or batch number not in parens, had nondigit
+characters, or invalid numeric value.
+613 NORBMEXSET/NORFMEXSET
+More than one slash or plus delimiter in selector string.
+614 NORBMEXSET/NORFMEXSET
+An unrecognized letter code was found in a selector string.
+615 NORBMEXSET/NORFMEXSET
+An error occurred opening the specified file.
+616 NORBMEXSET/NORBMEXGET/NORFMEXGET
+A read error occurred on the specified file.
+617 NORBMEXSET
+The specified file did not have the expected headers
+for a NORB dataset.
+618 NORBMEXSET
+Information read from a NORB dataset category or information
+file provided a value for the variable named in the error
+message that is outside the maximum range for that variable.
+619 NORBMEXSET/NORFMEXSET
+The number of images that match the given selectors exceeds
+the product of the numbers selected in each variable.
+This can only be a programming error.
+620 NORBMEXSET
+Setup program did not reach end-of-file simultaneously on
+NORB info and category files.
+621 NORBMEXSET/NORFMEXSET
+An error occurred closing the specified file.
+625 NORBMEXGET/NORFMEXGET
+An error occurred seeking to a requested image.
+626 NORBMEXGET
+There were not two left-hand side arguments:
+   image -- location where image will be returned
+   isid  -- location where 6 image identifiers will be returned.
+627 NORFMEXSET
+The norfmexset routine decides what type of call it is getting
+based on the number of arguments:  One argument for the close-out
+call, two for the revised-udata and reset calls, and three for the
+initialization call.  The argument for the closeout call should be
+the NorfMexComm array from a previous initialization call.  The
+arguments for the revised-udata and reset calls are NorfMexComm
+and the new selector string or the word 'reset', respectively.
+These calls have no return value.  The initialization call should
+have one return value (the NorfMexComm array) and 3 arguments--
+the response file name, an integer, and a selection string.
+628 NORFMEXGET
+There were not two left-hand side arguments:
+   featVec -- location where response features will be returned
+   isid    -- location where 6 image identifiers will be returned.
+629 NORFMEXSET/NORFMEXGET
+The program ran out of memory trying to allocate space for an
+internal image selection table, a response vector, or image id info.
+# 630-659 CITMEX
+630 CITMEXSET/CITMEXGET
+While attempting an operation with the citmexset or citmexget
+programs (used to access the Caltech 101 image dataset from a
+Matlab program), or during Matlab mex cleanup, the private saved
+memory area (CitMexComm in the documentation) was found to be
+corrupted.
+631 CITMEXSET
+The citmexset routine decides what type of call it is getting based
+in part on the number of arguments:  Two arguments for the revise-
+udata, reset, and closeout calls, five for the initialization call.
+The arguments for the first set are (1) the NorbMexComm array from
+a previous initialization call, and (2) a new selector string, the
+word 'reset', or the word 'close', respectively.  These calls have
+no return value.  The initialization call should have one return value
+(the NorbMexComm array) and 5 arguments--a path to the directory where
+the CIT 101 images are stored, the max image sizes along x and y to be
+returned, a user selection string, and a logical control variable that
+is 'true' to return colored images as red-green-blue values, 'false'
+to convert colored image to their grayscale equivalents.
+632 CITMEXSET/CITMEXGET
+The first argument to a CITMEX function was not a CitMexComm
+array created by an earlier call to citmexset().
+633 CITMEXSET/CITMEXGET
+An argument to a CITMEX function did not have the type or length
+specified in the documentation, or the kopt argument to citmexset()
+had both the '4' (paint out background now) and '8' (paint out
+background later) bits set.
+634 CITMEXSET/CITMEXGET
+An error was generated trying to access or copy a string argument to
+citmexset() or citrdimg().  This means either the program ran out of
+memory (very unlikely) or there is some coding error with the string.
+635 CITMEXSET
+The specified maximum x or y size of the portion of a CIT 101 image
+to be sampled, or the size of the added border around the cropped
+area, was either negative or larger than the maximum size the code
+is prepared to handle (65535).
+636 CITMEXSET/CITMEXGET
+The program ran out of memory trying to allocate space for an
+internal image selection table, an image, or image id info.
+637 CITMEXSET
+While parsing image selections for the Caltech 101 image dataset,
+an image category or image number selection list was malformed.
+The list did not begin with a '('.
+638 CITMEXSET
+While parsing image selections for the Caltech 101 image dataset,
+more than one consecutive image category list or image number list
+was found.
+639 CITMEXSET
+A selector specification for the variable named had one of the
+following errors:
+The selector had characters other than digits, minus signs, and
+commas.
+A range had more than one '-'.
+A comma was not followed by a value or range.
+The end of a range was a less than the start of the range.
+A selector or range had values less than 1 or larger than the
+maximum allowed for the variable named.
+640 CITMEXSET
+One of the categories in the CIT 101 image dataset had more
+images than the maximum the program is prepared to handle (800).
+641 CITMEXSET
+Specified probabilities add to more than 1.0, or do not add to
+near 1.0 (if all given), or do add to near 1.0 when not all are
+given.
+642 CITMEXSET
+Selector probability, random number seed, or batch number not
+in parens, had nondigit characters, or invalid numeric value.
+643 CITMEXSET
+Two slashes, two plus signs, or two asterisks appeared before
+a category or image selection list.  The only types of selector
+lists that can be concatenated are those that involve a single
+mode of selection (random, sequential, or permuted).
+644 CITMEXSET
+No images were selected, either globally or within a single
+image category.  Possibly the low image number in a selection
+sequence was higher than the number of image in the category.
+645 CITMEXSET
+An error occurred opening the specified top-level CIT 101
+image dataset directory.
+646 CITMEXSET
+The batch size ('N' parameter) specified was larger than the
+number of images in the selection list.
+647 CITMEXSET
+A category name did not match any category in the dataset.
+648 CITMEXSET
+The purported CIT 101 category directory had more or fewer
+entries than the documented number of categories in the
+dataset (101 plus 1 for backgrounds).
+649 CITMEXSET
+A category name in the CIT 101 directory did not start with
+a letter 'a' through 'z' (upper or lower case).  Since the
+distributed dataset satisfies this restriction, presumably
+the wrong directory was read.
+650 CITMEXSET
+An error occurred closing the specified image subdirectory.
+651 CITMEXGET
+A call to the Matlab script "citrdimg" failed.  This script
+is part of the citmex CIT image reader mex package and must
+be available on the Matlab path.
+652 CITMEXGET
+Function citmexget requires one calling argument and one or two
+return arguments.  If there is just one return value, it is an
+array to receive the category and instance numbers (zero-based).
+If there are two return values, the first receives the image and
+the second receives the category/instance information.
+653 CITRDIMG
+The citrdimg.m script did not receive the required argument
+giving a path to a CIT image annotation file.
+654 CITMEXSET/CITMEXGET
+An error occurred creating or accessing a semaphore used by the
+Matlab mex-functions citmexset() or citmexget() to coordinate
+memory access.  The error message should indicate the exact cause.
+655 CITMEXSET
+Two calls were made to citmexset to initialize Matlab access to the
+Caltech image database without an intervening 'close' call (or
+'clear mex' on the command line in case a script did not finish).
+The interface to Matlab exit cleanup is not written to handle two
+independent CitMexComm structures.  If it is not possible to
+write the Matlab script to use only one common selection setup,
+contact the author to remove this restriction.
+656 CITMEXPBG
+Function citmexpbg requires two calling arguments (CitMexComm and
+the input image) and one return argument (the output masked image).
+# 660-664  semrm
+660  SEMRM
+The semrm program is used to remove named semaphores from the
+system.  It was called but no names were specified on the
+command line.
+661  SEMRM
+The semrm program is used to remove named semaphores from the system.
+The name given as argument could not be removed because no semaphore
+with that name existed in the system at the time semrm was run.
+# 670-679 SHENCAS
+670  SHENCAS
+A parameter to one of the Shen-Castan edge detection rouines
+was outside the documented valid range.  The error message
+should indicate which parameter was involved.
+671  SHENCAS
+The SCComm argument passed to one of the Shen-Castan edge
+detection routines did not point to a memory area that
+contained valid information.  Presumably some other program
+wrote over this area between the sheninit() call and the
+routine that failed.
+672  SHENCAS
+The part of shenedge() that extends contours by neighboring
+point detection with hysteresis exceeded the fixed size of
+a circular buffer where points to be checked are stored.
+This buffer is large enough for all reasonable images, so
+this error probably indicates a bug in the code.
+673  SHENCAS
+During Shen-Castan edge detection, the gradient of the image
+was found to be constant.  Check the image.
+674  SHENCAS
+Routine shenedge() contains code to sort the gradient values
+for candidate edge pixels in order to determine the upper and
+lower hysteresis gradient cutoffs.  The list for sorting is
+placed in storage earlier used for the Shen-Castan smoothness
+filter.  This space was not large enough.  This could only
+happen if the number of candidate edge pixels is more than
+half the number of pixels in the image, which is very unlikely.
+Consult the author.
+678  SMEX
+In the Shen-Castan edge-detection Matlab interface routines
+(smexxxxx), an error occurred in trying to access shared
+memory where some global information is kept.  This is most
+likely caused by trying to use smexxxxx routines in two
+separate copies of matlab.  The routines can be recoded to
+handle this situation if necessary.
+679  SMEX
+One of the Shen-Castan edge-detection Matlab interface
+routines received an invalid argument.  The error message
+should indicate which argument was involved.
+# 680-689 Programs using mdksallo()
+# These are just 680 plus the error codes defined in mdks.h
+681  MDKSALLO/MDKSFREE/MDKS1S/MDKS2S/MDKSDIVS
+A bad work area was passed to one of these routines.
+Be sure to call mdksallod (double data) or mdksallof (float data)
+before using other routines in the mdks package.
+682  MDKSALLO
+In a call to mdksallod or mdksallof, the dimensionality, k,
+was zero or negative
+683  MDKSALLO
+In a call to mdksallod or mdksallof, the dimensionality, k,
+was so large that the work area would not fit in an address
+space of 32 or 64 bits in a 32-bit or 64-bit operating system,
+respectively.  This calculation allows for the need to store
+4 * 2**k integer (or long) quadrant counts.
+684  MDKSALLO
+In a call to mdksallod or mdksallof, the number of points
+in the first data set was less than the dimensionality, k.
+685  MDKSALLO
+In a call to mdksallod or mdksallof, the number of points
+in the second data set was less than the dimensionality, k.
+686  MDKSALLO
+In a call to mdksallod or mdksallof, the number of divisions
+requested for the some dimension axis of the first data set
+was larger than the size of the data set.
+687  MDKSALLO
+In a call to mdksallod or mdksallof, the number of divisions
+requested for the some dimension axis of the second data set
+was larger than the size of the data set.
+688  MDKSALLO
+In a call to mdksallod or mdksallof, the calculated size of
+the requested work area was too large to fit in an address
+space of 32 or 64 bits in a 32-bit or 64-bit operating system,
+respectively.  This calculation allows for the need to store
+4 * 2**k integer (or long) quadrant counts, plus bricks and
+pointers to the user data.
+689
+In a call to mdksallod or mdksallof, even though the size of
+the requested work area was small enough to fit in the address
+space, an attempt to allocate this area failed.  This is
+because the preliminary size check does not take into account
+the space required for the calling program and all its data.
+687  MDKSALLO
+One coordinate was constant.
+688  MDKSALLO
+Attempt to free an ill-composed work area.
+# 690-694 MDKSOPT
+690  MDKSOPT
+Input error -- should be accompanied by an earlier message.
+691  MDKSOPT
+A bad work area was passed to mdks1s or mdks2s.
+692  MDKSOPT
+All the data were equal in one or more dimensions.
+# 700-729  KEYEDIT
+701  KEYEDIT
+Negative response to getok()
+702  KEYEDIT
+Too few arguments
+703  KEYEDIT
+Bad command-line switch
+704  KEYEDIT
+No write permission for output
+705  KEYEDIT
+Path name is too long
+706  KEYEDIT
+Unable to create output directory or temporary file to hold
+output for edit-in-place option.
+707  KEYEDIT
+Nonexistent directory specified
+708  KEYEDIT
+Too many inputs
+709  KEYEDIT
+Unable to expand home directory
+710  KEYEDIT
+Unable to access input file
+711  KEYEDIT
+No input found matching file spec
+712  KEYEDIT
+Input and output files are same
+713  KEYEDIT
+Unable to rename temp to input fn
+714  KEYEDIT
+Unable to get old timestamp
+715  KEYEDIT
+Unable to reset timestamp
+716  KEYEDIT
+Unable to get initial cwd
+717  KEYEDIT
+Unable to getcurdir on O/P drive
+718  KEYEDIT
+Illegally composed path name
+719  KEYEDIT
+Unable to open input directory
+720  KEYEDIT
+Error reading input directory
+721  KEYEDIT
+The key string found in an input file had an unexpected character
+(not a digit or a digit larger than a defined option code).
+This code may also be given for certain errors that should never
+occur in parsing file or directory names (these would be due to
+coding errors--please contact the author).
+722  KEYEDIT
+Unable to execute a system program
+723  KEYEDIT
+A key string was found in the source file but it did not have the
+expected length (6 characters including leading and trailing '*')
+or a character in the key string was not expected (not a digit).
+This code is also given if an attempt to parse the regular expression
+search string for finding the key code gave an error (this would be
+a development error--please contact the author).
+#730-739 READPNG/GETPNG
+730  READPNG
+Unable to open requested png image file.
+731  READPNG
+Opened a png image file for reading but the header bytes could
+not be read.
+732  READPNG
+A supposed png image file was opened for reading but the header
+information did not match the signature of a png file.
+733  READPNG
+An error was returned by a libpng function.  These do not have
+specific error numbers -- the text should describe the error.
+734  READPNG
+The libpng function png_create_read_struct returned a NULL
+pointer.  No reason is available; perhaps not enough memory?
+735  READPNG
+The libpng function png_create_info_struct returned a NULL
+pointer.  No reason is available; perhaps no enough memory?
+736  READPNG
+An image file was read by the libpng routines but the format
+(but depth, color mode, alpha channel) was not compatible
+with the routine that was trying to process it.
+#740-749 TIFFCAM
+740  TIFFCAMSET
+An attempt was made to open a tiff image file, but the libtiff
+function TIFFOpen returned 0, indicating an error.  A text message
+may have been written to stderr.
+741  TIFFCAMSET
+An attempt was made to open a tiff image file, but the file
+descriptor was already set to work with this or another file.
+742  TIFFCAMSET
+An attempt was made to open a tiff image file, but no file name
+was given.
+743  TIFFCAMSET
+Library routine TIFFReadScanline returned -1 indicating an error.
+A text message may have been written to stderr.
+744  TIFFCAMSET
+An attempt was made to reopen an already open tiff file for rereading,
+but there was no previously opened file descriptor in place.
+745  TIFFCAMSET
+A tiff image was opened.  Its width or height was more than 65536
+lines or columns, which is a design limitation of CNS.  Please
+consult with the author if this limit must be increased.
+746  TIFFCAMSET
+A tiff image was opened.  The number of bits per sample returned
+by libtiff was not 8, 16, or 32.  Existence of other modes is not
+clear from the documentation but this possibility can be explored
+if necessary--please contact the author.
+747  TIFFCAMSET
+A tiff image was opened.  The number of samples per pixel returned
+by libtiff was not 1 (grayscale), 3 (color), or 4 (color with alpha).
+Existence of other modes is not clear from the documentation but
+this possibility can be explored if necessary--please contact the
+author.
+748  DUMPMF
+Attempted to interpret non-existing operation code.
+
+

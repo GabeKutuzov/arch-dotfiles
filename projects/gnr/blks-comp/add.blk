@@ -1,0 +1,17 @@
+use STDLIB
+
+int A 32;
+int B 21;
+
+func _main
+
+   int SUM;
+   SUM = _add_two_numbers[A,B];
+   _print[SUM];
+::
+
+int _add_two_numbers [int x, int y]
+
+   int RET = x + y;
+   $RET;
+::

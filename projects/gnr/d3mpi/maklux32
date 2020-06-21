@@ -1,0 +1,196 @@
+# (c) Copyright 1999-2016, The Rockefeller University *11225* 
+# $Id: maklux32 73 2017-04-26 20:36:40Z  $
+########################################################################
+#         MAKE file for CNS (DARWIN III) running on PC Linux           #
+#                           32-bit version                             #
+#                                                                      #
+# This makefile makes the following target:                            #
+#	Cns	The normal serial version (this is the default target) #
+#                                                                      #
+# The following options are always selected by this makefile:          #
+# no BBDS, no timers.                                                  #
+#                                                                      #
+# Note:  In the current environment, the only use for the BBDS option  #
+# is calling from Matlab via bbdcinit(), and Matlab currently only     #
+# supports 64-bit Linux, therefore, there is no use for BBDS here.     #
+#                                                                      #
+# V1A, 08/08/99, GNR - Derived from IRIX makefile                      #
+# V8D, 02/14/07, GNR - Remove PNS, add BBDS                            #
+# ==>, 12/29/07, GNR - Last mod before committing to svn repository    #
+# Rev, 12/28/08, GNR - Add clean target, dependency on makefile itself #
+# Rev, 02/18/16, GNR - Make separate nxdr outputs for 32- and 64-bits  #
+########################################################################
+
+# Common pathnames
+INC	:= $(HOME)/include
+L	:= $(HOME)/lib/pclinux
+
+# Path for object files
+DIR := pclinux
+
+# Object files to build standard version of CNS
+CNSOBJ := \
+darwin3 \
+d3ajw  \
+d3allo \
+d3autsc \
+d3bgis \
+d3bxvp \
+d3cchk \
+d3chng \
+d3cij  \
+d3clst \
+d3cnmd \
+d3cpli \
+d3cond \
+d3ctbl \
+d3decay \
+d3dflt \
+d3dij  \
+d3dprt \
+d3echo \
+d3elij \
+d3epsi \
+d3evtm \
+d3exit \
+d3fchk \
+d3g1g3 \
+d3g1imin \
+d3g2cell \
+d3g2cond \
+d3g2conn \
+d3g3prob \
+d3g3rset \
+d3g3timr \
+d3genr \
+d3gfcl \
+d3gfhd \
+d3gfrl \
+d3gfsh \
+d3gfsv \
+d3go   \
+d3grex \
+d3grp0 \
+d3grp1 \
+d3grp2 \
+d3grp3 \
+d3gvin \
+d3i3vr \
+d3ijpi \
+d3ijpl \
+d3imgt \
+d3inhb \
+d3inhi \
+d3kij  \
+d3lani \
+d3lij  \
+d3lime \
+d3lkni \
+d3lplt \
+d3mark \
+d3master \
+d3mchk \
+d3mset \
+d3news \
+d3ngph \
+d3nset \
+d3nxt32 \
+d3oafs \
+d3oflw \
+d3parm \
+d3perr \
+d3phase \
+d3plot \
+d3regenr \
+d3resetn \
+d3resetz \
+d3rlnm \
+d3rplt \
+d3rpsi \
+d3rstr \
+d3salf \
+d3save \
+d3schk \
+d3sfhm \
+d3sj   \
+d3snsa \
+d3start \
+d3stat \
+d3tchk \
+d3term \
+d3tsvp \
+d3uprg \
+d3valu \
+d3vchk \
+d3vitp \
+d3vjnt \
+d3vplt \
+d3vtch \
+d3woff \
+d3zsta \
+findln \
+findmdlt \
+findpcf \
+findvc \
+getthr \
+rfdmtx \
+stubs  \
+tvplot
+
+# NSI home-grown libraries (note: order is NOT arbitrary)
+NSILIBS := \
+$(L)/libenv.a \
+$(L)/libserplot.a \
+$(L)/libsertools.a \
+$(L)/libcrk.a
+
+# Compile-time and target-dependent definitions
+CC := gcc
+CFLAGS := -m32 -g -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := PCLINUX _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV)) \
+	DCMON=$(shell date +%b) DCDAY=$(shell date +%-d) CYEAR=$(shell date +%Y)
+
+.SUFFIXES:
+.SUFFIXES: .o .c .s .d
+VPATH = $(DIR)
+
+.PHONY: all cdate
+all:	cdate Cns
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d d3nxd32.h maklux32
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) -c $< ; \
+	mv $(*F).o $(DIR)
+	
+$(DIR)/%.o:	%.s maklux32
+	as $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) $*.s; \
+	mv $(*F).o $(DIR)
+
+# Put it all together
+
+# Compile cdate every time the make file is run
+cdate:
+	$(CC) $(CFLAGS) -DPCLUX64 $(INC:%=-I%) -o $(DIR)/compdate.o -c compdate.c
+	
+# Note:  To make m32 version in 64-bit system, use following CC line:
+#	$(CC) $(CFLAGS) $(CNSOBJ:%=$(DIR)/%.o) $(NSILIBS) \
+#     -L/usr/lib/gcc/i686-redhat-linux/4.4.4 -lm -ldl -lgcc_s -o $@;
+Cns:	$(CNSOBJ:%=$(DIR)/%.o) d3nxt32.c d3nxd32.h $(NSILIBS) maklux32
+	echo $(DIR); \
+	$(CC) $(CFLAGS) $(CNSOBJ:%=$(DIR)/%.o) $(DIR)/compdate.o $(NSILIBS) \
+		-L/usr/lib/gcc/i686-redhat-linux/4.4.4 -lm -ldl -lgcc_s -o $@; \
+	cp $@ $(HOME)/bin/Cns32
+
+clean:
+	rm -f $(DIR)/*.[do]
+	rm $(HOME)/bin/Cns
+
+-include $(CNSOBJ:%=$(DIR)/%.d)

@@ -1,0 +1,14 @@
+Running gathtest with 4 nodes
+Test 1: Even dist, no host data, 0 errors
+Test 2: No headnode or host data, 0 errors
+Test 3: No node 2 or host data, 0 errors
+Test 4: Node 3 covers for node 2, 0 errors
+Test 5: Even dist, with host data, 0 errors
+Test 6: No Node 1 data, 0 errors
+Test 7: No node 2 data, Node 1 covers, 0 errors
+Test 8: No node 2 data, Node 3 covers, 0 errors
+Test 9: Even dist, no host data, 0 errors
+Test 10: No headnode or host data, 0 errors
+Test 11: No node 2 or host data, 0 errors
+Test 12: Node 3 covers for node 2, 0 errors
+==>Test complete, 0 had errors

@@ -1,0 +1,330 @@
+[Revised, 09/02/18]
+                   Guidelines for mfdraw development
+                   ---------- --- ------ -----------
+
+Proposed changes are listed roughly in order of decreasing importance.
+Items that should not change are not listed.  In particular, frame
+navigation remains the same as it is now except for implementation of
+the functions described for the CTRL-buttons in item (8).  That is,
+the user can move around among the frames currently in memory while
+(if not in Still mode) mfdraw continues to request and store new
+frames from the running application.  Implementation suggestions are
+in a separate list following the feature descriptions.  Items (1) and
+(2) require that the new client plot library be available and calls
+inserted in the rkgtest.c program to prepare suitable test data.
+
+   (1) Implement ability to open multiple windows with different
+lifetimes as described in the plotting.pdf document.
+   (1a) Implement other calls that are in the plotlib documentation
+but were never available in mfdraw.  In particular, a mechanism is
+provided to allow the application to assign index numbers to specific
+colors so color changes can be done without specifying the full color
+name or RGB spec.
+
+   (2) Implement binary metafile format as described in the plotting.pdf
+document.  It can be discussed whether mfdraw still needs to be able to
+read the old decimal format metafiles, or whether it will be easier to
+make a translate utility to convert any such into the new format.
+   (2a) The new spec allows for multiple separate "frames" within a
+drawing.  Implementation in mfdraw can be postponed, but the calls in
+the client plot library should be included right from the beginning, as
+they affect data structures in the client.
+   (2b) In the present mfdraw, incoming plot instructions are imme-
+diately translated to C++ objects which are then stored in arrays and
+accessed for drawing.  I think it would be better to store incoming
+plot instructions exactly as they arrive as binary somewhat compressed
+codes, translated to OpenGL when accessed for plotting.  The inter-
+mediate C++ objects seem to me to just add overhead and take more
+memory.
+
+   (3) Implement memory management as described in the comments at the
+top of the mffm.c file.  In particular, a separate list of frames in
+the order viewed by the operator is to be maintained, so that when it
+is necessary to delete frames, the ones least recently viewed can be
+deleted, rather than just the lowest numbered ones.  Furthermore,
+reading of frames is to be conducted in a separate execution thread
+so model calculations can get ahead of graph drawing (when permitted,
+i.e. outside Still mode).
+
+   (4) When sitting on the last frame of a batch mode run, the QUIT
+button (called up with a right mouse click) should actually quit the
+program.  Currently, the window frame 'X' button has to be used.
+
+   (5) We really need a command-line parameter that specifies the
+maximum memory to be used for storing frame commands (as opposed to
+the present setting of the maximum number of frames).  This should not
+be an environment parameter.  If the guidelines are implemented as
+outlined above, there is really no reason this cannot be changed up or
+down (with some fixed minimum) during a run via a right-click menu
+item.  There is a default in the preferences file that should be used
+if the command-line parameter is not found at start up but this has
+not been implemented properly.
+
+The following items (5a-c) refer to the interaction between frame
+movement and memory restriction in the various viewing modes:
+
+   (5a) Socket-still mode:  We always want to request from the appli-
+cation just one more frame than the highest frame number ever viewed.
+The user can click Next and Previous and Goto ad lib anywhere within
+what is in memory, but a new frame is requested from the application
+only when the latest frame is viewed.  When memory fills, least-
+recently viewed frames are to be thrown out until enough memory is
+freed up.  (This may create gaps in the set of viewable frames--to be
+discussed.)
+   Note that the program will never be throwing away a frame except
+when the latest frame is being viewed and when that happens, it will
+always be throwing away just one or more of the earliest frames.  The
+user will not be able to go back to those, but he/she will never see a
+discontinuity within the stack of viewable frames.
+
+   (5b) Socket-movie mode.  When in movie mode, either viewing
+current frames or navigating, mfdraw requests frames from the
+application until the memory quota is filled.  When the currently
+viewed frame is more than half way through the cache of frames in
+memory, and a new frame is received, mfdraw (a) removes old frames
+if necessary to make enough memory to hold the new frame on the
+list of frames that are recorded in the index, (b) puts a pointer
+to the new frame in the index, (c) asks the application for another
+frame, and (d) (if in true movie mode) displays the new latest one.
+
+   (5c) Transition from still mode to movie mode:  With the current
+frame positioned anywhere in the list of viewable frames, the user can
+get to movie mode via the 'M' key or the right-click menu.  The first
+thing that happens is that mfdraw requests a new frame from the
+application if one is not already pending.  Then, if the currently
+displayed frame is not the most recent frame, mfdraw quickly steps
+through the frames in memory, as it does now, displaying each one for
+a brief time (using the preference file minimum-time item) until the
+displayed frame is the most recent frame.  Then it changes the global
+switch to movie mode and continues as above.  No other special action
+needed.
+    Note that if the user does not desire stepping through all the
+frames as described here, he/she need only press the '>|' button
+before entering movie mode.
+
+   (6) The functions of the existing seven navigation buttons are as
+follows.  These buttons will have different meanings when clicked with
+the CTRL key held down as described in item (9).
+|<	     Jump immediately to the earliest available frame (always
+        frame 1 if viewing a metafile when (3) implemented).
+<<      Step backwards through frames continually until Pause button
+        or other button (item 6b) is clicked or first available frame
+        is reached.  Speed as in preferences file and item (6a).
+<       Step back one frame.
+||      Pause ongoing fast-forward or fast-reverse sequence.
+        Continue when pressed again.
+>       Step forward one frame.
+>>      Step forwards through frames continually until Pause button
+        or other button (item 6b) is clicked or last available frame
+        is reached.  Speed as in item (6a).
+>|      Jump immediately to the latest available frame (always
+        the last frame in the file if viewing a metafile.
+None of these buttons should cause entry from still mode into movie
+mode as regards frame input from a client.  Any of them, if clicked
+in movie mode, should cause updating of the display with new images
+to stop while new frames continue to be acquired from the applica-
+cation until the in-frame memory limitation is reached.  The stated
+action for that button then occurs.
+
+   (6a) [Modification movie speed].  When in fast-forward (all modes),
+clicking the '>>' button causes a small increment in speed (decrement
+in minimum viewing time) for each click, and clicking the '<<' button
+causes a small decrement in speed (increment in minimum viewing time).
+Conversely, when in fast-backwards mode, clicking the '<<' button
+causes a small increment in speed for each click, and clicking the
+'>>' button causes a small decrement in speed.  These do not change
+the minimum viewing time set in the preferences file.
+
+   (6b) When in fast-forward or fast-backwards (all modes), clicking
+any navigation button other than '>>' or '<<' causes exit from that
+mode and viewing of the single frame implied by the button that was
+clicked.
+
+   (7) Metafile viewing should behave as follows:  On startup, the
+program should read the first frame and display it immediately.  It
+should then continue reading (but not displaying) frames in the
+background until the in-memory storage limit is reached (or, of
+course, fewer if the metafile contains fewer than this number of
+frames).  The navigation buttons then work within this set, except
+that, when located at the last in-memory frame, the '>' button
+results in reading one more frame (and discarding a frame (or
+frames if necessary); the '>>' button steps to the last frame if
+not already located there, then continues reading new frames and
+deleting old frames until stopped by a button as detailed above or
+by reaching the end of the metafile.
+
+   (8) I would like to have the existing GoTo button with its entry
+widget for a frame number, work correctly whether in metafile or
+socket mode.  If clicked while in socket-movie mode, frame updating is
+handled as for the buttons described in item (6).  The frame number
+should refer to the frame number provided by the client application,
+which may not be the same as a count from the first frame in the
+metafile or socket file.  If the requested frame has been discarded
+due to memory being filled, it should be reloaded if reading from a
+metafile.  If a frame is requested in socket mode that is not
+available, or not present in a meta-file being read, a nice little
+beep would be sufficient error message.
+
+   The rules of property inheritance should be as follows:  Whenever
+the user views frames in number order, i.e.  using '<', '<<', '>', or
+'>>' buttons, or in movie mode, each frame inherits the window size
+(unless the aspect ratio changes due to the frame size given in the
+file) and position, magnification, origin offset, and background color
+of the most recently viewed frame.  If 'GoTo' or '|<' is used to view
+a frame already viewed that is not the immediate previous or next
+frame in frame number order, then the parameters of that frame when it
+was most recently viewed will apply (mffm has provision to store this
+information with the frame).  If 'GoTo' or '>|' is used to view a
+frame not already viewed (in a metafile), it should inherit from the
+highest-numbered frame in memory that is below the requested frame.
+The inherited values can also be stored with all of the unviewed
+frames that are skipped over.  The user can move or resize the main
+viewing window, change background color, and zoom the image while
+navigating behind the latest frame, but not when new frames are being
+displayed as soon as received ("true movie mode"), as then confusion
+can arise as to which frame is intended to be changed.  The user can
+use the new Pause button described in item (6) to freeze the movie-
+mode display on the current frame in order to perform these functions.
+   When the frame size requested by a new frame command in the input
+metafile or socket is different from the value that would be inherited
+according to the above rules, the size in the header takes precedence.
+The current behavior is good the way it is, it should not be changed.
+
+   (9) The program should keep track of the order in which frames
+are viewed when the user applies any of the controls mentioned above.
+The size of this list should be a preference file item, with default
+100 frames.  Each time the '<' button is clicked with the CTRL key
+held down, the program goes to the next previous frame on this list,
+i.e. undoes a GoTo.  Each time the '>' button is clicked with the
+CTRL key held down, the program goes to the next frame moving forward
+on this list.  See implementation suggestion (5).
+
+   (10) Regarding navigation when reading from a metafile on disk:
+The new thing here is that we want to be able to use arrow keys and
+Goto to access any frame in the metafile.  (This would not apply
+when reading from a socket.)  This clearly requires being able to
+reread frames that may have previously been discarded from memory.
+
+Other items (no preference order):
+
+   The code needs to be cleaned up to handle all error conditions
+with standard methods and standard abexit error numbers.  Some errors
+can be reflected to the client when in socket mode, others to stderr
+when reading from a file, others may require immediate termination.
+
+   There is a user-editable preferences file called ".mfdrawrc".  We
+need to check that the spec given here is in fact how it works and
+correct it as necessary while adding new features given here:  mfdraw
+will look for this file in several places in the following decreasing
+order of priority:
+
+(i) When mfdraw starts up in socket mode, and a location for the
+preferences file is given in the socket file header, that location
+will be used and an error will be given if the file does not exist
+or cannot be read.
+
+(ii) If an MFDRAW_HOME environment variable exists, mfdraw will look
+for the preferences file in that directory.  An error will be given if
+the file does not exist or cannot be read, but it is not an error if
+the MFDRAW_HOME variable is not present.
+
+(iii) When mfdraw starts up in metafile mode, and there is a file name
+on the command line, it will look for the preferences file in the
+directory where this metafile is located.  It is not error if there is
+no preferences file in this location.
+
+(iv) mfdraw will look for a preferences file in the home directory of
+the current user.  It is not an error if there is no preferences file
+in this location, but this location will be used to store the prefer-
+ences file if one is created and no other location has been specified.
+
+(v) If no preference file is found, mfdraw will use compile-time
+defaults for all preferences.
+
+   Items for inclusion in the preferences file, but not limited to
+these, are:  Background color, minimum frame viewing time for fast-
+forward and fast-reverse buttons, default X display, default index
+size, maximum memory to be devoted to storing frames in memory.  I
+always had a preference item here to specify the screen location of
+the window at startup, but apparently this is ignored by windows
+managers, can it can be deleted from file spec.
+
+    It is not necessary to display a numeric value for the zoom
+factor, but if one is shown, it should be the amount by which the
+scale of the image has been multiplied relative to a scale of 1.0,
+considered as the size that just allows the frame to fit in the
+current window.  This must take into account changes made with the
+zoom widget or the arrow keys, but not window resizes.
+
+   There is a long-time wish item for mfdraw to assume that the
+lowest numbered frame is frame 1, not 0.  There is so much history
+here that it should probably just accept any number as the first frame
+number.
+
+                      Implementation suggestions
+                      -------------- -----------
+
+   Most of the above specs regarding frame navigation can be
+implemented via an in-memory index that contains pointers to an area
+for each frame that contains its plotting commands and any other
+information needed for plotting, i.e.  current scale, origin, and
+location.  If the index is a simple array of structs, then information
+about frame x can be obtained quickly via index[x]->variable.
+
+   (1) Regarding reading metafiles:  Supposing we add a data item at
+the end of the metafile that records how many frames are in that file,
+so one does not have to scan through to count them but can just do a
+seek to the end of the file to read the number of frames; then it
+seems one could allocate space for an index structure for all the
+frames in the metafile, which is not a lot of memory, but populate
+those index structures only when the frames are actually read, so
+there is not too long a startup delay.  When the current memory limit
+is full, delete frames in order from least recently viewed (see above)
+until the memory is below the limit.  (Would not apply when reading
+frames from a socket.)
+
+   So, whether the user goes through starting at frame 1 and clicking
+Next over and over, or uses Goto and view in some crazy random order,
+what the code has to do is go to the index, see if that frame is in
+memory, if so, display it, if not, read it in and note in its index
+slot that it is now in memory and where it is.
+
+   One of the items in the index has to be the seek location of that
+frame in the metafile.  If the user uses Goto to view frames out of
+order, it may be necessary in this situation to scan through the
+metafile from the last frame whose seek location is known to find
+the requested frame.  The seek locations of the frames skipped over
+can still be recorded in the index so these can be found quickly
+when needed later.  This overhead will be unavoidable (it replaces
+reading the entire metafile at startup as is done now), but will
+be relatively rare in practice.
+
+   (2) Reading from a socket.  Now we do not know in advance how many
+frames there will be.  mfdraw can allocate index space, but not frame
+command space, for some large number of frames that is a compile-time
+constant, e.g.  10000.  In the unlikely event that that number is ever
+exceeded, a realloc() would take care of it (this requires that there
+be no pointers in the structs that point to other items in the index--
+offsets must be used instead so they do not have to change when a
+realloc() occurs) or the program could keep the index as a circular
+list and when full throw away old index entries along with the frames
+they point to.
+
+   (3) Note that if things are done this way, the memory limit can
+be changed at any time.  The next time a new frame is requested, it
+may result in throwing away a bunch of frames if the limit was
+lowered, or in throwing away nothing for a while if it was raised.
+
+   (4) The natural structure for the viewing-order list is a
+circular buffer so that nothing except a pointer to the most-
+recently viewed frame ever needs to be moved.  The only information
+that needs to be stored in this list is the frame number, which
+can be used to access frames via the master index.  The list is
+updated when normal navigation is performed and is traversed,
+but not updated, when the CTRL arrow buttons are used.  Clearly,
+there is some special startup code needed to handle backtracking
+when the list is not yet full.  Old entries are simply written
+over when the list becomes full.
+
+GNR
+

@@ -1,0 +1,133 @@
+HISTORY CLUSTERING ENTROPY PACKAGE
+
+COPYRIGHT AND LICENSE:
+   This software was developed in the Laboratory of Biological
+   Modelling at The Rockefeller University by Nicholas Watters and
+   George N.  Reeke, (c) Copyright 2013, The Rockefeller University.
+
+   Please send any corrections, suggestions, or improvements to the
+   author by email to reeke@mail.rockefeller.edu for incorporation in
+   future revisions.
+
+   This software is distributed under GPL, version 2.  This program is
+   free software; you can redistribute it and/or modify it under the
+   terms of the GNU General Public License as published by the Free
+   Software Foundation; either version 2 of the License, or (at your
+   option) any later version.  Accordingly, this program is
+   distributed in the hope that it will be useful, but WITHOUT ANY
+   WARRANTY; without even the implied warranty of MERCHANTABILITY or
+   FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+   License for more details.  You should have received a copy of the
+   GNU General Public License along with this program.  If not, see
+   <http://www.gnu.org/licenses/>.
+
+SUMMARY:
+    This collection of MATLAB programs runs seven entropy
+    estimators on input interspike interval (ISI) data from neural
+    spike trains.  The estimators involved are the following:
+        Direct Bin method:  Shannon, C.  (1948).  A mathematical
+            theory of communications.  Bell System Technical Journal,
+            27(2), 632-656.
+        History Clustering method:  Watters, N.D. & Reeke, G.N,
+            Neural Computation, submitted.
+        Interval method:  Reeke, G.N. & Coop, A.D.  (2004).
+            Estimating the temporal interval entropy of neuronal
+            discharge.  Neural Computation, 16(5), 941-970.
+        Kozachenko & Leonenko method:  Kozachenko, L.F., & Leonenko, N.N. 
+            (1987).  Sample estimate of the entropy of a random vector.
+            Problems of Information Transmission, 23(1), 95-101.
+        Lin & Reeke method:  Lin, T.W., & Reeke, G.N. (2010).  A 
+            continuous entropy rate estimator for spike trains using a
+            k-means-based context tree.  Neural Computation, 22, 998-1024.
+        Ma Bound:  Ma, S.  (1981).  Calculation of entropy from data
+            motion.  Journal of Statistical Physics, 26, (221-240).
+        Strong method:  Strong, S.P., Koberle, R., van Steveninvk,
+            R.R.D., & Bialek, W.  (1998).  Entropy and information in
+            neural spike trains.  Physical Review Letters, 80(1),
+            197-200.
+
+INSTALLATION:  All the programs are written in MATLAB except C-language
+    "mex" files are called from the MATLAB code for the Strong et al.
+    method and for the multidimensional Kolmogorov-Smirnov statistic 
+    ("MDKSS") used to compare synthetic and real data sets in the
+    history clustering and synthetic data methods.
+       The MDKSS code is available from the same location as this code:
+    http://lab.rockefeller.edu/reeke/techpub.  You must first download
+    that code and install it according to the instructions given in the
+    accompanying "readme" file.  Makefiles are provided to make C-
+    callable library files for 32- and 64-bit bit systems and to run
+    the MATLAB "mex" compilation command for 64-bit systems.  This is
+    easily modified by the user if needed for 32-bit systems.  If you
+    are not running Linux, you are on your own here.  Once you have
+    made and tested the MDKSS mex functions, add the location where
+    they are stored to your MATLAB path.
+       If you do not plan to run the Strong et al. method, all you
+    need to do is unpack the distribution file (tgz or zip) into some
+    directory and work there.  If you want to run the Strong et al.
+    code, and you have the gcc compiler, just run the following
+    command after unpacking the files:  mex strongmx.c.
+
+USAGE:
+    The primary program is hcentropy.m.  All the other programs are
+    called by this one.  The program hcentropy.m requires one input,
+    an ordered sequence of interspike intervals (ISIs) from a neural
+    spike train.  There are a few parameters at the beginning of
+    hcentropy.m that can be varied to perform certain tasks (e.g.
+    controlling which estimators to run, plotting data, etc.).  Please
+    look in hcentropy.m for a full description of all the options.
+
+    A demonstration Matlab script is provided in the file demo.m.
+    This script uses downloaded data found in the 'data' subdirectory
+    of the distribution directory.  Provenance and terms of usage
+    for these data are documented in the demo.m file.  The parameters
+    in hcentropy.m are appropriate for the demo run--you will want to
+    edit these for any real application; in particular, increase the
+    bootstrap_num parameter from 200 to a value that will give better
+    error bounds -- we usually use 10000.
+
+    NOTE:  Very small ISIs in the data, perhaps the result of noise
+    in the experiment, will cause problems with some of the methods.
+    It is best to examine the data before running this package and
+    remove such data, either by hand or with a programmed filter.
+
+REVISION HISTORY:
+Note:  Revision numbers are numbers assigned by the "subversion"
+version control package used to maintain different versions of
+this software.
+Rev. 1, 08/15/13:  Code exactly as used to run experiments in the
+    Neural Computation manuscript.
+Rev. 2, 10/11/13:  As in Rev. 1 except copyright and GPL license
+    notification added and trivial code changes made: some comments
+    revised and reformatted, error() calls added or text changed,
+    waitbar added, kind_entropy switch added, etc.  demo.m script
+    added and for demo, ITERTYPE was changed to 1 and bootstrap_num
+    was reduced to 2000.
+Rev. 3, 01/24/14:  Changed bootstrappping for all bootstrapped methods
+    so that bootstrapping draws with replacement from only a designated
+    portion of the data, not the entire dataset.
+    Removed "iter" input for all bootstrapped estimators.
+    Added Lin & Reeke and Kozachenko & Leonenko estimators.
+    Removed output fwte and associated superfluous or redundant code.
+    Added code to "print" answer matrix.
+Rev. 4, 03/17/14:  Added strongmx mex file to compute Strong et al.
+    entropy by literature method or alternative with digitization
+    of ISI lengths rather than use of binary bins.  Added to strong.m
+    ability to plot progress of regression of entropy vs word length.
+    Modified hcentropy.m to control these options and corrected bug
+    to allow runs with bootstrap_num = 1.  Corrected bug in koz_leo.m
+    that incorrectly determined amount of noise to add to input data.
+    This was code used for accepted version of Neural Comp. manuscript.
+Rev. 5, 03/18/14:  Removed old code for Strong et al. method that
+    omitted some values of word length.  Updated comments.
+Rev. 6, 05/12/14:  Modified to use mex file code for multidimensional
+    Kolmogorov-Smirnov statistic.  Deleted redundant emc.m and
+    nelderm.m files.  Updated README.
+Rev. 7, 06/12/14:  Added waitbar for artificial data method and
+   SHOW_PROGRESS switch.  Corrected bug that stopped run when a
+   substring could not be analyzed in the Monte-Carlo comparison of
+   aritifical with real data.  Corrected bug that printed differential
+   instead of discrete entropy for artificial data method.  Turned on
+   direct bin method, ma bound, and default bin width in demo.
+Rev. 8, 06/12/14:  Updated revision history in this README.
+
+

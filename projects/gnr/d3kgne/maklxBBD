@@ -1,0 +1,180 @@
+# $Id: maklxBBD 31 2010-08-30 18:57:56Z  $
+########################################################################
+#        MAKE file for BBDCns (DARWIN III) running on PC Linux         #
+#                                                                      #
+# This makefile makes the following target:                            #
+#       BBDCns  The version with BBD options                           #
+#                                                                      #
+# The following options are always selected by this makefile:          #
+# no D1, no timers.                                                    #
+#                                                                      #
+# After multiple attempts to get one makefile to make both Cns and     #
+# BBDCns targets, that approach was abandoned.  Use make -f maklnBBD   #
+# to make the BBD version of CNS in a Linux system.                    #
+#                                                                      #
+# V1A, 08/08/99, GNR - Derived from IRIX makefile                      #
+# V8D, 02/14/07, GNR - Remove PNS, add BBDS                            #
+# ==>, 12/29/07, GNR - Last mod before committing to svn repository    #
+# Rev, 12/28/08, GNR - Add clean target, dependency on makefile itself #
+########################################################################
+
+.DEFAULT_GOAL := BBDCns
+
+# Common pathnames
+I        := $(HOME)/include
+L        := $(HOME)/lib/pclinux
+
+# Paths for object files
+DIR := pclinux_bbd
+
+# Object files to build standard version of CNS
+CNSOBJ := \
+darwin3 \
+d3abort \
+d3ajw  \
+d3allo \
+d3autsc \
+d3bgis \
+d3bxvp \
+d3cchk \
+d3chng \
+d3clst \
+d3cij  \
+d3cnmd \
+d3cond \
+d3ctbl \
+d3decay \
+d3dflt \
+d3dij  \
+d3dprt \
+d3echo \
+d3elij \
+d3epsi \
+d3evtm \
+d3exit \
+d3fchk \
+d3foff \
+d3g1g3 \
+d3g1imin \
+d3g2cell \
+d3g2cond \
+d3g2conn \
+d3g3prob \
+d3g3rset \
+d3g3timr \
+d3genr \
+d3gfcl \
+d3gfhd \
+d3gfsh \
+d3gfsv \
+d3go   \
+d3grp0 \
+d3grp1 \
+d3grp2 \
+d3grp3 \
+d3gvin \
+d3i3vr \
+d3ijpi \
+d3ijpl \
+d3imgt \
+d3inhb \
+d3inhi \
+d3kij  \
+d3lij  \
+d3lplt \
+d3mark \
+d3master \
+d3mchk \
+d3mset \
+d3news \
+d3ngph \
+d3nset \
+d3nxtab \
+d3oafs \
+d3parm \
+d3perr \
+d3phase \
+d3plot \
+d3regenr \
+d3resetn \
+d3resetz \
+d3rlnm \
+d3rplt \
+d3rprt \
+d3rpsi \
+d3rstr \
+d3salf \
+d3save \
+d3schk \
+d3sfhm \
+d3sj   \
+d3snsa \
+d3stat \
+d3tchk \
+d3tsvp \
+d3uprg \
+d3valu \
+d3vitp \
+d3vjnt \
+d3vplt \
+d3vtch \
+d3woff \
+d3zsta \
+findln \
+findmdlt \
+findpcf \
+findvc \
+rfdmtx \
+stubs  \
+tvplot
+
+# Add following object files to support D1:
+#        d1genr   d1go   d1nset   d1rplt
+
+# Search path additions for "include" files
+INC := $I
+
+# NSI home-grown libraries (note: order is NOT arbitrary)
+NSILIBS := \
+$(L)/libbbds.a \
+$(L)/libenv.a \
+$(L)/libserplot.a \
+$(L)/libsertools.a \
+$(L)/libcrk.a
+
+# Compile-time and target-dependent definitions
+CC := gcc
+CFLAGS := -g -Wunused
+SVNV := $(shell gnrversn)
+DEFS    := PCLINUX _ISOC99_SOURCE BBDS SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+.SUFFIXES:
+.SUFFIXES: .o .c .s .d
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(CPPFLAGS) $(INC:%=-I%) $< \
+	| sed '\''s/^\(.*\)\.o[ :]*/$(DIR)\/\1.o $(DIR)\/\1.d : /g'\'' > $@; \
+	[ -s $@ ] || rm -f $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d maklxBBD
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) -c $< ; \
+	mv $*.o $(DIR)
+	
+$(DIR)/%.o:	%.s maklxBBD
+	as $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) $*.s; \
+	mv $*.o $(DIR)
+
+# Put it all together
+BBDCns:	$(CNSOBJ:%=$(DIR)/%.o) $(NSILIBS)
+	echo $(DIR); \
+	$(CC) $(CFLAGS) $(CNSOBJ:%=$(DIR)/%.o) $(NSILIBS) -lm -ldl -o $@; \
+	mv $@ $(HOME)/bin; \
+	chmod a+x ~/bin/$@
+
+clean:
+	rm -f $(DIR)/*.o
+	rm -f $(HOME)/bin/BBDCns
+
+-include $(CNSOBJ:%=$(DIR)/%.d)

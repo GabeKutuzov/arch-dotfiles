@@ -1,0 +1,841 @@
+Test si64-ui64 Arithmetic Routines
+
+===jasw===
+   AS1 = 000000000000000000, correct = 000000000000000000  OK
+   AS2 = 0x00000000bb00000121, correct = 0x00000000bb00000121  OK
+   AS3 = 0x00000000bc7ffffffe, correct = 0x00000000bc7ffffffe  OK
+The next test has a deliberate overflow--not detected by design.
+   AS4 = 0x00fffffffe00000004, correct = 0x00fffffffe00000004  OK
+   AS5 = 000000000000000000, correct = 000000000000000000  OK
+   AS6 = 0x000000005700000053, correct = 0x000000005700000053  OK
+   AS7 = 0x00fffffffd00010058, correct = 0x00fffffffd00010058  OK
+   AS8 = 0x00fffffffe00000058, correct = 0x00fffffffe00000058  OK
+
+===jaswe===
+   ASE1 = 000000000000000000, correct = 000000000000000000  OK
+   ASE2 = 0x00000000bb00000121, correct = 0x00000000bb00000121  OK
+   ASE3 = 0x00000000bc7ffffffe, correct = 0x00000000bc7ffffffe  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 4 and msg jaswe
+   ASE4 = 0x007fffffffffffffff, correct = 0x007fffffffffffffff  OK
+   ASE5 = 000000000000000000, correct = 000000000000000000  OK
+   ASE6 = 0x000000005700000053, correct = 0x000000005700000053  OK
+   ASE7 = 0x00fffffffd00010058, correct = 0x00fffffffd00010058  OK
+   ASE8 = 0x00fffffffe00000058, correct = 0x00fffffffe00000058  OK
+
+===jasjem===
+   ASA1 = 0x000001fffe, correct = 0x000001fffe  OK
+   ASA2 = 0x007fff0000, correct = 0x007fff0000  OK
+   ASA3 = 0x008000ffff, correct = 0x008000ffff  OK
+   ASA4 = 0x00fffe0002, correct = 0x00fffe0002  OK
+The next 2 tests have deliberate overflows.
+***Abexitr called with code 5 and msg jasjem
+   ASA5 = 0x007fffffff, correct = 0x007fffffff  OK
+***Abexitr called with code 6 and msg jasjem
+   ASA6 = 0x0080000001, correct = 0x0080000001  OK
+
+===jauw===
+   AU1 = 000000000000000000, correct = 000000000000000000  OK
+   AU2 = 0x00000000bb00000121, correct = 0x00000000bb00000121  OK
+   AU3 = 0x00000000bc7ffffffe, correct = 0x00000000bc7ffffffe  OK
+   AU4 = 0x00fffffffe00000004, correct = 0x00fffffffe00000004  OK
+The next test has a deliberate overflow--not detected by design.
+   AU5 = 000000000000000000, correct = 000000000000000000  OK
+The next test has a deliberate overflow--not detected by design.
+   AU6 = 0x000000005700000053, correct = 0x000000005700000053  OK
+The next test has a deliberate overflow--not detected by design.
+   AU7 = 0x00fffffffd00010058, correct = 0x00fffffffd00010058  OK
+The next test has a deliberate overflow--not detected by design.
+   AU8 = 0x00fffffffe00000058, correct = 0x00fffffffe00000058  OK
+
+===jauwe===
+   AUE1 = 000000000000000000, correct = 000000000000000000  OK
+   AUE2 = 0x00000000bb00000121, correct = 0x00000000bb00000121  OK
+   AUE3 = 0x00000000bc7ffffffe, correct = 0x00000000bc7ffffffe  OK
+   AUE4 = 0x00fffffffe00000004, correct = 0x00fffffffe00000004  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 5 and msg jauwe
+   AUE5 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 6 and msg jauwe
+   AUE6 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 7 and msg jauwe
+   AUE7 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 8 and msg jauwe
+   AUE8 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+
+===jauaem===
+   AUA1 = 0x000001fffe, correct = 0x000001fffe  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 2 and msg jauaem
+   AUA2 = 0x00ffffffff, correct = 0x00ffffffff  OK
+
+===jasl===
+   AS1 = 000000000000000000, correct = 000000000000000000  OK
+   AS2 = 0x000000006400000121, correct = 0x000000006400000121  OK
+   AS3 = 0x00000000647ffffffe, correct = 0x00000000647ffffffe  OK
+The next test has a deliberate overflow--not detected by design.
+   AS4 = 0x00800000007ffffffd, correct = 0x00800000007ffffffd  OK
+   AS5 = 000000000000000000, correct = 000000000000000000  OK
+   AS6 = 0x000000000000000053, correct = 0x000000000000000053  OK
+   AS7 = 0x00000000650000fffd, correct = 0x00000000650000fffd  OK
+   AS8 = 0x00fffffffefffffffd, correct = 0x00fffffffefffffffd  OK
+
+===jasle===
+   ASE1 = 000000000000000000, correct = 000000000000000000  OK
+   ASE2 = 0x000000006400000121, correct = 0x000000006400000121  OK
+   ASE3 = 0x00000000647ffffffe, correct = 0x00000000647ffffffe  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 4 and msg jasle
+   ASE4 = 0x007fffffffffffffff, correct = 0x007fffffffffffffff  OK
+   ASE5 = 000000000000000000, correct = 000000000000000000  OK
+   ASE6 = 0x000000000000000053, correct = 0x000000000000000053  OK
+   ASE7 = 0x00000000650000fffd, correct = 0x00000000650000fffd  OK
+   ASE8 = 0x00fffffffefffffffd, correct = 0x00fffffffefffffffd  OK
+
+===jaul===
+   AU1 = 000000000000000000, correct = 000000000000000000  OK
+   AU2 = 0x000000006400000121, correct = 0x000000006400000121  OK
+   AU3 = 0x00000000657ffffffe, correct = 0x00000000657ffffffe  OK
+   AU4 = 0x007fffffff80000001, correct = 0x007fffffff80000001  OK
+The next test has a deliberate overflow--not detected by design.
+   AU5 = 000000000000000000, correct = 000000000000000000  OK
+The next test has a deliberate overflow--not detected by design.
+   AU6 = 0x000000000000000053, correct = 0x000000000000000053  OK
+   AU7 = 0x00fffffffe00010058, correct = 0x00fffffffe00010058  OK
+
+===jaule===
+   AUE1 = 000000000000000000, correct = 000000000000000000  OK
+   AUE2 = 0x000000006400000121, correct = 0x000000006400000121  OK
+   AUE3 = 0x00000000657ffffffe, correct = 0x00000000657ffffffe  OK
+   AUE4 = 0x007fffffff80000001, correct = 0x007fffffff80000001  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 5 and msg jaule
+   AUE5 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 6 and msg jaule
+   AUE6 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+   AUE7 = 0x00fffffffe00010058, correct = 0x00fffffffe00010058  OK
+
+===jnsw===
+   NS1 = 000000000000000000, correct = 000000000000000000  OK
+   NS2 = 0x00ffffff9bffffff38, correct = 0x00ffffff9bffffff38  OK
+   NS3 = 0x000000000000000001, correct = 0x000000000000000001  OK
+The next test has a deliberate overflow--not detected by design.
+   NS4 = 0x008000000000000000, correct = 0x008000000000000000  OK
+
+===jnswe===
+   NSE1 = 000000000000000000, correct = 000000000000000000  OK
+   NSE2 = 0x00ffffff9bffffff38, correct = 0x00ffffff9bffffff38  OK
+   NSE3 = 0x000000000000000001, correct = 0x000000000000000001  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 4 and msg jnswe
+   NSE4 = 0x008000000000000000, correct = 0x008000000000000000  OK
+
+===jrsw===
+   RS1 = 000000000000000000, correct = 000000000000000000  OK
+   RS2 = 0x000000000d0000006f, correct = 0x000000000d0000006f  OK
+   RS3 = 0x000000000c80000000, correct = 0x000000000c80000000  OK
+The next test has a deliberate overflow--not detected by design.
+   RS4 = 0x00fffffffefffffffe, correct = 0x00fffffffefffffffe  OK
+   RS5 = 0x00000000830000008b, correct = 0x00000000830000008b  OK
+   RS6 = 0x00fffffffcffff005a, correct = 0x00fffffffcffff005a  OK
+   RS7 = 0x00fffffffe0000005a, correct = 0x00fffffffe0000005a  OK
+   RS8 = 0x008000000000000000, correct = 0x008000000000000000  OK
+
+===jrswe===
+   RSE1 = 000000000000000000, correct = 000000000000000000  OK
+   RSE2 = 0x000000000d0000006f, correct = 0x000000000d0000006f  OK
+   RSE3 = 0x000000000c80000000, correct = 0x000000000c80000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 4 and msg jrswe
+   RSE4 = 0x007fffffffffffffff, correct = 0x007fffffffffffffff  OK
+   RSE5 = 0x00000000830000008b, correct = 0x00000000830000008b  OK
+   RSE6 = 0x00fffffffcffff005a, correct = 0x00fffffffcffff005a  OK
+   RSE7 = 0x00fffffffe0000005a, correct = 0x00fffffffe0000005a  OK
+   RSE8 = 0x008000000000000000, correct = 0x008000000000000000  OK
+
+===jrsjem===
+   RSA1 = 0000000000, correct = 0000000000  OK
+   RSA2 = 0x0000010001, correct = 0x0000010001  OK
+   RSA3 = 0x00fffeffff, correct = 0x00fffeffff  OK
+   RSA4 = 0x0080000002, correct = 0x0080000002  OK
+The next 2 tests have deliberate overflows.
+***Abexitr called with code 5 and msg jrsjem
+   RSA5 = 0x007fffffff, correct = 0x007fffffff  OK
+***Abexitr called with code 6 and msg jrsjem
+   RSA6 = 0x0080000001, correct = 0x0080000001  OK
+
+===jruw===
+   RU1 = 000000000000000000, correct = 000000000000000000  OK
+   RU2 = 0x000000000d0000006f, correct = 0x000000000d0000006f  OK
+   RU3 = 0x000000000c80000000, correct = 0x000000000c80000000  OK
+The next test has a deliberate underflow--not detected by design.
+   RU4 = 0x00fffffffefffffffe, correct = 0x00fffffffefffffffe  OK
+The next test has a deliberate underflow--not detected by design.
+   RU5 = 0x00000000830000008b, correct = 0x00000000830000008b  OK
+   RU6 = 0x00fffffffcffff005a, correct = 0x00fffffffcffff005a  OK
+The next test has a deliberate overflow--not detected by design.
+   RU7 = 0x00fffffffe0000005a, correct = 0x00fffffffe0000005a  OK
+   RU8 = 0x008000000000000000, correct = 0x008000000000000000  OK
+
+===jruwe===
+   RUE1 = 000000000000000000, correct = 000000000000000000  OK
+   RUE2 = 0x000000000d0000006f, correct = 0x000000000d0000006f  OK
+   RUE3 = 0x000000000c80000000, correct = 0x000000000c80000000  OK
+The next test has a deliberate underflow.
+***Abexitr called with code 4 and msg jruwe
+   RUE4 = 000000000000000000, correct = 000000000000000000  OK
+The next test has a deliberate underflow.
+***Abexitr called with code 5 and msg jruwe
+   RUE5 = 000000000000000000, correct = 000000000000000000  OK
+   RUE6 = 0x00fffffffcffff005a, correct = 0x00fffffffcffff005a  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 7 and msg jruwe
+   RUE7 = 000000000000000000, correct = 000000000000000000  OK
+   RUE8 = 0x008000000000000000, correct = 0x008000000000000000  OK
+
+===jruaem===
+   RUA1 = 0x007fff0000, correct = 0x007fff0000  OK
+   RUA2 = 0000000000, correct = 0000000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 3 and msg jruaem
+   RUA3 = 0000000000, correct = 0000000000  OK
+
+===jrsl===
+   RLS1 = 000000000000000000, correct = 000000000000000000  OK
+   RLS2 = 0x00000000640000006f, correct = 0x00000000640000006f  OK
+   RLS3 = 0x000000006480000000, correct = 0x000000006480000000  OK
+The next test has a deliberate overflow--not detected by design.
+   RLS4 = 0x007fffffff00000000, correct = 0x008000000000000000  ***INCORRECT***
+   RLS5 = 000000000000000000, correct = 000000000000000000  OK
+   RLS6 = 0x000000000000000053, correct = 0x000000000000000053  OK
+   RLS7 = 0x00000000650000fffd, correct = 0x00000000650000fffd  OK
+   RLS8 = 0x00fffffffefffffffd, correct = 0x00fffffffefffffffd  OK
+
+===jrsle===
+   RLSE1 = 000000000000000000, correct = 000000000000000000  OK
+   RLSE2 = 0x00000000640000006f, correct = 0x00000000640000006f  OK
+   RLSE3 = 0x000000006480000000, correct = 0x000000006480000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 4 and msg jrsle
+   RLSE4 = 0x007fffffffffffffff, correct = 0x007fffffffffffffff  OK
+   RLSE5 = 000000000000000000, correct = 000000000000000000  OK
+   RLSE6 = 0x000000000000000053, correct = 0x000000000000000053  OK
+   RLSE7 = 0x00000000650000fffd, correct = 0x00000000650000fffd  OK
+   RLSE8 = 0x00fffffffefffffffd, correct = 0x00fffffffefffffffd  OK
+
+===jrul===
+   RLU1 = 000000000000000000, correct = 000000000000000000  OK
+   RLU2 = 0x00000000640000006f, correct = 0x00000000640000006f  OK
+   RLU3 = 0x000000006380000000, correct = 0x000000006380000000  OK
+   RLU4 = 0x007ffffffe80000003, correct = 0x007ffffffe80000003  OK
+The next test has a deliberate underflow--not detected by design.
+   RLU5 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+The next test has a deliberate underflow--not detected by design.
+   RLU6 = 0x00fffffffffffffffb, correct = 0x00fffffffffffffffb  OK
+   RLU7 = 0x00fffffffdffff005a, correct = 0x00fffffffdffff005a  OK
+
+===jrule===
+   RLUE1 = 000000000000000000, correct = 000000000000000000  OK
+   RLUE2 = 0x00000000640000006f, correct = 0x00000000640000006f  OK
+   RLUE3 = 0x000000006380000000, correct = 0x000000006380000000  OK
+   RLUE4 = 0x007ffffffe80000003, correct = 0x007ffffffe80000003  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 5 and msg jrule
+   RLUE5 = 000000000000000000, correct = 000000000000000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 6 and msg jrule
+   RLUE6 = 000000000000000000, correct = 000000000000000000  OK
+   RLUE7 = 0x00fffffffdffff005a, correct = 0x00fffffffdffff005a  OK
+
+===jdswb===
+   DS1Q = 0x0000070000, correct = 0x0000070000  OK
+   DS1R = 0000000000, correct = 0000000000  OK
+   DS2Q = 0x0000070007, correct = 0x0000070007  OK
+   DS2R = 0x0000000076, correct = 0x0000000076  OK
+Test DS3 has a deliberate overflow.
+Returned values are irrelevant.
+***Abexitmq called with code 73 and msg Divide check.
+   DS4Q = 0x00fff8fff9, correct = 0x00fff8fff9  OK
+   DS4R = 0x00fffffff9, correct = 0x00fffffff9  OK
+   DS5Q = 0x00fff8fff9, correct = 0x00fff8fff9  OK
+   DS5R = 0x0000000007, correct = 0x0000000007  OK
+   DS6Q = 0x0000070007, correct = 0x0000070007  OK
+   DS6R = 0x00fffffff9, correct = 0x00fffffff9  OK
+   DS7Q = 0x007ffffffe, correct = 0x007ffffffe  OK
+   DS7R = 0x007ffffffe, correct = 0x007ffffffe  OK
+
+===jdswbe===
+   ES1Q = 0x0000070000, correct = 0x0000070000  OK
+   ES1R = 0000000000, correct = 0000000000  OK
+   ES2Q = 0x0000070007, correct = 0x0000070007  OK
+   ES2R = 0x0000000076, correct = 0x0000000076  OK
+Test ES3 has a deliberate overflow.
+***Abexitr called with code 3 and msg jdswbe
+   ES3Q = 0x007fffffff, correct = 0x007fffffff  OK
+   ES3R = 0000000000, correct = 0000000000  OK
+   ES4Q = 0x00fff8fff9, correct = 0x00fff8fff9  OK
+   ES4R = 0x00fffffff9, correct = 0x00fffffff9  OK
+   ES5Q = 0x00fff8fff9, correct = 0x00fff8fff9  OK
+   ES5R = 0x0000000007, correct = 0x0000000007  OK
+   ES6Q = 0x0000070007, correct = 0x0000070007  OK
+   ES6R = 0x00fffffff9, correct = 0x00fffffff9  OK
+   ES7Q = 0x007ffffffe, correct = 0x007ffffffe  OK
+   ES7R = 0x007ffffffe, correct = 0x007ffffffe  OK
+
+===jdswq===
+   DS1Q = 0x0000070000, correct = 0x0000070000  OK
+   DS2Q = 0x0000070007, correct = 0x0000070007  OK
+Test DS3 has a deliberate overflow.
+Returned values are irrelevant.
+   DS4Q = 0x00fff8fff9, correct = 0x00fff8fff9  OK
+   DS5Q = 0x00fff8fff9, correct = 0x00fff8fff9  OK
+   DS6Q = 0x0000070007, correct = 0x0000070007  OK
+   DS7Q = 0x007ffffffe, correct = 0x007ffffffe  OK
+
+===jdswqe===
+   ES1Q = 0x0000070000, correct = 0x0000070000  OK
+   ES2Q = 0x0000070007, correct = 0x0000070007  OK
+Test ES3 has a deliberate overflow.
+***Abexitr called with code 3 and msg jdswqe
+   ES2Q = 0x007fffffff, correct = 0x007fffffff  OK
+   ES4Q = 0x00fff8fff9, correct = 0x00fff8fff9  OK
+   ES5Q = 0x00fff8fff9, correct = 0x00fff8fff9  OK
+   ES6Q = 0x0000070007, correct = 0x0000070007  OK
+   ES7Q = 0x007ffffffe, correct = 0x007ffffffe  OK
+
+===jduwb===
+   DU1Q = 0x000000000000070000, correct = 0x000000000000070000  OK
+   DU1R = 0000000000, correct = 0000000000  OK
+   DU2Q = 0x000000000000070007, correct = 0x000000000000070007  OK
+   DU2R = 0x0000000076, correct = 0x0000000076  OK
+Test DU3 has a deliberate divide check.
+Returned values are irrelevant.
+   DU4Q = 000000000000000000, correct = 000000000000000000  OK
+   DU4R = 0000000000, correct = 0000000000  OK
+   DU5Q = 0x0000000000ffffffff, correct = 0x0000000000ffffffff  OK
+   DU5R = 0x00fffffffe, correct = 0x00fffffffe  OK
+   DU6Q = 0x00000004bda145dd0f, correct = 0x00000004bda145dd0f  OK
+   DU6R = 0x00001bdd0e, correct = 0x00001bdd0e  OK
+   DU7Q = 0x0000001999998a3d7f, correct = 0x0000001999998a3d7f  OK
+   DU7R = 0x0000000009, correct = 0x0000000009  OK
+
+===jduwq===
+   DU1Q = 0x0000070000, correct = 0x0000070000  OK
+   DU2Q = 0x0000070007, correct = 0x0000070007  OK
+Test DU3 has a deliberate overflow.
+Returned values are irrelevant.
+   DU4Q = 0000000000, correct = 0000000000  OK
+   DU5Q = 0x00ffffffff, correct = 0x00ffffffff  OK
+
+===jduwqe===
+   DU1QE = 0x0000070000, correct = 0x0000070000  OK
+   DU2QE = 0x0000070007, correct = 0x0000070007  OK
+Test DU3QE has a deliberate overflow.
+***Abexitr called with code 3 and msg jduwqe
+   DU3QE = 0x00ffffffff, correct = 0x00ffffffff  OK
+   DU4QE = 0000000000, correct = 0000000000  OK
+   DU5QE = 0x00ffffffff, correct = 0x00ffffffff  OK
+
+===jmsw===
+   MS1 = 0x00fffffffffffffe43, correct = 0x00fffffffffffffe43  OK
+   MS2 = 0x0000000000fffe0001, correct = 0x0000000000fffe0001  OK
+   MS3 = 0x0000000000ffff0000, correct = 0x0000000000ffff0000  OK
+   MS4 = 0x000000000100000000, correct = 0x000000000100000000  OK
+   MS5 = 0x000000002300000000, correct = 0x000000002300000000  OK
+   MS6 = 0x00ffffffdd00000000, correct = 0x00ffffffdd00000000  OK
+   MS7 = 0x000000002300000000, correct = 0x000000002300000000  OK
+   MS8 = 0x003fffffff00000001, correct = 0x003fffffff00000001  OK
+
+===jmuw===
+   MU1 = 0x0000000058fffffe43, correct = 0x0000000058fffffe43  OK
+   MU2 = 0x0000000000fffe0001, correct = 0x0000000000fffe0001  OK
+   MU3 = 0x0000000000ffff0000, correct = 0x0000000000ffff0000  OK
+   MU4 = 0x000000000100000000, correct = 0x000000000100000000  OK
+   MU5 = 0x000000002300000000, correct = 0x000000002300000000  OK
+   MU6 = 0x000004ffdd00000000, correct = 0x000004ffdd00000000  OK
+   MU7 = 0x00fff4002300000000, correct = 0x00fff4002300000000  OK
+   MU8 = 0x00fffffffe00000001, correct = 0x00fffffffe00000001  OK
+
+===jmuwb===
+   JMUW1 = 0x000000008d000000eb, correct = 0x000000008d000000eb  OK
+   JMUH1 = 0000000000, correct = 0000000000  OK
+   JMUW2 = 0x00fffeff6667989901, correct = 0x00fffeff6667989901  OK
+   JMUH2 = 0000000000, correct = 0000000000  OK
+   JMUW3 = 0x00999a3cd8c15bcdff, correct = 0x00999a3cd8c15bcdff  OK
+   JMUH3 = 0x00ff656798, correct = 0x00ff656798  OK
+   JMUW4 = 0x000000009999010000, correct = 0x000000009999010000  OK
+   JMUH4 = 0x0000007fff, correct = 0x0000007fff  OK
+   JMUW5 = 0x008000000000000000, correct = 0x008000000000000000  OK
+   JMUH5 = 0x0000007fff, correct = 0x0000007fff  OK
+   JMUW6 = 0x0080010099986766ff, correct = 0x0080010099986766ff  OK
+   JMUH6 = 0x0000007ffe, correct = 0x0000007ffe  OK
+   JMUW7 = 0x007fffffff80000001, correct = 0x007fffffff80000001  OK
+   JMUH7 = 0x003fffffff, correct = 0x003fffffff  OK
+   JMUW8 = 000000000000000000, correct = 000000000000000000  OK
+   JMUH8 = 0x0040000000, correct = 0x0040000000  OK
+   JMUW9 = 0x008000000000000000, correct = 0x008000000000000000  OK
+   JMUH9 = 0000000000, correct = 0000000000  OK
+
+===jmuwje===
+   MWJ1 = 0x0000000058fffffe43, correct = 0x0000000058fffffe43  OK
+   MWJ2 = 0x0000000000ffff0000, correct = 0x0000000000ffff0000  OK
+   MWJ3 = 0x000000002300000000, correct = 0x000000002300000000  OK
+   MWJ4 = 0x00003984cceb7cae4c, correct = 0x00003984cceb7cae4c  OK
+   MWJ5 = 0x00fffaffff00050000, correct = 0x00fffaffff00050000  OK
+Test MWJ6 has a deliberate overflow.
+***Abexitr called with code 6 and msg jmuwje
+   MWJ6 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+Test MWJ7 has a deliberate overflow.
+***Abexitr called with code 7 and msg jmuwje
+   MWJ7 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+
+===jmuwwe===
+   MW1 = 0x0000000058fffffe43, correct = 0x0000000058fffffe43  OK
+   MW2 = 0x0000000000ffff0000, correct = 0x0000000000ffff0000  OK
+   MW3 = 0x000000002300000000, correct = 0x000000002300000000  OK
+   MW4 = 0x00003984cceb7cae4c, correct = 0x00003984cceb7cae4c  OK
+   MW5 = 0x00fffb000000000000, correct = 0x00fffb000000000000  OK
+Test MW6 has a deliberate overflow.
+***Abexitr called with code 6 and msg jmuwwe
+   MW6 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+Test MW7 has a deliberate overflow.
+***Abexitr called with code 7 and msg jmuwwe
+   MW7 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+
+===jssw===
+   SS1 = 0x000000001237ffffff, correct = 0x000000001237ffffff  OK
+   SS2 = 0x000000000000000048, correct = 0x000000000000000048  OK
+   SS3 = 0x00ffffffffe7ffffff, correct = 0x00ffffffffe7ffffff  OK
+   SS4 = 0x00ffffffedc456789a, correct = 0x00ffffffedc456789a  OK
+   SS5 = 0x0000000037fffffff0, correct = 0x0000000037fffffff0  OK
+   SS6 = 0x000123456000000000, correct = 0x000123456000000000  OK
+The next test has a deliberate overflow--not detected by design.
+   SS7 = 0x002345607fffffff00, correct = 0x002345607fffffff00  OK
+The next test has a deliberate overflow--not detected by design.
+   SS8 = 0x00fffffff000000000, correct = 0x00fffffff000000000  OK
+   SS9 = 0x00ffffffc7fffffff0, correct = 0x00ffffffc7fffffff0  OK
+   SS10 = 0x00fedcba9000000000, correct = 0x00fedcba9000000000  OK
+The next test has a deliberate overflow--not detected by design.
+   SS11 = 0x00dcba9f7fffffff00, correct = 0x00dcba9f7fffffff00  OK
+The next test has a deliberate overflow--not detected by design.
+   SS12 = 0x00fffffff000000000, correct = 0x00fffffff000000000  OK
+
+===jsswe===
+   SSE1 = 0x000000001237ffffff, correct = 0x000000001237ffffff  OK
+   SSE2 = 0x000000000000000048, correct = 0x000000000000000048  OK
+   SSE3 = 0x00ffffffffe7ffffff, correct = 0x00ffffffffe7ffffff  OK
+   SSE4 = 0x00ffffffedc456789a, correct = 0x00ffffffedc456789a  OK
+   SSE5 = 0x0000000037fffffff0, correct = 0x0000000037fffffff0  OK
+   SSE6 = 0x000123456000000000, correct = 0x000123456000000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 7 and msg jsswe
+   SSE7 = 0x007fffffffffffffff, correct = 0x007fffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 8 and msg jsswe
+   SSE8 = 0x007fffffffffffffff, correct = 0x007fffffffffffffff  OK
+   SSE9 = 0x00ffffffc7fffffff0, correct = 0x00ffffffc7fffffff0  OK
+   SSE10 = 0x00fedcba9000000000, correct = 0x00fedcba9000000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 11 and msg jsswe
+   SSE11 = 0x008000000000000000, correct = 0x008000000000000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 12 and msg jsswe
+   SSE12 = 0x008000000000000000, correct = 0x008000000000000000  OK
+
+===jsuw===
+   SU1 = 0x000000001237ffffff, correct = 0x000000001237ffffff  OK
+   SU2 = 0x000000000000000048, correct = 0x000000000000000048  OK
+   SU3 = 0x000fffffffe7ffffff, correct = 0x000fffffffe7ffffff  OK
+   SU4 = 0x000fffffedc456789a, correct = 0x000fffffedc456789a  OK
+   SU5 = 0x0000000037fffffff0, correct = 0x0000000037fffffff0  OK
+   SU6 = 0x000123456000000000, correct = 0x000123456000000000  OK
+The next test has a deliberate overflow--not detected by design.
+   SU7 = 0x002345607fffffff00, correct = 0x002345607fffffff00  OK
+The next test has a deliberate overflow--not detected by design.
+   SU8 = 0x00fffffff000000000, correct = 0x00fffffff000000000  OK
+The next test has a deliberate overflow--not detected by design.
+   SU9 = 0x00dcba9f7fffffff00, correct = 0x00dcba9f7fffffff00  OK
+The next test has a deliberate overflow--not detected by design.
+   SU10 = 0x00fffffff000000000, correct = 0x00fffffff000000000  OK
+
+===jsuwe===
+   SUE1 = 0x000000001237ffffff, correct = 0x000000001237ffffff  OK
+   SUE2 = 0x000000000000000048, correct = 0x000000000000000048  OK
+   SUE3 = 0x000fffffffe7ffffff, correct = 0x000fffffffe7ffffff  OK
+   SUE4 = 0x000fffffedc456789a, correct = 0x000fffffedc456789a  OK
+   SUE5 = 0x0000000037fffffff0, correct = 0x0000000037fffffff0  OK
+   SUE6 = 0x000123456000000000, correct = 0x000123456000000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 7 and msg jsuwe
+   SUE7 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 8 and msg jsuwe
+   SUE8 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 9 and msg jsuwe
+   SUE9 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 10 and msg jsuwe
+   SUE10 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+
+===dmrswjwe===
+   DMRW1 = 0x000000000000070000, correct = 0x000000000000070000  OK
+   DMRW2 = 0x000000000000070001, correct = 0x000000000000070001  OK
+   DMRW3 = 0x000000000001e36903, correct = 0x000000000001e36903  OK
+   DMRW4 = 0x000000000001e2efad, correct = 0x000000000001e2efad  OK
+   DMRW5 = 0x007ffffffefffffffd, correct = 0x007ffffffefffffffd  OK
+   DMRW6 = 0x000000100000000000, correct = 0x000000100000000000  OK
+   DMRW7 = 0x0000000000002dbae3, correct = 0x0000000000002dbae3  OK
+Test DMRW8: deliberate shift too large.
+Returned values are irrelevant.
+***Abexitq called with code 74
+   DMRW9 = 0x00fffffffffe1d1053, correct = 0x00fffffffffe1d1053  OK
+   DMRW10 = 0x00fffffffffe1d1053, correct = 0x00fffffffffe1d1053  OK
+   DMRW11 = 0x00fffffffffe1d1053, correct = 0x00fffffffffe1d1053  OK
+
+===dsrsjqe===
+   DSRJ1 = 0x0000070000, correct = 0x0000070000  OK
+   DSRJ2 = 0x0000079c48, correct = 0x0000079c48  OK
+   DSRJ3 = 0x00003697b7, correct = 0x00003697b7  OK
+   DSRJ4 = 0x00003697b8, correct = 0x00003697b8  OK
+Test DSRS5:  deliberate overflow into the sign bit.
+***Abexitr called with code 5 and msg dsrsjqe
+   DSRJ5 = 0x007fffffff, correct = 0x007fffffff  OK
+Test DSRS6: deliberate divide check.
+***Abexitr called with code 6 and msg dsrsjqe
+   DSRJ6 = 0x007fffffff, correct = 0x007fffffff  OK
+   DSRJ7 = 0x0000000984, correct = 0x0000000984  OK
+   DSRJ8 = 0x00ffc96849, correct = 0x00ffc96849  OK
+   DSRJ9 = 0x00ffc96849, correct = 0x00ffc96849  OK
+
+===dsrswq===
+   DSRS1 = 0x0000070000, correct = 0x0000070000  OK
+   DSRS2 = 0x0000070001, correct = 0x0000070001  OK
+   DSRS3 = 0x00078da40d, correct = 0x00078da40d  OK
+   DSRS4 = 0x00078da40e, correct = 0x00078da40e  OK
+   DSRS5 = 0x00078da40e, correct = 0x00078da40e  OK
+Test DSRS6:  deliberate overflow into the sign bit.
+Returned values are irrelevant.
+***Abexitmq called with code 75 and msg Fixed-point scaling overflow.
+Test DSRS7 has a deliberate divide check.
+Returned values are irrelevant.
+***Abexitmq called with code 73 and msg Divide check.
+   DSRS8 = 0x00000042e6, correct = 0x00000042e6  OK
+   DSRS9 = 0x00f8725bf2, correct = 0x00f8725bf2  OK
+   DSRS10 = 0x00f8725bf2, correct = 0x00f8725bf2  OK
+
+===dsrswqe===
+   ESRS1 = 0x0000070000, correct = 0x0000070000  OK
+   ESRS2 = 0x0000070001, correct = 0x0000070001  OK
+   ESRS3 = 0x00078da40d, correct = 0x00078da40d  OK
+   ESRS4 = 0x00078da40e, correct = 0x00078da40e  OK
+   ESRS5 = 0x00078da40e, correct = 0x00078da40e  OK
+Test DSRS6:  deliberate overflow into the sign bit.
+***Abexitr called with code 6 and msg dsrswqe
+   ESRS6 = 0x007fffffff, correct = 0x007fffffff  OK
+Test DSRS7: deliberate divide check.
+***Abexitr called with code 7 and msg dsrswqe
+   ESRS7 = 0x007fffffff, correct = 0x007fffffff  OK
+   ESRS8 = 0x00000042e6, correct = 0x00000042e6  OK
+   ESRS9 = 0x00f8725bf2, correct = 0x00f8725bf2  OK
+   ESRS10 = 0x00f8725bf2, correct = 0x00f8725bf2  OK
+
+===dsrswwqe===
+   EDSW1 = 0x000000000000070000, correct = 0x000000000000070000  OK
+   EDSW2 = 0x000000000000070001, correct = 0x000000000000070001  OK
+   EDSW3 = 0x0000000000078da40d, correct = 0x0000000000078da40d  OK
+   EDSW4 = 0x0000000000078da40e, correct = 0x0000000000078da40e  OK
+   EDSW5 = 0x0000000000078da40e, correct = 0x0000000000078da40e  OK
+   EDSW6 = 0x000000333333333333, correct = 0x000000333333333333  OK
+   EDSW7 = 0x000000000002bc2ec1, correct = 0x000000000002bc2ec1  OK
+Test EDSW8: deliberate shift too large.
+Returned values are irrelevant.
+***Abexitq called with code 74
+   EDSW9 = 0x00fffffffff8725bf2, correct = 0x00fffffffff8725bf2  OK
+   EDSW10 = 0x00fffffffff8725bf2, correct = 0x00fffffffff8725bf2  OK
+   EDSW11 = 0x0000000000078da40e, correct = 0x0000000000078da40e  OK
+
+===dsruwq===
+   DSRU1 = 0x0000070000, correct = 0x0000070000  OK
+   DSRU2 = 0x0000070001, correct = 0x0000070001  OK
+   DSRU3 = 0x00078da40d, correct = 0x00078da40d  OK
+   DSRU4 = 0x00078da40e, correct = 0x00078da40e  OK
+   DSRU5 = 0x00078da40e, correct = 0x00078da40e  OK
+Test DSRU6: deliberate overflow past the sign bit.
+Returned values are irrelevant.
+***Abexitmq called with code 75 and msg Fixed-point scaling overflow.
+Test DSRU7 has a deliberate divide check.
+Returned values are irrelevant.
+***Abexitmq called with code 73 and msg Divide check.
+   DSRU8 = 0x00000042e6, correct = 0x00000042e6  OK
+   DSRU9 = 0x0080000001, correct = 0x0080000001  OK
+Test DSRU10 has a subtle kind of divide check.
+Returned values are irrelevant.
+***Abexitmq called with code 73 and msg Divide check.
+
+===dsruwqe===
+   ESRU1 = 0x0000070000, correct = 0x0000070000  OK
+   ESRU2 = 0x0000070001, correct = 0x0000070001  OK
+   ESRU3 = 0x00078da40d, correct = 0x00078da40d  OK
+   ESRU4 = 0x00078da40e, correct = 0x00078da40e  OK
+   ESRU5 = 0x00078da40e, correct = 0x00078da40e  OK
+Test DSRU6: deliberate overflow past the sign bit.
+***Abexitr called with code 6 and msg dsruwqe
+   ESRU6 = 0x00ffffffff, correct = 0x00ffffffff  OK
+Test DSRU7: deliberate divide check.
+***Abexitr called with code 7 and msg dsruwqe
+   ESRU7 = 0x00ffffffff, correct = 0x00ffffffff  OK
+   ESRU8 = 0x00000042e6, correct = 0x00000042e6  OK
+   ESRU9 = 0x0080000001, correct = 0x0080000001  OK
+Test DSRU10 has a subtle kind of divide check.
+***Abexitr called with code 10 and msg dsruwqe
+   ESRU10 = 0x00ffffffff, correct = 0x00ffffffff  OK
+
+===dsruwwqe===
+   EDUW1 = 0x000000000000070000, correct = 0x000000000000070000  OK
+   EDUW2 = 0x000000000000070001, correct = 0x000000000000070001  OK
+   EDUW3 = 0x0000000000078da40d, correct = 0x0000000000078da40d  OK
+   EDUW4 = 0x0000000000078da40e, correct = 0x0000000000078da40e  OK
+   EDUW5 = 0x0000000000078da40e, correct = 0x0000000000078da40e  OK
+   EDUW6 = 0x000000666666666666, correct = 0x000000666666666666  OK
+   EDUW7 = 0x0000000000002157c0, correct = 0x0000000000002157c0  OK
+Test EDUW8: deliberate negative shift.
+Returned values are irrelevant.
+***Abexitq called with code 74
+   EDUW9 = 0x000000000080000001, correct = 0x000000000080000001  OK
+Test DSRU10 has a subtle kind of divide check.
+***Abexitr called with code 10 and msg dsruwwqe
+   EDUW10 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+
+===mssw===
+***Note:  This routine is obsolete and should be replaced
+***with msswe in all applications--many dangerous overflows
+***are not detected (by design), and in those cases, results
+***may differ between 32-bit and 64-bit compilations.  Also,
+***negative results differ by one bit between 64- and 32-bit
+***versions due to shift neg. vs. shift pos, then negate.
+   MSS1 = 0x00000000178000003a, correct = 0x00000000178000003a  OK
+   MSS2, expected: 0x00fffffeff66679899 (64-bit), 0x0000fffeff66679899 (32-bit)
+   Result = 0x00fffffeff66679899, expected = 0x00fffffeff66679899  OK
+   MSS3, expected: 0x00fffffffffffffeff (64-bit), 0x000000000000fffeff (32-bit)
+   Result = 0x00fffffffffffffeff, expected = 0x00fffffffffffffeff  OK
+   MSS4 = 0x00fffeff6667989901, correct = 0x00fffeff6667989901  OK
+   MSS5, expected: 0x00fffffeff66679899 (64-bit), 0x0000fffeff66679899 (32-bit)
+   Result = 0x00fffffeff66679899, expected = 0x00fffffeff66679899  OK
+   MSS6, expected: 0x000000010099986766 (64-bit), 0x00ff00010099986767 (32-bit)
+   Result = 0x000000010099986766, expected = 0x000000010099986766  OK
+The next test has a deliberate overflow--not detected by design.
+   MSS7, expected: 0x00ff80010099986766 (64-bit), 0x000080010099986766 (32-bit)
+   Result = 0x00ff80010099986766, expected = 0x00ff80010099986766  OK
+The next test has a deliberate overflow--not detected by design.
+   MSS8 = 0x00fff8000000000000, correct = 0x00fff8000000000000  OK
+
+===mssle===
+   MSSLE1 = 0x0007f309d7, correct = 0x0007f309d7  OK
+   MSSLE2 = 0x00f80cf629, correct = 0x00f80cf629  OK
+   MSSLE3 = 0x0007f309d7, correct = 0x0007f309d7  OK
+   MSSLE4 = 0x0033ffcb00, correct = 0x0033ffcb00  OK
+   MSSLE5 = 0x00cc003500, correct = 0x00cc003500  OK
+   MSSLE6 = 0x00067fe000, correct = 0x00067fe000  OK
+   MSSLE7 = 0x00e033d8a4, correct = 0x00e033d8a4  OK
+   MSSLE8 = 0x007fff7fff, correct = 0x007fff7fff  OK
+   MSSLE9 = 0x0080008000, correct = 0x0080008000  OK
+   MSSLE10 = 0x0080000000, correct = 0x0080000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 11 and msg mssle
+   MSSLE11 = 0x007fffffff, correct = 0x007fffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 12 and msg mssle
+   MSSLE12 = 0x007fffffff, correct = 0x007fffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 13 and msg mssle
+   MSSLE13 = 0x007fffffff, correct = 0x007fffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 14 and msg mssle
+   MSSLE14 = 0x007fffffff, correct = 0x007fffffff  OK
+
+===msswe===
+   MSSE1 = 0x00000000178000003a, correct = 0x00000000178000003a  OK
+   MSSE2 = 0x0000fffeff66679899, correct = 0x0000fffeff66679899  OK
+   MSSE3 = 0x000000000000fffeff, correct = 0x000000000000fffeff  OK
+   MSSE4 = 0x000fffeff666798990, correct = 0x000fffeff666798990  OK
+   MSSE5 = 0x0000fffeff66679899, correct = 0x0000fffeff66679899  OK
+   MSSE6 = 0x00ff00010099986767, correct = 0x00ff00010099986767  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 7 and msg msswe
+   MSSE7 = 0x007fffffffffffffff, correct = 0x007fffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 8 and msg msswe
+   MSSE8 = 0x008000000000000000, correct = 0x008000000000000000  OK
+   MSSE9 = 0x007ffe800100999867, correct = 0x007ffe800100999867  OK
+   MSSE10 = 0x003fffffff7fffffff, correct = 0x003fffffff7fffffff  OK
+   MSSE11 = 0x002000000000000000, correct = 0x002000000000000000  OK
+   MSSE12 = 0x00ffffffff80000000, correct = 0x00ffffffff80000000  OK
+
+===msrsle===
+   MSRSLE1 = 0x0007f32611, correct = 0x0007f32611  OK
+   MSRSLE2 = 0x00f80cd9ef, correct = 0x00f80cd9ef  OK
+   MSRSLE3 = 0x0007f32611, correct = 0x0007f32611  OK
+   MSRSLE4 = 0x0033ffcb00, correct = 0x0033ffcb00  OK
+   MSRSLE5 = 0x00cc003500, correct = 0x00cc003500  OK
+   MSRSLE6 = 0x00cc003500, correct = 0x00cc003500  OK
+   MSRSLE7 = 0x00e03367be, correct = 0x00e03367be  OK
+   MSRSLE8 = 0x007fff7fff, correct = 0x007fff7fff  OK
+   MSRSLE9 = 0x0080008000, correct = 0x0080008000  OK
+   MSRSLE10 = 0x0080000000, correct = 0x0080000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 11 and msg msrsle
+   MSRSLE11 = 0x007fffffff, correct = 0x007fffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 12 and msg msrsle
+   MSRSLE12 = 0x007fffffff, correct = 0x007fffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 13 and msg msrsle
+   MSRSLE13 = 0x007fffffff, correct = 0x007fffffff  OK
+
+===msrsl===
+   MSRSL1 = 0x0007f32611, correct = 0x0007f32611  OK
+   MSRSL2 = 0x00f80cd9ef, correct = 0x00f80cd9ef  OK
+   MSRSL3 = 0x0007f32611, correct = 0x0007f32611  OK
+   MSRSL4 = 0x0033ffcb00, correct = 0x0033ffcb00  OK
+   MSRSL5 = 0x00cc003500, correct = 0x00cc003500  OK
+   MSRSL6 = 0x00cc003500, correct = 0x00cc003500  OK
+   MSRSL7 = 0x00e03367be, correct = 0x00e03367be  OK
+   MSRSL8 = 0x007fff7fff, correct = 0x007fff7fff  OK
+   MSRSL9 = 0x0080008000, correct = 0x0080008000  OK
+   MSRSL10 = 0x0080000000, correct = 0x0080000000  OK
+The next 3 tests have deliberate overflows--not detected by design.
+   MSRSL11 = 0x0080000000, correct = 0x0080000000  OK
+   MSRSL12 = 0x00fe800100, correct = 0x00fe800100  OK
+   MSRSL13 = 0x0080000000, correct = 0x0080000000  OK
+
+===msrswe===
+   MSRSE1 = 0x00000000178000003b, correct = 0x00000000178000003b  OK
+   MSRSE2 = 0x0000fffeff66679899, correct = 0x0000fffeff66679899  OK
+   MSRSE3 = 0x000000000001fffdff, correct = 0x000000000001fffdff  OK
+   MSRSE4 = 0x000fffeff666798990, correct = 0x000fffeff666798990  OK
+   MSRSE5 = 0x000800000000000000, correct = 0x000800000000000000  OK
+   MSRSE6 = 0x00fff0001009998676, correct = 0x00fff0001009998676  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 7 and msg msrswe
+   MSRSE7 = 0x007fffffffffffffff, correct = 0x007fffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 8 and msg msrswe
+   MSRSE8 = 0x008000000000000000, correct = 0x008000000000000000  OK
+   MSRSE9 = 0x007ffe800100999867, correct = 0x007ffe800100999867  OK
+   MSRSE10 = 0x003fffffff80000000, correct = 0x003fffffff80000000  OK
+   MSRSE11 = 0x002000000000000000, correct = 0x002000000000000000  OK
+   MSRSE12 = 0x00ffffffff80000000, correct = 0x00ffffffff80000000  OK
+   MSRSE13 = 0x004000000000000000, correct = 0x004000000000000000  OK
+
+===msuw===
+   MSU1 = 0x00000000178000003a, correct = 0x00000000178000003a  OK
+   MSU2 = 0x0000fffeff66679899, correct = 0x0000fffeff66679899  OK
+   MSU3 = 0x000000000000fffeff, correct = 0x000000000000fffeff  OK
+   MSU4 = 0x00fffeff6667989901, correct = 0x00fffeff6667989901  OK
+   MSU5 = 0x0000fffeff66679899, correct = 0x0000fffeff66679899  OK
+The next test has a deliberate overflow--not detected by design.
+   MSU6 = 0x000000010099986766, correct = 0x000000010099986766  OK
+The next test has a deliberate overflow--not detected by design.
+   MSU7 = 0x000080010099986766, correct = 0x000080010099986766  OK
+The next test has a deliberate overflow--not detected by design.
+   MSU8 = 0x000008000000000000, correct = 0x000008000000000000  OK
+
+===msule===
+   MSULE1 = 0x0007f309d7, correct = 0x0007f309d7  OK
+   MSULE2 = 0x0033ffcb00, correct = 0x0033ffcb00  OK
+   MSULE3 = 0x00007819ff, correct = 0x00007819ff  OK
+   MSULE4 = 0x007819fffd, correct = 0x007819fffd  OK
+   MSULE5 = 0x001fcc275c, correct = 0x001fcc275c  OK
+   MSULE6 = 0x00fffeffff, correct = 0x00fffeffff  OK
+   MSULE7 = 0x007fff8000, correct = 0x007fff8000  OK
+   MSULE8 = 0x0080000000, correct = 0x0080000000  OK
+   MSULE9 = 0x0080000000, correct = 0x0080000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 10 and msg msule
+   MSULE10 = 0x00ffffffff, correct = 0x00ffffffff  OK
+   MSULE11 = 0x0080000000, correct = 0x0080000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 12 and msg msule
+   MSULE12 = 0x00ffffffff, correct = 0x00ffffffff  OK
+
+===msuwe===
+   MSUE1 = 0x00000000178000003a, correct = 0x00000000178000003a  OK
+   MSUE2 = 0x0000fffeff66679899, correct = 0x0000fffeff66679899  OK
+   MSUE3 = 0x000000000000fffeff, correct = 0x000000000000fffeff  OK
+   MSUE4 = 0x00fffeff6667989901, correct = 0x00fffeff6667989901  OK
+   MSUE5 = 0x0000fffeff66679899, correct = 0x0000fffeff66679899  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 6 and msg msuwe
+   MSUE6 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 7 and msg msuwe
+   MSUE7 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 8 and msg msuwe
+   MSUE8 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+   MSUE9 = 0x007ffe800100999867, correct = 0x007ffe800100999867  OK
+   MSUE10 = 0x003fffffff7fffffff, correct = 0x003fffffff7fffffff  OK
+   MSUE11 = 0x002000000000000000, correct = 0x002000000000000000  OK
+   MSUE12 = 0x000000000080000000, correct = 0x000000000080000000  OK
+
+===msrule===
+   MSRULE1 = 0x0007f309d7, correct = 0x0007f309d7  OK
+   MSRULE2 = 0x0033ffcb00, correct = 0x0033ffcb00  OK
+   MSRULE3 = 0x0000781a00, correct = 0x0000781a00  OK
+   MSRULE4 = 0x007819fffe, correct = 0x007819fffe  OK
+   MSRULE5 = 0x001fcc275c, correct = 0x001fcc275c  OK
+   MSRULE6 = 0x00fffeffff, correct = 0x00fffeffff  OK
+   MSRULE7 = 0x0007fb3338, correct = 0x0007fb3338  OK
+   MSRULE8 = 0x0080000000, correct = 0x0080000000  OK
+   MSRULE9 = 0x0080000000, correct = 0x0080000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 10 and msg msrule
+   MSRULE10 = 0x00ffffffff, correct = 0x00ffffffff  OK
+   MSRULE11 = 0x0080000000, correct = 0x0080000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 12 and msg msrule
+   MSRULE12 = 0x00ffffffff, correct = 0x00ffffffff  OK
+
+===msrul===
+   MSRUL1 = 0x0007f309d7, correct = 0x0007f309d7  OK
+   MSRUL2 = 0x0033ffcb00, correct = 0x0033ffcb00  OK
+   MSRUL3 = 0x0000781a00, correct = 0x0000781a00  OK
+   MSRUL4 = 0x007819fffe, correct = 0x007819fffe  OK
+   MSRUL5 = 0x001fcc275c, correct = 0x001fcc275c  OK
+   MSRUL6 = 0x00fffeffff, correct = 0x00fffeffff  OK
+   MSRUL7 = 0x0007fb3338, correct = 0x0007fb3338  OK
+   MSRUL8 = 0x0080000000, correct = 0x0080000000  OK
+   MSRUL9 = 0x0080000000, correct = 0x0080000000  OK
+The next test has a deliberate overflow--not detected by design.
+   MSRUL10 = 0x00fe800100, correct = 0x00fe800100  OK
+   MSRUL11 = 0x0080000000, correct = 0x0080000000  OK
+The next test has a deliberate overflow--not detected by design.
+   MSRUL12 = 0000000000, correct = 0000000000  OK
+
+===msruwe===
+   MSRUE1 = 0x00000000178000003b, correct = 0x00000000178000003b  OK
+   MSRUE2 = 0x0000fffeff66679899, correct = 0x0000fffeff66679899  OK
+   MSRUE3 = 0x000000000001fffdff, correct = 0x000000000001fffdff  OK
+   MSRUE4 = 0x000fffeff666798990, correct = 0x000fffeff666798990  OK
+   MSRUE5 = 0x000800000000000000, correct = 0x000800000000000000  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 6 and msg msruwe
+   MSRUE6 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 7 and msg msruwe
+   MSRUE7 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+The next test has a deliberate overflow.
+***Abexitr called with code 8 and msg msruwe
+   MSRUE8 = 0x00ffffffffffffffff, correct = 0x00ffffffffffffffff  OK
+   MSRUE9 = 0x007ffe800100999867, correct = 0x007ffe800100999867  OK
+   MSRUE10 = 0x003fffffff80000000, correct = 0x003fffffff80000000  OK
+   MSRUE11 = 0x002000000000000000, correct = 0x002000000000000000  OK
+   MSRUE12 = 0x000000000080000000, correct = 0x000000000080000000  OK
+   MSRUE13 = 0x004000000000000000, correct = 0x004000000000000000  OK
+
+End 64-bit arithmetic tests, got 1 errors.

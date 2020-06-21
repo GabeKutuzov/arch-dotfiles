@@ -1,0 +1,111 @@
+#!/bin/sh
+# Program to run sgrep in all directories containing gnr source code
+
+echo
+echo include
+pushd ~/include > /dev/null
+sgrep $1 *.h
+popd > /dev/null
+
+echo
+echo src/bbd
+pushd ~/src/bbd > /dev/null
+sgrep $1 *.c
+popd > /dev/null
+
+echo
+echo src/bbdmex
+pushd ~/src/bbdmex > /dev/null
+sgrep $1 *.c
+popd > /dev/null
+
+echo
+echo src/crk
+pushd ~/src/crk > /dev/null
+sgrep $1 *.c
+popd > /dev/null
+
+echo
+echo src/crk/test
+pushd ~/src/crk/test > /dev/null
+sgrep $1 *.c
+popd > /dev/null
+
+echo
+echo src/d3
+pushd ~/src/d3 > /dev/null
+sgrep $1 *.h *.c
+popd > /dev/null
+
+echo
+echo src/d3utils
+pushd ~/src/d3utils > /dev/null
+sgrep $1 *.c
+popd > /dev/null
+
+echo
+echo src/env
+pushd ~/src/env > /dev/null
+sgrep $1 *.c
+popd > /dev/null
+
+echo
+echo src/femesh
+pushd ~/src/femesh > /dev/null
+sgrep $1 *.h *.c
+popd > /dev/null
+
+echo
+echo src/hybdrvr
+pushd ~/src/hybdrvr > /dev/null
+sgrep $1 *.h *.c
+popd > /dev/null
+
+echo
+echo src/mfdraw
+pushd ~/src/mfdraw > /dev/null
+sgrep $1 *.h *.c *.cxx
+popd > /dev/null
+
+echo
+echo src/mfsr
+pushd ~/src/mfsr > /dev/null
+sgrep $1 *.c
+popd > /dev/null
+
+echo
+echo src/mpitools
+pushd ~/src/mpitools > /dev/null
+sgrep $1 *.c
+popd > /dev/null
+
+echo
+echo src/nxdr2
+pushd ~/src/nxdr2 > /dev/null
+sgrep $1 *.h *.c
+popd > /dev/null
+
+echo
+echo src/oldplot
+pushd ~/src/oldplot > /dev/null
+sgrep $1 *.h *.c
+popd > /dev/null
+
+echo
+echo src/pgms
+pushd ~/src/pgms > /dev/null
+sgrep $1 *.h *.c
+popd > /dev/null
+
+echo
+echo src/plot
+pushd ~/src/plot > /dev/null
+sgrep $1 *.h *.c
+popd > /dev/null
+
+echo
+echo src/tanks
+pushd ~/src/tanks > /dev/null
+sgrep $1 *.h *.c *.cpp
+popd > /dev/null
+

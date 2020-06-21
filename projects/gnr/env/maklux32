@@ -1,0 +1,74 @@
+# (c) Copyright 1999-2011, The Rockefeller University *11224* 
+# $Id: maklux32 26 2018-08-15 19:38:08Z  $
+########################################################################
+#                      Make file for env library                       #
+#                                                                      #
+# Rev, 07/24/99, GNR - New version for PCLINUX (GNU make)              #
+# ==>, 08/18/07, GNR - Last mod before committing to svn repository    #
+# Rev, 03/31/08, GNR - Use shell syntax to get svnversion into code    #
+# Rev, 12/28/08, GNR - Add clean target, dependency on makefile itself #
+# Rev, 01/30/11, GNR - Add NEWARB definition                           #
+########################################################################
+
+LIBDIR   = /$(HOME)/lib
+INC      = /$(HOME)/include
+LIBNM    = libenv
+
+# Linux common pathnames
+DIR := pclinux
+LL  := $(LIBDIR)/pclinux
+
+FILES = \
+envarm \
+envctl \
+envcyc \
+envdel \
+envget \
+envgob \
+envlim \
+envloc \
+envlod \
+envpia \
+envplot \
+envprt \
+envsav \
+envset \
+envshp \
+envvers
+
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+########## Target dependent macro definitions:
+CC := gcc
+CFLAGS := -g -O2 -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := PCLINUX NEWARB _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d maklux32
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+.PHONY : pclinux depend
+pclinux:   $(LL)/$(LIBNM).a
+depend:    $(FILES:%=$(DIR)/%.d)
+
+$(LL)/$(LIBNM).a: $(FILES:%=$(DIR)/%.o)
+	ar r $(LIBNM).a $(FILES:%=$(DIR)/%.o)
+	ranlib $(LIBNM).a
+	mv $(LIBNM).a $(LL)
+
+clean:
+	rm -f $(DIR)/*.o
+	rm -f $(LL)/$(LIBNM).a
+
+-include $(FILES:%=$(DIR)/%.d)

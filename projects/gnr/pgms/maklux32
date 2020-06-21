@@ -1,0 +1,100 @@
+# (c) Copyright 1999-2017, The Rockefeller University *11202* 
+# PCLINUX MAKE file for miscellaneous programs
+#
+# V1A, 07/25/99, GNR
+# Rev, 06/16/01, GNR - Add sgrep and abend
+# Rev, 03/24/07, GNR - Add crkparse
+# Rev, 06/04/07, GNR - Add bmtest
+# Rev, 04/10/08, GNR - Add gnrversn
+# Rev, 06/02/10, GNR - Add dumpnorb
+# Rev, 11/08/11, GNR - Add ShowMovie
+# Rev, 03/22/12, GNR - Add semrm
+# Rev, 01/11/17, GNR - Add keyedit
+
+# Define architecture-specific subdirectory
+DIR := pclinux
+
+# Define directory where include files are stored
+INC=$(HOME)/include
+
+# Define directory where private libraries are stored
+LIB=$(HOME)/lib/$(DIR)
+
+.SUFFIXES:
+.SUFFIXES: .c .s .o
+
+# Compilation macros for LINUX
+CC := gcc
+CFLAGS := -g -Wunused
+DEFS := PCLINUX _ISOC99_SOURCE
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -o $@ -c $<
+
+# Targets for making various programs
+
+d2u:	$(DIR)/d2u.o $(LIB)/libcrk.a
+	$(CC) $(CFLAGS) -o d2u $(DIR)/d2u.o $(LIB)/libcrk.a -lm
+	mv $@ ~/bin
+
+$(DIR)/d2u.o:	d2u-u2d.c $(DIR)/d2u-u2d.d
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -o $*.o -c d2u-u2d.c
+
+u2d:	$(DIR)/u2d.o $(LIB)/libcrk.a
+	$(CC) $(CFLAGS) -o u2d $(DIR)/u2d.o $(LIB)/libcrk.a -lm
+	mv $@ ~/bin
+
+$(DIR)/u2d.o:	d2u-u2d.c $(DIR)/d2u-u2d.d
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -DU2D -I$(INC) -o $*.o -c d2u-u2d.c
+
+abend:	$(DIR)/abend.o
+	$(CC) $(CFLAGS) -o abend $(DIR)/abend.o -lm
+	mv $@ ~/bin
+
+bmtest: $(DIR)/bmtest.o $(LIB)/libcrk.a $(LIB)/libserplot.a
+	$(CC) $(CFLAGS) -o bmtest $(DIR)/bmtest.o -L$(LIB) -lserplot -lcrk -lm
+
+bmtest1: $(DIR)/bmtest1.o $(LIB)/libcrk.a $(LIB)/libserplot.a
+	$(CC) $(CFLAGS) -o bmtest1 $(DIR)/bmtest1.o -L$(LIB) -lserplot -lcrk -lm
+
+dumpnorb: $(DIR)/dumpnorb.o $(LIB)/libcrk.a
+	$(CC) $(CFLAGS) -o dumpnorb $(DIR)/dumpnorb.o $(LIB)/libcrk.a -lm
+	mv $@ ~/bin
+
+gnrversn: $(DIR)/gnrversn.o
+	$(CC) $(CFLAGS) -o gnrversn $(DIR)/gnrversn.o
+	mv $@ ~/bin
+
+keyedit: $(DIR)/keyedit.o $(LIB)/libcrk.a
+	$(CC) $(CFLAGS) -o keyedit $(DIR)/keyedit.o $(LIB)/libcrk.a -lm
+	mv $@ ~/bin
+
+semrm:	$(DIR)/semrm.o
+	$(CC) $(CFLAGS) -o semrm $(DIR)/semrm.o -L$(LIB) -lcrk -lrt -lm
+	mv $@ ~/bin
+
+sgrep:	$(DIR)/sgrep.o
+	$(CC) $(CFLAGS) -o sgrep $(DIR)/sgrep.o -lm
+	mv $@ ~/bin
+
+ShowMovie:	$(DIR)/ShowMovie.o $(LIB)/libserplot.a $(LIB)/libcrk.a
+	$(CC) $(CFLAGS) -o ShowMovie $(DIR)/ShowMovie.o -L$(LIB) -lserplot -lcrk -lm
+	mv $@ ~/bin
+
+crkparse:	$(DIR)/crkparse.o $(LIB)/libcrk.a
+		$(CC) $(CFLAGS) -o crkparse $(DIR)/crkparse.o $(LIB)/libcrk.a -lm
+
+d2x:	$(DIR)/d2x.o
+	$(CC) $(CFLAGS) -o d2x $(DIR)/d2x.o -lm
+	mv $@ ~/bin
+
+x2d:	$(DIR)/x2d.o
+	$(CC) $(CFLAGS) -o x2d $(DIR)/x2d.o -lm
+	mv $@ ~/bin
+

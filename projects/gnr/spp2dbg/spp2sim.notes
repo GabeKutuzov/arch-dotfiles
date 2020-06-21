@@ -1,0 +1,47 @@
+Here are my questions concerning the function of some of the
+SPP2 Assembly language instructions:
+(1) Documentation does not state that all numbers in BRAM and
+    general registers are considered to be signed (except when
+    operated on by SHFTLR).  Is this correct?
+(2) Documentation does not state notation for negative numbers
+    (I assume twos complement).  I would assume operands to
+    ADDACC and SUBTACC are sign-extended?
+(3) Documentation states that the AC stack has depth 5.  It is
+    not clear whether this includes the P register itself.  I
+    assume it does not, i.e. there is the P register plus five
+    more in the stack.
+(4) Documentation does not state whether the last stack register
+    is zero'd or left unchanged when the stack is popped.  I
+    assume the latter.
+(5) Documentation of SHFTP says "shift P right 17 per dsp48".  The
+    notation "dsp48" is not documented.  What is it?  Documentation
+    does not state whether this is a logical or signed shift (i.e.
+    are the high 16 bits set to the existing sign?).  I assume they
+    would be, please clarify.
+(6) Documentation states that FETCH (immediate form) uses only
+    bits 2:0 of the immediate data register to form the 11 bit
+    memory address.  I assume this means the remaining 5 bits
+    are irrelevant, and so I do not test that they are zero.
+(7) Document says Carry flag is set by TESTP instruction.  What
+    is this doing, if there is no arithmentic to carry anything?
+
+The following are suggestions for what I hope would be simple
+improvements.  Possibly these have already been implemented and
+it is just a matter of documentation.
+(8) ADDACC, SUBTACC, MULTACC are not documented as setting any of
+    the arithmetic flags.  Is this correct?  Clearly some compare
+    instructions could be saved if these bits were set by arith.
+(9) Many compare instructions could be saved if the AND instruction
+    set the Zero/Nonzero flag.  Could this easily be done?
+(10) [I consider this important] A simple function call could easily
+    be implemented by adding an instruction to copy the PC (program
+    counter) to a general register and an instruction to jump to the
+    address stored in a general register (for return).  In this case,
+    return address would have to be computed first by ordinary arith-
+    metic to skip over the jump and any arguments stored inline.
+    The save-return-address and jump-to-subroutine could be combined
+    into one instruction ala the old IBM BAL:  Store address of next
+    instruction in a register and jump to an immediate address, but
+    this is not necessary if difficult to implement.
+    Function arguments could be passed in general registers.
+

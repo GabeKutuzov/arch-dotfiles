@@ -1,0 +1,293 @@
+.MCAD 303010000 1 79 29 0
+.CMD FORMAT  rd=d ct=10 im=i et=3 zt=15 pr=3 mass length time charge temperature tr=0 vm=0
+.CMD SET ORIGIN 0
+.CMD SET TOL 0.001000000000000
+.CMD SET PRNCOLWIDTH 8
+.CMD SET PRNPRECISION 4
+.CMD PRINT_SETUP 1.000000 1.000000 1.200000 1.000000 0
+.CMD HEADER_FOOTER 1 1 *empty* PHANTOM^IMAGE^PROGRAM *empty* 0 1 *empty* *empty* *empty*
+.CMD HEADER_FOOTER_FONT fontID=14 family=Arial points=10 bold=0 italic=0 underline=0
+.CMD HEADER_FOOTER_FONT fontID=15 family=Arial points=10 bold=0 italic=0 underline=0
+.CMD DEFINE_FONTSTYLE_NAME fontID=0 name=Variables
+.CMD DEFINE_FONTSTYLE_NAME fontID=1 name=Constants
+.CMD DEFINE_FONTSTYLE_NAME fontID=2 name=Text
+.CMD DEFINE_FONTSTYLE_NAME fontID=4 name=User^1
+.CMD DEFINE_FONTSTYLE_NAME fontID=5 name=User^2
+.CMD DEFINE_FONTSTYLE_NAME fontID=6 name=User^3
+.CMD DEFINE_FONTSTYLE_NAME fontID=7 name=User^4
+.CMD DEFINE_FONTSTYLE_NAME fontID=8 name=User^5
+.CMD DEFINE_FONTSTYLE_NAME fontID=9 name=User^6
+.CMD DEFINE_FONTSTYLE_NAME fontID=10 name=User^7
+.CMD DEFINE_FONTSTYLE fontID=0 family=Times^New^Roman points=10 bold=1 italic=0 underline=0
+.CMD DEFINE_FONTSTYLE fontID=1 family=Times^New^Roman points=10 bold=0 italic=0 underline=0
+.CMD DEFINE_FONTSTYLE fontID=2 family=Arial points=10 bold=0 italic=0 underline=0
+.CMD DEFINE_FONTSTYLE fontID=4 family=Arial points=10 bold=0 italic=0 underline=0
+.CMD DEFINE_FONTSTYLE fontID=5 family=Courier^New points=10 bold=0 italic=0 underline=0
+.CMD DEFINE_FONTSTYLE fontID=6 family=System points=10 bold=0 italic=0 underline=0
+.CMD DEFINE_FONTSTYLE fontID=7 family=Script points=10 bold=0 italic=0 underline=0
+.CMD DEFINE_FONTSTYLE fontID=8 family=Roman points=10 bold=0 italic=0 underline=0
+.CMD DEFINE_FONTSTYLE fontID=9 family=Modern points=10 bold=0 italic=0 underline=0
+.CMD DEFINE_FONTSTYLE fontID=10 family=Times^New^Roman points=10 bold=0 italic=0 underline=0
+.CMD UNITS U=1
+.CMD DIMENSIONS_ANALYSIS 0 0
+.CMD SMART_MATH 1
+.CMD RULE_PACK Live^Symbolics 1
+.TXT 2 1 3 0
+Cg b78.000000,78.000000,5883
+{\rtf1\ansi \deff0
+{\fonttbl
+{\f0\fnil Arial;}
+{\f1\fnil Symbol;}
+}
+{\plain {\par      This document sets forth
+ the mathematical techniques used to generate
+ objects in the "phantom" program.\par \par 
+}{\ul I.  NOTATION}{\par \par }{\ul Image
+ Space}{:\par      x                    
+                    horizontal coordinate
+ (right) (mm)\par      y                
+                        vertical coordinate
+ (down) (mm)\par      z                 
+                       section coordinate
+ (back) (mm)\par      }{\b q}{[ia] = \{x,y,z\}
+                    x,y,z seen as a vector
+ (mm)  \par      ix,iy,iz               
+                coordinates in cols, rows,
+ secs\par      }{\b Vox}{[ia] = \{Vx,Vy,Vz\}
+       size of a voxel along x,y,z directions
+ (mm)\par      }{\b F}{[ia] = \{Fx,Fy,Fz\}
+            x,y,z of right, bottom, rear
+ faces of image (mm)\par \par }{\ul General}{:\par 
+     X,Y,Z = \{0,1,2\}                symbolic
+ subscripts for x,y,z directions\par    
+  ia                                    
+  index over the three axes:  ia = \{0,1,2\}
+ = \{X,Y,Z\}\par      i2,i3             
+                     permutations of ia:
+  i2 = \{1,2,0\}, i3 = \{2,0,1\}\par    
+  }{\b O}{[3] = \{Ox.Oy.Oz\}           origin
+ of an object and of the lattice it sits
+ on (mm)\par     }{\b  P}{              
+                         a point of interest
+ (mm)\par      }{\f1 r}{                
+                       density of an object\par 
+     }{\b qmn}{[3],}{\b qmx}{[3]        
+         min, max extent of an object along
+ x,y,z axes relative to its origin (mm)\par 
+     }{\b oqmn}{[3],}{\b oqmx}{[3]      
+      min, max extent of an object along
+ x,y,z relative to image origin (mm)\par 
+     w2mn,w2mx                    min, max
+ extent of an object along Lw2 axis relative
+ to its origin (mm)\par      ow3mn,ow3mx
+               min, max extent of an object
+ along Lw3 axis relative to image origin
+ (mm)\par \par }{\ul Lattice}{:\par     
+ }{\b Lv}{[3][3] = \{}{\b Lv1}{[3],}{\b 
+Lv2}{[3],}{\b Lv3}{[3]\}     Three vectors
+ defining a lattice (mm)\par      nLv   
+                                number of
+ lattice vectors specified\par      u1,u2,u3
+                          fractional translations
+ along directions }{\b Lv1}{,}{\b Lv2}{,}{\b 
+Lv3}{ relative to origin of\par         
+                                        
+   current object of interest\par      l1,l2,l3
+                              integer values
+ of u1,u2,u3\par      l1mn,l2mn,l3mn    
+          minimum values defining looping
+ ranges of l1,l2,l3\par      l1mx,l2mx,l3mx
+               maximum values defining looping
+ ranges of l1,l2,l3\par      }{\b Lw2}{[3]
+                             vector perpendicular
+ to }{\b Lv1}{ and in same half-plane as
+ }{\b Lv2}{ and having\par              
+                                      length
+ 1/|Lv2| (mm}{\fs16 \up6 -1}{)\par      
+Llw2                                 length
+ of }{\b Lw2}{ (mm}{\fs16 \up6 -1}{)\par 
+     }{\b Lw3}{                         
+         vector along }{\b Lv1}{ x }{\b 
+Lv2}{ and having length equal to reciprocal
+ of spacing\par                         
+                            between planes
+ containing }{\b Lv1}{ and }{\b Lv2}{ (mm}{\fs16 
+\up6 -1}{)\par \par }{\ul Brick}{:\par  
+    }{\b Be}{[3][3]                     
+      three vectors defining the edges of
+ a brick-shaped object (mm)\par \par }{\ul 
+Cylinder}{:\par      }{\b Ca}{[3]       
+                       vector defining the
+ axis of a cylinder (mm)\par      Cr    
+                               radius of
+ a cylinder (mm)\par \par }{\ul Sphere}{:\par 
+     Sr                                 
+  radius of a sphere (mm)\par \par \par 
+     \par \par \par }{\ul II.  SELECTING
+ RANGE OF LATTICE TRANSLATIONS THAT INTERSECT
+ IMAGE BOX}{\par \par      The user may 
+enter 0 <= nLv <= 3 lattice translations,
+ }{\b Lv}{.  Input checking will verify 
+that all cross products of lattice vectors
+ are "nondegenerate." i.e. longer than some
+ small length, e.g. 10}{\fs16 \up6 -4}{ 
+mm.  Later code can than always safely divide
+ any quantity by the length of a lattice
+ vector or of the cross product of two lattice
+ vectors.\par \par }{\ul Case 0}{:\par  
+    0 lattice vectors entered.  Objects 
+are placed on their input origins.  Lattice
+ vector loops are trivialized, i.e. ranges
+ l1mn..l1mx, l2mn..l2mx, l3mn..l3mx are 
+set to 0,0.\par \par }{\ul Case 1}{:\par 
+     1 lattice vector entered.  Objects 
+will be placed along this line so as to 
+fill image box.  Outer two lattice vector
+ loops are trivialized.  Calculation of 
+range l1mn..l1mx:  Lattice vector in general
+ intersects image box on two faces, not 
+necessarily opposite.  Most exact method
+ would be to consider a family of lines 
+all parallel to }{\b Lv1}{ and passing through
+ all the vertices (or other local extrema)
+ of the object, and solve for intersections
+ of all of these with the image box, taking
+ the most permissive.  However, we take 
+a simpler approach.  (This approach may 
+occassionally generate an extra lattice 
+point, but this point will not generate 
+any voxels inside the image box.  The extra
+ overhead will be trivial compared to the
+ savings at this stage.)\par \par      Consider
+ points on a line }{\b P}{ = }{\b O}{ + 
+u1*}{\b Lv1}{ + u2*}{\b Lv2}{ + u3*}{\b 
+Lv3}{ with u2,.u3 fixed at 0.  (If more 
+than one lattice vector was entered, the
+ following argument will be carried out 
+for all values of u2, u3 selected by outer
+ loops according to the algorithms given
+ below.)  We need to calculate the intersections
+ of this line with the 6 planes\par \par 
+     x = 0, x = }{\b F}{[0],  y = 0, y =
+ }{\b F}{[1],  z= 0, z= }{\b F}{[2].\par 
+\par However, the range of solutions must
+ be augmented according to the finite size
+ of the object.  When near an edge, the 
+limits may be obtained conservatively (as
+ explained above) from a consideration only
+ of the extents of the object along x,y,z,
+ viz., the vectors }{\b oqmn}{, }{\b oqmx}{.\par 
+\par }{     We must not only extend the 
+solutions outward by the object size normal
+ to the particular face, but we should also
+ consider the faces as being extended outward
+ in plane by the object dimensions for purposes
+ of deciding when a solution P is within
+ the box boundaries (see fig. inset).\par 
+\par }}
+}
+.EQN 90 55 13 0
+{Microsoft_Windows 0 4475}
+{60}
+)D,N*F$'&M!A&K#j!!!#!!!!#%!!!%EP5M,|4]:Z3k/o!!!!!!!!!!!!!"!!!&'6,{2e!1!!./5!&Q:g4-+y!!!!!!!!6q-+5?Bl!1!!23#e#i1A!)!q!!#%!A!!!&Aa!)!s!!"C,W!!6o.[!)#@!!!!!Q!!!!!!!&!!!!!/!!!!!!!!!!!!!!!!!!!!!!!s!!!!#e!!!%$F!!!^1a!!:k<7!*+"!!!t!!"CAa!!6w!!!!!,!!!!!A!!!!!!
+!!!!!!#&!!"C4'!!Aa)1!!"=!!"CE)!!!"<7!!!$!*5S!!!^1a!!,*Iq!$EK!!!b+e!!:-DG!(+u!!!$!!!!!!!!5y!!6r#e!-!~!!"C.k!!Af!!!-!%!!!!0_!!6p&K!)!e!!"C,g!!6x>{!!!$!!!!!!!!.[!!!!G-!!!!!!!!!!!!!!!!!!!!!&&K!!!1!!!!8C#e!#!j!!##7=!!JXIq!&)1!)#%!!"CAa!!!!>{!!!#!!!!!!!!!!!!
+!-#e!)"3!!#%!!!!!(+u!)"4!!!!#e!!!):4!!#Y11!!AI)1!#!j!!"8!!"C47!!AfDG!)!r!!#%-)!!6k!)$w1A>{#g!&&a<7!!!!&K,(1[!!!!!Q$B%91A/M!$!7)I"#!k!!&KK'C'!!!!!A"T%H&K!!!#!+<Q4g!!!!&K7^=7!!!!!A"d)s4'!!!$!@4M"3!4!!)21S1H!"&K!A"n(29Q!!!#!,?8%y!!!!&KL8@e!!!!!A#>%a4'!!!$
+!>!?"#"i!!)2B$G3!+4'!Q%_&+1A=)!$!8B!"#!p!!)2J$Ag!##e!Q$8&+1A$w!#!"1_&K!!!!)2IBDM!/6k!Q%m%y1A&K!$!3!>"#"v!!&KGNBp!!!!!A#0(9&K!!!#!"$&-I!!!!&KKVH)!!!!!A#R&3<7!!!#!%/'2s!!!!&K'O&~!!!!!A!8';Aa!!!&"A?>!a!!!!.bF]#i!!!!!q6@&[+u!!!#!0B&H_!!!!&K?/$=!!!!!Q$b&{4'
+D7!#!#<iI!!!!!&KDXKV!!!!!q5z&;.[!!!&"=Df!q!!!!.b:4Iv!!!!!q5Y&;.[!!!&";<V!a!!!!.b7>Iv!!!!!A!u'-1A!!!#!$)U/M!!!!&K#g,]!!!!!A#I'%9Q!!!#!+.~'}!!!!&K,9//!!!!!q43'=1A!!!&"372!q!!!!.b!S._!!!!!q6i'-1A!!!&"B<[!q!!!!.bJu+y!!!!!A"_'E#e!!!#!"J:"c!!!!&K2EAt!!!!!Q$?
+'m>{A1+x!=<^"s#.!a)2G_1L!,<;!Q#h']4'#u!$!5GS"3!0!!&K={;z!!!!!A"=(".[!!!&!11k"3"4!!)2H!9X!&&K!A!P)f+u!!!#!(?Q*C!!!!&K&m=X!!!!6:Ks"i<M";II=30D=*J19(HSAB'W9>8T=30D&@"+%O=f.CAw.t=#!b4\912K*%3&&q=b-"+{2e-#9%2y$l"]-Y,.*+G33(/#<9Bm833#'W!N3-A))U3$'-JC-"K@At';
+</#F#h!o</A))U3$'/!Q-"K@At';</#F+x!o</A))U3$'4JEC-7[</Eo4vJ).c?c"+?s"C/a!&'=;:<=$z0c1!2p6aC2@&DF=30D=1?{"+Eh4oE_7W0D=30,-!Aw.c?c"#/y!!23;:<=$z0*-"-}1!1g8G5M!)E/:T239)5O!!23;:<=$z0)-"I51!1g875W!#2m8'Iq)U3$'-J9)95X!#2m8'Iq)U3$'.!G)95X!#2m8'Iq)U3$'/!G)95X
+!#2m8'Iq)U3$'1!G)95X!#2m8'Iq)U3$'4JE-"J9875X!)E/:T23;D<;$z0,-!Aw.d>u!b4\9)2WLH23;D<;$z0c1!1g8c4w'M?d.B.g'Y4n.;#e'Y4n.[!!<G2>8`1I0R9g#j@>(&Ag*c1O0V)R8C358D37<GH*8`1Q0Y)70W9g"H@J-$"N/h(2#J@H$h!|<H'H8`1U0R9g#*@;'DIw*c1K0V1^8_G70W?;#*@H.FC.1,Hr"h@H$gB^8?G?
+0W9o$L?;2c2>3%+t5)9P5)2}$I3l*rK+"RK+",<7!,4]1&K~CE1A!-7W!!!LAi:9L?:9K~=]!+JZBs2)##BKBHG3'Y5P>;!!!#2n-+!G8d4I8C3Y8D3['U?d%k2n/nI8-'6k!):9Hw:II@K+H^K+EXK+E.'=;B!PH?@BBC=b-'HX/l!s.d<W'#4X8C3I8D3K#""7"o,uBE2n-*#P!Z!TAdDI!(.d8c3I8d3KI!-I)m"\8C3{8D3}LN3mLN3u
+LN3sLN3qLN3o;:!Z.M2fBC>z589P582n,w2n/]6p;U!s.a<73%#)1!1gLR5_!#4&@8+u;?1J+i0(-(C./lG8DN.n2h/m2iG{3("+=K@')2=sCe;\-Q?cK}?sL?:9@':I@H<]!/I|8c3;8d3=CA<;!!#-!a!!(K"L-(HX-(C0,w3I1!73*g4-5.)nLVK).=2f6[+u4i1gLN4+;<6m']%2-(C./lG8DN,*8cG38l;VG=&NCU+>!]%2-(D2&g,u
+"E2f6[+u4h53!*>&%cIt2e='3%"]9)%X!V"]FmE(+M?cK}?sLC;_"#!!C&+u!+$-"{?3'm@H-(C./lI510B)8S4+'=&KDU88-(>?1!1gLN4/3%"-!'8f(u8G*<<I!q4qLN4!LN4%LN4#;56uK%Ip58Ip58Bm!@JI!AA`*3!,;BGgK%H]"*Gc'\JI;X2}'nCT!QA!4g@'@1H7:v2}:T>J'H6l!-;_"C!!C&Aa!+&A"k?3K5=b-(C./lHZB#?c
+K|,ALN1GLN1I9%3q$l"]AA7L.sE/I223LN4%LN4#;C&X=I;\-'CM!m4mI\JRCA?r8mCi1!1gLK4Q'Y4n)q!!"(*m&K/l)PK+"RK+",<Y"!42;<&L9AFC!1#.CE+uC0<7!0K+$vK+$VK+$6K+#k<73%#d5)Ip5)DF5)=f7t.Z$l"]IT',,oEo4vJ).d=c%HJb8G2ULOE/K623;D<;$z0,-'8;DWA)4g8<-("ODu?!9T+5;-:y0NK>:XDF/""]
+%k<>-aE/HP23;:6{$z0,-%.q.d>u!b4\9%3B$l"]KU,.*+E/;623;9+u*F;"7t.Z8|#pC,+}9)2_LOCwI!)dAj:|7q>z8H2/LL'=;6<@F}'z7t.Z$l"]/~!8*+@E4VK~CF&K!-7+!!!x/e?c#Q,u"%2l--,_4k?e4w+^B3!i4w+^:C#)1!1gBw4k!!"N,w2n/]6p/]"N1!=d5)B!/eAY8n*aB$KZ=30D&C?c"#/[!)?{"k@5#&H%8n8:JDKZ
+=30DI"3I1!2n,w=d/]B!9(Ji8n"QF69Y!0*x&C?c#%?c"j.^H`+v3&C?<7"2-1+9!I:9H7:IHOA14w+^G="N,w2n/]6p/]!s.a<73%#d579P572}0"L>##;\!-,u"c26'Y,6'\Jr$L'=8c1G8d1I!w1A/""]@`'<.MA!8C1M8C1KI*;Y1!<=//3I&=4&12,i.c?c"+?s"C/c!&'=;@<I.OJ}#n<}.UIt#!"@C}?c"+?s"C/c!&'=8n"NK^<=
+&}JD/""])s5p.c+9!i:9K}:IL7A14y:J/f<=&}JD8l8=B%2n"52n/m&Q/5I38l73LLIy8C4#8D4%#""8!_:oLVK+L<"N,w2n/]6p2C!s.d>5$+JbLN4%LN4#;@1o-,9:0NJFAj:E.c?c"+?s"C/c!&'=;@<I.OJq1=;_"c"S8c1G8d1I!w1A8C3g8D3i#""7#A,uGO2n"52n/m(z!j!TAj:|-(88/l<BDN,sLJ1{0nJI*XBm!-,u"%4&@9!!
+'\Kl;u"]Fm98-8JI)VDF*6!}3%#)1!1gLR5i!#4&@8G-;A1kHC6/1!1gLR5i!#4&@8G-9%4}"("-!7<73%#)106q//3I&=4&11Ba1=;_"c!!C&G-!)?c"+?s"C/-!&'=;B1_5=5R-(<bAi:9K=:9Jy=>3%=C+=E/JT232n4U2o88;D!a/qK@-(<p-(-.#A4mK"GkBw3}@1I\*,"-29<A+z"+@1H7C-;/EkEX(7:9K}:IL7A14h:~/lG2"#!s
+.cI38l73BDJ9LLIy8C3{8D3}8c3}"w3{4w+^6+%m1!1g7DJ?!(+xHj+uBHIg'U?d"e1L-)8$.M4&593I1!1g8c4O'U?t(//}!&'=;7B0/qK@,w2n/]6p?]!s.d>i)wJ7#!"8!_9q!=,uJu4&593I1!1g8c4O'U?t(//}!&'=;=!N/qL@!1$-LN41'\K,"O,u"%2n-+738d4Q!y!!/""]6LAX.s?c"+?s"C0S!&'=;CGa3w,"Ah.^HkDGBHIg
+'\K,"e4&598s1!1g8c4O'U?t(//}!&'=;7&RLK3n=y"SBHIg'U?d"e1L-)8$-k4&593I1!1g8c4O'U?t(//}!&'=;=!N/qK@,w2n/]6p?]!s.d>i)wJ7#!"74#,uJu4&593I1!1g8c4O'U?t(//}!&'=;7B0/qLB.m4&59<]LN4/BHG3'U?d'o2n/o<<6k!s.d<Y"BJY8c1G8d1I!|+u/""]IT-('-A!4i#)101gLN41'\K,"O,u"%2n-+73
+8d4Q!y!!/""]6LAX.w,u"%4&5="-!'<73%%C'g>*!`K+"RK+",<9"-4bCA<;!-6y!!#)1!1g7DJj!(G3@?#eI!*c)m"L-(GSLR67!f"]%C;D!],u"%4&@;!%LN4%;6;>>k+91!1gLR6C!pK+L@<P=sItCA<;!-6s!!"d!!@J$g&V8C4#8k&V-(Bw"X)058C?6K+d#!;_!a#--9!!/i,u"%2n--?C"w4p4w+^9Q$-BHJ\'U?d&3:9L#,u"%3I
+159w8c4G8C3cBHG3'Y,v-K3I132nI}&1!C2n!#2n.[&P"C!s.cE/JT23;9<;$z0c1!1gLR5p!'6p!g<73%"-!*=_=SItBw4%!!#P2L#)1!1gBHJ\'Y,v'UAQB!1C'U>{'U?m!A.c!&'=9%3K$l"]-Y,.*+*QCE"8#+<j9%3K$l"]>})H*+?cBk?sC-:9Hw:II=,u"%4&@94'2c#i3%!s.d=_=SIt9%3K$l"]KU,.*2JYL??cL::9K|KHBHG3
+'\Kl;e"+"s-#!'<73%"]7w5x!]4mL7!!I'0c1!1gBHJ\'Y,v'UAQB!1C'U>{'U?m!A.c!&'=9%3K$l"]-Y,.*+*QCE"8#+<j9%3K$l"]>})H*+?cBk?sC-:9Hw:II=,u"%4&@8DG2c)53%!s.d=_=SIt9%3K$l"]KU,.*2JYL??cL::9K|KH7DIi!(.g3(*`-(,-.d>+&|4\8c3y8d3{8C3]8D3_BHG3'\Kl;e"+#5-#LL'=;=3,>k*`-(,-
+.d>u!b4\1-;_!a!v8mC(6KGM4I-<6KG]4G2f6KGf5*89,wI51!1g*W424gB)*W414g1g*W434wA`5)9P5)2},7Ax*/;_"c#-"#!!LN1ILN1G;B=*3w-B-(=b/lBUBHIk.]3I&=4&12#.CU#-*3!!/r3&9q0*$p+z8C3U8D3W/""P-&,-.d=#!b4\8c3U8d3W!q6k&3EgFSAQ$g5WF50D=3.z8c3U8d3W!r!!&3DH!q!!!q!!!!DG!!!n,l,X
+,{:?,l!j,L+u;e4'!/#ZLVJ;!1!!"C"`"5!+&+Ir!!9Q!!*W!!!!!Q!>!!!!!!!>!!!!'M1P!#Iq./5!-L<W1x'R1X,|2%"%5[!n2y*E3{5;1W2[(Q!j3k)_&OEP5O5;25"9)CG])1!!!a!!!!)2"C!&!!!!"s&K!!!!!q!!!!Ac!1!"!!.[!!!-!D&LH/!(!!!!Ku&L!!!!!!!!!!+u!!!N!1!!"C!!!0<9!!!!!!!!!!!!!!+u!!!N!1#e
+"c!!!#.^!Q#I!%Aa!!!m!!!!)1#m!!!!'=)3!!4',g#4!!!!"3!!!0Ac!!#dLVIq!!!%!!!!(_#g!!+u!!#U!1!!"C!!!0<9!!!!!!!!!!!!!!+u!!!N!1!!!a!!!0!"!1!$!!!!!!!#!(.gC%!!!!&K5j3A!!!!!A"~&v4'!!!Q
+{  122    92 0 0}
+19778 12304 0 0 1068
+40 92 122 1 8 0 11224 0 0 0 0
+!!!!!!!!Aa!!Aa!!!-#%!-!!!!#%!-!!Am!!!-#%Aa#%FW!!I}8S!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!J"A`!+-Y<7"C6s!!!!#d!!#d!!!!LVIqLG!!!0IqLG#dLG!!LVLV!!)15^DF!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`
+!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`
+!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`
+!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!q"<!1!|LG.[5Y#e0^Iv!(9R!&A`!Q"<0_!$!(:OLG4'5Y+t!A!xLG4'5Y1@!Q!uLG4'5Y9P!Q!rLG4'5YA`
+!A!pLG4'5YG,!Q!mLG4'5Z#d!Q!jLG4'5Z+t!Q!gLG4'5Z4&!Q!dLG4'5Z<6!Q!aLG4'5ZDF!Q!^LG4'5ZLV!A!\LG4'5[&J!Q!YLG4'5[.Z!Q!VLG4'5[6j!Q!SLG4'5[>z!Q!PLG4'5[G,!Q!MLG4'5\#d!Q!JLG4'5\+t!A!HLG4'5\1@!Q!ELG4'5\9P!Q!BLG4'5\A`!Q!?LG4'5\Ip!Q!<LG4'5]&J!Q!9LG4'5].Z!Q!6LG4'5]6j
+!A!4LG4'5]<6!Q!1LG4'5]DF!Q!.LG4'5]LV!Q!+LG4'5^)0!1!*LJ!Q
+
+.TXT 0 10 16 0
+Cg a0.700000,23.000000,4
+{\rtf1\ansi \deff0
+{\fonttbl
+{\f0\fnil Arial;}
+{\f1\fnil Symbol;}
+}
+{\plain {z}}
+}
+.TXT 3 1 15 0
+Cg a0.700000,22.000000,4
+{\rtf1\ansi \deff0
+{\fonttbl
+{\f0\fnil Arial;}
+{\f1\fnil Symbol;}
+}
+{\plain {x}}
+}
+.TXT 11 -11 14 0
+Cg a0.700000,33.000000,4
+{\rtf1\ansi \deff0
+{\fonttbl
+{\f0\fnil Arial;}
+{\f1\fnil Symbol;}
+}
+{\plain {y}}
+}
+.TXT 65 -53 20 0
+Cg a29.800000,76.000000,48
+{\rtf1\ansi \deff0
+{\fonttbl
+{\f0\fnil Arial;}
+{\f1\fnil Symbol;}
+}
+{\plain {Thus, we treat the 6 binding planes
+ as, e.g.:}}
+}
+.EQN 2 0 23 0
+{0:q.lower}NAME÷-({0:qmx}NAME)[({0:ia}NAME)
+.TXT 0 12 27 0
+Cg a0.400000,64.000000,2
+{\rtf1\ansi \deff0
+{\fonttbl
+{\f0\fnil Arial;}
+{\f1\fnil Symbol;}
+}
+{\plain ;}
+}
+.EQN 0 3 24 0
+{0:q.upper}NAME÷({0:F}NAME)[({0:ia}NAME)-({0:qmn}NAME)[({0:ia}NAME)
+.EQN 4 -15 18 0
+{0:q.lowup}NAME÷{0:u1}NAME*{0:Lv1.ia}NAME+{0:u2}NAME*{0:Lv2.ia}NAME+{0:u3}NAME*{0:Lv3.ia}NAME+{0:O.ia}NAME
+.TXT 5 0 29 0
+Cg a3.000000,75.000000,5
+{\rtf1\ansi \deff0
+{\fonttbl
+{\f0\fnil Arial;}
+{\f1\fnil Symbol;}
+}
+{\plain u1 =}
+}
+.EQN 0 4 28 0
+(({0:q.lowup}NAME-{0:u2}NAME*{0:Lv2.ia}NAME-{0:u3}NAME*{0:Lv3.ia}NAME-{0:O.ia}NAME))/({0:Lv1.ia}NAME)

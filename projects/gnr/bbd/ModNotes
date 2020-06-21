@@ -1,0 +1,7 @@
+This version relates to CNS R78.
+Remove SUNOS support and mention of SunOS or Solaris from makefiles.
+Use $(CC) in place of gcc in a few places in makefiles.
+Use LCLHOME for HOME in makefiles.
+bbdcinit.c and bbdsinit:  Fix rare case where lnm was used uninitialized.
+   Remove sunosbbdcquite as synonym for bbdcquit, used in place
+   of atexit under SunOS.

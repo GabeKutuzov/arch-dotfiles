@@ -1,0 +1,552 @@
+To install mfdraw on a new machine:
+(1) 
+
+
+
+
+----- Original Message ----- 
+Date: Fri, 02 Nov 2007 14:33:42 -0400
+From: "George Reeke" &lt;reeke@mail.rockefeller.edu&gt;
+To: "Steven Marx" &lt;smarx@verizon.net&gt;
+Subject: Window size
+
+Dear Steve,
+   As things are now, when I run CNS as a server for the Tank Wars game,
+the mfdraw window comes up 114 mm wide x 158 mm high (roughly--using an
+old plastic ruler).  The aspect ratio is just right.
+To avoid collision with the main window, it needs to be 100-101 mm.
+wide.  This would correspond to a magnification ratio of about 88%
+applied to both height and width.  (This will be just temporary
+for next week--after that, we will revert to the larger default size
+but have a magnification factor in the preferences file.)
+   Thanks,
+   GNR
+----- Original Message ----- 
+Date: 24-oct-2007 17:40:33 -0400
+From: "STEVEN MARX" <smarx@verizon.net>
+To: <smarx@rockefeller.edu>
+Subject: Fwd: Just a little bug [mfdraw]
+
+Dear Steve,
+   I have noticed lately that when mfdraw starts up (socket movie mode),
+the little yellow "ZOOM" balloon-hint box is always up until I move the
+mouse out of the window and back in again, then it goes away.  I don't
+recall that any clicking is involved one way or the other, but I am not
+absolutely sure of that.
+   Thanks,
+----- Original Message -----  
+
+Dear Steve,
+   Here is the Oct. 19 revision of the mfdraw specs, with the change
+that we will retain the feature that one can navigate through the
+frames in memory while still receiving new frames in movie mode.
+   Thanks for your patience,
+   GNR
+
+
+Plain Text Attachment [ Scan and Save to Computer ]
+
+[Revised, 10/19/07]
+                   Guidelines for mfdraw development
+
+Proposed changes are listed in order of decreasing importance.  Items
+that should not change are not listed.  In particular, navigation in
+socket movie mode remains the same except for implementation of the
+functions described for the new buttons in item (6).  That is, the
+user can move around among the frames currently in memory while
+mfdraw continues to request and store new frames from the running
+application.  However, when the available frame memory is full,
+mfdraw will delete frames and acquire new frames only when the
+current frame being viewed is at or beyond halfway through the
+set of frames currently in memory.  The user can move or resize
+the main viewing window, change background color, and zoom the
+image while navigating behind the latest frame, but not when new
+frames are being displayed as soon as received ("true movie mode"),
+as then confusion can arise as to which frame is intended to be
+changed.  The user can use the new Stop button described in item
+(6) to freeze the movie-mode display on the current frame in order
+to perform these functions.
+
+Implementation suggestions are in a separate list following the
+feature descriptions.
+
+    (1) The magnification slider has to be made usable.
+[Already solved with new "vector" widget.]  It is not necessary to
+display a numeric value for the zoom factor, but if one is shown, it
+should be the amount by which the scale of the image has been
+multiplied relative to a scale of 1.0, considered as the size that
+just allows the frame to fit in the current window.  This must take
+into account changes made with the zoom widget or the arrow keys,
+but not window resizes.
+   (2) There will be a user-editable preferences file.  This file
+will be called ".mfdrawrc".  When mfdraw starts up in metafile mode
+with the file name on the command line, it will look for this file
+first in the directory where the current metafile being viewed was
+found, then in the home directory of the current user.  In other
+modes, the first of these is not applicable, and the second refers to
+the home directory of the user under whose userid the program is being
+run.  In the event that neither preferences file is found, the program
+will use compile-time defaults for all preferences.
+   Items for inclusion in the preferences file, but not limited
+to these, are:  Startup location of main window, background color,
+minimum frame viewing time for fast-forward and fast-reverse buttons,
+default X display, default index size, maximum number of frames to
+store in memory (temporary), maximum memory to be devoted to storing
+frames in memory (permanent).
+   If the startup size is not given in the preferences file, the
+existing defaults are excellent and should continue to be used.
+(This option ignored if not supported by the window system in use.)
+   I would like to be able to specify startup location by one of
+the following options or similar, or with explicit x,y coordinates.:
+ULHC, URHC, LLHC, LRHC -- Upper left-hand corner, etc.,
+Center, Center Left, Center Right, Center Top, Center Bottom.
+(This option ignored if not supported by the window system in use.)
+   (3) There needs to be a minimum display time for the fast
+forward and fast reverse buttons, rather than just drawing as
+fast as possible as mfdraw does when in movie mode.  This time
+can be read from the preferences file and overridden while running
+by an item on the "File->Settings" menu.  The minimum frame viewing
+time does not apply in movie mode.
+   (4) The Home and Background buttons can be made into little
+squares like the motion buttons and the titles replaced with icons,
+for example, a cross inside a square for "Fit" and a square that is
+black on one half and clear on the other half, perhaps divided
+vertically or diagonally, for "Bkgrnd".
+   (5)  I would like the "Home" button, better thought of as a "Fit"
+button, to adjust the magnification and positioning of the frame to
+just fit in the current window.  It probably would make sense also
+to reset the scale origin to the original origin.
+   (6) I would like to have seven navigation buttons as follows:
+|<	Jump immediately to the earliest available frame (always
+        frame 1 if viewing a metafile when (10) implemented).
+<<      Step backwards through frames continually until Stop
+        button is clicked or first available frame is reached.
+        Speed as in items (3) and (6a).
+<       Step back one frame.
+||      Stop ongoing fast-forward or fast-reverse sequence.
+>       Step forward one frame.
+>>      Step forwards through frames continually until Stop
+        button is clicked or last available frame is reached.
+        Speed as in items (3) and (6a).
+>|      Jump immediately to the latest available frame (always
+        the last frame if viewing a metafile when (10) imple-
+        mented).
+These buttons work as stated in still mode or metafile mode.
+None of them causes entry into movie mode.  Any of them, if
+clicked in movie mode, causes updating of the display with new
+images to stop while new frames continue to be acquired from
+the application until the in-frame memory limitation is reached.
+The stated action (reverse buttons) or no action (Stop or
+forward buttons) then occurs.
+   (6a) [Modification of item 6].  When in fast-forward (all modes),
+clicking the '>>' button causes a small increment in speed (decrement
+in minimum viewing time) for each click, and clicking the '<<' button
+causes a small decrement in speed (increment in minimum viewing time).
+Conversely, when in fast-backwards mode, clicking the '<<' button
+causes a small increment in spped for each click, and clicking the
+'>>' button causes a small decrement in speed.  These do not change
+the minimum viewing time set in the preferences file.
+   (6b) When in fast-forward or fast-backwards (all modes), clicking
+any navigation button other than '>>' or '<<' causes exit from that
+mode and viewing of the single frame implied by the button that was
+clicked.
+   (7) Metafile viewing should behave like socket still-mode
+viewing, that is, on startup, the program should read only the
+number of frames specified by the in-memory limit (or, of
+course, fewer if the metafile contains fewer than this number
+of frames).  The navigation buttons then work within this set,
+except that, when located at the last in-memory frame, the
+'>' button results in reading one more frame (and discarding
+a frame (or frames when (9) is implemented) if necessary; the
+'>>' button steps to the last frame if not already located
+there, then continues reading new frames and deleting old
+frames until stopped by a button as detailed above or by
+reaching the end of the metafile.
+   (8) I would like to have a GoTo button that pops up a small
+dialog where one can enter a frame number, whether in metafile
+or socket mode.  (Or, if room is available, the entry widget
+can be present at all times.)  If clicked while in socket-movie
+mode, frame updating is handled as for the buttons described in
+item (6).  The frame number should count from the first frame
+in the metafile or socket file, regardless of any frames that
+have been discarded.  If a frame is requested that is not avail-
+able, a nice little beep would be sufficient error message.  In
+the first phase, GoTo would only access frames that are currently
+in memory.  A further extension for the metafile case is given
+in item (10).
+   The rules of inheritance are modified as follows:  Whenever
+the user views frames in number order, i.e. using '<', '<<',
+'>', or '>>' buttons, or in movie mode, each frame inherits
+the window size (unless the aspect ratio changes due to the
+frame size given in the file) and position, magnification,
+origin offset, and background color of the most recently viewed
+frame.  If 'GoTo' or '|<' is used to view a frame already viewed
+that is not the immediate previous or next frame in frame number
+order, then the parameters of that frame when it was most recently
+viewed will apply.  If 'GoTo' or '>|' is used to view a frame not
+already viewed (in a metafile), it should inherit from the highest-
+numbered frame in memory that is below the requested frame.  If
+implemented as in implementation suggestion (2) below, the inherited
+values can also be stored with all of the unviewed frames that are
+skipped over.
+   When the frame size requested by a new frame command in the
+input metafile or socket is different from the value that would
+be inherited according to the above rules, the size in the
+header takes precedence.  The current behavior is good the
+way it is, please do not change it.
+   (8a) If the '<' button is clicked with the CTRL key held
+down, goes to the most recently viewed frame, i.e. undoes a GoTo.
+   (8b) Item (8a) can be extended so both '<' and '>' buttons,
+when clicked with the CTRL key, move forward or backward through
+the file in the order most recently viewed, i.e. using a double-
+linked list of frame viewing order.
+   (9) We really need a command-line parameter that specifies the
+maximum memory to be used for storing frame commands (as opposed
+to the present setting of the maximum number of frames).  This
+should not be an environment parameter.  If the guidelines are
+implemented as outlined above, there is really no reason this
+cannot be changed up or down (with some fixed minimum) during a
+run via a right-click menu item.  There should be a default in
+the preferences file that will be used if the command-line
+parameter is not found at start up.
+
+The following items (9a-d) refer to the interaction between GoTo
+and memory restriction and so are really addenda to item (8):
+
+   (9a) Socket-still mode:  We always want to request from the
+application just one more frame than the highest frame number
+ever viewed.  The user can click Next and Previous and Goto ad
+lib anywhere within what is in memory, but a new frame is
+requested from the application only when the latest frame is
+viewed.  There are two differences from Metafile mode: (a) When
+memory fills, instead of throwing out the least recently viewed
+frames, you throw out oldest frames until there is enough memory
+freed up.  This prevents creating gaps in the set of viewable
+frames.  (b) When the user tries to use the Back or Goto button
+to go back to a frame that has been removed, there is an error
+beep as already mentioned above.
+   Note that the situation I observed with the 9/11 version cannot
+happen now, as long as you keep enough spare memory to receive one
+new frame.  You will never be throwing away a frame except when the
+latest frame is being viewed and when that happens, you will always
+be throwing away just one or more of the earliest frames.  The user
+will not be able to go back to those, but he/she will never see a
+discontinuity within the stack of viewable frames.
+   (9b) Socket-movie mode.  When in movie mode, either viewing
+current frames or navigating, mfdraw requests frames from the
+application until the memory quota is filled.  When the currently
+viewed frame is more than half way through the cache of frames in
+memory, and a new frame is received, mfdraw (a) removes old frames
+if necessary to make enough memory to hold the new frame on the
+list of frames that are recorded in the index, (b) puts a pointer
+to the new frame in the index, (c) asks the application for another
+frame, and (d) (if in true movie mode) displays the new latest one.
+   (9c) [This paragraph deleted].
+   (9d) Transition from still mode to movie mode:  With the current
+frame positioned anywhere in the list of viewable frames, the user can
+get to movie mode via the 'M' key or the right-click menu.  The first
+thing that happens is that mfdraw requests a new frame from the
+application if one is not already pending.  Then, if the currently
+displayed frame is not the most recent frame, mfdraw quickly steps
+through the frames in memory, as it does now, displaying each one for
+a brief time (using the preference file minimum-time item) until the
+displayed frame is the most recent frame.  Then it changes the global
+switch to movie mode and continues as above.  No other special action
+needed.
+    Note that if the user does not desire stepping through all the
+frames as described here, he/she need only press the '>|' button
+before entering movie mode.
+   (10) Regarding navigation when reading from a metafile on disk:
+The new thing here is that we want to be able to use arrow keys and
+Goto to access any frame in the metafile.  (This would not apply
+when reading from a socket.)  This clearly requires being able to
+reread frames that may have previously been discarded from memory.
+Implementation suggestions are given below.
+
+Implementation suggestions:
+
+   (1) As we discussed, most of the above can be implemented via
+an in-memory index that contains pointers to an area for each frame
+that contains its plotting commands and any other information
+needed for plotting, i.e. current scale, origin, and location.
+If the index is a simple array of structs, then information about
+frame x can be obtained quickly via index[x]->variable.
+   Also, I suggest keeping in the index information on the order
+in which the frames were viewed, as opposed to loaded.  This might
+best be implemented as a doubly-linked list with a pair of pointers
+in each index entry, one pointing to the next viewed (0 if last)
+and one pointing to the previous viewed (to list header if first)
+along with a pair of global pointers pointing to the first and
+last viewed.  Then, when you goto a frame (new or already stored),
+you adjust the pointers so the new frame becomes the most recently
+viewed and the hole in the list, if any, is plugged by changing
+the pointers of the previous and next entries appropriately.
+Then, when you need to clear memory, you just have to delete plot
+instructions from entries in this list, chasing down the linked
+list from earliest towards later entries (and adjusting the
+pointers accordingly).  These are all constant-time algorithms
+for list traversal.
+    (2) Regarding reading metafiles:  Supposing I add a data item
+at the end of the metafile that records how many frames are in that
+file, so you do not have to scan through to count them but can just
+do a seek to the end of the file to read the number of frames; then
+it seems to me you could allocate space for your index structures
+for all the frames in the metafile, which we agree is not a lot of
+memory, but populate those index structures only when the frames
+are actually read, so there is not too long a startup delay.  When
+the current memory limit is full, delete frames in order from least
+recently viewed (see above) until the memory is below the limit.
+   So, whether I go through starting at frame 1 and clicking Next
+over and over, or use Goto and view in some crazy random order,
+what the code has to do is go to the index, see if that frame is in
+memory, if so, display it, if not, read it in and note in its index
+slot that it is now in memory and where it is.
+   One of the items in the index has to be the seek location of that
+frame in the metafile.  If the user uses Goto to view frames out of
+order, it may be necessary in this situation to scan through the
+metafile from the last frame whose seek location is known to find
+the requested frame.  The seek locations of the frames skipped over
+can still be recorded in the index so these can be found quickly
+when needed later.  This overhead will be unavoidable (it replaces
+reading the entire metafile at startup as is done now), but will
+be relatively rare in practice.
+   (3) Reading from a socket.  Now we do not know in advance how
+many frames there will be.  As we discussed on 9/12/07, you can
+allocate index space, but not frame command space, for some large
+number that is a compile-time constant, e.g. 10000.  I suppose
+that if that number is ever exceeded, a realloc() would take care
+of it (this requires that there be no pointers in the structs
+that point to other items in the index--offsets must be used
+instead so they do not have to change when a realloc() occurs)
+or the program could keep the index as a circular list and when
+full throw away old index entries along with the frames they
+point to.
+   (4) Note that if things are done this way, the memory limit can
+be changed at any time.  The next time a new frame is requested, it
+may result in throwing away a bunch of frames if the limit was
+lowered, or in throwing away nothing for a while if it was raised.
+
+GNR
+
+----- Original Message -----  
+From: "George Reeke" <reeke@mail.rockefeller.edu>
+To: "Steven Marx" <smarx@verizon.net>
+Sent: Tuesday, September 25, 2007 3:28 PM
+Subject: Inheritance
+
+> Steve,
+> Actually, there does seem to be a bug with inheritance in today's
+> version:  In socket-movie mode, first I tried expanding with the
+> new zoom widget--it worked on the current frame, did not inherit
+> to the next frame.  So I went to still mode, expanded the view,
+> then went back to movie mode.  Now all the frames were zoomed,
+> but nothing I did in either still or movie mode could get new
+> frames to come up the old default (1.0) size.
+>   I would think in movie mode that if I change the size while
+> looking at one picture, this should then become the size of
+> all subsequent new frames until changed again.
+>   GNR
+> 
+
+----- Original Message ----- 
+Date: 3-jul-2007 17:06:07 -0400
+From: "STEVEN MARX" <smarx@verizon.net>
+To: <smarx@rockefeller.edu>
+Subject: Fwd: mfdraw
+
+Dear Steve,
+   A couple of suggestions for mfdraw based on my experience out here:
+
+(1) There are still problems with the magnification.  The slider
+increments are so large as to be essentially unusable:  If I start
+at 1.0 and make the drawing smaller, it goes to 0.5 with nothing
+in between.  If I try to make it larger, it goes to 3.xx.  There
+seems to be a setting at 1.8, but it won't stick there when a new
+frame comes along.  If I use the keyboard, the changes are unstable--
+when the next frame arrives, it often goes back to the previous mags
+rather than stay at the one I just set.  Given a logarithmic scale, each
+slider increment should probably be something like 95% (moving left) or
+105% (moving right).  The keyboard steps are OK, but they don't
+stick.
+
+(2) Regarding allocation for number of frames:  Why not make it a
+command-line parameter (which can be specified in the xinetd
+config file) so it can be set appropriately on different machines
+without recompilation.
+
+(3) In working towards larger numbers of frames, have you considered
+separate compilation for 32-bit vs 64-bit operating systems?
+Obviously the latter have more address space so can hold more
+frames if you continue to use a frame size big enough to hold the
+largest likely frame rather than the actual size of each frame.
+
+Regards and thanks,
+GNR
+----- Original Message ----- 
+From: "George Reeke" <reeke@mail.rockefeller.edu>
+To: "Steven Marx" <smarx@verizon.net>
+Sent: Friday, May 18, 2007 5:23 PM
+Subject: Another little mfdraw glitch
+
+> Dear Steve,
+>   When I expand the view to fullscreen (button next to kill button at
+> upper right) and then use the magnification slider, the magnification
+> happens, but the slider does not move under the mouse.
+>   Sorry,
+>   GNR
+> 
+> 
+>
+----- Original Message ----- 
+From: "George Reeke" <reeke@mail.rockefeller.edu>
+To: "Steven Marx" <smarx@verizon.net>
+Sent: Friday, May 18, 2007 1:44 PM
+Subject: mfdraw bug
+
+
+> Dear Steve,
+>   I just noticed the following:
+> If I am in step mode (if it matters, I started in Movie mode
+> but changed to step mode with the mouse button) and I hit
+> the rewind button back to step 1, then move forward one
+> frame at a time with the mouse on the right arrow button,
+> the application receives acknowledgment on each click as
+> if the next frame had been received and plotted.  This is
+> not as it should be--should only acknowledge when last frame
+> received is plotted, not when an earlier frame is revisited.
+>   Not urgent, but have a look next time working on this code.
+>   Thanks,
+>   GNR
+> 
+> 
+>
+----- Original Message ----- 
+From: "George Reeke" <reeke@mail.rockefeller.edu>
+To: "Steven Marx" <smarx@verizon.net>
+Sent: Friday, December 15, 2006 3:15 PM
+Subject: Batch mode
+
+
+> Steve,
+>   I copied a new Cns (still V8D) to your home directory this p.m.
+> It should request batch mode now when user specifies movie mode but
+> it is offline, as per the documentation.  Please test at your 
+leisure.
+>   There is really another change I would like you to make which has
+> been on my mind for a long time.  Could you make the QUIT button
+> actually quit, i.e. remove the window, kill the socket, & end the
+> process?  We will have to see about that comment you have that bad
+> things happen when you send the quit message to the client, as that
+> may actually be necessary to make the application do a controlled
+> quit.  It may depend on whether the QUIT is done before or after the
+> frame with the MF_CLOSE has been received.  I will work on this with
+> you.
+>   GNR
+> 
+
+
+----- Original Message ----- 
+From: "George Reeke" <reeke@mail.rockefeller.edu>
+To: "Steven Marx" <smarx@verizon.net>
+Sent: Monday, August 14, 2006 4:53 PM
+Subject: A new problem with latest mfdraw
+
+
+> Dear Steve,
+>   Using the new mfdraw, in movie mode, at a certain point I hit
+> the back arrow and studied the current figure for a minute or so.
+> Then I hit the forward arrow, expecting to go to the next figure,
+> but instead it went to the last figure (I believe the calculation
+> had gotten to the last figure while I was looking at the earlier
+> one, about 100 frames back from the end).  It did not go through
+> all the intermediate ones as with the FF button, it just went
+> straight to the last one.
+>   I'm sure this was working before.
+>   GNR
+> 
+> 
+>
+
+
+From: "George Reeke" <reeke@mail.rockefeller.edu>
+To: "Steven Marx" <smarx@verizon.net>
+Sent: Friday, August 04, 2006 5:55 PM
+Subject: Re: New version
+
+
+> Steve,
+>   We'll have to deal with that Monday, its getting late now.
+> Another thing I would like you to change:
+>   I go into STILL mode.  Now I have to click to get a new picture.
+> You quite correctly, as we discussed, discard extra clicks.  But I
+> think you should keep one click--that is, if I click before the next
+> picture is ready, it saves the click and moves to the next picture
+> when it comes.  Any further extra clicks are discarded.
+>   The way it is, I don't know when the next picture is ready, so I
+> have to keep clicking until I see it.  This may be what happened in
+> the problem I reported to you earlier, although in that case I am
+> quite sure I was still in movie mode, but having just come back to
+> the current frame after backtracing, I kept clicking the forward
+> button when there was no picture ready.
+>   GNR
+>
+> On Fri, 2006-08-04 at 17:47 -0400, STEVEN MARX wrote:
+>> Hi George:
+>> I will try to reproduce this problem with the femesh executable and 
+data
+>> that I
+>> already have. If possible please place  a new femesh/input (if any) 
+into 
+>> my
+>> home directory
+>> /home/smarx so that I can use it as well.
+>> Regards,
+>> Steve
+>> ----- Original Message ----- 
+>> From: "George Reeke" <reeke@mail.rockefeller.edu>
+>> To: "Steven Marx" <smarx@verizon.net>
+>> Sent: Friday, August 04, 2006 5:21 PM
+>> Subject: New version
+>>
+>>
+>> > Steve,
+>> >   It sems to work except I observed another strange problem.
+>> > After about 200 frames, in the section that draws the fitting 
+curves,
+>> > I did a back one, then slowly hit the forward button one at a 
+time,
+>> > i.e. too slowly to catch up with the current plotting.  At a 
+certain
+>> > point, the plot disappeared and mfdraw died, as judged by a ps 
+that
+>> > didn't show it running.  No error messages, femesh kept merrily on 
+its
+>> > way.
+>> >   GNR
+
+
+From: George Reeke <reeke@rockefeller.edu>
+To: Steven Marx <smarx@i2000.com>
+Subject: Plotting documentation
+Date: Tue, 02 May 2006 17:21:33 -0400
+Dear Steve,
+   I have deleted the file "plotting.doc" from /home/nsi/docs.
+   There are now two ASCII plotting documentation files there:
+plotting.txt (new, as yet unimplemented, version)
+oldplot.txt  (modified old, i.e. current, version)
+   These files document the changes to bitmap functions and
+metafile records we have discussed.  They are essentially the
+same in the two versions except for details of the binary
+file representation, which is not currently implemented anyway.
+The case I will want to put into femesh will be the scaled
+grayscale image.  Please work from (and let me know if anything
+is unclear in) the oldplot.txt document.  I will modify the
+bitmap library routine (and add the new bitmaps library routine)
+accordingly.
+   Thanks,
+   George
+[At the time I originally starting making these documentation
+files, I did not know that Microsoft had appropriated the
+file extension ".doc" for their word processor.  I will in the
+future change the extensions of the other /home/nsi/docs/*.doc
+files to .txt when any of them are updated.]

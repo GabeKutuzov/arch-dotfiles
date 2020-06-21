@@ -1,0 +1,15 @@
+[Started 06/05/18].
+The k_means currently in the program made some bad clusters with some
+of A Bubnys's data.  Look into replacing with newer code in NECO last
+month.
+
+It seems that some methods use different numbers of dimension when they
+do k_means (e.g. Lin 3, Watters 2).  So there should be cluster plots
+for both ways of looking at the data.  Look at what would be separate
+appropriate plots for each method.
+
+Think about whether there is a way to have the program automatically
+select the best history_depth.
+
+Update notes in distribution about the paper, which is now published,
+not in press.

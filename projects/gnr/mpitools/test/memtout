@@ -1,0 +1,2627 @@
+DBG MSG from host: Host returned from aninit
+DBG MSG from host: Entering Stage I setup
+DBG MSG from host: Entering Stage I membcst
+DBG MSG from host: MBDBG Loc 1, tnbr = 15
+DBG MSG from host: MBDBG First, ChangedPools = 15
+DBG MSG from host: MBDBG Loc 2.1, nblks = 3
+DBG MSG from host: MBDBG Loc 2.2 (Sent static blkinfo)
+DBG MSG from host: MBDBG Looping on ChangedPools = 15
+DBG MSG from Node 1: Node 1 returned from aninit
+DBG MSG from Node 2: Node 2 returned from aninit
+DBG MSG from Node 3: Node 3 returned from aninit
+DBG MSG from Node 1: Entering Stage I membcst
+DBG MSG from Node 2: Entering Stage I membcst
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from Node 3: Entering Stage I membcst
+DBG MSG from Node 3: MBDBG Loc 1A, got tnbr = 15
+DBG MSG from Node 1: MBDBG Loc 1A, got tnbr = 15
+DBG MSG from Node 2: MBDBG Loc 1A, got tnbr = 15
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from Node 3: MBDBG Received ChangedPools = 15
+DBG MSG from Node 1: MBDBG Received ChangedPools = 15
+DBG MSG from Node 2: MBDBG Received ChangedPools = 15
+DBG MSG from Node 3: MBDBG Loc 2.1A, got tnbr = 3
+DBG MSG from Node 1: MBDBG Loc 2.1A, got tnbr = 3
+DBG MSG from Node 2: MBDBG Loc 2.1A, got tnbr = 3
+DBG MSG from Node 3: MBDBG Loc 2.2A (About to alloc static)
+DBG MSG from Node 1: MBDBG Loc 2.2A (About to alloc static)
+DBG MSG from Node 2: MBDBG Loc 2.2A (About to alloc static)
+DBG MSG from Node 3: MBDBG Loc 4, nbr = 3
+DBG MSG from Node 1: MBDBG Loc 4, nbr = 3
+DBG MSG from Node 2: MBDBG Loc 4, nbr = 3
+DBG MSG from Node 3: MBDBG Looping over tpools = 14
+DBG MSG from Node 1: MBDBG Looping over tpools = 14
+DBG MSG from Node 2: MBDBG Looping over tpools = 14
+DBG MSG from Node 3: MBDBG Loc 5, pool = 1, nbr = 3
+DBG MSG from Node 1: MBDBG Loc 5, pool = 1, nbr = 3
+DBG MSG from Node 2: MBDBG Loc 5, pool = 1, nbr = 3
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 6
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 6
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 6
+DBG MSG from Node 3: MBDBG Loc 5, pool = 3, nbr = 3
+DBG MSG from Node 1: MBDBG Loc 5, pool = 3, nbr = 3
+DBG MSG from Node 2: MBDBG Loc 5, pool = 3, nbr = 3
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = -536870912
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = -536870912
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = -536870912
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1DBG MSG from host: Entering Stage II, sending correct data
+
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from host: MBDBG Normal, ChangedPools = 6
+DBG MSG from host: MBDBG Looping on ChangedPools = 6
+                                    Parallel computer memory management test program              20 JUL 16    0:00000  Page 1    
+  
+Allocations and length tests OK.
+
+Contents broadcast to all nodes OK.
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: Entering Stage II, receiving correct data
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: Entering Stage II, receiving correct data
+DBG MSG from Node 2: Entering Stage II, receiving correct data
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from Node 1: MBDBG Received ChangedPools = 6
+DBG MSG from Node 3: MBDBG Received ChangedPools = 6
+DBG MSG from Node 1: MBDBG Looping over tpools = 6
+DBG MSG from Node 2: MBDBG Received ChangedPools = 6
+DBG MSG from Node 3: MBDBG Looping over tpools = 6
+DBG MSG from host: MBDBG Normal, ChangedPools = 2
+DBG MSG from host: MBDBG Looping on ChangedPools = 2
+DBG MSG from Node 1: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 6
+DBG MSG from Node 3: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: 
+New blocks and pointers added OK.
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -1073741817, sendflag = 0
+MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4233925
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4233925
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4233925
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 2
+DBG MSG from Node 3: MBDBG Received ChangedPools = 2
+DBG MSG from Node 1: MBDBG Looping over tpools = 2
+DBG MSG from Node 2: MBDBG Received ChangedPools = 2
+DBG MSG from Node 3: MBDBG Looping over tpools = 2
+DBG MSG from Node 1: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 2: MBDBG Looping over tpools = 2
+DBG MSG from Node 3: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 2: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4234036
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4234036
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4234036
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -1073741817, sendflag = 5
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -1073741817, sendflag = 5
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -1073741817, sendflag = 5
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 5
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 5
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: DBG MSG from host: MBDBG Normal, ChangedPools = 2
+DBG MSG from host: MBDBG Looping on ChangedPools = 2
+MBDBG Loc 10, sendflag = 5
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+
+Block enlarged with allocprv OK.
+
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+
+Block contracted with allocprv OK.
+
+Next should follow dump of Dynamic region,
+first from host node, then from last PAR node,
+(3 blocks in all--types 0x0, 0x18, 0x0):
+DBG MSG from host: MBDBG Normal, ChangedPools = 2
+DBG MSG from host: MBDBG Looping on ChangedPools = 2
+DBG MSG from Node 1: MBDBG Received ChangedPools = 2
+DBG MSG from Node 3: MBDBG Received ChangedPools = 2
+DBG MSG from Node 1: MBDBG Looping over tpools = 2
+DBG MSG from Node 2: MBDBG Received ChangedPools = 2
+DBG MSG from Node 3: MBDBG Looping over tpools = 2
+DBG MSG from Node 1: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 2: MBDBG Looping over tpools = 2
+DBG MSG from Node 3: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4234129
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: Dumping memory blocks in Dynamic pool
+
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4234129
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4234129
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+Host mem at 825ec0 has 1 blocks of type 0x80000000 and size 48
+Host mem at a274a0 has 1 blocks of type 0x80000019 and size 56
+Host mem at 826180 has 1 blocks of type 0x80000000 and size 48
+DBG MSG from host: The total memory recorded for this pool is 296 bytes
+DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from host: MBDBG Resend, ChangedPools = 14
+DBG MSG from host: MBDBG Looping on ChangedPools = 14
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+
+Broadcast with resend OK.
+DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from Node 1: MBDBG Received ChangedPools = 2
+DBG MSG from Node 3: MBDBG Received ChangedPools = 2
+DBG MSG from Node 1: MBDBG Looping over tpools = 2
+DBG MSG from Node 2: MBDBG Received ChangedPools = 2
+DBG MSG from Node 3: MBDBG Looping over tpools = 2
+DBG MSG from Node 1: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 2
+DBG MSG from Node 3: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4234169
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4234169
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4234169
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: Dumping memory blocks in Dynamic pool
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: Mem at 1a3bb10 (host 825ec0) has 1 blocks of type 0x80000000 and size 48
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: Mem at 183dda0 (host a274a0) has 1 blocks of type 0x80000019 and size 56
+DBG MSG from Node 1: MBDBG Received ChangedPools = 14
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: Mem at 1a598c0 (host 826180) has 1 blocks of type 0x80000000 and size 48
+DBG MSG from Node 1: MBDBG Looping over tpools = 14
+DBG MSG from Node 2: MBDBG Received ChangedPools = 14
+DBG MSG from Node 3: The total memory recorded for this pool is 296 bytes
+DBG MSG from Node 1: MBDBG Loc 5, pool = 1, nbr = 3
+DBG MSG from Node 2: MBDBG Looping over tpools = 14
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 8
+DBG MSG from host: MBDBG Normal, ChangedPools = 2
+DBG MSG from host: MBDBG Looping on ChangedPools = 2
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from Node 2: MBDBG Loc 5, pool = 1, nbr = 3
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Loc 5, pool = 3, nbr = 3
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 8
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 3, nbr = 3
+DBG MSG from Node 3: MBDBG Loc 6, nbr = 0
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG CheckResend loop over tpools = 1DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Received ChangedPools = 14
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Looping over tpools = 14
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 5, pool = 1, nbr = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from host: MBDBG Normal, ChangedPools = 2
+DBG MSG from host: MBDBG Looping on ChangedPools = 2
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 8
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 5, pool = 3, nbr = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 2
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6347008
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6347008
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6347008
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Received ChangedPools = 2
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 2
+DBG MSG from Node 2: MBDBG Looping over tpools = 2
+DBG MSG from Node 3: MBDBG Received ChangedPools = 2
+DBG MSG from Node 1: MBDBG Looping over tpools = 2
+DBG MSG from Node 2: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 3: MBDBG Looping over tpools = 2
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: DBG MSG from Node 1: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Received ChangedPools = 2
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 2
+DBG MSG from Node 2: MBDBG Looping over tpools = 2
+DBG MSG from Node 3: MBDBG Received ChangedPools = 2
+DBG MSG from Node 1: MBDBG Looping over tpools = 2
+DBG MSG from Node 2: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 3: MBDBG Looping over tpools = 2
+DBG MSG from Node 1: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+
+DBG MSG from Node 3: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4235468
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4235468
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4235468
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from host: MBDBG Normal, ChangedPools = 2
+DBG MSG from host: MBDBG Looping on ChangedPools = 2
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 2
+DBG MSG from host: MBDBG Looping on ChangedPools = 2
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6347008
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6347008
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6347008
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4235717
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4235717
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4235717
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: DBG MSG from host: MBDBG Looping on ChangedPools = 4
+MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6347008
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6347008
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6347008
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from Node 1: MBDBG Received ChangedPools = 2
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Looping over tpools = 2
+DBG MSG from Node 2: MBDBG Received ChangedPools = 2
+DBG MSG from Node 3: MBDBG Received ChangedPools = 2
+DBG MSG from Node 1: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 2: MBDBG Looping over tpools = 2
+DBG MSG from Node 3: MBDBG Looping over tpools = 2
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+
+DBG MSG from Node 2: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 3: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 2
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Looping over tpools = 2
+DBG MSG from Node 2: MBDBG Received ChangedPools = 2
+DBG MSG from Node 3: MBDBG Received ChangedPools = 2
+DBG MSG from Node 1: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 2
+DBG MSG from Node 3: MBDBG Looping over tpools = 2
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 3: MBDBG Loc 5, pool = 1, nbr = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 0
+DBG MSG from host: MBDBG Looping on ChangedPools = 0
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from host: MBDBG Data bcst, tpools = 4
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4236183
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4236183
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4236183
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 4DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4236330
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4236330
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4236330
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4236474
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4236474
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4236474
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 2
+DBG MSG from host: MBDBG Looping on ChangedPools = 2
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 0
+DBG MSG from Node 1: MBDBG Received ChangedPools = 0
+DBG MSG from Node 2: MBDBG Received ChangedPools = 0
+DBG MSG from Node 3: MBDBG Looping over tpools = 0
+DBG MSG from Node 1: MBDBG Looping over tpools = 0
+DBG MSG from Node 2: MBDBG Looping over tpools = 0
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 4
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 4
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 4
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4236618
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4236618
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4236618
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 2
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 2
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 2
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from host: MBDBG Normal, ChangedPools = 4
+DBG MSG from host: MBDBG Looping on ChangedPools = 4
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Normal, ChangedPools = 2
+DBG MSG from host: MBDBG Looping on ChangedPools = 2
+
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from host: MBDBG Data bcst, tpools = 7
+DBG MSG from host: MBDBG Loc 10, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 2
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483627, sendflag = 2
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 10, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483623, sendflag = 0
+DBG MSG from host: MBDBG Loc 11, ldata = 49
+DBG MSG from host: MBDBG Loc 11, ldata = 24
+DBG MSG from host: MBDBG Loc 11, ldata = 74
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483648, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+DBG MSG from host: MBDBG Loc 12, mbtype = -2147483641, sendflag = 0
+
+Pool change tests OK.
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4236794
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4236794
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4236794
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4236986
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4236986
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4236986
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4237146
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4237146
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4237146
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 2
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 2
+DBG MSG from Node 1: MBDBG Looping over tpools = 2
+DBG MSG from Node 2: MBDBG Received ChangedPools = 2
+DBG MSG from Node 3: MBDBG Looping over tpools = 2
+DBG MSG from Node 1: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 2: MBDBG Looping over tpools = 2
+DBG MSG from Node 3: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 4
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 4
+DBG MSG from Node 1: MBDBG Looping over tpools = 4
+DBG MSG from Node 2: MBDBG Received ChangedPools = 4
+DBG MSG from Node 3: MBDBG Looping over tpools = 4
+DBG MSG from Node 1: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 2: MBDBG Looping over tpools = 4
+DBG MSG from Node 3: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 2, nbr = 1
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 4237290
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 4237290
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 4237290
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Received ChangedPools = 2
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Received ChangedPools = 2
+DBG MSG from Node 1: MBDBG Looping over tpools = 2
+DBG MSG from Node 2: MBDBG Received ChangedPools = 2
+DBG MSG from Node 3: MBDBG Looping over tpools = 2
+DBG MSG from Node 1: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 2: MBDBG Looping over tpools = 2
+DBG MSG from Node 3: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 1: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 2: MBDBG Loc 5, pool = 1, nbr = 2
+DBG MSG from Node 3: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 2: MBDBG Data bcst, tpools = 7
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 6346976
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483627, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 3
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 10, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483623, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 49
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 1: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 24
+DBG MSG from Node 3: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 11, ldata = 74
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483648, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 1: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 2: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1
+DBG MSG from Node 3: MBDBG Loc 12, mbtype = -2147483641, sendflag = 1

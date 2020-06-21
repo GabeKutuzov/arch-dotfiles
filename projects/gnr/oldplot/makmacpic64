@@ -1,0 +1,119 @@
+# (c) Copyright 2011-2018, The Rockefeller University *11225*
+# $Id: makmacpic64 37 2018-08-15 19:53:33Z  $
+########################################################################
+#          Make file for old ROCKS metafile plotting library           #
+#                  Version for Mac OS 64-bit (-fPIC)                   #
+#                                                                      #
+# V2A, 08/26/11, GNR - Derived from 32-bit makefile                    #
+# Rev, 10/06/11, GNR - Revise for -fPIC library                        #
+# Rev, 03/09/16, GNR - Version for MacOS derived from makpic64         #
+# ==>, 08/10/16, GNR - Last mod before committing to svn repository    #
+# Rev, 05/27/18, GNR - Add col2gr                                      #
+########################################################################
+
+# Name of result library
+LN = libserpicplot
+
+# Define directory where plot library is stored
+RL = $(HOME)/lib/macospic64
+
+# Define directory where include files are stored
+INC = $(HOME)/include
+
+# Define directory where object files are stored
+DIR = macos64
+
+# Object files to be included in PLOT library
+
+OBJFILES = \
+arc \
+arrow \
+axis \
+axlin \
+axlog \
+axpol \
+bitmap \
+bitmaps \
+bmpxsz \
+bpause \
+circle \
+color \
+col2gr \
+deccol \
+ellips \
+endplt \
+factor \
+i2a \
+line \
+newplt \
+number \
+pencol \
+penset \
+pentyp \
+plot \
+plotvers \
+polyln \
+rect \
+retrace \
+setmovie \
+symbol \
+where
+
+MFFILES = \
+mfbchk \
+mfckerr \
+mfstate \
+mfsynch \
+mfwrite \
+setmf
+
+MF0FILES = \
+mfclose \
+mfcreate \
+mfhead \
+mfst
+
+RKGFILES = \
+rkgcpy \
+rkgget \
+rkgput \
+rkgcls
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+FILES := $(OBJFILES) $(MFFILES) $(MF0FILES) $(RKGFILES)
+CC := gcc
+CFLAGS := -m64 -g -O2 -fPIC -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := MACOS64 _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Targets
+.PHONY : all depend
+all:		$(RL)/$(LN).a
+depend:		$(FILES:%=$(DIR)/%.d)
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+$(DIR)/%.o: %.c $(DIR)/%.d makmacpic64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+$(DIR)/%.o: %.s makmacpic64
+	as $(CFLAGS) -I$(INC) $*.s
+	mv $*.o $(DIR)
+
+$(RL)/$(LN).a: $(FILES:%=$(DIR)/%.o)
+	ar r $(LN).a $(FILES:%=$(DIR)/%.o)
+	ranlib $(LN).a
+	mv $(LN).a $(RL)
+
+clean:
+	rm -f $(DIR)/*.o $(RL)/$(LN).a
+
+-include $(FILES:%=$(DIR)/%.d)

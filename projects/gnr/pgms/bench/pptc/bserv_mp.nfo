@@ -1,0 +1,92 @@
+MVP MP ANSI C Optimizer    Version 1.10
+Copyright (c) 1993-1995    Texas Instruments Incorporated 
+
+
+		======File-level Optimization Summary======
+
+
+>>>> WARNING: -op2 specified but file has no entry functions!
+
+
+extern void Proc1() is called from 0 sites in this file
+    It appears to be inlineable (size = 139 units)
+    It calls these functions:
+	min()
+
+extern void Proc2() is called from 0 sites in this file
+    It appears to be inlineable (size = 3 units)
+    It calls these functions:
+	<NONE>
+
+extern void Proc3() is called from 0 sites in this file
+    It appears to be inlineable (size = 3 units)
+    It calls these functions:
+	<NONE>
+
+extern void Proc4() is called from 0 sites in this file
+    It appears to be inlineable (size = 3 units)
+    It calls these functions:
+	<NONE>
+
+extern void *mallocv() is called from 6 sites in this file
+    It appears to be inlineable (size = 12 units)
+    It calls these functions:
+	memalign()
+
+extern int rand() is called from 4 sites in this file
+    It appears to be inlineable (size = 13 units)
+    It calls these functions:
+	<NONE>
+
+extern void srand() is called from 1 sites in this file
+    It appears to be inlineable (size = 5 units)
+    It calls these functions:
+	<NONE>
+
+extern int userMain() is called from 0 sites in this file
+    It calls these functions:
+	TaskResume()
+	TaskCreate()
+	TaskInitTasking()
+	dspInit()
+	dspAPIInit()
+	memset()
+	rand()
+	exit()
+	mallocv()
+	srand()
+	xprintf()
+	sscanf()
+	GICTimerGet()
+
+These functions may be recursive:
+	Proc1()
+	userMain()
+	mallocv()
+
+Making this function inlineable: srand()
+
+Making this function inlineable: mallocv()
+
+Making this function inlineable: rand()
+
+Making this function inlineable: Proc4()
+
+Making this function inlineable: Proc3()
+
+Making this function inlineable: Proc2()
+
+These external functions are called but not defined here:
+	exit()
+	GICTimerGet()
+	sscanf()
+	xprintf()
+	memset()
+	dspAPIInit()
+	dspInit()
+	TaskInitTasking()
+	TaskCreate()
+	TaskResume()
+	memalign()
+	min()
+

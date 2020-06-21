@@ -1,0 +1,12 @@
+
+to compile simulator version:
+make sim CDEBUGFLAGS=-DSIM
+
+to reset board:
+sipload -x
+
+to reset host-side comm software:
+daemon -x   (from the /examples/daemon directory)
+
+pp converts doubles to floats. This increases their size by 2 bytes and
+can mess up structures.

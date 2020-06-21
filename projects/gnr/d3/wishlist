@@ -1,0 +1,882 @@
+                        Revised, Dec. 25, 2017
+
+/***********************************************************************
+*                            CNS WISHLIST                              *
+***********************************************************************/
+
+===>1.  Cell Dynamics
+
+>See "Voltage-stepping schemes for the simulation of spiking
+     neural networks" by G. Zheng, A. Tonnelier, D. Martinez,
+     J. Comp. Neurosci. 26:409-423 (2009).
+>User-specified response functions, perhaps implemented as table
+     lookups.
+>pt and nt should probably work independently on excit and inhib
+     inputs.
+>Biologically, hyperpolarized cells probably should never have a
+     postsynaptic effect.  This is handled now by default [egm]tlo =
+     -inf., allowing a user to make oddball models with equal effects
+     of +/- cell states by increasing those thresholds.  There is a
+     question how much d3oafs should try to determine exactly when
+     mixed conntype outputs are possible, taking into account sign
+     of scale or betas, whether PP is 0 or 1 or mixed, whether input
+     is old 0-1 scale or new mV or external, sjrev, thresholds that
+     abrogate inputs below sjrev, possibility that autoscale can give
+     a negative multiplier.  I am thinking of a global STRICT option
+     that would allow each input to have only one--depolarizing or
+     hyperpolarizing--effect.  d3go() would discard inputs that don't
+     fit type as determined solely by the scale (or mscl or beta),
+     maybe still allowing mixed CONNTYPEs depending on PP.  Then in
+     the default case AFF_xxx codes as determined in d3oafs could
+     liberally allow +/- for all inputs and get rid of all that PP,
+     sjrev, etc. checking.
+>Add noise to Izhikevich/Gerstner initialization (resetux) routines.
+>Handling value when ntc > 1:  with a cell-type value scheme,
+     Vb can go to 0 on 2nd cycle (when AMPLIF happens) because
+     there is no change.  Should value at end of previous trial
+     be saved and used to calculate delta-V and update only for
+     ENVIRONMENT-type value?  Or does user need to be able to
+     control this, since with >2 cycles, might really want cycle-
+     to-cycle delta-V.  Or should NTC > 1 no longer be supported
+     at all?
+>Handling decay:  Eliminate omega1.  Do cycle decay in d3go only
+     when ntc > 1 else trial stuff externally as selected by
+     reset options and update documentation.
+>Option to reverse sign of subarbor input after summation
+     (so don't need to add additional thresh tests for inhibs).
+     Alternatively, max/min tests in both directions.
+>Phase noise.  Noise that only hits active cells.  Poisson
+     noise.
+>Eliminate clipped value--use pos/neg value for everything,
+     except clip when it's an input under COMPAT=C.
+>A value scheme that combines NFIRE with a category.  A value
+     scheme that is a weighted sum of s(i) with greater weight at
+     the center of the region.  A value scheme that depends on
+     the muscular effort needed to do something.  A value scheme
+     that fires when some external signal CHANGES, or when it
+     lies either within or outside some specified range.
+>Option for simulated touch pad to interpolate rather than
+     take max when on nonintegral pixels, or way to force to
+     nearest even grid point, in order for it to work well with
+     feature detectors.
+>Add phase to PROBEs.  Probes should apply a current, not a
+     voltage, unless some sort of voltage-clamp mode specified.
+     Add noise to probes.
+>Diffusible signals (NO).  See PNAS 95:8975-8980 (1998) for
+     info on diffusion.
+>Allow user to define rectilinear region borders, i.e. list
+     of points and use iterpgfg.  Put a square or hexagonal
+     cell grid inside the region.
+>Give cells a three-dimensional position and allow
+     development, sprouting, etc., as in RC.  True dendritic
+     structure to cells.
+>Asynchronous (randomized order) update of cell states.
+>Spiking as a Poisson process when Vm > Vt.
+>Allow all thresholds to vary from cell to cell with a std.
+     dev.  A subtractive version of depression could provide
+     this.  Also variable parameters in AEIF models sim to
+     what is provided for Izhikevich models.
+>Add time interval variables to all timers.
+>Go ahead and allow decay with phase.
+
+
+===>1a.  Cell Dynamics relating to AUTOSCALE
+
+>Need separate summation codes for self vs nonself inputs.
+>Need to redo WTA rescaling in d3autsc perform all the actions
+     of d3go, including spiking response functions -- this should
+     be a new subroutine called from either normal or WTA mode.
+>Possible to get A(i),I(i),M(i) stats before/after rescaling?
+>Need to have a controlled way to do bubble plots before and
+     after immediate rescaling in same cycle.
+>Possibly separate max,min scale limits for HTN vs HPN scales.
+>Do we really need option H now that we have W?
+>Possibly need individual control of inclusion by connection
+     type to override S,G,M,A bits on AUTOSCALE card.
+>See Neher et al PLOS CompBiol HC learning article -- no inhib
+     cells, just sets percent active parameter, sets highest
+     Na cells to computed value, others to zero in each cycle.
+
+
+===>2.  Connections and connection dynamics
+
+>Default nrx,nry for Crow's foot should probably be the size
+     of the source region, rather than sqrt(nc),nc/nrx.
+>Boundary conditions for lij generation (same as on GCONN
+     cards, e.g. EDGE, MIRROR, ZERO, TOROIDAL, NORMALIZE, NOISE).
+     This may or may not moot other suggestions, e.g. make RGA
+     wrap at end of group, not end of region.
+>Ability to assign cij (and lij) according to a frequency
+     distribution specified by the user.
+>Short-term-STDP:  See Szatmary & Izhikevich
+     doi:10.1371/journal.pcbi.1000879.  Input(i,t) =
+     Sum_j sij(1+sd_ij) where sd is a variable that is
+     different for each synapse, follows the classical
+     STDP rule, and decays back to 0 with time constant
+     5 sec. in absence of input.
+>Self avoidance (KGEN=V) and way to avoid duplicate conns.
+>DAD scheme for EPSPs:  Delay, amplitude, duration.
+>Sporea & Gruening, NECO 25:473, see p. 485 suggest for
+     synaptic scaling to use wij = (1+f)*wij (wij > 0) and
+     wij = (1/(1+f))*wij (wij < 0) where f is the desired
+     scaling factor, f > 0 for si < smin, f < 0 for si > smax.
+>Noise on conntypes rather than on input array to handle noise
+     on colored input correctly.
+>Implement LB1N.  Gaussian and Mexican Hat (difference of
+     Gaussians) connection schemes.
+>Implement hexagonal cell arrays.
+>Implement round (or hexagonal) visual windows, schemes for
+     denser vision at fovea as with real eyes, complex log
+     mapping to V1, etc.  See Bandera et al, Proc 13th Intl Conf.
+     on Machine Learning, Bari Italy, July 1996.
+>Assign synaptic delay dij proportional to distance between
+     cells.
+>MacGregor & Lewis 1977 have a postsynaptic response term that
+     looks like (Cij/(dist of synapse from soma * t)) *
+     exp(-bd*d/sqrt(t)) * exp(-t/tau), b and tau const.
+>Hand vision should be a regular virtual sense type, plotted
+     as such, capable of connecting in various ways, etc.  Would
+     eliminate memory to build a real cell type to do same thing.
+>d3vtch to work with only one color.
+
+
+===>3.  Amplification
+
+>Amplification based on si(t), not si(t-1).  Save sj or lij
+     from main loop?
+>Optional Cij normalization after amplification.
+>Alternative phi functions, e.g. to encourage negative amp
+     more when cij is near saturation, etc.  A 3% error in
+     delta(phi) was observed due to use of 32 entry table.  Maybe
+     it is time to get rid of this anachronism and use the full
+     256 entry table with the delta multiplier incorporated in
+     the way scale.
+>Ternary amplification rule, i.e. one that attaches the role
+     of value to the input from a specified connection type.
+>BCM amplification rule:  Look at Darwin 10 paper:  NSI had
+     a version with fixed thresholds, another with a delay.
+>RCHP (Rare-correlation Hebb Rule), see Soltoggio & Steil,
+     Neural Comp. 25:940 (2013).  Puts thresholds on Hebbian
+     product rather than on individual Si,Sj terms and adjusts
+     the threshold dynamically so only a selected small % of
+     all synapses get changed at any one cycle--alternatice to
+     Izhikevich (2007) for solving distal credit problem with
+     rate-coded network.
+>Update Cij probabilistically according to WAY class.
+>TD learning.  Also see Darwin 10.
+>Other amplification rules, e.g. Finkel rule, something based
+     on known physiology of LTP, STDP, etc.  Possible power-law
+     factor.
+>See G.A. Luduena & C. Gros Neural Comp. 25:1006 (2013) for some
+     ideas on using Anti-Hebb rule and max operator for synaptic
+     inputs.
+>See Habenschuss, Puhr, & Maas NECO 25(6) 1371-1407 (2013) for
+     optimal STDP model w/ WTA competition that is very robust
+     to tuning curve changes, cell death, etc. and can handle
+     salience modulation (dopamine-like).
+
+
+===>4.  Geometric and Modulatory Connection Types
+
+>Add an option like gbcm for modulatory connections.
+>Given GCONN decay, should implement GCONN plots, like a
+     separate cell type.
+>Other GCONN geometries besides squares and now circles.
+>There is currently no MASTER MODULATE card.
+>It would be useful if a MODULATE or GCONN card after a
+     CONNTYPE would affect only that conntype (i.e. inhibit it).
+     Ref:  Rall in Koch & Segev, Wigstrom (inhibition closer to
+     the soma).
+>IA should be allowed with TV as a valid modulatory or NMOD
+     input (implemented, not tested).  Also allow images as
+     GCONN inputs.  This implies eliminating the assumption
+     that srcng[xy]==tgtng[xy].  Should this retain 1:1 size
+     ratio (leave borders if source larger) or expand like
+     CONNTYPE t?
+>Allow GBCM, GDEFER, GDECAY, GJREV separate per band or at
+     least per excit vs. inhib bands.
+
+
+===>5.  Ions and conductances
+
+>Composite models.  Merge with conductance-based models.
+>A [Ca2+] term that can be used to control e.g. Ca2+ - dep K+
+     fluxes as in McMullen & Ly.  Other generic conductances.
+     Better ion diffusion models than in Purkinje paper.
+>Add PRESYN|POSTSYN activation types.
+>Add Hodgkin-Huxley conductances and pre-evaluation tables
+     for same.
+>May be OK to put TIMESTEP on CYCLE card if no allocations depend
+     on it or such allocations can be dynamic.
+>Finish implementation of TEMPERATURE.
+
+
+===>6.  Statistics and Analysis
+
+>Ability to get key statistics by cycle number.
+>Allow modality info (stim & category) to be transmitted to
+     a celltype via G and M connections.
+>Keep track of all mallocv,callocv data by using HOST pool,
+     so can print accurate totals in d3echo.
+>Get rid of all doubles, which will give different rounding
+     on some machines--now can use wdivl() for division.
+>Mean ak for all cases where ak > minax.
+>Cross-correlation matrix of ak.
+>A noise statistic suitable for adjusting NMOD parameters.
+>Activity traceback:  when a cell fires, determine the largest
+     input contributors, march back and mark in the plot every
+     cell that contributed to the firing of the given cell, and
+     recursively back to the sensory inputs.  See Darwin X paper.
+>Need to generalize XR stats for case where each instance of a
+     class is a different stimulus--currently have bits only for
+     individual, not for class.  If number of stimuli is allowed
+     to be unrestricted, need to record only a category bit in
+     d3go, accumulate sums for intragroup stats after each trial.
+>Ability to do cosine statistics of kind now done externally
+     in matlab.
+>Ability to sample XR statistics only when a recognition event
+     is triggered.
+>Clean up SPOUT output:  seems to pick up extra lines here and
+     there.  One case is summary stats of last region coming out
+     when next CYCLE card is processed.  Need an extra CRLF at
+     the end so prompt comes on new line.  CYCLE card is not
+     spouted, but following MOVIE or SNOISE is!
+>DETAIL print is inconsistent as to values at t or (t-1).
+     Cij shows value after amplif, not value used.  Should
+     everything be value used in this cycle, or value attained at
+     end of this cycle?  Pick one, implement, and document.
+>DETAIL print should print value to which s(i) decays at
+     omega1 time.  Should be able to print old_si used in
+     amplification.
+>Omega1 decay should perhaps subtract noise actually used
+     rather than average noise.
+>Ability to get detail print for all cells above some
+     threshold, without an explicit cell list.  Way for CNS to
+     give user a list of candidate interesting cells for DETAIL
+     print, such as cells that fire for some stimuli but not
+     others.
+>Cell list for response history print (old KP=T option).
+>Built-in way to do receptive field maps, like GNR matlab
+     treatment or like Pierson and Finkel, with "electrode
+     penetration" path diagrams.
+>Ability to control "type-detail" at celltype and connection
+     type levels as well as just global.
+>Ability to read feature-detector template number from
+     CONNLIST file, use in KRPFD statistic.
+>Statistics on qbar, rbar, sbar (averages or distributions?)
+
+
+===>7.  Images
+
+>Add possibility of Fourier kernels -- presumably run on Node 0.
+>Make entire image pipeline a separate thread so can run "one-ahead"
+     in parallel with network.
+>Implement tvuflgs TV_ADJB (adjacent background when expanding an
+     image)--currently gives development error.
+>Considering how to make neuroanatomy plots map onto image plots
+     when using pixel mapping (bitmap() not bitmaps() for speed).
+     Since user dragging can change scale of vectors, not pixel-
+     mapped images, mfdraw would need to deal with this via getting
+     dpi from system ('xdpyinfo | grep dimension' or 'xrdb -q |
+     grep dpi') and having neurite sources in a separate frame
+     in new plot library; remap frame when plot is dragged.
+>Consider implementing preprocessors on comp nodes, working on
+     tiles of inputs relevant to cells on each node.
+>Implement preprocessors with Intel vector instructions or GPUs.
+>Look for useful cases where full images would not need to be
+     broadcast.  Break into rectangles needed by various
+     conntypes and send just these or optionally base
+     broadcast on merged Lij list (but not if preprocessors
+     are on comp nodes).
+>In case of VVTV or UPROG input, possibly images can be
+     sent directly to comp nodes without first being collected
+     on node 0.
+>Make debug plots into permanent options to plot camera images
+     before and after rescaling or other preprocessing.
+
+
+===>8.  Graphics
+
+>Raster plots (in a separate window).
+>CIJPLOT-like: Ability to plot sj and decaying conn activity.
+     A and G classes.
+>Parallel CIJPLOTs:  Eliminate d3ijp[nz], do from comp nodes.
+     Merge CM structure into IJPLDEF struct so common calcs
+     like scdx, etc. can be done in d3ijpi instead of d3ijp[lz].
+>A separate NEUROANATOMY PLOT control card, allowing chaining
+     of plots from more than one connection type, cell lists,
+     get parms out of CELLTYPE block.  Dash/dash-dot lines to
+     signify subarbor origins in neuroanatomy plots.
+>Way to mark cells that have saturated.
+>Change default plot type to superposition.
+>Ability to do normal and superposition plots in the same run.
+     Consider putting non-super region plots in d3go for greater
+     message scatter, simplify d3plot(), allow SIC_Hist in non-
+     super plot (must call before layerupd).
+>A kind of connectivity plot that imitates anterograde or
+     retrograde tracer injections, i.e. color the target
+     cells but do not draw the lines between source & target.
+>Ability to make beep when plotting series comes on.
+>Global black and white color override.
+>Investigate: why do HC IN cells appear on grid lines?
+>Expand color sequences to allow 16 colors (or less).
+>Improve appearance of arrows in arrow plots.  Maybe use
+     circles, triangles, or bars to indicate excit/inhibitory
+     connections (abrogate if too many conns to one cell?).
+>Way to randomly jiggle cell location on KP=N plot to
+     minimize overlapping lines.  End lines at edge of cell
+     symbol, rather than center (so colors don't conflict).
+>Determine max x and y from plot options for newplt() call.
+>Metafile precision control, automated or user-controlled
+     batch mode determination.
+>Improve d3epsi to allocate celltype windows in a two-
+     dimensional arrangement, maybe with new row,column guidance
+     parameters.  Or at least use obsolete KP=W for this.
+>Run inputs from edge of plot on non-superposition rep plots.
+>Ability to vary shape of IA pixels according to object color
+     when plotting on B&W device (like laser-jet).
+>Implement configuration plots.
+>Receptive field maps as in SM program.  Cortical
+     "penetrations".
+>Ability to enter user-specified colors for SHAPE objects.
+>Various types of s(i) vs time plots.
+>Replace RETRACE options, variables, and descriptions
+     throughout with appropriate line-thickness controls.
+>PARROW (plot arrow) on PLINE card.
+
+
+===>9.  User Interface
+
+>Fix hyperlinks in CNS doc
+>Add MASTER cards for CONNTYPE, GCONN, MODUL options.
+>Ability to interrupt run with or without statistics and with
+     or without saving networks (from mfdraw).
+>Redo the RESET interface:  Don't reassign levels, have a grid
+     of what items get reset at what levels, user controllable.
+     Add controls for autoscale, image selectors.
+     (Include image preprocessor random rounder seed!)
+>In d3echo, have a way to indicate min/max tests as -INF/+INF
+     instead of a meaningless number like -256.0.  Have a control
+     (RESPONSE FUNCTION card?) that prints all the KWJ_THR items
+     either as S14 or S7mV.
+>Why is RDAMP on the AMPLIF card, but all 3 (QDAMP, RDAMP, SDAMP)
+     on the DECAY card?
+>Set up a mechanism to have variable name prefixes that are
+     optional on regular control cards but required on CHANGE.
+     I am thinking of using '.' to separate the prefix in kwscan
+     and in docs, input of the '.' is optional.  Then do a grand
+     renaming of variables for consistency.  What prefix to use
+     for specific connections?  Maybe 'X' or 'CN'.
+>Allow all reasonable options from Group I PLIMITS card on Group III.
+>Get rid of as many as possible of memory preallocation options
+     (but I am willing to leave ncs, nds as defined).
+>Use Vmin,Vmax with BBD senses (but no easy way to specify
+     separate scales for each cell within a sense).
+>Allow external (BBD) senses to be L2S14 fixed-point.  Get rid of
+     KP=F on Group I SENSE card, make this (Float input) a separate
+     option.
+>Allow external (BBD) senses to activate a linear array of virtual
+     cells the same as the old VJ etc. senses.
+>A SELF (or AUTAPTIC) card parallel to CONNTYPE, etc. for
+     siet, siscale input.
+>ION sets and CONDs able to generate needed ions from
+     generic ones.
+>Specify a value scheme on CONNTYPE, etc. with %type, not with
+     %offset.  (Already implemented for MODULATE)
+>Way to specify all tau, upsilon, omega constants in terms
+     of either cycles or time (ms etc.).
+>Use of pointing device to select cells for detail print.
+>Mouse-driven parameter changes.  On-screen dials and graphs
+     to display selected parameter values.
+>A way to enter "prototype" blocks of parameters and copy
+     them to individual cell and connection types.  (This
+     would amount to multiple named MASTER objects.)
+>Make default nks internally != 0, document 0 as valid input
+     to reuse one matrix repeatedly.  Then needs a matrix
+     selector.  nkt could serve this purpose when nks == 0.
+>More hooks for user code.
+>Facility for automated parameter scans.
+>Putting nel=0 for all (or only) celltypes in a region gives
+     "No cells" error--really should get that error only if no
+     CELLTYPE cards found, or kill the region altogether.
+>Ability to generate a run data base for each user, with
+     automatic run number updating, input file archiving, etc.
+>Ability to specify file names on the cards that use them,
+     eliminating Group 0, except maybe for IBM systems.
+>Update the sample files.
+>See http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371 \
+     %2Fjournal.pcbi.1000815 for info on NeuroML and consider
+     making a way to translate input from NeuroML to a CNS
+     input file.
+
+
+===>10.  Performance
+
+>Compile a version without phase options.
+>Get rid of D3MEMACC_BYTE_ORDER.  Cell and Conn data stored in
+     host byte order, saved that way in SAVENET files.  Add a
+     header item indicating what the host byte order was.
+     Change RESTORE code to swap when host byte orders are
+     different.  When restoring from an old file, set that
+     variable to the old D3MEMACC_BYTE_ORDER.
+>Some shifting could be saved if cij in memory treated as S15
+     rather than S31, given max nbc=16.
+>MODVAL Items checked for equality in d3tchk could be put in
+     a single substruct and checked w/memcmp().
+>Where possible, turn linked lists into arrays of structs to
+     minimize mblkdef load.  Most likely candidates are items
+     that are not added/deleted at Group III time, e.g. the three
+     connection types.
+>Isolate phase convolutions in a separate function, possibly
+     implemented in Assy lang.  (3 calls in d3go).  Args would
+     be afference, phase bins, new struct with params (option
+     flags, seed, const phase, scale, delay).  Check whether
+     more efficient to perform in one loop all convolutions
+     involving same kernel.
+>Use color index internally to implement color sequences.
+>May be possible to merge data streams to node 0 for SIMDATA,
+     CIJPLOT, DPRINT and disburse on arrival.  Are there often
+     common cells in these data streams?
+>When shunting inhibition is large enough to cut off cell,
+     can skip evaluation of specific connection types.  If input
+     is large enough to fire cell, subsequent excitatory
+     conntypes can be bypassed.  But there are issues involving
+     mij update, etc. that need to be thought through.
+>The "knapsack problem" load balancer.
+>Implement virtual joint kinesthesia as parabola rather than
+     exponential function of distance.
+>Printing (and possibly collecting) of pctdist dists could be
+     table-directed to eliminate many of the if's in the cell
+     loop.
+>Find a way to get rid of references to variable-length memory
+     items in inner loops, e.g. Lij, Cij, Cij0.
+>For env & BBD sense input, which is same over cycles in a trial,
+     should be able to reuse A(k) sum, at least until amplif is
+     turned on after an ADEFER.
+
+
+===>11.  Files
+
+>Finish converting all files to big-endian.
+>Total redesign of FDMATRIX file format.  Use standard
+     scanning rules so user can divide matrix rows among input
+     lines in any manner desired, enter cij as fractions, handle
+     various numbers of bits per cij, way to start at any matrix
+     in a file, perhaps SET=(file,matrix)?
+>Total redesign of CONNLIST file.  Ability to include all
+     generated variables, e.g. Cij, Cij0, Dij.  Independence
+     from any OS sorting application.  Add coded l(ij) values
+     for: -1, skip one connection; -2, skip to next subarbor;
+     -3, skip rest of connection list.
+>Ability to write a spike-list file.
+>Include transcript of control file in SAVENET file.  Would
+     require copying to temp file and appending at end.
+>Some standard tests for getgd3.  Add documentation of how
+     getgd3 deals with ntc > 1.
+>A SAVENET file lister.
+>Ability to save only plastic connections in SAVENET file.
+>Write SAVENET after any resetting so restart can be done
+     in runs that have reset.
+>Method to utilize SIMDATA file as a REPLAY input file.
+     Delete code to write a separate REPLAY file format.
+>General translations ASCII<-->EBCDIC and IEEE float<-->IBM
+     float where needed, along lines of swap() routines.
+>Separate CAMID and CAMINFO options on SAVE card (SIMDATA).
+>Create a new variable name for non-REPSRC inputs in mV s(i)
+     range runs, where binary scale is 14 and file can have
+     mixed scales depending on ix->sjbs.
+
+
+===>12.  Internal Organization
+
+>Current code assumes all GRPNO sets have ncs classes--could save
+     some loop times in d3stat by making a parent block with this
+     number under which the GSDEFs would hang off.
+>Eliminate current method of handling skipped connections--
+     allocate just for connections used, probably with offset in
+     data for each cell.  Then could have an OPTIMIZE option that
+     would essentially run d3genr twice, once to get accurate
+     storage count, again to generate and store the values,
+     default wastes unused storage as now, but all at the end.
+     (Cannot be applied if regeneration will be used.)
+>Skip lists could probably be eliminated by storing with each
+     cell the nuk for each subarbor--assuming there is no need
+     for any other code to need true jsyn.
+>Eliminate ssck switches and dynamic assignment of offsets for all
+     the different types of entries in cell response -- just make
+     static space in CELLDATA for all of them and add all of them
+     (may be faster than loop with dynamic offsets).
+>Connection-type data (cnoff and xnoff) could have SAVE_LS_COUNT-
+     style organization, so variables like AK would be saved but
+     not restored, would not give d3fchk errors either way.
+>Remove mpitools.h from d3global.h if serial.  Move timer
+     stuff, anything else you would use in a serial program out
+     of mpitools.h and into a new, more global header file.
+>Reorganize header files so seldom-used ones not always brought
+     in by d3global.
+>Reorganize IA as a regular virtual cell array.  Allow multiple
+     copies.  Gets rid of all the separate lij generating routines,
+     etc.  Handle 8-16-24 bit color.  Allow d3 objects to be placed
+     on top of video images and moved around.  Hexagonal indexing.
+     Allow them to have names so ARM, WINDOW etc. can ref. by name.
+>Rewrite lbqb following new lb2bia using x,y coords then combine at
+     end to get Lij, saving much complexity (but one more multiply)
+>Reorganize mechanism for allocating group masks and stimulus counts
+     (pnr, pxxxx) to work top down, i.e.  each statistic requests
+     resources it needs and those are passed down in d3mchk to the
+     modality blocks.  kxr goes away, allocation is per modality (or
+     GRPNO) not global.  The one-time allocations in d3msgl become
+     Group 3 (d3nset) allocations, thus allowing many more stats
+     options be modified at d3chng time (just need a test for XRM
+     alloc).  Also, this makes it much easier to manage allocations
+     for new statistics options--just need to set request bits in
+     CELLTYPE blocks for needed resources.
+>Make and utilize a ceiling function throughout when rounding
+     fixed-point divisions up.
+>By calling d3gfsv once per cell rather than once per cell
+     type, can we eliminate the restrictions on A,N,U codes but
+     still retain message buffering?
+>Apply new method of dealing with clocks to Mij, Dst, etc.
+>Break CELLDATA into 2 substructs so can use nxdr properly;
+     merge non-message part into Lija.
+>Check all allocation counts for overflows (see note below).
+>Use nncom mechanism for CELLDATA in detail print.
+>Would it make sense for CELLTYPE and CONNTYPE blks to have
+     separate appendages for node 0-only stuff and for node-
+     varying stuff?  Or at least move phase I pointers out
+     of these blocks.
+>Common function to plot boxes w/labels & grids for 
+     d3rplt, envplot.  Way to plot boxes last so boundaries
+     override symbols, but how on node 0 of parallel computer?
+     Implement boxes as separate plot objects so an external
+     window manager can move/rescale them easily.
+>Collect all noden iteration lists into a single array for
+     broadcast--eliminates mblk overhead and unused allocations.
+>Isolate environment package as a proper module.
+>Simplify kpl,kpl1 using same bits as kplot.
+>Finish eliminating calls to old ibcdin, ubcdin, ibcdwt, ubcdwt.
+
+
+===>14.  Bugs
+
+>Reported bug:  PPF in CELLTYPE run may be incorrect
+>Reported bug (may have been fixed):  AMPFAC == 0, AMPMUL != 0
+     doesn't work.
+>layerupd in d3go does not check DIDSCALC before calling d3exch().
+>Cortex test run picks up ENVVAL 3 in wrong place.
+>dbgprt should have an internal sleep to avoid deadlocks when
+     msgs sent fast (ProcWait(CLOCKS_PER_SEC/50) on transputer).
+>Why is sleep needed between two CNS runs in a batch file?
+>Why does CNS kill the parent shell when executing directly a
+     batch file (as opposed to sourcing it)?
+
+
+===>15.  Candidates for code removal
+
+>mxmp in amplification.
+>Response history (KCTP=H) statistics.
+>OPTJS.
+>Mixed-sign connection strengths (or possibly use sign+magnitude
+     rather than two's-complement in memory now that inputs can be
+     signed.)  Alternatively:  after scaling and capping, combine
+     EXCIT + INHIB connection sets, do convolutions, volt-dep,
+     decay, detail print only on the combined total (but would
+     mean also eliminating separate pexSums, pinSums for hyperpol
+     vs squared vs shunting inhibition).
+>Everything to do with REPLAY (but still useful to make
+     figs from low-bandwidth SIMDATA files).
+>d3tsvp.
+>Canonical trace mode.
+>2-3-3, 5-5-5 color modes.
+>GS8 and C24 color modes--convert to GS16 or C48 in same code that
+    deals with floating-point, etc. image inputs.  Then large
+    amounts of alternative code in d3imgt, d3sj, d3gvin go away.
+>Adjustment of conntype scale per nc.
+>Original-style WAY codes (0,1,3 choices)
+>Decay of Cij to individual Cij0 (const per conntype enough?).
+>Check that MOPNEG can be implemented with mtolo and eliminate.
+>siet, siscl inputs (for phasing calcs, spread persistence terms
+    among all phase bins by exponential intervals, then if this
+    explicit input is ever needed, user can use a regular CONNTYPE).
+
+
+/***********************************************************************
+*                    ENVIRONMENT PROGRAM WISHLIST                      *
+***********************************************************************/
+
+===>1.  Simulated Environment
+
+>CREATE/SELECT needs a mechanism to randomize set-down coordinates.
+>Allow multiple IAs of individual generic size and color mode.
+>Ability to generate correlated SELECT objects (see separate
+     sheet).
+>Object movement option to avoid collisions (i.e. bounce off
+     of) other objects.
+>If colored object loaded on B&W IA, use GrayFromRGB table
+     lookup.  If B&W object loaded on colored IA, use RGBFromGray
+     table lookup.  Allow user to modify these tables.  Default
+     ENOISE should be NONE.
+>Robot simulator.
+>Add a mouth so Darwin III can eat.
+>Implement old AT TRIAL idea by use of generic CNS timers.
+     Check each use of cycnum--most should be series-relative,
+     not run-relative.
+>Three-dimensional world with three-dimensional arm.
+>Simulated muscles should have spring constants.
+>Run-time selection of 8-, 16-, or 24-bit color.
+>Read TIFF files, remove old pixel files with EBCDIC headers.
+>Routine envsav() is obsolete and can be removed.
+
+
+===>2.  Application Program Interface
+
+>Isolate phenotype stuff in a separate library.
+>Rewrite interface to eliminate shared data structures, i.e.
+     access all arm, window, shape data via function calls.
+>Ability to have > 1 environment per CNS run, to support
+     stereo vision or multiple inputs from ordinary objects
+     to handle touch/smell/audio modalities better.
+>Printed output of objects in envplot() uses an illegitimate
+     method of passing enabling switch.
+
+
+===>3.  Bugs
+
+>MOVE with boundary tests fails in hc6.3.  Mirror reflection seems
+     to put the object out-of-bounds (hc6.3 run).  Probably has to
+     do with OR option and fact that another object is still in
+     the window, confusing the mirror calculation.
+>Bug fix--envctl should init jump count to 1, not 0, when
+     starting jump mode (but existing Darwin III runs depend on
+     this bug).
+>envpia does not take color into account when rotating
+     colored objects.
+>It is reported that envget() does not return D3_PREM_EOF on eof
+     error.  (Moot if go to GRAFDATA as REPLAY source).
+
+
+/***********************************************************************
+*                       ROCKS LIBRARY WISHLIST                         *
+***********************************************************************/
+
+===>1.  New Facilities
+
+>Allow '$' or '&' for variable parameters.
+>Allow ';' or '#' for column 1 comments.
+>Add an %SYSRAN variable to get a random value from /dev/random.
+>Variant of %SYSNDX (maybe %SYSSEQ) with global memory in a file,
+     returns 4 cols w/leading 0's for numbering output file names.
+>Multitasking version of cryout.  This would include cross-
+     process flush facility.
+>Implement rfseek mode -1 (SEEKEND).
+>rocks.h should use line and card length from sysdef.h.
+>Ability to list switch options with words instead of letters.
+>kwscan should set from an argument when 'S' code is followed
+     by something not a number.
+>kwscan argument list as a big struct instead of long arg list.
+>kwscan and inform code to read yes/no, true/false, on/off, 0/1.
+>Way to register your own messages with ermark() or to add
+     detail info to a built-in message.
+>Way to register multiple exit codes for iexit and get >=1
+     termination message when several set (e.g. params error,
+     input deck error, file checking error).  [Currently done in
+     d3perr.]
+>If-Elif-Else-Endif facility in cryin(), possibly on EXECUTE
+     card or a new control card, using simple arithmetic tests on
+     EXECUTE variables.
+>Add a accmeth to rfallo/rfopen that will call mkstemp to make a
+     temporary file.  This call runs open(), so when rfopen() is
+     doing fopen(), code must be modified to allow both open/fopen
+     and related calls to run on same system.
+>Fix pxq routine.
+>Finish work on 64-bit random numbers.
+>#define option in sysdef.h and bbdmex for systems with or w/o
+     POSIX sentinels.
+>Add jmswe.
+>Have wbcdwt print a special value for +/-INF floats and doubles
+     and something for largest negative fixpt number, maybe '--'
+>Add equivalent of new convrt 'R?' code to rkprintf.
+>rfopen/close error messages with "unnamed" -- try to report
+     stdin, stdout, stderr if possible.
+>Add a macro to rkarith.h to safely convert a ui64 (or si64)
+     to size_t.
+>Have a way to comment out an internal portion of a line.
+
+===>2.  Performance
+
+>Assembler versions of all arithmetic routines.
+>Rewrite jdxxx routines to use native division.
+>Faster amssw[e] with no internal calls.
+
+
+===>3.  Bugs
+
+>Using SYSCWD with filename -- card prints twice.
+>mcodprt/convrt:  Allow lower-case letters as option codes and
+     correct comments in convrt and documentation.
+
+===>4.  Documentation
+
+>Convert apndx5 to html with index at front.
+
+
+/***********************************************************************
+*                      GRAPHICS LIBRARY WISHLIST                       *
+***********************************************************************/
+
+===>1.  New Facilities
+
+>Ability to specify gray-->RGB display table.
+>Implement pentyp (code 'T') in mfdraw.
+>Implement ellips (code 'E') in mfdraw (currently draws circle)
+>Implement ctload(), ctlkup() routines.
+>Implement font().
+>Implement gmode().
+>Support origin shift in plot() as documented.  Expand this
+     spec to incorporate object handles, both for window
+     management and mouse selection feedback.
+>Ability to cache several frames in mfdraw and go back, as in
+     GAMPLOT.
+>Ability to open multiple windows, so, e.g. can build a raster plot
+    while showing normal superposition plots on each trial.
+>Ability to cache numbered bitmaps or drawing command macros in mfdraw
+    and call them up at specified locations so for example a static
+    background need not be repeated in the metafile at each frame.
+>mfdraw needs a way to find screen resolution and pass back to library
+    so program can adjust minimum object sizes (CNS MINBPRAD etc.)
+    But how to handle with off-line plotting?
+
+
+===>2.  Implementation
+
+>Ability to specify pathnames for mfsr and mfdraw in .run
+     file.
+>Use atexit() to call endplt() in parallel when a run
+     abends.
+>Get rid of SNAPSHOT button in mfdraw (or implement it).
+>Should mfsr startup msg be binary and use hhcom?
+>Individual region windows could be implemented as individual
+     X windows, thus allowing user to reposition, resize.
+>mfdraw and mfprint need user docs.
+
+
+/***********************************************************************
+*                         MPI TOOLS WISHLIST                           *
+***********************************************************************/
+
+===>1.  New Facilities
+
+>A blocking version of antest, i.e. a way to wait for a
+     message, but then peek at who sent it.  This would be
+     useful, e.g. to make a better version of d3exch.
+>ngetpv routine is useless (hangs up in VERTEX if no
+     storage)--get rid of it.
+>General way to put node 0 stuff at bottom of a block and have
+     it not get through membcst.  Examples that would benefit are
+     ilsts, CLBLKs, many others.
+
+===>2.  Performance
+
+>At startup time, have Node 0 distribute its endian, floating-point
+     format, and lengths of longs, pointers, a few others.  Then
+     if all nodes are the same, membcst can just send the binary
+     data without using the nncom machinery.
+>Are there safe ways for d3gfsv and d3save to accept data from
+     nodes in random order rather than serializing access (assuming
+     large numbers of nodes so just "everybody send when ready,
+     read in order received" would not be safe)?
+>Something like this should also apply to d3ijpl and d3dprnt.
+
+===>3.  Implementation
+
+>Handle signals correctly when there is a 'tee' so stdout is
+     not lost.  See abp mail of 10/20/93.
+>Clean out references to ?obsolete anrelp,angetp.
+>After hhcom.c is really gone, make new typedef for unicvt permanent
+     and make nngetb, nnputb static (internal to nnget.c, etc.)
+
+
+/***********************************************************************
+*                                OTHER                                 *
+***********************************************************************/
+
+===1.  Utilities
+
+>ulf man page.
+>mfprint:  Frame 1 often fails to come up on display.
+>mfprint:  GOTO menu item:  would like it to erase old frame
+     number if start typing a new one.
+>mfprint:  If Gray-level button selected, render all text in
+     solid black regardless of color.
+>Document abstract data streams mechanism, nxdr mechanism.
+>d3mklib/envshp accept pixel values >= 256 and set to 255.
+     Add new D format for decimal fractions.
+>Configure tool to generate makefiles.
+
+
+/***********************************************************************
+*               DOCUMENTED LIMITS FOR 32- vs 64-BIT CNS                *
+***********************************************************************/
+
+The documentation should have a big table showing max numbers of various
+kinds of objects as a function of 32- vs 64-bit compilation.  Some will
+vary with compilation type, others will always be 8, 16, 32, or 64 bit.
+Random number seeds can be 64 bit (two 32-bit values in parens) or 32
+bit (one value, results compatible with old code) with either type of
+compilation.
+
+Document the memory model:  pointers and longs are 32 or 64 according
+to compilation type.
+
+The following are counted in bytes, so no more than 255 of each:
+arms, windows, cameras, values.
+
+celltypes:  No more than 2^16-1 (seqvmo, upseq, oautsc, etc.).
+conntypes per celltype: 2^16-1 (A,G,M types separately)
+connection delays:  2^16-1.
+delays:  2^16-2.
+ilst's:  Everything in an ilst is a long
+input arrays and images:  No more than 2^15-1 pixels in x and y
+  (because env uses S16 for coords).  When env lib is rewritten
+  for compat with images, go back to 2^16.  The 3-color formats
+  will require longs for anything to cover 2 dimensions.
+ions:  No more than 255/celltype (nionc)
+joints/arm:  No more than 16 (bit flags in vcdef)
+ljnwd:  Given nelt <= 2^31, since pjnwd stores floats, the memory
+  could be up to 2^33 per entry and more in total, so overflow
+  checking in 32-bit comps must be very careful.
+nc:  A connection type can have up to 2^28-1 connections per cell
+  (which allows for multiplication by upcij1, uplijss).
+  Bookkeeping must be 64-bit over multiple cells, if only to
+  find memory limitations on 32-bit machines.
+nce (sum over conntypes of nc):  2^32
+ncs,nds:  Largest group number, 2^16-1, largest stim number, umed.
+nel, nelt, lijlim, etc.:  I will assume no one group or cell type can
+  have more than 2^31 cells (64-bit systems) or 2^30 cells (32-bit
+  systems) (negative cell number is a flag in initsi call and will
+  avoid need for change in CONNLIST file format; cell lists use two
+  high-order bits of a long).  In 64-bit compilations, total storage
+  can exceed 2^32. but in 32-bit compilations, storage limitations
+  will prevent the 2^31 nel, nelt limits from being reached.
+ngx,ngy,nib,ngb,nr = 1 + (nib-1)*ngb:  No more than 2^16-1.
+sensory modalities:  No more than 16 (bits in a halfword).
+subarbors:  Both modes will assume no more than 2^16-1 subarbors
+    per connection type.
+cycles per trial:  Currently limited to 2^16-1.
+trial series in a run:  2^32-1.
+trials in a series or between resets:  2^32-1.
+cycles in a run or between resets:  2^63-1.
+
+Colors in a color sequence (currently 8):  No more than 32
+
+Implementation plan:  Calculations of space needed for various
+dynamic allocations will be done with ui64 variables, assuming
+there will be no overflows when all the above conditions are met.
+The only testing needed will be to check that a ui64 fits in a
+size_t (might be 63 or 31 bits).  New routines [su]w2z[de]() have
+been added to the crk library to handle these checks.  Note that
+using [su]i64 for these calcs doesn't add any memory in 64-bit
+compilations.
+--Offsets into pbcst are currently longs, will leave them as not
+worth the trouble to recode, although broadcast under MPI can
+only handle 32 bits.

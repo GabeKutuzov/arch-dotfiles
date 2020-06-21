@@ -1,0 +1,59 @@
+                                      ROCKS - CRYSTALLOGRAPHIC COMPUTING SYSTEM                   16 AUG 09    0:00000  Page 1     
+ 
+  
+***Field is too long.
+Test 1 OK 
+Test 2 OK 
+ 
+-->WARNING: Numeric value 12.000000  is <= 18, reset to limiting value. 
+Test 2a OK 
+ 
+***NUMERIC VALUE 12.000000  IS > 6, NOT VALID FOR THIS VARIABLE.
+Test 2b OK 
+Test 3 OK 
+ 
+***NUMERIC VALUE 13.000000  IS < 18, NOT VALID FOR THIS VARIABLE.
+Test 3a OK 
+ 
+***NUMERIC VALUE 13.000000  IS >= 6, NOT VALID FOR THIS VARIABLE.
+Test 3b OK 
+ 
+***NUMERIC VALUE -1329.000  IS < 0, NOT VALID FOR THIS VARIABLE.
+Test 4 OK 
+Test 5 OK 
+Test 6 OK 
+ 
+***NUMERIC VALUE 1.2500000  IS < 2.2, NOT VALID FOR THIS VARIABLE.
+Test 6a OK 
+Test 6b OK 
+Test 7 OK 
+Test 8 OK 
+ 
+***NUMERIC VALUE ==>-1329<== MUST BE >= 0.
+ 
+***NUMERIC VALUE 0          IS <= 0, NOT VALID FOR THIS VARIABLE.
+Test 9 OK 
+ 
+***NUMERIC VALUE ==>-<== IS NOT A WELL FORMED NUMBER.
+Test 9a OK 
+Test 10 OK 
+Test 11 OK 
+Test 12 OK 
+ 
+-->WARNING: Numeric value 2.4000001  is <= 2.5678, reset to limiting value. 
+Test 12a OK 
+Test 13 OK 
+Test 13a OK 
+Test 14 OK 
+Test 15 OK 
+Test 16 OK 
+Test 17 OK 
+Test 18 OK 
+***Equals sign expected.
+Test 19 OK 
+***Parentheses required.
+Test 20 OK 
+***Unrecognized metric unit multiplier prefix.
+Test 21 OK 
+Test 22 OK 
+Test 23 OK

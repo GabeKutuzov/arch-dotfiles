@@ -1,0 +1,279 @@
+Testing sibcdin.
+Tests 1-12 should all end with abend 55.
+Testing in scan mode without character test:
+
+   Test 1: Octal, input is 0 1 7 10 17 20 3456 -1 -7 -10 -3456 12a 8
+    Results are: 0 1 7 10 17 20 3456 37777777777 37777777771 37777777770 37777774322 12
+
+***Expected a number, no digits found.
+
+***Program terminated with abend code 57
+ 0
+***Program terminated with abend code 55
+ 0
+
+   Test 2: Decimal, input is 0 1 9 10 19 20 3456 -1 -9 -10 -3456 12a junk
+    Results are: 0 1 9 10 19 20 3456 -1 -9 -10 -3456 12
+
+***Expected a number, no digits found.
+
+***Program terminated with abend code 57
+ 0
+***Program terminated with abend code 55
+ 0
+
+   Test 3: Hexadecimal, input is 0 1 f 10 1F 20 3456 -1 -f -10 -3456 12g junk
+    Results are: 0 1 f 10 1f 20 3456 ffffffff fffffff1 fffffff0 ffffcbaa 12
+
+***Expected a number, no digits found.
+
+***Program terminated with abend code 57
+ 0
+***Program terminated with abend code 55
+ 0
+Testing in scan mode with character test:
+
+   Test 4: Octal, input is 0 1 7 10 17 20 3456 -1 -7 -10 -3456 12a 8
+    Results are: 0 1 7 10 17 20 3456 37777777777 37777777771 37777777770 37777774322
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ 12
+
+***Expected a number, no digits found.
+
+***Program terminated with abend code 57
+ 0
+***Program terminated with abend code 55
+ 0
+
+   Test 5: Decimal, input is 0 1 9 10 19 20 3456 -1 -9 -10 -3456 12a junk
+    Results are: 0 1 9 10 19 20 3456 -1 -9 -10 -3456
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ 12
+
+***Expected a number, no digits found.
+
+***Program terminated with abend code 57
+ 0
+***Program terminated with abend code 55
+ 0
+
+   Test 6: Hexadecimal, input is 0 1 f 10 1F 20 3456 -1 -f -10 -3456 12g junk
+    Results are: 0 1 f 10 1f 20 3456 ffffffff fffffff1 fffffff0 ffffcbaa
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ 12
+
+***Expected a number, no digits found.
+
+***Program terminated with abend code 57
+ 0
+***Program terminated with abend code 55
+ 0
+Testing in fixed width mode without character test:
+
+   Test 7: Octal, input is 0 1 7 10 17 20 3456 -1 -7 -10 -3456 12a 8
+    Results are: 1 7101 7203 4561 37777777707 345 612
+
+***Expected a number, no digits found.
+
+***Program terminated with abend code 57
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+
+   Test 8: Decimal, input is 0 1 9 10 19 20 3456 -1 -9 -10 -3456 12a junk
+    Results are: 1 9101 9203 4561 -91 345 612
+
+***Expected a number, no digits found.
+
+***Program terminated with abend code 57
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+
+   Test 9: Hexadecimal, input is 0 1 f 10 1F 20 3456 -1 -f -10 -3456 12g junk
+    Results are: 1 f101 f203 4561 ffffff0f 345 612
+
+***Expected a number, no digits found.
+
+***Program terminated with abend code 57
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+Testing in fixed width mode with character test:
+
+   Test 10: Octal, input is 0 1 7 10 17 20 3456 -1 -7 -10 -3456 12a 8
+    Results are: 1 7101 7203
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ 4561
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ 37777777707
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ 345
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ 612
+
+***Expected a number, no digits found.
+
+***Program terminated with abend code 57
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+
+   Test 11: Decimal, input is 0 1 9 10 19 20 3456 -1 -9 -10 -3456 12a junk
+    Results are: 1 9101 9203
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ 4561
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ -91
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ 345
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ 612
+
+***Expected a number, no digits found.
+
+***Program terminated with abend code 57
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+
+   Test 12: Hexadecimal, input is 0 1 f 10 1F 20 3456 -1 -f -10 -3456 12g junk
+    Results are: 1 f101 f203
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ 4561
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ ffffff0f
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ 345
+
+***Nonnumeric character in numeric field.
+
+***Program terminated with abend code 56
+ 612
+
+***Expected a number, no digits found.
+
+***Program terminated with abend code 57
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+***Program terminated with abend code 55
+ 0
+
+    Test 13: Input zero, should produce an error
+
+
+***Value must be nonzero.
+
+***Program terminated with abend code 57
+    Results are: 0
+    sibcdinf should be NULL, actual is 0
+
+    Test 14: Input -1, should produce an error
+
+
+***Value must be positive.
+
+***Program terminated with abend code 57
+    Results are: -1
+    sibcdinf should be NULL, actual is 0

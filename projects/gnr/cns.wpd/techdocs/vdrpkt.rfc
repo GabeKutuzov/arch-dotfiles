@@ -1,0 +1,192 @@
+Definition of packets for Video DIsk Recorder
+---------------------------------------------
+The following defines the packets to be used for the control of one or more
+VDR devices by CNS.  The protocol is based on the new TQD,TQE and RECORD control
+cards added to the CNS input set.
+
+The term "Control PC" refers to the PC that is physically connected (by means of
+a serial port) to the specific VDR.  Although currently each control PC
+will only be controlling one VDR, the protocol provides for multiple VDRs per
+PC.
+
+The term "CNS" is used for any source of packets to the control PC, routed
+thru the SUN-PC serial connection.
+
+All VDR_* constants are defined in packet.h .
+
+1. VDR INIT PACKET
+
+Src: CNS
+Dst: Control PC
+Type: PKT_VINIT   (see packet.h)
+Data Fields:
+
+struct VideoInitPkt {
+   short type;     /*  camera or graphics recording.   */
+   short device;   /*  in case PC has more than one VDR. Otherwise=1  */
+   long  nframes;  /*  number of frames to reserve.  If 0, reserve all  */
+   long diskid;    /* disk ID or flag: do not check */
+   };
+
+Description:
+This packet is sent following a TQD or TQE input card. It initializes
+the VDR and acossiated data structures, and sets it to record mode.
+This packet is ACKed with the Video Init Response packet.
+
+Possible field values:
+type: VDR_REC_DISP: record from Moniterm display. Ignore intvl, nexp and
+                    mode fields in subsequent Video Setup packets.
+      VDR_REC_EXP:  record from camera.  
+device: 1..n :  Designates the number of the VDR, in case more than one
+                is connected to the same PC.  At present, always assign
+                to this field the value 1.
+nframes:0..54000: Number of frames for recording area.  Derived from the
+                  RESERVE parameter to the TQE/TQD card.  If this field
+                  is zero, all available space is allocated.  If this
+                  field exceeds the available space, only part of it will
+                  be allocated, and the Init Response packet will include
+                  a VDR_NO_SPACE flag.  In any case, the size of the recording
+                  area is returned in the response packet.
+diskid:1..99999,VDR_NO_IDCHK: ID of laser disk.  if positive, will compare
+                  to actual disk ID, and if not matching, will not do any
+                  initialization.  VDR_NO_IDCHK will override that.  In
+                  any case, the ID of the actual disk is returned in the
+                  response packet, unless no ID is found, in which case -1
+                  is returned.
+
+
+2. VDR INIT RESPONSE PACKET
+
+Src: Control PC
+Dst: CNS
+Type:PKT_VINITRESP (see packet.h)
+Data Fields:
+
+struct VIdeoInitResPkt {
+   long curframe;      /* number of first recordable frame  */
+   short errcode;      /* Bit Mask error flag */
+   long diskid;        /* ID of disk currently in VDR, -1 if has none  */
+   long freeframes;    /* number of free frames for recording */
+   };
+
+Description:
+This message is the response to an INIT packet.  
+THE TIME LAG BETWEEN RECEIPT OF INIT PACKET AND RESPONSE MAY BE UP TO
+90 SECONDS.
+
+Possible field values:
+curframe: If any of the error flags, EXCLUDING VDR_NO_SPACE, is raised,
+          the value of this field is zero. Otherwise, it is te current frame,
+          allocated as the first frame for recording.
+errcode:  A bit mask, containing error flags.  See packet.h for list of
+          errors.  With the exception of VDR_NO_SPACE, all other errors
+          are fatal, and the VDR will not be initialized. 
+diskid:   If VDR_OFFLINE or VDR_UNKNOWN_ERR flags are set, this field is
+          undefined.  Otherwise this field is a non-negative integer,
+          corresponding to the ID of the disk currently in the VDR, or -1
+          if that disk has no ID.
+freeframes: The number of frames allocated to recording. If any of the error
+            flags, excluding VDR_NO_SPACE, is raised, the value of this field
+            is zero. Otherwise, it is the number of frames (the minimum of
+            the requested and available space).
+
+
+3. VIDEO SETUP PACKET
+
+Src: CNS
+Dst: Control PC
+Type: PKT_VSETUP
+Data Fields:
+
+struct VideoSetup {
+   long  first,last,of_every;  /* defines trial sample to be recorded */
+   short mode;    /* synched to CNS cycles, or not     */
+   float intvl;   /* time interval between frames   */
+   short nexp;    /* Number of exposures after each movement, in synch mode */
+   };
+
+Description:
+This packet will be sent as a result of a RECORD input card.  all settings 
+from previous Setup packets will be cleared, and if recording is in progress, itwill be stopped.  THIS MAY BE A PROBLEM AND MAY HAVE TO CHANGE.  IT PARTIALLY
+DEPENDS ON THE QUESTION: WHEN DOES A CYCLE END? WHEN THE LAST OUTPUT TO NOMAD
+IS SENT, OR WHEN THE "ALL ENGINES STOPPED" IS RECEIVED.
+
+Possible field values:
+first,last:   0..n: If both are zero, no frames will be recorded.  If sum of
+              both is greater than of_every, all trials will be recorded.
+of_every:     The number of trials used as a unit in conjuction with first,last.
+intvl:        Ignored if initialized to record Moniterm display.     
+              Non negative floating number.  If in SYNCH mode, determines the 
+              inter frame delay during motion.  If in NOSYNCH mode, determines 
+              the inter frame delay during whole recording.  If zero, in SYNCH
+              mode no recording will take place during motion, if in ASYNCH
+              mode, no recording will take place.
+              NOT FINAL< MAY CVHANGE TO SPEED RATIO.
+nexp:         Ignored if initialized to record Moniterm display.   
+              1..n:  In SYNCH mode, number of exposures to take, at the normal
+              speed of 30 f/sec, after end of motion.  In ASYNCH, this parameter
+              is ignored (???????????????)
+
+
+4.  NEW TRIAL SERIES PACKET
+Src: CNS
+DSt: Control PC
+Type:PKT_NEWSER
+No Data Fields.
+
+Description:
+Indicates that a new trial series is starting.  In SYNCH mode, will reset 
+counters for recorded trial selection.
+The PC will ack this message with a FRAME packet.
+
+5.  FRAME NUMBER PACKET
+Src: CNS / PC
+Dst:  PC / CNS
+Type: PKT_VFRAME
+Data Fields:
+(only from PC) A long integer indicating the current absolute frame number.
+
+Desceription:
+When received by the PC, this packet is a request for the current frame number,
+and data length should be set to zero.  
+When sent by the PC, this frame contains the current frame number.  In addition
+to being a response to the inquiry, this is used as the ACK for the following
+frames: PKT_VSETUP, PKT_NEWSER, PKT_VCLEAR.  The value can be extracted
+by CNS for transcript purposes.
+
+6. EFFECTORS ON PACKET
+Src: CNS
+Dst: Control PC
+Type: PKT_EFFON
+No Data Fields.
+
+Description:
+
+Indicates that amessage from  NOMAD has been received, and platform is now in 
+motion.   This packet is not ACKed.
+
+
+7. EFFECTORS OFF PACKET
+Src: CNS
+Dst: Control PC
+Type: PKT_EFFOFF
+No Data Fields.
+
+Description:
+
+Indicates that a message from  NOMAD has been received, and platform has stopped
+motion.   This packet is not ACKed.
+
+8. CLEAR PACKET
+Src:  CNS
+Dst: Control PC
+Type:PKT_VCLEAR
+No Data FIelds.
+
+Description:
+Instructs PC to clear all VDR settings, stop recording and invalidate all
+data structures.  This packet is ACKed with the number of the last recorded
+frame.  No further recording can take place before another INIT frame is
+received by the PC.
+
+

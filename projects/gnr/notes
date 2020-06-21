@@ -1,0 +1,1 @@
+NOTE: h_addr change - added to sysdef because __USE_GNU doesn't work.

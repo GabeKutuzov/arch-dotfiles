@@ -1,0 +1,171 @@
+function [entropy,clusternumber,clusters] = ...
+   history_clustering(interval,gamdelay,max_clusters)
+
+% $Id: history_clustering.m 6 2014-05-12 20:21:24Z  $
+
+%  This software was developed in the Laboratory of Biological
+% Modelling at The Rockefeller University by Nicholas D. Watters
+% and George N. Reeke
+
+% (c) The Rockefeller University, 2013
+%
+% This routine is part of a set of routines for computing the entropy of a
+% neuronal spike train by the history clustering method of Watters & Reeke
+% (Neural Computation, submitted) and various comparison methods as
+% documented in the main routine of this set, hcentropy.m.
+%
+% This software is distributed under GPL, version 2.
+% This program is free software; you can redistribute it and/or
+% modify it under the terms of the GNU General Public License as
+% published by the Free Software Foundation; either version 2 of
+% the License, or (at your option) any later version.
+% Accordingly, this program is distributed in the hope that it will
+% be useful, but WITHOUT ANY WARRANTY; without even the implied
+% warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+% See the GNU General Public License for more details.  You should
+% have received a copy of the GNU General Public License along with
+% this program.  If not, see <http://www.gnu.org/licenses/>.
+
+% See README file for revision history
+
+% Compute spike-train entropy by the history-clustering method
+
+% INPUTS:
+    % interval: a history matrix of ISIs
+    % gamdelay: 1 to include a refractory period, 0 otherwise
+    % max_clusters: maximum number of clusters the program is allowed to
+    %   make
+% OUTPUTS:
+    % entropy: the entropy estimation
+    % clusternumbers: vector of number of clusters produced
+    % clusters: cell conatining the actual clusters
+% PROGRAMS CALLED:
+    % k_means
+
+if size(interval,1) == 1
+    error('Bad history_depth value (must be 2-4)')
+end
+X = interval; % The data
+nX = X(2:end,:);
+sznX2 = size(nX,2);
+CHinds = zeros(1,max_clusters); % Calinski-Harabasz vector
+for k=2:max_clusters
+    % Do k-means clustering with k-means++ initialization
+    % Make tentative cluster points
+    X_prob = ones(1, sznX2);
+    X_prob = X_prob ./ sum(X_prob);
+    Z = zeros(size(nX,1),k);
+    for ii=1:k
+        ind = randsample(sznX2,1,true,X_prob);
+        Z(:,ii) = nX(:, ind);
+        ND = zeros(ii, sznX2);
+        for jj = 1:ii
+            centroid = repmat(Z(:,jj), 1, sznX2);
+            D = (nX - centroid).^2;
+            ND(jj,:) = sum(D.^2,1);
+        end
+        if size(ND,1) == 1
+            newD = ND;
+        else
+            newD = min(ND);
+        end
+        if sum(newD) == 0
+            continue
+        end
+        X_prob = newD/sum(newD);
+    end;
+    Z = Z(:,1:ii);
+    ZZ = Z';
+    % Cluster the data:
+    [I,fincenters] = k_means(nX',k,ZZ);
+
+    % Compute Calinski-Harabasz index
+    sub_tree = cell(k,1);
+    Xdiffs_sq = zeros(1,k);
+    Cdiffs_sq = zeros(1,k);
+    tot_center = mean(X(2:end,:),2);
+    for ii=1:k
+        sub_tree{ii,1} = X(:,I==ii);
+        nT = sub_tree{ii,1}(2:end,:);
+        temp_stds = zeros(1,size(nT,2));
+        for jj = 1:size(nT,2)
+            temp_stds(jj) = sum((nT(:,jj)-fincenters(ii,:)').^2);
+        end
+        nnX = sub_tree{ii,1}(end,:);
+        Xdiffs_sq(ii) = sum(temp_stds);
+        Cdiffs_sq(ii) = numel(nnX)*sum((fincenters(ii,:)'-tot_center).^2);
+    end
+    CHinds(k) = (sum(Cdiffs_sq)/(k-1))/(sum(Xdiffs_sq)/(numel(X(1,:))-k));
+
+    if k == size(X,2);
+        if k == 2
+            sub_tree_before = cell(1,1);
+            sub_tree_before{1} = X;
+        end
+        sub_tree = sub_tree_before;
+        break;
+    end
+    for j = 1:numel(sub_tree)
+        if isempty(sub_tree{j}) == 1;
+            if k == 2
+                sub_tree_before = cell(1,1);
+                sub_tree_before{1} = X;
+            end
+            sub_tree = sub_tree_before;
+            break;
+        end
+    end
+    if CHinds(k)<CHinds(k-1)
+        sub_tree = sub_tree_before;
+        break;
+    end
+    if k == max_clusters
+        sub_tree = sub_tree_before;
+        break;
+    end
+    sub_tree_before = sub_tree;
+
+end;
+clusters = sub_tree';
+clusternumber = numel(clusters);
+
+%% Calculate the entropy
+entropies = zeros(1,numel(clusters));
+entweights = zeros(1,numel(clusters));
+for j=1:numel(clusters)
+    code = clusters{j};
+    SD = code(1,:);
+    if gamdelay == 1
+        [smallest,smallind] = min(SD);
+        nSD = SD-smallest;
+        nSD(smallind) = [];
+        if isempty(nSD) ~= 1
+            phat = gamfit(nSD);
+        else
+            phat = gamfit(SD);
+        end
+    else
+        phat = gamfit(SD);
+    end
+    if phat(1, 2) == 0
+        entropies(j) = 0;
+        continue;
+    end;
+    % Calculate the entropy for a gamma distribution with parameters
+    %  given by phat
+    phattemp = phat';
+    a = phattemp(1,:);
+    b = phattemp(2,:);
+    entropies(j) = (a + log(b) + log(gamma(a)) + (1-a).*psi(a))./log(2);
+    if entropies(j) == Inf
+        entropies(j) = 0;
+    end;
+    if isnan(entropies(j)) == 1
+        error('Invalid entropy')
+    end;
+    entweights(j) = numel(clusters{j});
+end
+nentweights = entweights/sum(entweights);
+entropy = sum(nentweights.*entropies);
+
+end

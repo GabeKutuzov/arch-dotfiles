@@ -1,0 +1,25 @@
+#if 0
+/* DEBUG DEBUG DEBUG */
+      printf("State at iteration %d\n",ji);
+/*      for (jl=1,il=play1;il!=NULL;il=il->play,jl++) {*/
+         il=play1;
+      for (i=0; i <3; i++) il=il->play;
+         jl=1;
+
+         ic = il->prd; lc = ic;
+/*         for (js=0,is=il->psi;js<il->ncells;js++) {*/
+           js=0; is=il->psi;
+
+            printf("   s(%d,%d) = %6.3f\n",jl,js,(float)(*is++)/256.0);
+            for (jx=1,ix=il->pct1;ix!=NULL;ix=ix->pct,jx++) {
+               printf("     l(%d): ",jx);
+               for (jc=0;jc<ix->nconns;jc++,lc++)
+                  printf("%7d",lc->lij);
+               printf("\n");
+               printf("     c(%d): ",jx);
+               for (jc=0;jc<ix->nconns;jc++,ic++) {
+                  wkcij = ic->cij >= 128 ? ic->cij - 256 : ic->cij;
+                  printf("%7.3f",(float)wkcij/128.0);}
+               printf("\n");}
+/* ENDDEBUG ENDDEBUG ENDDEBUG */
+#endif

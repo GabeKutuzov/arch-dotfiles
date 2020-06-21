@@ -1,0 +1,49 @@
+R79 Major changes:
+Main diff from R78 was debugging of KSTMG,KSTGP stats to give same
+results on serial and parallel machines.  Marking of which stimuli
+were observed in each trial were removed from pps and ps2 arrays and
+put in new lindv space for each celltype along with space for KSTHR
+history for one trial back from current.  This gets rid of unneeded
+keeping track for connections with delay--marks just OR together
+across cycles in a trial.  As regards mem allocation, allocation in
+lindv would allow turning these stats on/off at Group III time, but
+this was not done because of initializations done at d3mchk that would
+have to be redone in d3nset--but some are used sooner...
+
+darwin3 main:  Add envin() call to redirect stdin, turn off OKPLOT
+   if NOXG and no METAFILE.  Get rid of VFILEONLY option.  Move
+   "Running" message to d3start and add serial case.
+d3start:  Implement printing host name and number of nodes, WAI info.
+d3tchk:  Add KSTHR (response history) to options that set RP->kxr GSTATS.
+d3allo:  Remove allocation of lmm space from pps and ps2, allow for
+   two (hi+lo) histos and new HILOSI (if PAR) in ldstat, eliminate
+   RP->nctwmgs, eliminate marking space on PAR0 node.
+d3news:  Add ir->andctkst, now only used to shut off stats at
+   region level when off for all celltypes in that region.
+d3nset:  Fix allocations for stim id marking, HILOSI and GPSTATs
+   space, eliminat lmm space in pps, ps2 arrays.
+d3zsta:  Clear the HILOSI and pmark space correctly.
+d3go:  Fixes for KSTMG,KSTGP stats just summarized:  Clear stim id
+   marks only at start of a trial, count hits > pt and hits > ht
+   separately, renamed oHLsi to iHLsi and made it an index, not a byte
+   offset.  Changed 'cyclestogo' to a signed variable so can count
+   down to 0 on last cycle of a trial and go to -1 when trial is done.
+   Also enhanced the DBGHLD debug output to give better info.
+d3gsta:  Add nstim to HILOSI, correct looping over HILOSI blocks,
+   eliminate loop over pmarks and just process all GPSTATs
+   whether the stimulus was seen or not.
+d3stat:  Allow any combo of KSTMT +/- KSTGP, clean up text and
+   checking for hiloresp, lohiresp, advancing of pgp0 pointer.
+d3chng:  Remove KSTHR from stats that require XRM allocation.
+d3exit:  Improve exit loop checking (abexloop).
+d3term:  If PAR, always call envplt() even if no plotting, for shutdown.
+d3global:  Add def of VFILE_ERROR.
+rpdef:   Add nhlsi, nhlssv.
+rpdef0:  Remove pmark0, lmark0. 
+repblock:  Add andctkst.
+celltype:  Add nstim to HILOSI, remove pmark, oHLsi, seqhls,
+   add mspt, iMarkh, iMarks.
+celldata:  Pointers to the new stim id marking areas on each node.
+makefile:  Incorporate LCLHOME, add d3start, defined MPICC.
+makmac64, maklux32, maknoi64:  Add d3start.
+

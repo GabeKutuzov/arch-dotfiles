@@ -1,0 +1,110 @@
+# (c) Copyright 2007-2016, The Rockefeller University *11225* 
+# $Id: maklux32 4 2008-03-13 19:21:14Z  $
+########################################################################
+#            Make file for BBD client and server libraries             #
+#                                                                      #
+# V1A, 02/05/07, GNR - New makefile                                    #
+# ==>, 11/21/07, GNR - Last mod before committing to svn repository    #
+# Rev, 03/12/08, GNR - Add bbdvers routine                             #
+# Rev, 08/23/08, GNR - Add server, client targets                      #
+# Rev, 09/02/08, GNR - Add bbdsputm, bbdcgetm routines, $(HOME)        #
+# Rev, 12/27/08, GNR - Add clean target, dependency on makefile itself #
+# V1C, 11/10/10, GNR - Add bbdcrsid, bbdcrtid                          #
+#                      Add msg to build bbdcminp,bbcmlog in bbdmex dir #
+# Rev, 01/15/11, GNR - Add bbdsquit source file                        #
+# Rev, 05/06/16, GNR - Comment out bbdcaztv, bbdcrngr (needs allegro)  #
+########################################################################
+
+CLIBNAME = libbbdc.a
+SLIBNAME = libbbds.a
+LIBDIR   = $(HOME)/lib
+INC      = $(HOME)/include /usr/local/include
+
+# Linux common pathnames
+DIR := pclinux
+LL  := $(LIBDIR)/$(DIR)
+
+CFILES = \
+bbdcinit \
+bbdcrege \
+bbdcregs \
+bbdcrsid \
+bbdcregt \
+bbdcrtid \
+bbdcregv \
+bbdcchk  \
+bbdcevnt \
+bbdcexsi \
+bbdcgete \
+bbdcgetm \
+bbdcputs \
+bbdcputt \
+bbdcputv \
+bbdvers
+
+# The following were used with the allegro library--
+# not required for Cns:  bbdcaztv, bbdcrngr
+
+SFILES = \
+bbdsinit \
+bbdsquit \
+bbdsrege \
+bbdsregs \
+bbdsregt \
+bbdsregv \
+bbdschk  \
+bbdspute \
+bbdsputm \
+bbdsgets \
+bbdsgett \
+bbdsgetv \
+bbdsevnt \
+bbdvers
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+########## Target dependent macro definitions:
+CC := gcc
+CFLAGS := -m32 -g -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := PCLINUX _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(CPPFLAGS) $(INC:%=-I%) $< \
+	| sed '\''s/^\(.*\)\.o[ :]*/$(DIR)\/\1.o $(DIR)\/\1.d : /g'\'' > $@; \
+	[ -s $@ ] || rm -f $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d maklux32
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) -c $<
+	mv $*.o $(DIR)
+
+.PHONY : pclinux client server depend
+pclinux: server client
+client:  $(LL)/$(CLIBNAME)
+server:  $(LL)/$(SLIBNAME)
+depend:  $(CFILES:%=$(DIR)/%.d) $(SFILES:%=$(DIR)/%.d)
+
+$(LL)/$(CLIBNAME):	$(CFILES:%=$(DIR)/%.o)
+	ar r $(CLIBNAME) $(CFILES:%=$(DIR)/%.o)
+	ranlib $(CLIBNAME)
+	mv $(CLIBNAME) $(LL)
+	@echo Also make bbdcmlog and bbdcminp in $(HOME)/src/bbdmex
+
+$(LL)/$(SLIBNAME):	$(SFILES:%=$(DIR)/%.o)
+	ar r $(SLIBNAME) $(SFILES:%=$(DIR)/%.o)
+	ranlib $(SLIBNAME)
+	mv $(SLIBNAME) $(LL)
+
+vbbdtest:	$(DIR)/vbbdtest.o $(LL)/$(CLIBNAME) $(LL)/libcrk.a
+	$(CC) -g $(DIR)/vbbdtest.o -o $@ $(LL)/$(CLIBNAME) $(LL)/libcrk.a
+	mv $@ ~/bin
+
+clean:
+	rm -f $(DIR)/*.o $(LL)/$(CLIBNAME) $(LL)/$(SLIBNAME)
+
+-include $(CFILES:%=$(DIR)/%.d) $(SFILES:%=$(DIR)/%.d)

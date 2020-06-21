@@ -1,0 +1,92 @@
+                                      ROCKS - CRYSTALLOGRAPHIC COMPUTING SYSTEM                   24 JAN 12    0:00000  Page 1    
+  
+    0.00000     0.06498     3.14159       256.0 5.732000+13
+1.063200-32  6.498340-2    3.141593  2.560000+2 5.732000+13
+    0.00000     0.00574     2.78178  1259.42000 3.890200+12
+2.794300-31  5.738020-3    2.781780  1.259420+3 3.890200+12
+      -9999          -1           0          23       65536
+      2.+19       2.+19           0          23       65536
+Note:  It is correct that the first two values on the line above
+   are different in 64-bit vs 32-bit runs,
+   because the variables are negative longs printed as unsigned.
+    0.00000  Now      0.06498  is t     3.14159  he t   256.00000  ime  5.732000+13  for 
+
+Q.5   -2.4949   -2.4950   -2.4951   -2.9949   -2.9950   -2.9951
+Q.3     -2.49     -2.50     -2.50     -2.99     -3.00     -3.00
+
+Old saying:
+
+Now is the time for all good men to come to the aid of their party  
+
+Now is the time for all good men to come to the aid of their party  
+
+Now w isis t thehe t timime e fofor r alall l gogoodod m menen t to 
+This isn't not in quotes
+   12345678    9ABCDEF0    00000111abcdef  4096.0 256.0000000-1     1.063200-32       0.065
+
+A word -9999, and 23 ends here
+
+Testnum2     0.00000     3.14159   5.732000+13
+
+Indent on the second line    -2.4949   -2.4950   -2.4951
+                             -2.9949   -2.9950   -2.9951
+
+K(W=8) test, expect AFKR8bbb: AFKR8   <--End here
+K(J=1) test, expect AFKR8b: AFKR8 <--End here
+Wseed test, expect (1234,56789) (0,2147483646): (1234,56789) (0,2147483646) 
+
+   cell  10.0        12.34567890 20.0        90.0        90.0       120.0
+
+Input test:
+
+Cell:      10.0000     12.3457     20.0000     90.0000     90.0100     20.0000
+   cell  10.0        12.34567890 20.0        90.0        90.0       120.0
+            $                                                                      
+
+***NUMERIC VALUE 10.000000  IS <= 10.5, NOT VALID FOR THIS VARIABLE.
+   cell  10.0        12.34567890 20.0        90.0        90.0       120.0
+                                                                         $         
+***Required field missing at '$`.
+
+Cell:      10.5000     12.3457     20.0000    120.0000     -1.0000     20.0000
+
+Cell:      10.0000     12.3457     20.0000    120.0000     -2.0000     20.0000
+
+   cell  129.74563,29.7,-14.32,opt1=398.26482
+
+Cell:     129.7456     29.7000    -14.3200           0           0           0
+
+Opt1:     398.2648
+
+Input with normal scale:    129.74561
+
+Input with compat scale:    129.75000
+
+   'Text string for testing T format' 1009 (9876,54321)
+
+Text locator: 1     
+Stored text: Text string for testing T format            
+Wseed input, expect (-1,1009) (9876,54321): (-1,1009) (9876,54321) 
+
+    36.2mV 33 ACC=47.25cm/sec2
+
+J test returned     30, 30 is correct
+
+Potential =  0.03620V, acceleration =  0.47250m/sec2
+   PData (1) (too many in parens) 2 (not enough)
+                        $      $               $                                   
+***Too many data fields of kind marked at '$`.
+***Required field missing at '$`.
+
+Deliberate errors: The last 2 items in the second parens
+  should be marked as "TOO MANY".
+  Two items should be missing in the last parens.
+The two numeric items were read as      1     2
+Item in first parens read in correctly.
+Next two items should be "too" and "many":
+   too    many
+Third data item read in correctly.
+Next three items should be "not" and "enough?" and "Untouch":
+   not    enough?    Untouch
+
+End of tests

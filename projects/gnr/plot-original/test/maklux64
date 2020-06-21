@@ -1,0 +1,41 @@
+# LINUX	MAKE file for ROCKS plot tests -- 64-bit version
+#
+# V1A, 03/14/15, GNR - New makefile
+
+# Define subdirectory for this type of make
+DIR := pclux64
+
+# Define directory where ROCKS library is stored
+LIB := $(HOME)/lib/$(DIR)
+
+# Define directory where include files are stored
+INC := $(HOME)/include
+
+# Define directory where plot object files are stored
+# (Can be used to test a new version instead of	version	in LIB)
+OBJ := $(HOME)/src/plot/$(DIR)
+
+.SUFFIXES:
+.SUFFIXES: .c .s .o
+
+# Compilation macros for LINUX
+CC := gcc
+CFLGS := -g -Wall
+DEFS :=	PCLUX64	_ISOC99_SOURCE
+
+#Compile for Linux
+$(DIR)/%.o:	%.c makefile
+	$(CC) $(CFLGS) $(DEFS:%=-D%) -I$(INC) -c $< ; \
+	mv $*.o	$(DIR)
+
+# Targets for making various test programs
+
+mfpktest:	$(DIR)/mfpktest.o $(LIB)/libserplotV2A.a
+	$(CC) $(CFLGS) -o mfpktest $(DIR)/mfpktest.o \
+		-L$(LIB) -lserplotV2A -lcrk -lm
+
+$(DIR)/mfpktest.o:	mfpktest.c $(INC)/sysdef.h $(INC)/rocks.h \
+		$(INC)/rkxtra.h
+	$(CC) $(CFLGS) $(DEFS:%=-D%) -I$(INC) -c $< ; \
+	mv mfpktest.o	$(DIR)
+

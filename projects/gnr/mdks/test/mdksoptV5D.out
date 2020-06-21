@@ -1,0 +1,892 @@
+
+CLOCKS_PER_SEC is 1000000.0
+
+   SPOUT ON
+
+   MDKSOPT K=1,N=200,DIVS=10,R=500,T=UNIF
+
+For k = 1, n = 200, dist = (UNIF,UNIF), reps = 500
+   Divs = 1, mean s =  1.18257, sigma s =  0.36867, time/trial =      0.00004
+
+   Brute force mean s =  1.18257, sigma s =  0.36867, time/trial =      0.00030
+   Brute force time/min brick time =      7.50000
+
+   MDKSOPT K=1,N=1000,DIVS=10,R=500
+
+For k = 1, n = 1000, dist = (UNIF,UNIF), reps = 500
+   Divs = 1, mean s =  1.20919, sigma s =  0.37575, time/trial =      0.00008
+
+   Brute force mean s =  1.20919, sigma s =  0.37575, time/trial =      0.00744
+   Brute force time/min brick time =     93.00000
+
+   MDKSOPT K=1,N=5000,DIVS=10,R=250
+
+For k = 1, n = 5000, dist = (UNIF,UNIF), reps = 250
+   Divs = 1, mean s =  1.23619, sigma s =  0.39454, time/trial =      0.00048
+
+   Brute force mean s =  1.23619, sigma s =  0.39454, time/trial =      0.18744
+   Brute force time/min brick time =    390.50000
+
+   MDKSOPT K=1,N=25000,DIVS=10,R=50
+
+For k = 1, n = 25000, dist = (UNIF,UNIF), reps = 50
+   Divs = 1, mean s =  1.25087, sigma s =  0.37661, time/trial =      0.00260
+
+   Brute force mean s =  1.25087, sigma s =  0.37661, time/trial =      4.67260
+   Brute force time/min brick time =   1797.15385
+
+   MDKSOPT K=1,N=125000,DIVS=10,R=10
+
+For k = 1, n = 125000, dist = (UNIF,UNIF), reps = 10
+   Divs = 1, mean s =  1.21283, sigma s =  0.19704, time/trial =      0.07100
+
+   Brute force mean s =  1.21283, sigma s =  0.19704, time/trial =    118.13800
+   Brute force time/min brick time =   1663.91549
+
+       *
+
+   MDKSOPT K=2,N=200,DOED=2,R=500,T=UNIF
+
+For k = 2, n = 200, dist = (UNIF,UNIF), reps = 500
+   Divs = 4, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00042
+   Divs = 5, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00040
+   Divs = 6, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00038
+   Divs = 7, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00038
+   Divs = 8, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00038
+   Divs = 9, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00040
+
+   Brute force mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00048
+   Brute force time/min brick time =      1.26316
+
+   MDKSOPT K=2,N=1000,DOED=2,R=500
+
+For k = 2, n = 1000, dist = (UNIF,UNIF), reps = 500
+   Divs = 9, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00646
+   Divs = 10, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00622
+   Divs = 11, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00590
+   Divs = 12, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00574
+   Divs = 13, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00550
+   Divs = 14, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00542
+   Divs = 15, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00532
+   Divs = 16, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00528
+   Divs = 17, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00532
+   Divs = 18, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00542
+   Divs = 19, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00566
+
+   Brute force mean s =  1.76272, sigma s =  0.36389, time/trial =      0.01154
+   Brute force time/min brick time =      2.18561
+
+   MDKSOPT K=2,N=5000,DOED=2,R=125
+
+For k = 2, n = 5000, dist = (UNIF,UNIF), reps = 125
+   Divs = 19, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.08736
+   Divs = 20, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.08552
+   Divs = 21, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.08296
+   Divs = 22, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.08176
+   Divs = 23, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07944
+   Divs = 24, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07824
+   Divs = 25, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07536
+   Divs = 26, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07544
+   Divs = 27, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07392
+   Divs = 28, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07440
+   Divs = 29, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07272
+   Divs = 30, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07376
+   Divs = 31, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07280
+   Divs = 32, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07352
+   Divs = 33, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07376
+   Divs = 34, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07464
+   Divs = 35, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07408
+   Divs = 36, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07584
+   Divs = 37, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07752
+
+   Brute force mean s =  1.86586, sigma s =  0.34535, time/trial =      0.28840
+   Brute force time/min brick time =      3.96590
+
+   MDKSOPT K=2,N=25000,DOED=2,R=25
+
+For k = 2, n = 25000, dist = (UNIF,UNIF), reps = 25
+   Divs = 40, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.25600
+   Divs = 41, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.22760
+   Divs = 42, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.22600
+   Divs = 43, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.20280
+   Divs = 44, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.21160
+   Divs = 45, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.18840
+   Divs = 46, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.19720
+   Divs = 47, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.17440
+   Divs = 48, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.18320
+   Divs = 49, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.16800
+   Divs = 50, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.18240
+   Divs = 51, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.16080
+   Divs = 52, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.16840
+   Divs = 53, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.14720
+   Divs = 54, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.16520
+   Divs = 55, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.15680
+   Divs = 56, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.16520
+   Divs = 57, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.14880
+   Divs = 58, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.17800
+   Divs = 59, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.15760
+   Divs = 60, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.18520
+   Divs = 61, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.17200
+   Divs = 62, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.21320
+   Divs = 63, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.19160
+   Divs = 64, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.22960
+
+   Brute force mean s =  1.86220, sigma s =  0.36214, time/trial =      7.20560
+   Brute force time/min brick time =      6.28103
+
+   MDKSOPT K=2,N=125000,DOED=2,R=5
+
+For k = 2, n = 125000, dist = (UNIF,UNIF), reps = 5
+   Divs = 84, mean s =  1.84696, sigma s =  0.22269, time/trial =     40.46000
+   Divs = 85, mean s =  1.84696, sigma s =  0.22269, time/trial =     30.08600
+   Divs = 86, mean s =  1.84696, sigma s =  0.22269, time/trial =     38.91400
+   Divs = 87, mean s =  1.84696, sigma s =  0.22269, time/trial =     29.60600
+   Divs = 88, mean s =  1.84696, sigma s =  0.22269, time/trial =     37.61600
+   Divs = 89, mean s =  1.84696, sigma s =  0.22269, time/trial =     29.15600
+   Divs = 90, mean s =  1.84696, sigma s =  0.22269, time/trial =     36.33800
+   Divs = 91, mean s =  1.84696, sigma s =  0.22269, time/trial =     28.93000
+   Divs = 92, mean s =  1.84696, sigma s =  0.22269, time/trial =     35.50200
+   Divs = 93, mean s =  1.84696, sigma s =  0.22269, time/trial =     28.63800
+   Divs = 94, mean s =  1.84696, sigma s =  0.22269, time/trial =     34.55400
+   Divs = 95, mean s =  1.84696, sigma s =  0.22269, time/trial =     28.60200
+   Divs = 96, mean s =  1.84696, sigma s =  0.22269, time/trial =     34.17000
+   Divs = 97, mean s =  1.84696, sigma s =  0.22269, time/trial =     28.52800
+   Divs = 98, mean s =  1.84696, sigma s =  0.22269, time/trial =     33.46000
+   Divs = 99, mean s =  1.84696, sigma s =  0.22269, time/trial =     28.49200
+   Divs = 100, mean s =  1.84696, sigma s =  0.22269, time/trial =     33.35800
+   Divs = 101, mean s =  1.84696, sigma s =  0.22269, time/trial =     28.48600
+   Divs = 102, mean s =  1.84696, sigma s =  0.22269, time/trial =     32.92000
+   Divs = 103, mean s =  1.84696, sigma s =  0.22269, time/trial =     28.70600
+   Divs = 104, mean s =  1.84696, sigma s =  0.22269, time/trial =     33.00800
+   Divs = 105, mean s =  1.84696, sigma s =  0.22269, time/trial =     28.86000
+   Divs = 106, mean s =  1.84696, sigma s =  0.22269, time/trial =     32.78000
+   Divs = 107, mean s =  1.84696, sigma s =  0.22269, time/trial =     29.12200
+   Divs = 108, mean s =  1.84696, sigma s =  0.22269, time/trial =     32.83200
+   Divs = 109, mean s =  1.84696, sigma s =  0.22269, time/trial =     29.51000
+   Divs = 110, mean s =  1.84696, sigma s =  0.22269, time/trial =     33.02600
+   Divs = 111, mean s =  1.84696, sigma s =  0.22269, time/trial =     29.97200
+   Divs = 112, mean s =  1.84696, sigma s =  0.22269, time/trial =     33.38000
+   Divs = 113, mean s =  1.84696, sigma s =  0.22269, time/trial =     30.35400
+   Divs = 114, mean s =  1.84696, sigma s =  0.22269, time/trial =     33.59600
+   Divs = 115, mean s =  1.84696, sigma s =  0.22269, time/trial =     30.71600
+   Divs = 116, mean s =  1.84696, sigma s =  0.22269, time/trial =     33.40000
+   Divs = 117, mean s =  1.84696, sigma s =  0.22269, time/trial =     30.97000
+   Divs = 118, mean s =  1.84696, sigma s =  0.22269, time/trial =     33.70800
+   Divs = 119, mean s =  1.84696, sigma s =  0.22269, time/trial =     31.60200
+   Divs = 120, mean s =  1.84696, sigma s =  0.22269, time/trial =     34.25600
+   Divs = 121, mean s =  1.84696, sigma s =  0.22269, time/trial =     32.09600
+   Divs = 122, mean s =  1.84696, sigma s =  0.22269, time/trial =     34.74600
+   Divs = 123, mean s =  1.84696, sigma s =  0.22269, time/trial =     32.65400
+   Divs = 124, mean s =  1.84696, sigma s =  0.22269, time/trial =     35.31600
+   Divs = 125, mean s =  1.84696, sigma s =  0.22269, time/trial =     33.50400
+   Divs = 126, mean s =  1.84696, sigma s =  0.22269, time/trial =     36.18600
+   Divs = 127, mean s =  1.84696, sigma s =  0.22269, time/trial =     34.61600
+   Divs = 128, mean s =  1.84696, sigma s =  0.22269, time/trial =     37.05200
+   Divs = 129, mean s =  1.84696, sigma s =  0.22269, time/trial =     35.50000
+   Divs = 130, mean s =  1.84696, sigma s =  0.22269, time/trial =     38.55600
+
+   Brute force mean s =  1.84696, sigma s =  0.22269, time/trial =    197.36800
+   Brute force time/min brick time =      6.92860
+
+       *
+
+   MDKSOPT K=3,N=200,DOED=2,R=500,T=UNIF
+
+For k = 3, n = 200, dist = (UNIF,UNIF), reps = 500
+   Divs = 2, mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00090
+   Divs = 3, mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00088
+   Divs = 4, mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00092
+   Divs = 5, mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00100
+   Divs = 6, mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00118
+
+   Brute force mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00064
+   Brute force time/min brick time =      0.72727
+
+   MDKSOPT K=3,N=1000,DOED=2,R=400
+
+For k = 3, n = 1000, dist = (UNIF,UNIF), reps = 400
+   Divs = 3, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.01847
+   Divs = 4, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.01710
+   Divs = 5, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.01665
+   Divs = 6, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.01615
+   Divs = 7, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.01710
+   Divs = 8, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.01990
+   Divs = 9, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.02613
+
+   Brute force mean s =  1.94962, sigma s =  0.34789, time/trial =      0.01557
+   Brute force time/min brick time =      0.96440
+
+   MDKSOPT K=3,N=5000,DOED=2,R=80
+
+For k = 3, n = 5000, dist = (UNIF,UNIF), reps = 80
+   Divs = 6, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.29650
+   Divs = 7, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.28187
+   Divs = 8, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.26912
+   Divs = 9, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.25888
+   Divs = 10, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.25488
+   Divs = 11, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.27788
+   Divs = 12, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.30800
+   Divs = 13, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.37188
+
+   Brute force mean s =  2.09392, sigma s =  0.28111, time/trial =      0.38775
+   Brute force time/min brick time =      1.52133
+
+   MDKSOPT K=3,N=25000,DOED=2,R=16
+
+For k = 3, n = 25000, dist = (UNIF,UNIF), reps = 16
+   Divs = 10, mean s =  2.02821, sigma s =  0.28606, time/trial =      8.24562
+   Divs = 11, mean s =  2.02821, sigma s =  0.28606, time/trial =      9.08500
+   Divs = 12, mean s =  2.02821, sigma s =  0.28606, time/trial =      7.20063
+   Divs = 13, mean s =  2.02821, sigma s =  0.28606, time/trial =      6.96312
+   Divs = 14, mean s =  2.02821, sigma s =  0.28606, time/trial =      6.97000
+   Divs = 15, mean s =  2.02821, sigma s =  0.28606, time/trial =      7.95063
+   Divs = 16, mean s =  2.02821, sigma s =  0.28606, time/trial =      8.02313
+   Divs = 17, mean s =  2.02821, sigma s =  0.28606, time/trial =      8.86000
+   Divs = 18, mean s =  2.02821, sigma s =  0.28606, time/trial =      9.63375
+
+   Brute force mean s =  2.02821, sigma s =  0.28606, time/trial =      9.71125
+   Brute force time/min brick time =      1.39467
+
+   MDKSOPT K=3,N=125000,DOED=2,R=3
+
+For k = 3, n = 125000, dist = (UNIF,UNIF), reps = 3
+   Divs = 18, mean s =  2.33062, sigma s =  0.27365, time/trial =    706.66667
+   Divs = 19, mean s =  2.33062, sigma s =  0.27365, time/trial =    679.01667
+   Divs = 20, mean s =  2.33062, sigma s =  0.27365, time/trial =    652.23000
+   Divs = 21, mean s =  2.33062, sigma s =  0.27365, time/trial =    619.89667
+   Divs = 22, mean s =  2.33062, sigma s =  0.27365, time/trial =    591.71667
+   Divs = 23, mean s =  2.33062, sigma s =  0.27365, time/trial =    567.03333
+   Divs = 24, mean s =  2.33062, sigma s =  0.27365, time/trial =    543.89000
+   Divs = 25, mean s =  2.33062, sigma s =  0.27365, time/trial =    522.23000
+   Divs = 26, mean s =  2.33062, sigma s =  0.27365, time/trial =    501.20333
+   Divs = 27, mean s =  2.33062, sigma s =  0.27365, time/trial =    475.78000
+   Divs = 28, mean s =  2.33062, sigma s =  0.27365, time/trial =    446.39333
+   Divs = 29, mean s =  2.33062, sigma s =  0.27365, time/trial =    436.68667
+   Divs = 30, mean s =  2.33062, sigma s =  0.27365, time/trial =    431.50667
+   Divs = 31, mean s =  2.33062, sigma s =  0.27365, time/trial =    427.62333
+   Divs = 32, mean s =  2.33062, sigma s =  0.27365, time/trial =    433.75000
+   Divs = 33, mean s =  2.33062, sigma s =  0.27365, time/trial =    446.80667
+   Divs = 34, mean s =  2.33062, sigma s =  0.27365, time/trial =    461.09333
+
+   Brute force mean s =  2.33062, sigma s =  0.27365, time/trial =    275.48000
+   Brute force time/min brick time =      0.64421
+
+       *
+
+   MDKSOPT K=4,N=200,DOED=2,R=500,T=UNIF
+
+For k = 4, n = 200, dist = (UNIF,UNIF), reps = 500
+   Divs = 2, mean s =  1.79252, sigma s =  0.31768, time/trial =      0.01252
+   Divs = 3, mean s =  1.79252, sigma s =  0.31768, time/trial =      0.00156
+   Divs = 4, mean s =  1.79252, sigma s =  0.31768, time/trial =      0.00176
+   Divs = 5, mean s =  1.79252, sigma s =  0.31768, time/trial =      0.00256
+   Divs = 6, mean s =  1.79252, sigma s =  0.31768, time/trial =      0.00438
+
+   Brute force mean s =  1.79252, sigma s =  0.31768, time/trial =      0.00078
+   Brute force time/min brick time =      0.50000
+
+   MDKSOPT K=4,N=1000,DOED=2,R=300
+
+For k = 4, n = 1000, dist = (UNIF,UNIF), reps = 300
+   Divs = 2, mean s =  2.01564, sigma s =  0.31923, time/trial =      0.04597
+   Divs = 3, mean s =  2.01564, sigma s =  0.31923, time/trial =      0.11540
+   Divs = 4, mean s =  2.01564, sigma s =  0.31923, time/trial =      0.28980
+   Divs = 5, mean s =  2.01564, sigma s =  0.31923, time/trial =      0.03617
+   Divs = 6, mean s =  2.01564, sigma s =  0.31923, time/trial =      0.05490
+   Divs = 7, mean s =  2.01564, sigma s =  0.31923, time/trial =      0.11010
+   Divs = 8, mean s =  2.01564, sigma s =  0.31923, time/trial =      0.19740
+   Divs = 9, mean s =  2.01564, sigma s =  0.31923, time/trial =      0.32570
+
+   Brute force mean s =  2.01564, sigma s =  0.31923, time/trial =      0.01927
+   Brute force time/min brick time =      0.53272
+
+   MDKSOPT K=4,N=5000,DOED=2,R=60
+
+For k = 4, n = 5000, dist = (UNIF,UNIF), reps = 60
+   Divs = 3, mean s =  2.23234, sigma s =  0.35700, time/trial =      0.93167
+   Divs = 4, mean s =  2.23234, sigma s =  0.35700, time/trial =      1.51800
+   Divs = 5, mean s =  2.23234, sigma s =  0.35700, time/trial =      3.84700
+   Divs = 6, mean s =  2.23234, sigma s =  0.35700, time/trial =      8.20217
+
+   Brute force mean s =  2.23234, sigma s =  0.35700, time/trial =      0.48000
+   Brute force time/min brick time =      0.51521
+
+   MDKSOPT K=4,N=25000,DOED=2,R=12
+
+For k = 4, n = 25000, dist = (UNIF,UNIF), reps = 12
+   Divs = 5, mean s =  2.23204, sigma s =  0.24504, time/trial =     48.72000
+   Divs = 6, mean s =  2.23204, sigma s =  0.24504, time/trial =     61.42667
+   Divs = 7, mean s =  2.23204, sigma s =  0.24504, time/trial =     67.55583
+   Divs = 8, mean s =  2.23204, sigma s =  0.24504, time/trial =     88.86750
+
+   Brute force mean s =  2.23204, sigma s =  0.24504, time/trial =     12.04500
+   Brute force time/min brick time =      0.24723
+
+   MDKSOPT K=4,N=125000,DOED=2,R=2
+
+For k = 4, n = 125000, dist = (UNIF,UNIF), reps = 2
+   Divs = 8, mean s =  2.46356, sigma s =  0.06223, time/trial =   1194.03000
+   Divs = 9, mean s =  2.46356, sigma s =  0.06223, time/trial =   1334.44000
+   Divs = 10, mean s =  2.46356, sigma s =  0.06223, time/trial =   3569.45000
+   Divs = 11, mean s =  2.46356, sigma s =  0.06223, time/trial =   3628.46000
+
+   Brute force mean s =  2.46356, sigma s =  0.06223, time/trial =    345.63000
+   Brute force time/min brick time =      0.28947
+
+       *
+
+   MDKSOPT K=5,N=200,DOED=2,R=500,T=UNIF
+
+For k = 5, n = 200, dist = (UNIF,UNIF), reps = 500
+   Divs = 2, mean s =  1.74443, sigma s =  0.29757, time/trial =      0.00432
+   Divs = 3, mean s =  1.74443, sigma s =  0.29757, time/trial =      0.02168
+   Divs = 4, mean s =  1.74443, sigma s =  0.29757, time/trial =      0.06710
+   Divs = 5, mean s =  1.74443, sigma s =  0.29757, time/trial =      0.24468
+
+   Brute force mean s =  1.74443, sigma s =  0.29757, time/trial =      0.00094
+   Brute force time/min brick time =      0.21759
+
+   MDKSOPT K=5,N=1000,DOED=2,R=250
+
+For k = 5, n = 1000, dist = (UNIF,UNIF), reps = 250
+   Divs = 2, mean s =  1.99831, sigma s =  0.28382, time/trial =      0.72484
+   Divs = 3, mean s =  1.99831, sigma s =  0.28382, time/trial =      4.50692
+   Divs = 4, mean s =  1.99831, sigma s =  0.28382, time/trial =      0.28284
+   Divs = 5, mean s =  1.99831, sigma s =  0.28382, time/trial =      0.72788
+   Divs = 6, mean s =  1.99831, sigma s =  0.28382, time/trial =      1.70572
+
+   Brute force mean s =  1.99831, sigma s =  0.28382, time/trial =      0.02320
+   Brute force time/min brick time =      0.08203
+
+   MDKSOPT K=5,N=5000,DOED=2,R=50
+
+For k = 5, n = 5000, dist = (UNIF,UNIF), reps = 50
+   Divs = 2, mean s =  2.20702, sigma s =  0.30529, time/trial =      3.19800
+   Divs = 3, mean s =  2.20702, sigma s =  0.30529, time/trial =     12.79280
+   Divs = 4, mean s =  2.20702, sigma s =  0.30529, time/trial =     43.04900
+   Divs = 5, mean s =  2.20702, sigma s =  0.30529, time/trial =    117.45040
+
+   Brute force mean s =  2.20702, sigma s =  0.30529, time/trial =      0.57680
+   Brute force time/min brick time =      0.18036
+
+   MDKSOPT K=5,N=25000,DOED=2,R=10
+
+For k = 5, n = 25000, dist = (UNIF,UNIF), reps = 10
+   Divs = 3, mean s =  2.33692, sigma s =  0.29107, time/trial =     77.85500
+   Divs = 4, mean s =  2.33692, sigma s =  0.29107, time/trial =    125.52800
+   Divs = 5, mean s =  2.33692, sigma s =  0.29107, time/trial =    236.93400
+   Divs = 6, mean s =  2.33692, sigma s =  0.29107, time/trial =    461.79100
+
+   Brute force mean s =  2.33692, sigma s =  0.29107, time/trial =     14.60000
+   Brute force time/min brick time =      0.18753
+
+   MDKSOPT K=5,N=125000,DOED=2,R=2
+
+For k = 5, n = 125000, dist = (UNIF,UNIF), reps = 2
+   Divs = 4, mean s =  2.38719, sigma s =  0.15274, time/trial =   8128.41000
+   Divs = 5, mean s =  2.38719, sigma s =  0.15274, time/trial =  15393.22000
+   Divs = 6, mean s =  2.38719, sigma s =  0.15274, time/trial =   4464.71500
+   Divs = 7, mean s =  2.38719, sigma s =  0.15274, time/trial =   4976.62000
+   Divs = 8, mean s =  2.38719, sigma s =  0.15274, time/trial =   5812.14000
+   Divs = 9, mean s =  2.38719, sigma s =  0.15274, time/trial =   7201.62000
+   Divs = 10, mean s =  2.38719, sigma s =  0.15274, time/trial =   9418.01500
+   Divs = 11, mean s =  2.38719, sigma s =  0.15274, time/trial =  12667.44500
+
+   Brute force mean s =  2.38719, sigma s =  0.15274, time/trial =    417.44000
+   Brute force time/min brick time =      0.09350
+
+       *
+
+   MDKSOPT K=1,N=200,DIVS=10,R=500,T=NORM
+
+For k = 1, n = 200, dist = (NORM,NORM), reps = 500
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00006
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00004
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00002
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00002
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00002
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00004
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00002
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00002
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00002
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00002
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00002
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00002
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00002
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00004
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00002
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00002
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00002
+   Divs = 1, mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00004
+
+   Brute force mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00030
+   Brute force time/min brick time =     15.00000
+
+   MDKSOPT K=1,N=1000,DIVS=10,R=500
+
+For k = 1, n = 1000, dist = (NORM,NORM), reps = 500
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00010
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00010
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00010
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00010
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00010
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00010
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00008
+   Divs = 1, mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00010
+
+   Brute force mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00744
+   Brute force time/min brick time =     93.00000
+
+   MDKSOPT K=1,N=5000,DIVS=10,R=250
+
+For k = 1, n = 5000, dist = (NORM,NORM), reps = 250
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00064
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00048
+   Divs = 1, mean s =  1.17595, sigma s =  0.35800, time/trial =      0.00052
+
+   Brute force mean s =  1.17595, sigma s =  0.35800, time/trial =      0.18740
+   Brute force time/min brick time =    390.41667
+
+   MDKSOPT K=1,N=25000,DIVS=10,R=50
+
+For k = 1, n = 25000, dist = (NORM,NORM), reps = 50
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00500
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+   Divs = 1, mean s =  1.19749, sigma s =  0.34145, time/trial =      0.00520
+
+   Brute force mean s =  1.19749, sigma s =  0.34145, time/trial =      4.67140
+   Brute force time/min brick time =    934.28000
+
+   MDKSOPT K=1,N=125000,DIVS=10,R=10
+
+For k = 1, n = 125000, dist = (NORM,NORM), reps = 10
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07400
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07200
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+   Divs = 1, mean s =  1.21651, sigma s =  0.35953, time/trial =      0.07300
+
+   Brute force mean s =  1.21651, sigma s =  0.35953, time/trial =    118.29100
+   Brute force time/min brick time =   1642.93056
+
+       *
+
+   MDKSOPT K=2,N=200,DOED=2,R=500,T=NORM
+
+For k = 2, n = 200, dist = (NORM,NORM), reps = 500
+   Divs = 4, mean s =  1.62620, sigma s =  0.35263, time/trial =      0.00042
+   Divs = 5, mean s =  1.62620, sigma s =  0.35263, time/trial =      0.00040
+   Divs = 6, mean s =  1.62620, sigma s =  0.35263, time/trial =      0.00038
+   Divs = 7, mean s =  1.62620, sigma s =  0.35263, time/trial =      0.00038
+   Divs = 8, mean s =  1.62620, sigma s =  0.35263, time/trial =      0.00036
+   Divs = 9, mean s =  1.62620, sigma s =  0.35263, time/trial =      0.00042
+   Divs = 10, mean s =  1.62620, sigma s =  0.35263, time/trial =      0.00044
+
+   Brute force mean s =  1.62620, sigma s =  0.35263, time/trial =      0.00046
+   Brute force time/min brick time =      1.27778
+
+   MDKSOPT K=2,N=1000,DOED=2,R=500
+
+For k = 2, n = 1000, dist = (NORM,NORM), reps = 500
+   Divs = 9, mean s =  1.74279, sigma s =  0.38274, time/trial =      0.00644
+   Divs = 10, mean s =  1.74279, sigma s =  0.38274, time/trial =      0.00618
+   Divs = 11, mean s =  1.74279, sigma s =  0.38274, time/trial =      0.00586
+   Divs = 12, mean s =  1.74279, sigma s =  0.38274, time/trial =      0.00568
+   Divs = 13, mean s =  1.74279, sigma s =  0.38274, time/trial =      0.00548
+   Divs = 14, mean s =  1.74279, sigma s =  0.38274, time/trial =      0.00540
+   Divs = 15, mean s =  1.74279, sigma s =  0.38274, time/trial =      0.00530
+   Divs = 16, mean s =  1.74279, sigma s =  0.38274, time/trial =      0.00524
+   Divs = 17, mean s =  1.74279, sigma s =  0.38274, time/trial =      0.00530
+   Divs = 18, mean s =  1.74279, sigma s =  0.38274, time/trial =      0.00538
+   Divs = 19, mean s =  1.74279, sigma s =  0.38274, time/trial =      0.00564
+
+   Brute force mean s =  1.74279, sigma s =  0.38274, time/trial =      0.01152
+   Brute force time/min brick time =      2.19847
+
+   MDKSOPT K=2,N=5000,DOED=2,R=125
+
+For k = 2, n = 5000, dist = (NORM,NORM), reps = 125
+   Divs = 19, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.08664
+   Divs = 20, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.08480
+   Divs = 21, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.08216
+   Divs = 22, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.08120
+   Divs = 23, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07872
+   Divs = 24, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07768
+   Divs = 25, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07472
+   Divs = 26, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07488
+   Divs = 27, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07344
+   Divs = 28, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07368
+   Divs = 29, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07216
+   Divs = 30, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07328
+   Divs = 31, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07224
+   Divs = 32, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07312
+   Divs = 33, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07328
+   Divs = 34, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07416
+   Divs = 35, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07360
+   Divs = 36, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07544
+   Divs = 37, mean s =  1.83180, sigma s =  0.37215, time/trial =      0.07704
+
+   Brute force mean s =  1.83180, sigma s =  0.37215, time/trial =      0.28696
+   Brute force time/min brick time =      3.97672
+
+   MDKSOPT K=2,N=25000,DOED=2,R=25
+
+For k = 2, n = 25000, dist = (NORM,NORM), reps = 25
+   Divs = 40, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.22520
+   Divs = 41, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.19840
+   Divs = 42, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.19560
+   Divs = 43, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.16960
+   Divs = 44, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.17520
+   Divs = 45, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.15160
+   Divs = 46, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.15960
+   Divs = 47, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.13680
+   Divs = 48, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.14480
+   Divs = 49, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.12680
+   Divs = 50, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.13800
+   Divs = 51, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.11840
+   Divs = 52, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.12440
+   Divs = 53, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.10400
+   Divs = 54, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.11560
+   Divs = 55, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.10600
+   Divs = 56, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.10840
+   Divs = 57, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.09440
+   Divs = 58, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.11640
+   Divs = 59, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.10200
+   Divs = 60, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.12240
+   Divs = 61, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.11520
+   Divs = 62, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.14040
+   Divs = 63, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.12760
+   Divs = 64, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.15400
+   Divs = 65, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.14000
+   Divs = 66, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.17400
+   Divs = 67, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.16800
+   Divs = 68, mean s =  1.78251, sigma s =  0.37300, time/trial =      1.20080
+
+   Brute force mean s =  1.78251, sigma s =  0.37300, time/trial =      7.17000
+   Brute force time/min brick time =      6.55154
+
+   MDKSOPT K=2,N=125000,DOED=2,R=5
+
+For k = 2, n = 125000, dist = (NORM,NORM), reps = 5
+   Divs = 84, mean s =  1.70328, sigma s =  0.18556, time/trial =     39.86800
+   Divs = 85, mean s =  1.70328, sigma s =  0.18556, time/trial =     30.32000
+   Divs = 86, mean s =  1.70328, sigma s =  0.18556, time/trial =     38.58800
+   Divs = 87, mean s =  1.70328, sigma s =  0.18556, time/trial =     29.80200
+   Divs = 88, mean s =  1.70328, sigma s =  0.18556, time/trial =     37.41200
+   Divs = 89, mean s =  1.70328, sigma s =  0.18556, time/trial =     29.28400
+   Divs = 90, mean s =  1

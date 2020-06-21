@@ -1,0 +1,64 @@
+sylvester[1]: Number of celltypes = 4, number of iterations = 10, seed = 1009
+   Cell type 1
+      Ncells = 300, nconntypes = 4, delta = 0.100000
+      Connection type 1
+         Nconns = 400, source = 1, rule = 0, scale = 0.200000
+      Connection type 2
+         Nconns = 100, source = 2, rule = 1, scale = 0.300000
+      Connection type 3
+         Nconns = 40, source = 3, rule = 0, scale = 0.250000
+      Connection type 4
+         Nconns = 20, source = 4, rule = 1, scale = 0.180000
+   Cell type 2
+      Ncells = 120, nconntypes = 4, delta = 0.200000
+      Connection type 1
+         Nconns = 200, source = 1, rule = 1, scale = 0.200000
+      Connection type 2
+         Nconns = 100, source = 2, rule = 0, scale = 0.250000
+      Connection type 3
+         Nconns = 40, source = 3, rule = 1, scale = 0.180000
+      Connection type 4
+         Nconns = 20, source = 4, rule = 0, scale = 0.250000
+   Cell type 3
+      Ncells = 50, nconntypes = 4, delta = 0.100000
+      Connection type 1
+         Nconns = 400, source = 1, rule = 1, scale = 0.200000
+      Connection type 2
+         Nconns = 150, source = 2, rule = 0, scale = 0.250000
+      Connection type 3
+         Nconns = 40, source = 3, rule = 0, scale = 0.330000
+      Connection type 4
+         Nconns = 24, source = 4, rule = 1, scale = 0.250000
+   Cell type 4
+      Ncells = 30, nconntypes = 4, delta = 0.200000
+      Connection type 1
+         Nconns = 120, source = 1, rule = 1, scale = 0.100000
+      Connection type 2
+         Nconns = 10, source = 2, rule = 0, scale = 0.200000
+      Connection type 3
+         Nconns = 40, source = 3, rule = 1, scale = 0.250000
+      Connection type 4
+         Nconns = 20, source = 4, rule = 0, scale = 0.180000
+
+ benchmark time is 25.971867 
+
+ Celltype 1 
+      Conntype   1:     6068   27532   15319   71081
+      Conntype   2:     4807    3593   12797    8803
+      Conntype   3:     1645    1715    3911    4729
+      Conntype   4:      177    1503     431    3889
+ Celltype 2 
+      Conntype   1:     1979   10421    1708    9892
+      Conntype   2:     3643    2557    3556    2244
+      Conntype   3:     1124    1356    1123    1197
+      Conntype   4:      129    1111     110    1050
+ Celltype 3 
+      Conntype   1:     1783    4617    3805    9795
+      Conntype   2:     1122    1278    2471    2629
+      Conntype   3:      206     434     449     911
+      Conntype   4:       47     337     119     697
+ Celltype 4 
+      Conntype   1:       55     425     491    2629
+      Conntype   2:       17      23     129     131
+      Conntype   3:       46     114     375     665
+      Conntype   4:       12      68      37     483

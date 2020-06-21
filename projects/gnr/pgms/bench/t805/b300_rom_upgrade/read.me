@@ -1,0 +1,124 @@
+                       Reprogramming the B300
+                       ----------------------
+
+
+
+Requirements
+------------
+
+In order to reprogram the B300 you require a PC with a B008 (or similar)
+installed. A single TRAM with a 32-bit transputer
+needs to be inserted in slot 0.
+
+You will need an iserver that can boot programs into the B008
+and (if necessary) the INMOS MMS to configure the B008.
+
+
+
+Setting up the B008
+-------------------
+
+The B008 must be set up so that a link from the transputer in slot 0
+is connected to the edge connector on the B008. The system services must also
+be connected to the edge connector, using the 3 pin socket under slot 0.
+
+The simplest way to set up the link
+is to connect link 3 of the transputer via the C004. An example softwire
+description to do this is:
+
+                          SOFTWIRE
+                            PIPE 0
+                              SLOT 0, LINK 3 TO EDGE 0
+                          END
+
+
+Consult your B008 manual for more information.
+
+The rest of the instructions assume that the B008 has been set up
+in this manner.
+
+
+
+
+Connecting the B008 to the B300
+-------------------------------
+
+You should connect the single ended link cable supplied with the B300 to
+Link 0 of the B300. Connect the link connector (the P1 M50
+connector in the  B300 hardware manual) to the correct link on the
+edge connector of the B008. If you have set up the B008 as described above
+this is L0  on the B008 edge connector. Connect the subsystem up connector
+(the P2 M50 connector in the  B300 hardware manual) to the subsystem
+of the B008 (marked SS on the B008 edge connector).
+
+
+
+
+Programming the B300
+--------------------
+
+Move to the rom directory of the installation. Here you will
+find a PC batch file boot.bat. The batch file takes 2 parameters:
+the link from the transputer in slot 0 of the B008 that is connected
+to the B300 and the Ethernet address of the B300.
+
+In these instructions the link is 3. The Ethernet address of the B300
+is printed on the back of the B300 box.
+
+Assuming the link is 3 and your Ethernet address is 00:80:E1:00:00:01
+(which it isn't!) then the following command line will program the B300:
+
+                 boot 3 0:80:E1:0:0:1
+
+
+The reprogramming process sets the link speed of the B300 (B018) to 20 Mbits/s.
+If the B300 to be reprogrammed uses a different link speed you should add the
+link speed to the end of the command line. For eample to set the link speed
+to 5 Mbits/s use:
+
+                 boot 3 0:80:E1:0:0:1 5
+
+Valid link speeds are 5, 10 and 20 MBits/s.
+
+
+Note that the parameters must be supplied in the correct order of link number
+followed by Ethernet address and then, optionally, the link speed.
+
+
+
+Messages will be displayed indicating that the Flash ROM is being programmed.
+If an error occurs error messages are displayed.
+
+The message:
+
+  Error - iserver - unable to write byte 2 to the boot link
+
+indicates that the B008 is not configured correctly or the subsystem up
+connector is not connected to the SS connector of the B008 edge
+connector.
+
+Messages (other than iserver error messages) may indicate a hardware
+fault.
+
+
+
+Checking the B300
+-----------------
+
+After programming the B300 you should reboot it. It should boot as before
+but with the version string:
+
+           IMS B300 TCPlink Version 2.00
+
+Next check the configuration to see that it is correct. Pay special attention
+to the Ethernet address. Make sure that it is the same as on the back of
+the B300. If it is not you will need to reprogram the B300 again. The
+configuration values in the B300 should remain the same as before but
+there are new configuration values which will mean that you will have to
+reconfigure the B300. Instructions on how to do this will be found
+in the Network support software System Administrator and User Guide
+for this beta release.
+
+You can test the new code by running existing programs. It should behave
+exactly as before.
+

@@ -1,0 +1,4 @@
+; Commands for breakpoint/display sets for MPSIM
+
+send -g pp0 ba test_pp
+

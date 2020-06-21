@@ -1,0 +1,67 @@
+Sep 28 15:05:47 Numbers of celltypes = 4, iterations = 10, seed = 1009,
+			processors = 1 
+Sep 28 15:05:48    Cell type 1 
+Sep 28 15:05:48       Ncells = 300, nconntypes = 4, delta = 0.100000 
+Sep 28 15:05:48       Connection type 1 
+Sep 28 15:05:48          Nconns = 400, source = 1, rule = 0, scale = 0.200000 
+Sep 28 15:05:48       Connection type 2 
+Sep 28 15:05:48          Nconns = 100, source = 2, rule = 1, scale = 0.300000 
+Sep 28 15:05:48       Connection type 3 
+Sep 28 15:05:48          Nconns = 40, source = 3, rule = 0, scale = 0.250000 
+Sep 28 15:05:48       Connection type 4 
+Sep 28 15:05:48          Nconns = 20, source = 4, rule = 1, scale = 0.180000 
+Sep 28 15:05:49    Cell type 2 
+Sep 28 15:05:49       Ncells = 120, nconntypes = 4, delta = 0.200000 
+Sep 28 15:05:49       Connection type 1 
+Sep 28 15:05:49          Nconns = 200, source = 1, rule = 1, scale = 0.200000 
+Sep 28 15:05:49       Connection type 2 
+Sep 28 15:05:49          Nconns = 100, source = 2, rule = 0, scale = 0.250000 
+Sep 28 15:05:49       Connection type 3 
+Sep 28 15:05:49          Nconns = 40, source = 3, rule = 1, scale = 0.180000 
+Sep 28 15:05:49       Connection type 4 
+Sep 28 15:05:49          Nconns = 20, source = 4, rule = 0, scale = 0.250000 
+Sep 28 15:05:50    Cell type 3 
+Sep 28 15:05:50       Ncells = 50, nconntypes = 4, delta = 0.100000 
+Sep 28 15:05:50       Connection type 1 
+Sep 28 15:05:50          Nconns = 400, source = 1, rule = 1, scale = 0.200000 
+Sep 28 15:05:50       Connection type 2 
+Sep 28 15:05:50          Nconns = 150, source = 2, rule = 0, scale = 0.250000 
+Sep 28 15:05:50       Connection type 3 
+Sep 28 15:05:50          Nconns = 40, source = 3, rule = 0, scale = 0.330000 
+Sep 28 15:05:50       Connection type 4 
+Sep 28 15:05:50          Nconns = 24, source = 4, rule = 1, scale = 0.250000 
+Sep 28 15:05:51    Cell type 4 
+Sep 28 15:05:51       Ncells = 30, nconntypes = 4, delta = 0.200000 
+Sep 28 15:05:51       Connection type 1 
+Sep 28 15:05:51          Nconns = 120, source = 1, rule = 1, scale = 0.100000 
+Sep 28 15:05:51       Connection type 2 
+Sep 28 15:05:51          Nconns = 10, source = 2, rule = 0, scale = 0.200000 
+Sep 28 15:05:51       Connection type 3 
+Sep 28 15:05:51          Nconns = 40, source = 3, rule = 1, scale = 0.250000 
+Sep 28 15:05:51       Connection type 4 
+Sep 28 15:05:51          Nconns = 20, source = 4, rule = 0, scale = 0.180000 
+Sep 28 15:05:52  
+Sep 28 15:05:52 Starting cell initialization 
+Sep 28 15:05:52 Setup required 5.040425 seconds 
+Sep 28 15:06:09  
+Sep 28 15:06:09 Benchmark time is 16.192055  
+Sep 28 15:06:09  Celltype 1  
+Sep 28 15:06:09       Conntype   1:     6725   22475   20642   70158 
+Sep 28 15:06:09       Conntype   2:     1659    5641    5074   17626 
+Sep 28 15:06:09       Conntype   3:      729    2191    2111    6969 
+Sep 28 15:06:09       Conntype   4:      216    1244     542    3998 
+Sep 28 15:06:09  Celltype 2  
+Sep 28 15:06:09       Conntype   1:     1171    4229    4039   14561 
+Sep 28 15:06:09       Conntype   2:      610    2090    2041    7259 
+Sep 28 15:06:09       Conntype   3:      251     829     913    2807 
+Sep 28 15:06:10       Conntype   4:       71     469     233    1627 
+Sep 28 15:06:10  Celltype 3  
+Sep 28 15:06:10       Conntype   1:     1036    3764    3250   11950 
+Sep 28 15:06:10       Conntype   2:      400    1400    1194    4506 
+Sep 28 15:06:10       Conntype   3:      132     348     391    1129 
+Sep 28 15:06:10       Conntype   4:       40     248     116     796 
+Sep 28 15:06:10  Celltype 4  
+Sep 28 15:06:10       Conntype   1:      138     462     628    2372 
+Sep 28 15:06:10       Conntype   2:        9      41      40     210 
+Sep 28 15:06:10       Conntype   3:       56     144     251     749 
+Sep 28 15:06:11       Conntype   4:        7      93      79     421 

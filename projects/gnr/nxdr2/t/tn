@@ -1,0 +1,3 @@
+#!/bin/csh
+# Test nxdr2
+../nxdr2 -f testincl.h -b testobj -t PQRS -c "gcc -I/home/cdr/include -DPCLUX64" -v

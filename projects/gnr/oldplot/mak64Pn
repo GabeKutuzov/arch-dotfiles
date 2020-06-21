@@ -1,0 +1,125 @@
+# (c) Copyright 2011-2018, The Rockefeller University *11225* 
+# $Id: mak64Pn 37 2018-08-15 19:53:33Z  $
+########################################################################
+#          Make file for old ROCKS metafile plotting library           #
+#                     Version for 64-bit PC Linux                      #
+#                                                                      #
+#  This is the sub-makefile called from the top-level makefile         #
+#  to make the PARn ("comp node") version of the library.              #
+#                                                                      #
+# V1A, 07/21/16, GNR - Derived from maklux64                           #
+# ==>, 08/14/16, GNR - Last mod before committing to svn repository    #
+# Rev, 05/02/17, GNR - Add rkgtPn                                      #
+# Rev, 05/27/18, GNR - Add col2gr                                      #
+# Rev, 08/03/18, GNR - Incorporate LCLHOME                             #
+########################################################################
+
+# Directory where all this stuff is stored
+LCLHOME ?= $(HOME)
+# Define directory where include files are stored
+INC := $(LCLHOME)/include
+# Define directory where object and dependency files are stored
+DIR := pc64Pn
+# Define directory where result plot library is stored
+LIB := $(LCLHOME)/lib/pclux64
+# Name to be given to output library
+LN  := plotPn
+
+# Object files to be included in PLOT library
+
+OBJFILES = \
+arc \
+arrow \
+axis \
+axlin \
+axlog \
+axpol \
+bitmap \
+bitmaps \
+bmpxsz \
+bpause \
+circle \
+color \
+col2gr \
+ellips \
+endplt \
+factor \
+i2a \
+line \
+newplt \
+number \
+pencol \
+penset \
+pentyp \
+plot \
+plothdrs \
+plotvers \
+polyln \
+rect \
+retrace \
+setmovie \
+symbol \
+where
+
+MFFILES = \
+mfbchk \
+mfckerr \
+mfstate \
+mfsynch \
+mfwrite \
+setmf
+
+MF0FILES = \
+mfclose \
+mfcreate \
+mfhead \
+mfst
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+OBJ := $(OBJFILES) $(MFFILES)
+CC := mpicc
+CFLAGS := -g
+CFLGS := $(CFLAGS) -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code -m64
+SVNV := $(shell gnrversn)
+DDEFS := PCLUX64 _ISOC99_SOURCE USE_MPI SVNVRS=$(patsubst %,'"%"',$(SVNV))
+DEFS := $(DDEFS) PAR PARn
+
+# Targets
+.PHONY : PLOTPn
+PLOTPn: $(LIB)/lib$(LN).a
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(CFLGS) $(INC:%=-I%) $< \
+	| cat dirfile - > $@'
+
+# Compile for mpi Linux
+$(DIR)/%.o: %.c $(DIR)/%.d mak64Pn
+	$(CC) $(CFLGS) $(DEFS:%=-D%) $(INC:%=-I%) -c $<
+	mv $*.o $(DIR)
+
+plotnxdr.c plotnxdr.h:	plothdrs.c glu.h plotobjs $(INC)/sysdef.h \
+		$(INC)/swap.h
+	nxdr2 -m64 -b plotobjs -f plothdrs.c -o plotnxdr.c -h plotnxdr.h \
+   	-c "$(CC) -DPCLINUX -DUSE_MPI -I$(INC)" -t OPLT
+
+# Make PLOTPn
+$(LIB)/lib$(LN).a:	$(OBJ:%=$(DIR)/%.o) $(DIR)/plotnxdr.o
+	ar r lib$(LN).a $(OBJ:%=$(DIR)/%.o) $(DIR)/plotnxdr.o
+	ranlib lib$(LN).a
+	mv lib$(LN).a $(LIB)
+
+# Make rkgtPn
+rkgtPn: $(DIR)/rkgtest.o $(LIB)/lib$(LN).a $(LIB)/libmpitPn.a \
+		$(LIB)/libcrk.a mak64Pn
+	$(CC) $(CFLGS) -o rkgtPn $(DIR)/rkgtest.o -L$(LIB) -l$(LN) \
+		-lmpitPn -lcrk -lm
+
+clean:
+	rm -f $(DIR)/*.[od] $(LIB)/lib$(LN).a
+
+include $(OBJ:%=$(DIR)/%.d)

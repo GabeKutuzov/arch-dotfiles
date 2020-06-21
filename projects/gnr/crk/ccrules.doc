@@ -1,0 +1,926 @@
+                        The ROCKS Routines
+                      General User Interface
+                        (C Implementation)
+                        Control Card Rules
+
+
+
+
+
+                                by
+
+
+
+
+                       George N. Reeke, Jr.
+                    The Rockefeller University
+                      New York, N. Y.  10021
+
+
+
+
+
+                          March 19, 1984
+
+
+
+INTRODUCTION
+
+    This document describes the user interface implemented in the
+C-language version of the ROCKS control card scanning and input
+routines.  This interface is derived from that used in the ROCKS
+Crystallographic Computing System, and is designed to provide near
+compatibility with the familiar ROCKS input rules.
+
+    Differences from the original ROCKS versions of these routines
+are listed in a summary at the end.  The changes have been kept as
+small as possible consistent with a more "modern" approach to user
+input.  The most important single change is the abandonment of the
+fixed-length 80-column card format, which has necessitated some
+changes in the rules for continuation.  In addition, the separate
+scanning rules 6a and 6b have been combined into a single scanning
+rule 6 for all control cards.  The underscore has been defined as
+a "null" character that may be used in place of blanks that would
+previously have been ignored under rule 6a.  Standard conventions
+for abbreviating keywords have been adopted.  
+
+
+CONTROL CARD PARSING RULES
+
+    This section presents syntactic rules for preparing input
+cards for use with programs implementing the ROCKS interface. 
+(The term "card" is retained for historical reasons to denote a
+single line of input.)  Input may be provided interactively or
+read from a control file.  While input is generally read from unit
+1 (FORTRAN programs) or stdin (C programs), the EXECUTE card
+permits procedures of control cards to be read and executed from
+other files.
+
+    Each input record is normally treated as one control card. 
+Control cards may be of variable or fixed length (padded with
+blanks on IBM systems) up to some maximum, which is normally 80
+columns but may be less for some operating systems.  Control cards
+may be continued on additional lines as described in rules 7 and
+8.  The rules for constructing control cards and for reading
+control card descriptions are as follows:
+
+    1. Keywords.  Upper case letters and underscores (and rarely
+punctuation characters not mentioned in rule 3) represent control
+card identifiers and keywords.  Keywords are documented in a sans-
+serif font if available.  They may be entered in any mixture of
+upper and lower case.  Underscores are used to separate words in
+multi-word keywords and may be inserted or omitted at will.  Any
+unique leading substring of the specified string is a valid abbre-
+viation.  For example, if a control card has keywords 'XMAPSIZE',
+'XMAX', and 'XMIN', then the following abbreviations may be used:
+
+    Keyword     Abbreviations
+    XMAPSIZE    XMAP, XMAPS, XMAPSI, XMAPSIZ, XMAP_SIZE
+    XMAX        None
+    XMIN        XMI
+
+In this example, 'XM' and 'XMA' are ambiguous and will produce an
+error message.
+
+    2. Variables.  Lowercase letters represent variables. 
+Variables must be replaced with appropriate alphabetic or numeric
+values.  Numerical variables are interpreted similarly to decimal
+constants in C or FORTRAN.  If not entered, the decimal point is
+usually assumed to be to the right of the last digit.  Otherwise,
+the notation "(.n)" implies that a decimal point will be inserted
+in the number such that n digits are to the right of the inserted
+point.  Decimal exponents of the form 'E+xx' or 'E-xx' are permit-
+ted.  Variables designated as integers may have a decimal point at
+the end, but an error occurs if any additional digits follow the
+decimal point.  Unexpected alphabetic characters within a numeric
+field are flagged as errors.  Variables with the same name occur-
+ring on different control cards are different variables unless
+specifically stated to be the same.
+
+    3. Punctuation.  Punctuation marks fall in various classes as
+described in the following rules.  The following table summarizes
+the treatment of punctuation characters:
+
++-------+-------+----------------------------------------------+
+| Mark  | Rule  | Usage                                        |
++-------+-------+----------------------------------------------+
+| + - . |   2   | Usual meanings when part of a number         |
+|-------|-------|----------------------------------------------+
+|  [ ]  |   4   | Encloses optional items                      |
+|  { }  |       | Encloses alternative items                   |
+|   |   |       | Separates alternatives within {}             |
+|  ___  |       | Default choices are underlined               |
+|  ...  |       | Item may be repeated as may times as needed  |
+|-------|-------|----------------------------------------------+
+| blank |   6   | Item separator                               |
+|  tab  |       | Item separator                               |
+|   ,   |       | Item separator                               |
+|   =   |       | Follows keyword in keyword=value pairs       |
+|  ( )  |       | Encloses a set of subparameters              |
+| + - * |       | Delimiters in arithmetic expressions,        |
+|       |       |     otherwise treated as ordinary data       |
+|   /   |       | Delimiter in arith. expression or filename   |
+|   _   |       | Ignored except in file and symbol names--    |
+|       |       |     insert or delete at will                 |
++-------+-------+----------------------------------------------+
+| , = ( |   7   | Indicates continuation at end of line        |
+|   \   |       | Indicates continuation at end of line        |
+|-------+-------+----------------------------------------------+
+|   '   |   8   | Encloses strings containing punctuation      |
+|   \   |       | Following punctuation mark treated as data   |
++-------+-------+----------------------------------------------+
+|   *   |   9   | In column 1, indicates line is a comment     |
+|   ;   |       | Separates data from comments                 |
++-------+-------+----------------------------------------------+
+|   &   |  10   | Initiates a symbolic variable                |
+|   .   |       | Concatenates a symbol to following data      |
+|   _   |       | Treated as data when found in a symbol name  |
++-------+-------+----------------------------------------------+
+|   :   |  11   | Indicates abbreviation of card identifier    |
++-------+-------+----------------------------------------------|
+| : / \ |  12   | May be treated differently in file names     |
+|   _   |       | Treated as data when found in a file name    |
++-------+-------+----------------------------------------------+
+
+All punctuation marks not listed here have no intrinsic meaning
+and are treated as data.
+
+    4. Options.  Square brackets enclose optional items which
+should be entered only if the corresponding option is wanted;
+curly braces enclose alternative choices which are separated by
+vertical bars or by being arranged on different lines.  Only one
+of the items in braces should be selected.  If the braces are
+enclosed in outer brackets, then the entire item may be omitted. 
+In this case the program uses a default value, which is under-
+lined.  Ellipses (...) indicate that the item may be repeated as
+many times as necessary.  A leading comma before an item in
+brackets indicates a delimiter which should be omitted if the item
+is the first one entered on that card.  The brackets, braces, etc.
+mentioned in this rule are never actually entered on a control
+card.
+
+    5. Fixed-Format Input.  A few cards are read according to
+fixed formats for historical reasons.  These cards are indicated
+by giving the format in FORTRAN notation (e.g. 3I4,7F8.3, etc.). 
+Variables may be placed anywhere within the columns implied by the
+format, i.e. trailing blanks are treated as nulls rather than as
+zeros.
+
+    6. Fields.  The remaining control cards are scanned for
+fields, which are separated by commas, blanks, or tabs.  Fields
+are interpreted in sequence from left to right.  Fields may con-
+tain positional or keyword parameters.  Positional parameters are
+identified by their position relative to the beginning of the con-
+trol card.  Keyword parameters are identified by a name, which is
+followed by an equals sign and a value.  Keyword parameters may
+occur in any order.  If both positional and keyword parameters are
+used on the same card or within the same parentheses, all posi-
+tional parameters must precede any keyword parameters.  Unless
+otherwise stated, no single field may contain more than 16 data
+characters.  Scanning ends when the end of the card or a semicolon
+is reached.  The semicolon indicates that comments follow (see
+rule 9).
+
+    Blanks, tabs, or commas separate fields.  Equals signs are
+used between keywords and their associated values.  Parentheses
+are used to enclose subparameters and index values or for other
+purposes.  Parentheses can be nested where necessary.  When a list
+in parentheses contains but a single item, and the parentheses are
+not otherwise needed to distinguish the list from other fields,
+the parentheses may be omitted.  Commas before left parentheses
+and after right parentheses are optional.  Asterisks, slashes,
+plus signs, and minus signs may also be treated as field delimit-
+ers when so specified.  Whether or not treated as delimiters, plus
+and minus signs are included in the following data field.  The
+appropriate delimiter should be chosen according to the particular
+control card description or an error may result.  
+
+    Every group of one or more blanks or tabs is equivalent to a
+single blank (except as described in rule 7).  If any other
+delimiter (comma, equals sign, parenthesis, etc.) is present
+within a group of blanks, the blanks are ignored.  If no other
+delimiter is present, the group of blanks is treated as a comma. 
+Therefore, when a blank is desired within a single field, the
+field must be enclosed in quotes (see rule 8).  An underscore
+character is treated as a null except when scanning a file name or
+variable symbol name.  It may be used to separate words that are
+to be treated as a single field. 
+
+    7. Continuation.  Control cards which are scanned may be
+continued on as many continuation cards as necessary.  Rules for
+continuation are as follows:
+
+        (a) A card may be interrupted after a comma, equals
+    sign, or left parenthesis to indicate continuation.  (Plus
+    and minus signs, asterisks and slashes also indicate con-
+    tinuation when designated as delimiters.)  
+
+        (b) A backslash may be used at the end of a card to
+    indicate continuation.  The effect is to concatenate the
+    following card, beginning with the first non-blank, non-
+    tab character, in place of the backslash.  Any operand can
+    be divided between two cards if the backslash continuation
+    mechanism is used.
+
+        (c) There must be at least one tab or blank at the
+    start of each continuation card.  The interrupted operands
+    resume with the first non-blank, non-tab character.
+
+        (d) Quoted strings may be continued as described in
+    rule 8.
+
+        (e) Comments may be continued as described in rule 9.
+
+
+    8. Quotation.  To prevent a punctuation character from being
+recognized as a delimiter, it may be escaped with (preceded by) a
+backslash.  A backslash (except when it indicates continuation at
+the end of a line as in rule 7) followed by any character causes
+the following character to be placed, uninterpreted, into the data
+field.  Two consecutive backslashes may be used to insert a single
+backslash into the data.
+
+    A data string may also be enclosed in single quotes (apo-
+strophes) to prevent recognition of any punctuation characters in
+the string as delimiters.  A quote within a quoted string may be
+represented by two consecutive quotes (not the same as a double
+quote character) or by a backslash-escaped quote.  Within quotes,
+a backslash is treated as data except when used to escape a quote
+character or to indicate continuation.
+
+    Quoted strings concatenate to the left or right with any other
+data in the same field.  (This rule has been changed.  A single
+quote within a data field is no longer treated as data, a closing
+quote no longer forces the end of the field, and a quote at the
+end of a card no longer indicates continuation.)
+
+    A backslash may be used at the end of a line to continue a
+quoted string.  Continuation of the interrupted quoted string
+always begins following one blank or tab on the following card,
+permitting continuation of strings of blanks.  Two consecutive
+quotes may not be split between a card and its continuation.  
+
+    9. Comments.  Any card with an asterisk (*) in col. 1 is taken
+to be a comment card.  Comment cards are listed with any variable
+symbols replaced by their values, but their contents are otherwise
+ignored.  Comment cards may be placed anywhere in a deck, even
+between a statement and its continuation.  Comment cards may not
+themselves be continued, but any number of comment cards can occur
+consecutively.  Null cards are also taken as comments.  Cards
+containing only whitespace characters (blanks and tabs) may be
+treated as data cards or comment cards at the discretion of the
+application.
+
+    Comments may be entered following the data on any scanned
+card.  A semicolon is used to separate the comments from the
+data--anything to the right of the semicolon is treated as
+comments.  Comments of this kind may be continued by placing a
+backslash at the end of the comments.  Comments may also appear on
+each of several continued scanned cards if a semicolon appears on
+each card after the delimiter that indicates the continuation. 
+For example:
+
+BOUNDS X=(-0.5,0.5),       ;THIS IS A COMMENT WITH DATA
+    Y=(-0.25,0.75)         ;CONTINUED ON THE NEXT CARD
+
+BOUNDS X=(-0.5,0.5), Y=(-0.25,0.75); HERE THE COMMENT \
+    ITSELF IS CONTINUED.  NOTICE THAT THERE IS NO     \
+    PUNCTUATION AFTER THE LAST DATA ITEM.
+
+    10. Symbols.  Ampersands should be used only to designate
+substitutable symbols used in connection with the EXECUTE card as
+described below.  Ampersands can be escaped (treated as data) by
+writing backslash-ampersand or two consecutive ampersands.  Symbol
+names can contain alphanumeric characters and @,$,_,#,!,~, and ^. 
+Any other punctuation character terminates the symbol name and
+also takes on any usual syntactic function it may have.  A period
+may be used to concatenate a symbol with other data.  The period
+terminates the symbol but is deleted from the data.
+
+    11. Scan Start Column.  Scanning begins following the word
+that identifies the control card, regardless of whether it is
+abbreviated.  However, the scanning routines will be confused if a
+multi-word card identifier is abbreviated to a shorter number of
+words.  In this case, and with older programs (including ROCKS)
+where a starting column is indicated in the writeup (usually the
+column immediately following the identifying name of the card), a
+colon may be used to override the normal starting column.  If a
+colon appears anywhere on a scanned card following the characters
+needed for name recognition, but before the column in which scan-
+ning would normally begin, then scanning will begin in the column
+following the colon.  For example, the control card
+
+CALCULATE FILM FACTORS IMIN=100
+
+can be abbreviated
+
+CALC: IMIN=100.
+
+    A colon in or after the column in which scanning starts is
+treated as data.
+
+    12. File Names.  When file names are read from input cards,
+they are usually treated as pure character strings and should be
+enclosed in quotes if they contain special characters.  Sometimes
+the application will parse the file name into its individual com-
+ponents (device, directory, file, mode or extension, etc.).  When
+the writeup indicates that this is the case, do not enclose the
+name in quotes.  File name separation characters appropriate to
+the operating system in use will be used.  Under Microsoft systems
+in which directory names are separated by backslashes, the forward
+slash replaces the backslash as the escape and continuation char-
+acter when scanning file names.
+
+    13. Switches.  Certain data fields contain strings of letters
+or other characters that specify one or more program options or
+switches.  At the beginning of any such field, a '+' indicates
+that the selected options are to be added to any options already
+in effect and a '-' indicates that the selected options are to be
+turned off.  A single '0' may be entered to indicate that all
+associated options are to be turned "off", unless '0' is itself
+one of the defined switch names.
+
+
+SPECIAL CONTROL CARDS
+
+    The following control cards are automatically recognized by
+any program using the ROCKS interface routines.  Because these
+cards may occur in a variety of contexts, the normal rules for
+abbreviation do not apply and at least the first six columns of
+each card must match the card name exactly.  These cards may not
+necessarily be included in application program writeups:
+
+
+END
+
+    Action:  The END card signals the end of a control card deck. 
+        If this card is read from the principal input unit, the
+        program terminates and control returns to the operating
+        system.  If this card is read from a file specified on an
+        EXECUTE card, the EXECUTE terminates and control returns
+        to the card following the EXECUTE.  The END card is not
+        needed when a deck is ended by an end-of-file, but may be
+        useful when the operating system does not provide a way to
+        generate an end-of-file from the keyboard, or when it is
+        desired to separate two or more groups of cards to be
+        executed from the same unit.    
+
+    Note:  This END card is distinguished from various other END
+        cards used by applications (e.g. END ATOMIC INFORMATION)
+        by the absence of any characters other than blank or tab
+        following the word 'END'.
+
+
+QUIT
+
+    Action:  Same as END except when read from a file specified on
+        an EXECUTE card, the application terminates.
+
+
+TITLE any text
+
+    Action:  The text in cols. 6-66 of this card, with any vari-
+        able symbols replaced by their values, is stored and
+        printed as a title on the top line of each following page
+        of printed output.  This card does not in itself cause a
+        new page to start.
+
+
+SPOUT {ON|OFF}
+
+    Action:  The SPOUT card controls the "supervisory print-out"
+        option.  When activated, this option results in generation
+        of a second copy of the most important information (in-
+        cluding any error messages) in the printed listing.  Nor-
+        mally, the SPOUT output is directed to the user's terminal
+        and the normal output is spooled for printing.  In the
+        FORTRAN implementation, SPOUT output goes to unit 7 and
+        printed output to unit 3.  In the C implementation, SPOUT
+        output goes to stderr and printed output to stdout.  When
+        the two output units are different, SPOUT output is ON by
+        default but can be controlled with the SPOUT control card. 
+        When the two units are the same, there is no SPOUT output
+        and the SPOUT control card is ignored.
+
+
+PROMPT pstring
+
+    Action:  The string pstring becomes the new prompting string
+        for on-line input.  pstring is parsed according to the
+        usual rules:  it may contain variable symbols and should
+        be enclosed in quotes if it contains literal punctuation
+        characters.  The cursor is moved to the start of a new
+        line before the prompt is issued.
+
+    Notes:  Prompting is active when input is from a character
+        device, otherwise inactive.  Prompting cannot be turned on
+        by the user, but it can be turned off by entering a null
+        string on a PROMPT card.  When a continuation card is
+        expected, the prompt string "...?" is used, regardless of
+        the setting of the PROMPT card.
+
+
+OUTPRTY pprty [NOPG]
+
+    Action:  Each potential output line is assigned a priority
+        from 1 (highest) to 5 (lowest).  Only lines with priority
+        numerically less than or equal to the value 'pprty' are
+        actually written to the print file.  (Default: 4)
+
+    The 5 priority levels are generally used as follows:
+        1.  Error and warning messages, critical output.
+        2.  Main results of application programs.
+        3.  Input card listings.
+        4.  Detailed listings from application programs.
+        5.  Debug output.
+
+    If the keyword NOPG appears on this card after the priority
+        setting, all page headers and overstrikes are eliminated
+        from the printed output.  This option is useful for view-
+        ing output on a terminal or for using 'diff' to compare
+        outputs from two runs, where the page titles will have
+        different times and therefore always compare different.
+
+
+ERROR DUMP REQUESTED
+
+    Action:  A flag is set such that if the program is subsequent-
+        ly terminated abnormally, a memory dump will be produced.
+
+
+EXECUTE [{UNIT=nn|FILE='name'}] [,NOREWIND] [,NOREUSE]
+    [,[&]var=value,...]
+
+    Format:  The UNIT, FILE, NOREWIND, and NOREUSE keywords, if
+        present, must come before any variable symbols.
+
+    Action:  The EXECUTE card causes the system to read control
+        cards from a specified file.  When an END card or end-of-
+        file is encountered in that file, the system resumes read-
+        ing from the old file following the EXECUTE card.  The
+        main use of EXECUTE is to execute repetitive procedures
+        taken from a "macro" file.  Such procedures can contain
+        system and user-defined symbols (see below).  EXECUTE
+        cards can be nested to any desired number of levels.  When
+        each successive EXECUTE card is read, any symbols defined
+        on the previous EXECUTE card become inaccessible until
+        control returns from the lower-level file.
+
+        The following options may appear on the EXECUTE card:
+
+    UNIT=nn.  This option is used only with FORTRAN implementa-
+        tions.  It specifies the next unit number, nn, from which
+        control cards are to be read.  The unit may be in any
+        format acceptable for the main input file.  If no unit
+        is specified, reading continues from the current unit. 
+        EXECUTE without a unit may be used to define variable
+        symbols occurring later in the current input file.
+
+    FILE='name'.  This option is used only with C implementations. 
+        It specifies the name of the file from which control cards
+        are to be read.  The length and format of the name are
+        operating-system dependent.  The name should be enclosed
+        in quotes if it contains ROCKS punctuation characters. 
+        The file may be in any format acceptable for the main
+        input file.  If no file is specified, reading continues
+        from the current unit.  EXECUTE without a file may be used
+        to define variable symbols occurring later in the current
+        input file.
+
+    NOREWIND.  Normally, the specified file is rewound before
+        reading begins, allowing repetitive execution of a proce-
+        dure.  However, if NOREWIND is specified, reading conti-
+        nues at the current position of the file.  If the previous
+        EXECUTE on this file was terminated by an END card, read-
+        ing continues at the card following the END card.  If the
+        previous EXECUTE on this file was terminated by an end-of-
+        file, the outcome is implementation-dependent.  Under IBM
+        FORTRAN, the FORTRAN sequence number 'sss' is incremented,
+        and reading continues using the next DD card (FTnnF002,
+        etc.).  In other implementations, an error may result.
+
+    NOREUSE.  Indicates that this file will not be reread later in
+        the run.  Memory occupied by buffers and system control
+        blocks associated with this file is released when the end-
+        of-file or END card is reached.
+
+    [&]var=value.  A symbol, 'var', may be a user-defined symbol,
+        a system symbol, or an environment variable.  In the event
+        that a name is a valid symbol in more than one of these
+        categories, the order of precedence is user-defined symbol
+        > system symbol > environment variable.  Symbol names can
+        now be interrupted by a backslash for continuation the
+        same as any other data field.
+            A user-defined symbol name consists of from one to
+        seven alphanumeric characters (@,$,_,#,!,~, and ^ may also
+        be used in the names of symbols) and is case-sensitive. 
+        It may be assigned any value, consisting of up to 16 char-
+        acters, on the EXECUTE or DEFAULTS card.  If the value
+        contains punctuation characters, such as blanks, it must
+        be enclosed in quotation marks.  A symbol definition can
+        contain another symbol that has already been defined.
+            A system symbol is a built-in symbol that is always
+        defined.  System symbols can be used in any scanned data
+        field without being defined by the user.  The names of all
+        system symbols begin with SYS and are not case-sensitive. 
+        If the user defines a symbol with the same name as a
+        system symbol, the user symbol is used instead and the
+        system symbol becomes inaccessible.  The following system
+        symbols are currently defined:
+
+            &SYSUSER    Login name of the current user (defined as
+                        "?USER" if the login name cannot be ob-
+                        tained from the system).
+            &SYSHOST    Network host name of the computer on which
+                        the application is running (defined as
+                        "?HOST" if the name cannot be obtained
+                        from the system).
+            &SYSDATE    The current date in mm/dd/yy format.
+            &SYSTIME    The current time in hh:mm:ss format.
+            &SYSCPU     The kind of CPU on which the program is
+                        running (defined as "?CPU" if this
+                        information cannot be obtained).
+            &SYSOS      The name or version of the operating
+                        system on which the program is running.
+            &SYSCMND    The name of the application or subprogram
+                        within the application that is currently
+                        running.
+            &SYSCWD     The name of the current working directory.
+            &SYSNDX     An index number which is initially '1' and
+                        which increases by 1 each time this symbol
+                        is used.
+
+            Environment variables can be defined under some oper-
+        ating systems by methods specific to the particular system
+        or "shell" program (typically, a command-line "set" com-
+        mand is used).  Environment variables with names up to 31
+        characters long can be accessed in scanned data fields. 
+        Environment variable names are case-sensitive under UNIX,
+        but not under DOS or Windows.
+            A defined symbol of any of the three kinds may appear,
+        prefixed by an ampersand, on any control card in a field
+        that is scanned, and it will be replaced by the assigned
+        value.  Symbols may be concatenated to the left or right
+        with other data, as long as the total length allowed for
+        the particular field is not exceeded.  The symbol name is
+        terminated by any punctuation character except those that
+        may appear in symbol names (see above).  Characters listed
+        in the table above both terminate the symbol and take on
+        their usual syntactical functions; other characters are
+        simply treated as data, except a single period terminates
+        the symbol but is deleted from the data.  The symbol may
+        appear in any position on the scanned card, e.g., on the
+        left or on the right of an equals sign.  The ampersand is
+        optional before the name of the symbol on the EXECUTE card
+        itself.  If the defining value is preceded by an amper-
+        sand, substitution of a value from an enclosing outer
+        EXECUTE card is implied.
+
+    Compatibility note:  The obsolete option MAXSYM is accepted
+        for compatibility with old input files.  The value of this
+        parameter is ignored.  Memory allocation is now automatic
+        for any number of symbols.
+
+
+DEFAULTS [&]var=value,...
+
+    Action:  This card is used to provide default values for user-
+        defined symbols.  Typically, it is placed at the beginning
+        of the file to be EXECUTEd, but it may be placed anywhere. 
+        Symbol definitions are as defined for the EXECUTE card. 
+        The obsolete MAXSYM option is accepted.  Every symbol must
+        be defined either on the EXECUTE card or on the DEFAULTS
+        card or an error occurs.
+
+
+Examples and usage notes for EXECUTE and DEFAULTS cards:
+
+    Parameters on the EXECUTE card override parameters on the
+DEFAULTS card as in this example:
+
+EXECUTE FILE='gnr.macros', X1=-0.5      [Read from stdin]
+DEFAULTS X1=0.0, X2=1.0                 [Read from 'gnr.macros']
+BOUNDS X=(&X1,&X2)                      [Read from 'gnr.macros']
+
+is equivalent to:
+
+BOUNDS X = (-0.5,1.0)
+
+    EXECUTE without a filename or DEFAULTS alone may be used to
+define symbolic parameters which you may want to change globally
+in multiple locations in an input file.  For example:
+
+DEFAULTS DELTA=0.1,ITH=0.5,JTH=0.4
+...
+AMPLIF 3DN &DELTA,MTI=&ITH,MNSI=0.05,MNSJ=0.05
+...
+THRESH 0.1 MTJ=&JTH,SCALE=1.0
+...
+THRESH 0.2 MTJ=&JTH,SCALE=1.5
+
+Changing the parameters on the DEFAULTS card will change the
+values used for all the AMPLIF and THRESH cards that refer to
+these values.
+
+    Symbols may be concatenated with other characters.  If the
+symbol follows the other characters, simply write them together;
+the ampersand acts as a delimiter.  To concatenate characters to
+the end of a symbol, use a period, which will be removed, to
+delimit the symbol, e.g.:
+
+EXECUTE ATOM=PT, X=0.013, Y=0.127, Z=0.369
+COORD  &ATOM.1  PT  -&X  &Y  -&Z
+
+is equivalent to:
+
+COORD  PT1  PT  -0.013  0.127  -0.369
+
+    System and environment symbols work the same way, but do not
+need to be defined by the user.  The following example shows how
+the host name could be inserted into a page title:
+
+TITLE  Run to test speed of program on host &SYSHOST
+
+    The following limitations on the use of symbols should be
+noted:   
+
+    1) Symbols may appear only on TITLE cards, comment cards, and
+in place of items that are scanned, not in card identifiers or
+other fixed-format information.
+
+    2) Any punctuation appearing in the defined value of a symbol
+is ignored when the value is used.  Thus:
+
+EXECUTE ID='MAP WITH X=0.3'
+SECTION ID=&ID
+
+is valid, because the equal sign in the defined value of the
+symbol is not intended to have syntactic value, but:
+
+EXECUTE SLICE='X=0.3'
+SECTION &SLICE
+
+would produce an error.  This example could be corrected by the
+use of two symbols:
+
+EXECUTE DIR=X, SLICE=0.3
+SECTION &DIR=&SLICE
+
+    3)  An ampersand appearing in quotation marks on the card
+being executed is not taken as a symbol, e.g.:
+
+EXECUTE X=0.3
+SECTION X = &X, ID='Z & X MAPS'
+
+The &X appearing in the ID field is not replaced by '0.3'.  The
+first 'X' (in 'X = &X') is also not replaced, because it is not
+preceded by an ampersand.
+
+    4)  Do not use 'UNIT', 'FILE', 'NORE', or 'MAXS' as the name
+of a symbol.
+
+
+ITERATION LISTS
+
+    An iteration list is a list of positive integers that you can
+enter on a variety of control cards to select items that an appli-
+cation should act upon.  For example, an iteration list might be
+used to indicate cycles of a calculation in which a certain type
+of graphical output should be produced.  In that case, the list
+might more specifically be called a "cycle list".  A list that has
+already been entered can be edited to add or delete items.
+
+    Control cards that permit iteration lists to be entered use a
+common syntax for this purpose.  The start of an iteration list is
+signalled by a keyword that indicates the purpose of the particu-
+lar list, for example, CELLS=(list).  The list itself is enclosed
+in parentheses, unless it contains only a single number, in which
+case the parentheses may be omitted.
+
+    The full syntax of an interation list is as follows (not every
+list will contain all the allowed constructs):
+
+([{OFF|NEW|ADD|DEL}],[MX=mxit],i,ib-ie,ib-ie+ii,ib+ii-ie,...,
+    [EVERY[=]nev]),...
+
+    The keywords 'OFF', 'NEW', 'ADD', and 'DEL' indicate how the
+list is to be processed.  The 'OFF' and 'NEW' keywords, if used,
+must come first in the list.  'ADD' and 'DEL' may appear anywhere
+in a list except at the end.  If the initial keyword is omitted, a
+default is supplied by the application (usually 'NEW').  (For
+compatibility with earlier versions of iteration lists, some
+control cards allow the mode keyword to be entered before the
+parentheses, for example, 'ADD=(list)').
+    OFF     Any existing list of the same kind is deleted.  If any
+            list items precede or follow this keyword, an error
+            occurs.
+    NEW     A new list is created.  Any existing list of the same
+            kind is deleted.  If any list items precede this
+            keyword, or if no list items follow it, an error
+            occurs.
+    ADD     Specified items folling this keyword are added to an
+            existing list of the same kind.  If the list does not
+            yet exist, it is created.
+    DEL     Specified items following this keyword are deleted
+            from an existing list.  If no items are specified, the
+            entire list is deleted.  If a specified item does not
+            exist in the list, a warning is issued and that item
+            is ignored.  A range with nonunit stride cannot be
+            specified in a DEL list.  To delete part or all of a
+            list with nonunit stride, just indicate the start and
+            end of the range to be deleted.
+
+    The construct 'MX=mxit' indicates the maximum number of items
+('mxit') for which memory is to be allocated in the list.  'MX'
+may be replaced by any word beginning with 'MX', e.g.,  'MXCELLS'
+or 'MXATOMS'.  This option is obsolete and is included only for
+compatibility with older input files.  Memory allocation is now
+automatic, however, a small savings in memory fragmentation may be
+achieved by specifying the exact number of list items that will be
+needed (simple ranges count as two items, ranges with stride as
+three items).  If any list items precede this keyword, an error
+occurs.
+
+    i   Indicates a single value, 'i'.  The values do not need to
+be entered in any particular order.
+
+    ib-ie   Indicates a range of values from 'ib' through 'ie'. 
+The stepping increment (stride) is 1.
+
+    ib-ie+ii or ib+ii-ie    Indicates a range of values from 'ib'
+through 'ie' with a step size (stride) of 'ii'.
+
+    The construct 'EVERY[=]nev' indicates that the iteration list
+is to be processed as if each value or range was repeated at all
+multiples of 'nev'.  'EVERY' and the numeric value 'nev' may be
+separated by an equals sign or by whitespace.  The application
+will specify whether counting begins at 0 or 1.  For example,
+'(NEW, 2, 5, EVERY 10)' will select items 2, 5, 12, 15, 22, 25,
+etc. if counting begins at 1.  When this option is used, it is an
+error for any value in the list to be greater than or equal to
+(nev + the count origin, 0 or 1).  When ADD or DEL is used to
+modify an existing list and a new EVERY option is not entered, the
+existing EVERY option remains unchanged.
+
+
+COLOR SPECIFICATION
+
+    A number of control cards allow the user to specify plotting
+colors for various objects.  A color specification may consist of
+a conventional English color name or a hexadecimal specification
+of the blue, green, and red components of the desired color.  The
+advantages of using color names are that they are easier to remem-
+ber and each implementation maps the standard names onto the near-
+est colors that can be realized with the particular device in use. 
+The advantage of using hexadecimal color specifications is that a
+wider range of colors is available with this method.
+
+    The list of color names that are recognized may be different
+in different implementations, however, at least the following list
+is always available:  white, black, blue, cyan, magenta, violet,
+orange, green, yellow, red.  Note that the name 'white' maps to
+the background color (the color of the paper on hard copy devices,
+black on display devices), whereas 'black' maps to black (if
+available) on hard-copy devices, but to white on display devices. 
+Hard-copy devices may offer a color reversal option that inter-
+changes the roles of "black" and "white", thereby reproducing the
+colors seen on the display device.
+
+    The hexadecimal color specification currently supports up to
+12-bit color depth (4 bits or one hex digit per primary color), in
+the form 'Xbgr', where 'b' is the blue specification, 'g' is the
+green, and 'r' is the red.  For example, 'orange' might be repre-
+sented as 'X04E'.  When support is added for 24-bit color devices,
+this will be expanded to 8 bits (two hex digits) per primary
+color, with the type of encoding automatically determined from the
+length of the color specification string.  If the device supports
+fewer than the number of color bits in the hex color
+specification, low-order bits will be dropped from each color in
+order to map onto the available number of colors.  In particular,
+128-color devices (typical X displays) will use 2 bits of blue
+information, 2 of green, and 3 of red; 256-color devices will use
+2 bits of blue information, 3 of green, and 3 of red.  In the
+example above, the specification 'X04E' for orange would map on a
+128-color display to a blue value of 0/4 = 0, green value 1/4 =
+0.25, and red value 7/8 = 0.875.
+
+    If the color specification is not one of the above, an
+arbitrary color will be used that will be the same for each use of
+the same color specification.
+
+
+CONTROL CARD LISTINGS
+
+    Each card read is listed as an alphanumeric card image.  Cards
+listed are indented 3 columns to distinguish them from other mes-
+sages, which are generally not indented.  Input lines longer than
+printed output or console display lines should be avoided, as they
+may be divided in inappropriate places.  Note that the listing of
+a card does not imply that all fields were actually interpreted
+during card scanning.  Examine output other than the card listing
+to determine whether all fields were read.
+
+
+ERRORS AND COMPLETION CODES
+
+    All error messages produced by the ROCKS interface begin with
+the characters '***'; warnings begin with '-->'.  The scanning
+routines indicate the locations of errors by placing '$' under
+them.  When an error is detected, the remaining cards for that
+program are processed before execution is terminated in order to
+permit detection of multiple errors whenever possible.
+
+    Upon completion of execution, a return code is generated to
+indicate the success of the job step.  This code is returned to
+the operating system.  It may or may not be accompanied by a text
+message describing the error.  A utility program 'abend' is
+provided, which gives a textual explanation for most error codes
+which the user may encounter.  This program may be executed by
+typing 'abend xxx', where 'xxx' is the numeric code of interest,
+on any system where the utility is supported.
+
+    Under IBM operating systems, a distinction is made between
+"condition codes" and "completion codes".  Condition codes
+indicate "normal" termination (which may still reflect an error
+condition), while "completion codes" indicate abnormal termination
+(ABEND).  Under CMS, the condition code is placed in the 'rc'
+return code where it can be tested from a REXX exec.  Under MVS,
+it can be tested by the COND parameter of a subsequent job step. 
+The possible condition codes are:
+
+    0  Successful execution.
+    4  An error occurred which probably did not affect the
+        integrity of any file.
+    8  An error occurred which prevented an output file from being
+        prepared or updated as requested; input files are probably
+        preserved.
+    12 Terminal error; files may have been destroyed.
+    16 FORTRAN or C library error.
+
+    When an ABEND occurs, a "user completion code" is generated to
+explain the error.  In the ROCKS system, ABEND is used when an
+error is detected that is more likely due to a programming error
+or machine fault than to a user error, or when an ERROR DUMP
+REQUESTED card has been read and any error is detected.
+
+    Under non-IBM operating systems, the distinction between
+condition codes and completion codes does not exist, and return
+codes parallel to the ABEND completion codes are given for all
+error terminations.
+
+
+SUMMARY OF CHANGES (from original ROCKS control card rules)
+
+    1) Control cards may now be any length that may be treated as
+a single record under the I/O system in use.  There is no
+provision for a sequence number field.  Continuation of character
+strings is now accomplished with the backslash character.
+
+    2) Control card identifiers and keywords may now be entered in
+any mixture of upper and lower case.  Identifiers and keywords may
+be abbreviated by unique leading substrings.
+
+    3) Numerical input fields may now have an exponent indicated
+by a trailing E+xx notation, as in FORTRAN real constants.
+
+    4) Parentheses may now be nested where permitted by the
+application.
+
+    5) Asterisk (other than in column 1, where it indicates a
+comment) is now treated as a data character unless specifically
+designated as a delimiter on a particular card.
+
+    6) The underscore character is treated as a null, and may be
+used in place of a blank in multiword keys.  Blanks and tabs are
+now always treated as delimiters.
+
+    7) The mechanism for continuation by use of a non-blank
+character in column 72 has been replaced by use of the backslash
+character in any column.  The special provision for a quote
+appearing in column 72 has accordingly been eliminated.
+
+    8) A continuation card may be indicated by a tab in column 1.
+
+    9) A null record is now treated as a comment rather than as an
+error.
+
+    10) The criterion for recognizing the END card has been
+changed from no nonblank characters in cols. 4-6 to no nonblank
+characters anywhere following the word 'END'.
+
+    11) 'FILE=name' has been added to the EXECUTE card.  System
+and environment variables have been added.  Variable symbols are
+now remembered across inner EXECUTE calls.  EXECUTEs may now be
+nested to any desired level.  The DEFAULTS card has been added.  A
+period may be used after a variable symbol to concatenate other
+data to it.
+
+    12) The SPOUT, TITLE, and ERROR DUMP REQUESTED cards are now
+directly recognized by the interface package.
+
+    13) The concept of output priority has been added.
+
+    14) The online input prompt has been added.
+
+                              - End -
+

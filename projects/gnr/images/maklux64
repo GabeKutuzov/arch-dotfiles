@@ -1,0 +1,58 @@
+# (c) Copyright 2017, The Rockefeller University *11225* 
+# $Id: maklux64 33 2017-05-03 16:14:57Z  $
+########################################################################
+#           Make file for image handling utilities library             #
+#                     Version for 64-bit PC Linux                      #
+#                                                                      #
+# V1A, 05/22/17, GNR - New makefile                                    #
+########################################################################
+
+# Define directories where include files are stored
+INC := $(HOME)/include
+# Define directory where object and dependency files are stored
+DIR := pclux64
+# Define directory where result plot library is stored
+RL := $(HOME)/lib/pclux64
+# Name to be given to output library
+LN  := imgtools
+
+# Object files to be included in imgtools library
+
+OBJFILES = \
+readpng
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+OBJ := $(OBJFILES)
+CC := gcc
+CFLAGS := -g
+CFLGS := $(CFLAGS) -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code -m64
+SVNV := $(shell gnrversn)
+DEFS := PCLUX64 _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Targets
+.PHONY : IMGTOOLS
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(\CFLGS) $(INC:%=-I%) $< \
+	| cat dirfile - > $@'
+
+# Compile for Linux
+$(DIR)/%.o: %.c $(DIR)/%.d maklux64
+	$(CC) $(CFLGS) $(DEFS:%=-D%) $(INC:%=-I%) -c $<
+	mv $*.o $(DIR)
+
+# Make IMGTOOLS
+IMGTOOLS:	$(OBJ:%=$(DIR)/%.o)
+	ar r lib$(LN).a $(OBJ:%=$(DIR)/%.o)
+	ranlib lib$(LN).a
+	mv lib$(LN).a $(RL)
+
+clean:
+	rm -f $(DIR)/*.[od] $(RL)/lib$(LN).a
+
+include $(OBJ:%=$(DIR)/%.d)

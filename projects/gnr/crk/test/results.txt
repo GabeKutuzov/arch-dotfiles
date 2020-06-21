@@ -1,0 +1,51 @@
+#==================================================================
+#                    Diehard DNA Test.
+# 
+#   The DNA test considers an alphabet of 4 letters::  C,G,A,T,
+# determined by two designated bits in the sequence of random   
+# integers being tested.  It considers 10-letter words, so that 
+# as in OPSO and OQSO, there are 2^20 possible words, and the   
+# mean number of missing words from a string of 2^21  (over-    
+# lapping)  10-letter  words (2^21+9 "keystrokes") is 141909.   
+# The standard deviation sigma=339 was determined as for OQSO   
+# by simulation.  (Sigma for OPSO, 290, is the true value (to   
+# three places), not determined by simulation.                  
+# 
+# Note 2^21 = 2097152
+# Note also that we don't bother with overlapping keystrokes 
+# (and sample more rands -- rands are now cheap). 
+#==================================================================
+#                        Run Details
+# Random number generator tested: stdin_input_raw
+# Samples per test pvalue = 2097152 (test default is 2097152)
+# P-values in final KS test = 100 (test default is 100)
+#==================================================================
+#                Histogram of p-values
+##################################################################
+# Counting histogram bins, binscale = 0.100000
+#    120|    |    |    |    |    |    |    |    |    |    |
+#       |    |    |    |    |    |    |    |    |    |    |
+#    108|    |    |    |    |    |    |    |    |    |    |
+#       |    |    |    |    |    |    |    |    |    |    |
+#     96|****|    |    |    |    |    |    |    |    |    |
+#       |****|    |    |    |    |    |    |    |    |    |
+#     84|****|    |    |    |    |    |    |    |    |    |
+#       |****|    |    |    |    |    |    |    |    |    |
+#     72|****|    |    |    |    |    |    |    |    |    |
+#       |****|    |    |    |    |    |    |    |    |    |
+#     60|****|    |    |    |    |    |    |    |    |    |
+#       |****|    |    |    |    |    |    |    |    |    |
+#     48|****|    |    |    |    |    |    |    |    |    |
+#       |****|    |    |    |    |    |    |    |    |    |
+#     36|****|    |    |    |    |    |    |    |    |    |
+#       |****|    |    |    |    |    |    |    |    |    |
+#     24|****|    |    |    |    |    |    |    |    |    |
+#       |****|    |    |    |    |    |    |    |    |    |
+#     12|****|    |    |    |    |    |    |    |    |    |
+#       |****|    |    |    |    |    |    |    |    |    |
+#       |--------------------------------------------------
+#       | 0.1| 0.2| 0.3| 0.4| 0.5| 0.6| 0.7| 0.8| 0.9| 1.0|
+#==================================================================
+#                          Results
+Kuiper KS: p = 0.00000000
+Assessment: FAILED at < 0.01% for Diehard DNA Test

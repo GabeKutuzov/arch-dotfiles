@@ -1,0 +1,2 @@
+pclux64/dmrswwqe.o pclux64/dmrswwqe.d : dmrswwqe.c /home/gmk/include/sysdef.h \
+ /home/gmk/include/rkarith.h /home/gmk/include/sysdef.h

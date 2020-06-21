@@ -1,0 +1,151 @@
+# (c) Copyright 2008-2018, The Rockefeller University *11221* 
+#
+# Linux makefile for CNS utilities (64-bit versions):
+#	d1inprep, d3libprp, dumpclst, dumpgd, getgd3, elibdump,
+#	mklijS1, snv8dump
+# V2A, 09/26/08, GNR - Made from existing 32-bit Linux makefile
+# Rev, 06/11/10, GNR - Add target mklijS1
+# Rev, 06/19/10, GNR - Remove getgd3 from 'all' target
+# Rev, 04/25/16, GNR - Move gditools source to this directory
+# Rev, 08/03/18, GNR - Incorporate LCLHOME
+
+# Where everything is
+LCLHOME ?= $(HOME)
+# Where compiled binaries are stored
+SB  := $(LCLHOME)/bin
+# Where local libraries are stored
+SL  := $(LCLHOME)/lib/pclux64
+# Where local include files are stored
+SI  := $(LCLHOME)/include
+
+# Object code and libraries to be included in D3LIBPRP exec:
+D3LIBPRP_OBJ := d3libprp
+D3LIBPRP_LIB := env crk
+
+# Object code and libraries to be included in DUMPCLST exec:
+DUMPCLST_OBJ := dumpclst
+DUMPCLST_LIB := crk
+
+# Object code and libraries to be included in DUMPGD exec:
+DUMPGD_OBJ := dumpgd gditools
+DUMPGD_LIB := sertools crk
+
+#Object code and libraries to be included in ELIBDUMP exec:
+ELDUMP_OBJ := elibdump
+ELDUMP_LIB := serplot sertools crk
+
+# Object code and libraries to be included in GETGD3 exec:
+GETGD3_OBJ := gditools
+GETGD3_LIB := crkpic
+
+# Object code and libraries to be included in D1INPREP exec:
+D1INPREP_OBJ := d1inprep
+D1INPREP_LIB := sertools crk
+
+# Object code and libraries to be included in mklijS1 exec:
+MKLIJS1_OBJ := mklijS1
+MKLIJS1_LIB := crk
+
+# Object code and libraries to be included in SNV8DUMP exec:
+SNDUMP_OBJ := snv8dump
+SNDUMP_LIB := crk
+
+# Compile-time definitions
+CC := gcc
+CFLAGS := -g -m64 -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+DEFS := PCLUX64 _ISOC99_SOURCE
+DIR  := pclux64
+
+.SUFFIXES:
+.SUFFIXES: .d .o .c .s
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:     %.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(CPPFLAGS) $(SI:%=-I%) $< \
+	| sed '\''s/^\(.*\)\.o[ :]*/$(DIR)\/\1.o $(DIR)\/\1.d : /g'\'' > $@; \
+	[ -s $@ ] || rm -f $@'
+
+# Compile for Linux
+$(DIR)/gditools.o:   gditools.c $(DIR)/gditools.d makefile
+	$(CC) $(CFLAGS) -fPIC $(DEFS:%=-D%) $(SI:%=-I%) -c $<
+	mv gditools.o $(DIR)
+
+$(DIR)/%.o:   %.c $(DIR)/%.d makefile
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) $(SI:%=-I%) -c $<
+	mv $*.o $(DIR)
+
+.PHONY: all help d3libprp d1inprep dumpclst dumpgd elibdump getgd3 mklijS1 snv8dump
+all:	d3libprp d1inprep dumpclst dumpgd elibdump mklijS1 snv8dump
+
+help h HELP H Help:
+	@echo This make file creates the CNS utilities
+	@echo
+	@echo Commands:
+	@echo
+	@echo --make [all]:     makes d1inprep, d3libprp, dumpclst, dumpgd, elibdump, mklijS1, snv8dump
+	@echo --make d3libprp:  makes stimulus library preparation utility
+	@echo --make d1inprep:  makes Darwin 1 stimulus preparation utility
+	@echo --make dumpclst:  makes connection list file dump utility
+	@echo --make dumpgd:    makes GRAFDATA dump utility
+	@echo --make elibdump:  makes stimulus library dump/plot utility
+	@echo --make getgd3:    makes MATLAB reader for GRAFDATA files
+	@echo --make mklijS1:   makes CONNLIST generator for Sentinel project
+	@echo --make snv8dump:  makes SAVENET V8 dump utility
+
+d3libprp:	$(SB)/D3libprp
+
+$(SB)/D3libprp:	$(D3LIBPRP_OBJ:%=$(DIR)/%.o) $(D3LIBPRP_LIB:%=$(SL)/lib%.a)
+	$(CC) $(CFLAGS) $(D3LIBPRP_OBJ:%=$(DIR)/%.o) $(D3LIBPRP_LIB:%=$(SL)/lib%.a) -lm -o $(DIR)/D3libprp
+	@rm -f $(SB)/D3libprp
+	cp $(DIR)/D3libprp $(SB)
+
+d1inprep:	$(SB)/D1inprep
+
+$(SB)/D1inprep:	$(D1INPREP_OBJ:%=$(DIR)/%.o) $(D1INPREP_LIB:%=$(SL)/lib%.a)
+	$(CC) -g $(D1INPREP_OBJ:%=$(DIR)/%.o) $(D1INPREP_LIB:%=$(SL)/lib%.a) -lm -o $(DIR)/D1inprep
+	@rm -f $(SB)/D1inprep
+	cp $(DIR)/D1inprep $(SB)
+
+dumpclst:	$(SB)/dumpclst
+
+$(SB)/dumpclst:	$(DUMPCLST_OBJ:%=$(DIR)/%.o) $(DUMPCLST_LIB:%=$(SL)/lib%.a)
+	$(CC) $(CFLAGS) $(DUMPCLST_OBJ:%=$(DIR)/%.o) $(DUMPCLST_LIB:%=$(SL)/lib%.a) -lm -o $(DIR)/dumpclst
+	@rm -f $(SB)/dumpclst
+	cp $(DIR)/dumpclst $(SB)
+
+dumpgd:		$(SB)/dumpgd
+
+$(SB)/dumpgd:	$(DUMPGD_OBJ:%=$(DIR)/%.o) $(DUMPGD_LIB:%=$(SL)/lib%.a)
+	$(CC) $(CFLAGS) $(DUMPGD_OBJ:%=$(DIR)/%.o) $(DUMPGD_LIB:%=$(SL)/lib%.a) -lm -o $(DIR)/dumpgd
+	@rm -f $(SB)/dumpgd
+	cp $(DIR)/dumpgd $(SB)
+
+elibdump:	$(SB)/elibdump
+
+$(SB)/elibdump:	$(ELDUMP_OBJ:%=$(DIR)/%.o) $(ELDUMP_LIB:%=$(SL)/lib%.a)
+	$(CC) $(CFLAGS) $(ELDUMP_OBJ:%=$(DIR)/%.o) $(ELDUMP_LIB:%=$(SL)/lib%.a) -lm -o $(DIR)/elibdump
+	@rm -f $(SB)/elibdump
+	cp $(DIR)/elibdump $(SB)
+
+getgd3:		getgd3.mexa64
+
+getgd3.mexa64:	$(GETGD3_OBJ:%=$(DIR)/%.o) $(GETGD3_LIB:%=$(SL)/lib%.a)
+	mex -g $(DEFS:%=-D%) -I$(SI) $(GETGD3_OBJ:%=$(DIR)/%.o) -L$(SL) \
+   	$(GETGD3_LIB:%=-l%) getgd3.c
+	cp getgd3.mexa64 $(LCLHOME)/matlab
+
+mklijS1:	$(SB)/mklijS1
+
+$(SB)/mklijS1:	$(MKLIJS1_OBJ:%=$(DIR)/%.o) $(MKLIJS1_LIB:%=$(SL)/lib%.a)
+	$(CC) $(CFLAGS) $(MKLIJS1_OBJ:%=$(DIR)/%.o) $(MKLIJS1_LIB:%=$(SL)/lib%.a) -lm -o $(DIR)/mklijS1
+	@rm -f $(SB)/mklijS1
+	cp $(DIR)/mklijS1 $(SB)
+
+snv8dump:	$(SB)/snv8dump
+
+$(SB)/snv8dump: $(SNDUMP_OBJ:%=$(DIR)/%.o) $(SNDUMP_LIB:%=$(SL)/lib%.a)
+	$(CC) $(CFLAGS) $(SNDUMP_OBJ:%=$(DIR)/%.o) $(SNDUMP_LIB:%=$(SL)/lib%.a) -lm -o $(DIR)/snv8dump
+	@rm -f $(SB)/snv8dump
+	cp $(DIR)/snv8dump $(SB)

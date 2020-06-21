@@ -1,0 +1,142 @@
+# (c) Copyright 2016-2018, The Rockefeller University *11226* 
+# $Id: makmac64 4 2017-02-03 18:57:19Z  $
+########################################################################
+#                   MAKE file for hybrid utilities                     #
+#                     Version for Mac OS (64-bit)                      #
+#                           Serial Version                             #
+#                                                                      #
+# These utilities support node-to-node messaging and shared memory on  #
+# parallel computers.  They replace the earlier "nctools" utilities    #
+# for all parallel platforms under the hybrid schema.                  #
+#                                                                      #
+# Call with make CFLAGS=-O2 to get optimized compilations.             #
+#                                                                      #
+# Versions of ROCKS routines abexit(), abexitm(), and abexitme() that  #
+# call appexit() are provided in file abexit.o but are not linked into #
+# any library.  This file can be explictly linked into any application #
+# that does not support cryout-style output in order to prevent the    #
+# usual versions from being linked from the ROCKS library.             #
+#                                                                      #
+# For now, all the source files (.c and .s) are kept in the current    #
+# directory.  Parallel routines not yet used on PCLINUX are compiled   #
+# nonetheless, to detect possible barriers to future ports.            #
+#                                                                      #
+# Rev, 02/16/16, GNR - Compile routines that were not worked over yet  #
+# Rev, 03/09/16, GNR - Version for MacOS derived from maklux64         #
+# Rev, 01/29/17, GNR - Add mpgather, update lists of working routines  #
+########################################################################
+
+# Directories for include files:
+INC := $(HOME)/include
+
+# Directory for object files
+DIR := macos64
+
+# Directory and name of result library:
+LD := $(HOME)/lib/$(DIR)
+LN = sertools
+
+# N.B.  When the parallel version is set up, the plan is to have a
+# separate object code subdirectory for each version (serial, host,
+# comp node), and to pass appropriate macros into this makefile for
+# each version to change the LD, LN, ODIR, CFLAGS, object files
+# list, etc. from a master makefile.  Something similar must also
+# be done if timer versions are needed.  This is the only apparent
+# way to overcome the lack of conditional macros in SGI & Linux make.
+# (For now, this file just makes the serial host library, including
+# some of the parallel tools just to be sure they compile OK.)
+
+# Compilation flags:
+CC := gcc
+CFLAGS := -g     # Override w/ -O2 from environment for optimizing
+CFLGS := $(CFLAGS) -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := MACOS64 _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Object files required for all of the libraries:
+HYBX_OBJ = \
+abscom   \
+allolink \
+appexit  \
+blkbcst  \
+chngpool \
+collect  \
+dbgprt   \
+imax     \
+isum     \
+isynch   \
+membcst  \
+memdump  \
+memsize  \
+mpgather \
+mpirwex  \
+nncom    \
+nnget    \
+nngeti2  \
+nngeti4  \
+nngeti8  \
+nngetu8  \
+nngetr4  \
+nngetr8  \
+nnput    \
+nnputi2  \
+nnputi4  \
+nnputi8  \
+nnputu8  \
+nnputr4  \
+nnputr8  \
+nxtupush \
+
+# Object files for hybrid host:
+HYBHOST_OBJ = \
+nsitvers \
+abscom   \
+allocpc  \
+allocpcv \
+allocpm  \
+allocpmv \
+allocpr  \
+allocprv \
+chngpool \
+dbxchild \
+dbxparnt \
+fatal    \
+freep    \
+freepv   \
+sockio
+
+FILES = $(HYBX_OBJ) $(HYBHOST_OBJ)
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+$(DIR)/%.o: %.c $(DIR)/%.d makmac64
+	$(CC) $(CFLGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+$(DIR)/%.o: %.s makmac64
+	as $(CFLGS) -I$(INC) $*.s
+	mv $*.o $(DIR)
+
+.PHONY : macos64 depend
+macos64: $(LD)/lib$(LN).a $(DIR)/abexit.o
+depend:  $(FILES:%=$(DIR)/%.d) $(DIR)/abexit.d
+
+$(LD)/lib$(LN).a: $(FILES:%=$(DIR)/%.o)
+	ar r lib$(LN).a $(FILES:%=$(DIR)/%.o)
+	ranlib lib$(LN).a
+	mv lib$(LN).a $(LD)
+
+clean:
+	rm -f $(DIR)/*.o $(LD)/lib$(LN).a
+
+# Dependencies
+
+-include $(FILES:%=$(DIR)/%.d)

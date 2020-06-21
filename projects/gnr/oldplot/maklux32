@@ -1,0 +1,111 @@
+# (c) Copyright 1999-2018, The Rockefeller University *11225* 
+# $Id: maklux32 37 2018-08-15 19:53:33Z  $
+########################################################################
+#          Make file for old ROCKS metafile plotting library           #
+#                        Version for PC Linux                          #
+#                                                                      #
+# V1A, 08/08/99, GNR - Derived from IRIX makefile                      #
+# Rev, 10/26/06, GNR - Add bitmaps() routine                           #
+# ==>, 01/25/07, GNR - Last mod before committing to svn repository    #
+# Rev, 03/12/08, GNR - Add plotvers() routine                          #
+# Rev, 12/27/08, GNR - Add clean target, dependency on makefile itself #
+# Rev, 05/27/18, GNR - Add col2gr                                      #
+########################################################################
+
+# Define directory where plot library is stored
+RL     = $(HOME)/lib/pclinux
+
+# Define directory where include files are stored
+INC   = $(HOME)/include
+
+# Define directory where object files are stored
+DIR = pclinux
+
+# Object files to be included in PLOT library
+
+OBJFILES = \
+arc \
+arrow \
+axis \
+axlin \
+axlog \
+axpol \
+bitmap \
+bitmaps \
+bmpxsz \
+bpause \
+circle \
+color \
+col2gr \
+deccol \
+ellips \
+endplt \
+factor \
+i2a \
+line \
+newplt \
+number \
+pencol \
+penset \
+pentyp \
+plot \
+plotvers \
+polyln \
+rect \
+retrace \
+setmovie \
+symbol \
+where
+
+MFFILES = \
+mfbchk \
+mfckerr \
+mfstate \
+mfsynch \
+mfwrite \
+setmf
+
+MF0FILES = \
+mfclose \
+mfcreate \
+mfhead \
+mfst
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+FILES := $(OBJFILES) $(MFFILES) $(MF0FILES)
+CC := gcc
+CFLAGS := -m32 -g -O2 -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := PCLINUX _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Targets
+.PHONY : all depend
+all:		$(RL)/libserplot.a
+depend:		$(FILES:%=$(DIR)/%.d)
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+$(DIR)/%.o: %.c $(DIR)/%.d maklux32
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+$(DIR)/%.o: %.s maklux32
+	as $(CFLAGS) -I$(INC) $*.s
+	mv $*.o $(DIR)
+
+$(RL)/libserplot.a: $(FILES:%=$(DIR)/%.o)
+	ar r libserplot.a $(FILES:%=$(DIR)/%.o)
+	ranlib libserplot.a
+	mv libserplot.a $(RL)
+
+clean:
+	rm -f $(DIR)/*.o $(RL)/libserplot.a
+
+-include $(FILES:%=$(DIR)/%.d)

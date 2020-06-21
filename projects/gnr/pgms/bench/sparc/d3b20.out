@@ -1,0 +1,64 @@
+Number of celltypes = 4, number of iterations = 20, seed = 1009
+   Cell type 1
+      Ncells = 600, nconntypes = 4, delta = 0.100000
+      Connection type 1
+         Nconns = 40, source = 1, rule = 0, scale = 0.200000
+      Connection type 2
+         Nconns = 10, source = 2, rule = 1, scale = 0.300000
+      Connection type 3
+         Nconns = 4, source = 3, rule = 0, scale = 0.250000
+      Connection type 4
+         Nconns = 2, source = 4, rule = 1, scale = 0.180000
+   Cell type 2
+      Ncells = 240, nconntypes = 4, delta = 0.200000
+      Connection type 1
+         Nconns = 20, source = 1, rule = 1, scale = 0.200000
+      Connection type 2
+         Nconns = 10, source = 2, rule = 0, scale = 0.250000
+      Connection type 3
+         Nconns = 4, source = 3, rule = 1, scale = 0.180000
+      Connection type 4
+         Nconns = 2, source = 4, rule = 0, scale = 0.250000
+   Cell type 3
+      Ncells = 100, nconntypes = 4, delta = 0.100000
+      Connection type 1
+         Nconns = 40, source = 1, rule = 1, scale = 0.200000
+      Connection type 2
+         Nconns = 15, source = 2, rule = 0, scale = 0.250000
+      Connection type 3
+         Nconns = 4, source = 3, rule = 0, scale = 0.330000
+      Connection type 4
+         Nconns = 24, source = 4, rule = 1, scale = 0.250000
+   Cell type 4
+      Ncells = 60, nconntypes = 4, delta = 0.200000
+      Connection type 1
+         Nconns = 12, source = 1, rule = 1, scale = 0.100000
+      Connection type 2
+         Nconns = 1, source = 2, rule = 0, scale = 0.200000
+      Connection type 3
+         Nconns = 4, source = 3, rule = 1, scale = 0.250000
+      Connection type 4
+         Nconns = 2, source = 4, rule = 0, scale = 0.180000
+Setup required 1.000000 seconds
+20 iterations required 8.000000 seconds
+DAS statistics for final iteration:
+   Celltype 1
+      Conntype   1:        0       0       0   24000
+      Conntype   2:        0       0       0    6000
+      Conntype   3:        0       0       0    2400
+      Conntype   4:        0       0       0    1200
+   Celltype 2
+      Conntype   1:        0       0       0    4800
+      Conntype   2:        0       0       0    2400
+      Conntype   3:        0       0       0     960
+      Conntype   4:        0       0       0     480
+   Celltype 3
+      Conntype   1:        0       0       0    4000
+      Conntype   2:        0       0       0    1500
+      Conntype   3:        0       0       0     400
+      Conntype   4:        0       0       0    2400
+   Celltype 4
+      Conntype   1:        0       0       0     720
+      Conntype   2:        0       0       0      60
+      Conntype   3:        0       0       0     240
+      Conntype   4:        0       0       0     120

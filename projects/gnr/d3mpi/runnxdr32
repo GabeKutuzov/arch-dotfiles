@@ -1,0 +1,1 @@
+nxdr2 -m32 -f d3hdrs.c -b d3objs -c "gcc -DPCLINUX -I$HOME/include" -o d3nxt32.c -h d3nxd32.h

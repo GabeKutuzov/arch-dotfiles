@@ -1,0 +1,105 @@
+# (c) Copyright 1999-2018, The Rockefeller University *11226* 
+# $Id: makpic64 8 2018-08-15 20:01:33Z  $
+########################################################################
+#                   MAKE file for hybrid utilities                     #
+#                 Version for PC Linux (64-bit -fPIC)                  #
+#                        Serial -fPIC Version                          #
+#                                                                      #
+# These utilities use functions from MPI to support node-to-node       #
+# messaging and shared memory on parallel computers.  They replace     #
+# the earlier "nctools" and "nsitools" libraries.                      #
+#                                                                      #
+# This version is intended for use in situations where everything      #
+# needs to be relocatable, e.g. matlab mex functions.  These will      #
+# always be serial processes in our scheme of things.                  #
+#                                                                      #
+# Call with make CFLAGS=-O2 to get optimized compilations.             #
+#                                                                      #
+# Versions of ROCKS routines abexit(), abexitm(), and abexitme() that  #
+# call appexit() are provided in file abexit.o but are not linked into #
+# any library.  This file can be explictly linked into any application #
+# that does not support cryout-style output in order to prevent the    #
+# usual versions from being linked from the ROCKS library.             #
+#                                                                      #
+# V1A, 08/08/99, GNR - Derived from IRIX makefile                      #
+# Rev, 08/26/99, GNR - Add allocp*, imax, isum, nnget*, nnput*         #
+# Rev, 10/24/99, GNR - Add nn{get|put}[iu]8                            #
+# Rev, 03/04/00, GNR - Remove allocs/frees family of routines          #
+# Rev, 04/22/00, GNR - Add abexit                                      #
+# Rev, 12/09/00, GNR - Add blkbcst                                     #
+# V1F, 06/30/01, GNR - Add chngpool, delete old "down" routines        #
+# Rev, 09/29/08, GNR - Revise for -PIC library                         #
+# Rev, 12/27/08, GNR - Add clean target, dependency on makefile itself #
+# ==>, 12/29/09, GNR - Last mod before committing to svn repository    #
+# Rev, 12/30/09, GNR - Add mpitvers                                    #
+# Rev, 08/03/18, GNR - Incorporate LCLHOME, serial routines only       #
+########################################################################
+
+# Directory where all this stuff is stored
+LCLHOME ?= $(HOME)
+# Directories for include files:
+INC := $(LCLHOME)/include
+# Directory for object and dependency files
+DIR := pcpic64
+# Directory and name of result library:
+LD := $(LCLHOME)/lib/pclux64
+LN = serpicmpit
+
+# Object files required for serial (or relocatble) hosts:
+PIC_OBJ := \
+allocpc  \
+allocpcv \
+allocpm  \
+allocpmv \
+allocpr  \
+allocprv \
+allolink \
+chngpool \
+dbgprt   \
+freep    \
+freepv   \
+membcst  \
+memdump  \
+memsize  \
+mpitvers \
+nxtupush \
+stattmr  \
+
+
+# Compilation flags:
+CC := gcc
+CFLAGS := -g      # Override w/ -O2 from command line for optimizing
+CFLGS := $(CFLAGS) -fPIC -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code -pthread -m64
+SVNV := $(shell gnrversn)
+DEFS := PCLUX64 _ISOC99_SOURCE USE_MPI SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+.PHONY : pcpic64 depend
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+$(DIR)/%.o: %.c $(DIR)/%.d makpic64
+	$(CC) $(CFLGS) $(DEFS:%=-D%) $(INC:%=-I%) -c $<
+	mv $*.o $(DIR)
+
+$(DIR)/%.o: %.s makpic64
+	as $(CFLGS) -I$(INC) $*.s
+	mv $*.o $(DIR)
+
+pcpic64: $(LD)/lib$(LN).a $(DIR)/abexit.o
+depend:  $(PIC_OBJ:%=$(DIR)/%.d) $(DIR)/abexit.d
+
+$(LD)/lib$(LN).a: $(PIC_OBJ:%=$(DIR)/%.o)
+	ar r lib$(LN).a $(PIC_OBJ:%=$(DIR)/%.o)
+	ranlib lib$(LN).a
+	mv lib$(LN).a $(LD)
+
+clean:
+	rm -f $(DIR)/*.[od] $(LD)/lib$(LN).a

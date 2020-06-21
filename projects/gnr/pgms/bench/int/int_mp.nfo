@@ -1,0 +1,41 @@
+MVP MP ANSI C Optimizer    Version 1.10
+Copyright (c) 1993-1995    Texas Instruments Incorporated 
+
+
+		======File-level Optimization Summary======
+
+
+>>>> WARNING: -op2 specified but file has no entry functions!
+
+
+extern void *mallocv() is called from 1 sites in this file
+    It appears to be inlineable (size = 12 units)
+    It calls these functions:
+	memalign()
+
+extern int userMain() is called from 0 sites in this file
+    It appears to be inlineable (size = 88 units)
+    It calls these functions:
+	exit()
+	dspExec()
+	flush()
+	dspInit()
+	dspAPIInit()
+	xprintf()
+	mallocv()
+
+These functions may be recursive:
+	userMain()
+	mallocv()
+
+Making this function inlineable: mallocv()
+
+These external functions are called but not defined here:
+	exit()
+	xprintf()
+	dspAPIInit()
+	dspInit()
+	flush()
+	dspExec()
+	memalign()
+

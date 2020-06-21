@@ -1,0 +1,107 @@
+On 08/01/17 some error numbers in abexit calls in oldplot library
+were found not to agree with errtab texts.  These were fixed.
+All abexit calls in new plot library should now be checked and
+if possible, when wrong, fix without changed errtab again.
+
+Currently plan for registered names is:  These are even on PAR0,
+odd elsewhere, so mfdraw can keep separate defs for odd ones per
+node.  But maybe they should just all be registered on node 0.
+
+Install preregistered colors, fonts, and pens per doc.
+Possibly the old color() routine should just be removed or use
+it for the predefined colors and have all registered color
+numbers free (incompatible with pen numbers).
+
+Maybe factor() should be redefined to just rescale subsequent
+plotting commands in the current frame.  Apparently its original
+use was to rescale a whole plot for paper output.
+
+Possibly the arguments in the arc() calls should be changed to
+the ones used in fltk, viz, radius and starting and ending angle
+instead of starting coordinate and ending angle.  Old style was
+never used as far as I know, except maybe in a test program.
+
+When a window is closed, its Win should be put on the available list.
+Ditto Frame array.
+
+but_msg bits that say a frame was dragged or coord transform
+modified need to initiate an interaction to transfer this
+information back to the host (allowing storage in some
+configuration file).  The change actually needs to be made
+on mfdraw so user can drag windows even when running from a
+stored metafile.
+
+Closing a window in mfdraw possibly should initiate passing
+that information back to the running app (if online) so
+future calls to write graphics to that window can be bypassed.
+
+N.B.  Following removed from rkginit, 06/27/15 -- now should
+be done each time a new frame is defined:
+   _RKG.cgmode = GM_SET;
+   strncpy(_RKG.ccolnm, "BLACK", MAXLCOLOR);
+   strncpy(_RKG.cfontn, "DEFAULT", MAXLFONT);
+   strncpy(_RKG.cpennm, "DEFAULT", MAXLPEN);
+frmdef() should also set all the following to zero or
+other default values:  cx,cy,ht,wd,rad,gmode,font,thickness,kreset
+
+-----------------------------------------------------------------------
+
+Notes reading GMK files, 07/09/19:
+
+Following routines were given a quick look and seem OK:  chgwin, circle,
+   ellips, mfstart, mfstate, rcolor, regcol, regfont, regpen, retrace,
+   rkgifin, rkginit, setmovie, square, w2mf, where, x2mf, xp2mf, y2mf, yp2mf
+   
+Generic comment:  Need to look at all routines and be sure doc was
+   satisfied as to where current coordinates are set after drawing--
+   here and in mfdraw.  E.g. line().  See plot() for example, where
+   this seems to be done as required.
+
+a2mf:  Constants ANGLOW, ANGMASK, ANGRES don't seem to be defined anywhere.
+    I think I am just missing a header with those and other defs.
+
+arc2:  Calls arc, which then writes wrong code for type of arc call.
+   
+arc:  Here and a few other places (clswin, color) we have hexch_to_int in
+   regular plot calls--can't we avoid this overhead at run time?  Let's also
+   define two new arc plot routines that use the arguments as suggested in
+   the note above (to reduce time for conversion of args to those needed by
+   fltk in mfdraw and maybe less work in calling program).
+
+bitmap, polyln:  Still has old i2a argument conversions.
+
+clswin:  Besides sending code to mfdraw to close window, you need to
+   modify rkg structure to indicate this window is closed (bit settings,
+   move structure to available list?)
+
+dumpmf.c:  Empty file.
+
+endplt:  Looks quite incomplete.  See version in oldplot library.
+
+frmdef:  Besides sending command to mfdraw, needs to put a frame struct
+   on the active list and fill it with current information (to be used
+   for example by commands to write coordinates).
+
+g2mf:  ui32 gs16 based on signed 'g' cannot be right, I think should
+   be 'S16 * ag'
+
+h2mf:  Something wrong in the comments '1=' etc.
+
+mfckerr:  See note in comments re error codes with multiple bits set.
+
+number:  Just a skeleton, no code.
+
+pencol, penset, pentyp, symbol:  Has code, no header comments.
+
+rect:  Why not check for inactive before checking for square?
+
+
+
+
+
+
+
+
+
+ 
+

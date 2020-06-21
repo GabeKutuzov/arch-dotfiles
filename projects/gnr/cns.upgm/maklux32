@@ -1,0 +1,61 @@
+# (c) Copyright 2010, The Rockefeller University *11202* 
+# PCLINUX MAKE file for Cns user ("plug-in") programs
+#
+# (Assumes these programs are not yet in a svn archive)
+#
+# V1A, 05/09/10, GNR - UPROGS separated from src/d3
+# Rev, 07/10/17, GNR - Add tiffcam, remove prescale (now in d3imgt)
+
+# Define name of the library we are constructing
+SONAME  = libcnsupgm.so.1
+LIBNAME = libcnsupgm.so.1.0.1
+
+# Define architecture-specific subdirectory
+DIR := pclinux
+
+# Define directory where include files are stored
+INC := /home/cdr/include /home/cdr/src/d3
+
+# Define directory where private libraries are stored
+LIB := /home/cdr/lib/$(DIR)
+
+# Object files to place in CNS plugin library
+UPGMOBJ = \
+norbmix  \
+sjrbar1  \
+sjrbar2  \
+sjrbar3  \
+tiffcam  \
+zsprb1
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+# Compilation macros for LINUX
+CC := gcc
+CFLAGS := -g -fPIC -Wunused
+DEFS := PCLINUX _ISOC99_SOURCE
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(CPPFLAGS) $(INC:%=-I%) $< \
+	| sed '\''s/^\(.*\)\.o[ :]*/\1.o $(DIR)\/\1\.d : /g'\'' > $@; \
+	[ -s $@ ] || rm -f $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d maklux32
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) $(INC:%=-I%) -o $@ -c $<
+
+# Targets for making various programs
+.PHONY:  depend pclinux
+pclinux: $(LIB)/$(LIBNAME)
+depend:  $(UPGMOBJ:%=$(DIR)/%.d)
+
+$(LIB)/$(LIBNAME):	$(UPGMOBJ:%=$(DIR)/%.o) $(LIB)/libcrkpic.a
+	$(CC) -shared -Wl,-soname=$(SONAME) -o $(LIB)/$(LIBNAME) \
+		$(UPGMOBJ:%=$(DIR)/%.o) -L$(LIB) -lcrkpic -lc -lm
+
+clean:
+	rm -f $(DIR)/*.o $(LIB)/$(LIBNAME)
+
+-include $(UPGMOBJ:%=$(DIR)/%.d)

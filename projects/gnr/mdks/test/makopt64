@@ -1,0 +1,71 @@
+# (c) Copyright 2013, The Rockefeller University */
+# $Id: makopt64 11 2013-03-19 20:56:23Z  $
+########################################################################
+# Make file for multi-dimensional Kolmogorov-Smirnov statistic library #
+# test programs.  This is the version for 64-bit systems               #
+#                                                                      #
+# Program written by George N. Reeke                                   #
+########################################################################
+# V1A, 04/17/14, GNR - New makefile, extracted from maklux64           #
+# ==>, 04/17/14, GNR - Last mod before committing to svn repository    #
+########################################################################
+
+KSLIBNAME = libmdks.a
+LIBDIR   = $(HOME)/lib
+INC      = $(HOME)/include
+
+# Linux common pathnames
+DIR := pclux64
+LL  := $(LIBDIR)/$(DIR)
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+########## Target dependent macro definitions:
+CC := gcc
+CFLAGS := -g -Wall -m64
+SVNV := $(shell gnrversn)
+DEFS := PCLUX64 _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(CPPFLAGS) -I$(INC) $< \
+	| sed '\''s/^\(.*\)\.o[ :]*/$(DIR)\/\1.o $(DIR)\/\1.d : /g'\'' > $@; \
+	[ -s $@ ] || rm -f $@'
+
+#Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d makopt64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+.PHONY : depend clean
+depend:  $(CFILES:%=$(DIR)/%.d)
+
+## TO MAKE A DEBUG VERSION OF mdksopt, UNCOMMENT THIS CODE
+## $(DIR)/mdksopt.o:	mdksopt.c $(DIR)/mdksopt.d makopt64
+##	 $(CC) $(CFLAGS) -DDEBUG $(DEFS:%=-D%) -I$(INC) -c $<
+##	 mv mdksopt.o $(DIR)
+
+mdksopt:    $(DIR)/mdksopt.o $(LL)/libmdks.a $(LL)/libcrk.a
+	$(CC) $(CFLAGS) -o mdksopt $(DIR)/mdksopt.o \
+	-L$(LL) -lmdks -lcrk -lm	
+
+mdkstst1:	$(DIR)/mdkstst1.o $(LL)/libmdks.a $(LL)/librkpf.a \
+	$(LL)/libcrk.a $(LL)/libserplot.a
+	$(CC) $(CFLAGS) -o mdkstst1 $(DIR)/mdkstst1.o \
+	-L$(LL) -lmdks -lrkpf -lserplot -lcrk -lm	
+
+mdkstst2:	$(DIR)/mdkstst2.o $(LL)/libmdks.a $(LL)/libcrk.a \
+      $(LL)/libserplot.a
+	$(CC) $(CFLAGS) -o mdkstst2 $(DIR)/mdkstst2.o \
+	-L$(LL) -lmdks -lserplot -lcrk -lm	
+
+mdkstst3:	$(DIR)/mdkstst3.o $(LL)/libmdks.a $(LL)/libcrk.a \
+      $(LL)/libserplot.a
+	$(CC) $(CFLAGS) -o mdkstst3 $(DIR)/mdkstst3.o \
+	-L$(LL) -lmdks -lserplot -lcrk -lm	
+
+clean:
+	rm -f $(DIR)/*.o $(LL)/$(KSLIBNAME)
+
+-include $(CFILES:%=$(DIR)/%.d)

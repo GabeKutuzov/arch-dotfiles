@@ -1,0 +1,1 @@
+nxdr2 -f d3hdrs.c -b d3objs -c "gcc -DPCLINUX -I/home/cdr/include" -o d3nxtab.c -h d3nxdr.h

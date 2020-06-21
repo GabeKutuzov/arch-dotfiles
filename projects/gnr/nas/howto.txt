@@ -1,0 +1,133 @@
+Neural Processing Unit (NPU) Assembler (NAS) HOWTO
+==================================================
+
+NAS v2.x is a windows program invokable from the MS-DOS command line.  Invoking
+it with only a -h argument yields the following usage information:
+
+    nas: usage: nas [-r <raw output file>] 
+                    [-v <VHDL output file>] 
+                    [-u <UCF mem ref> <UCF output file>]
+                    [-m <MEM preamble, e.g., @0000> <MEM output file; a la Xilinx data2mem>]
+                    <input file>
+    	- arguments can be given in any order
+    	- if no output files are specified, output is raw to nas_raw.out
+    	- any assembler warnings or errors are dumped to standard error
+    Neural Processing Unit (NPU) Assembler (NAS) version 2.3
+
+As the preceding suggests, nas takes in an input file of a given form
+(described below) and outputs one, two, or all three of three different output
+formats: "raw," VHDL initialzation, and/or UCF initialization.  If the invoker
+specifies no output format, output defaults to the raw format and to a file
+named nas_raw.out in the current working directory.  The "<UCF mem ref>"
+argument is NOT checked for correctness.
+
+NPU Assembler (the Input Format)
+--------------------------------
+
+An input file containing NPU assembler is a series of NPU assembler mnemonics
+with the appropriate operands.  Comments may be freely interspersed and
+whitespace (' ' and <tab>) are used to divide lexical tokens and are otherwise
+ignored.  <CR> and <CR>-<LF> are required, however, to mark the end of a line,
+but lines with only whitespace are permitted (and ignored).
+
+    * Comments
+
+Comments begin with a ';' and flow through to the end of the line.
+
+    * Registers
+
+To refer to a register as an operand, use the form reg<n>, where n is the
+register number, ranging from 0 to f.  Therefore, the following are keywords in
+NAS (and thus may not be used as labels or identifiers):
+
+    reg0 reg1 reg2 reg3 reg4 reg5 reg6 reg7
+    reg8 reg9 rega regb regc regd rege regf
+
+Note that only these exact strings refer to registers.  REG0, reg00, and Reg0f
+are NOT parsed as register references.
+
+    * Numbers
+
+Numbers are parsed according to strtoul().  For the uninitiated, this means
+that any string of digits starting with 1-9 is parsed as a decimal number, any
+string of digits preceeded with '0x' is parsed as a hexadecimal number, and any
+string of digits preceeded with '0' is parsed as an octal number.  This is just
+like C, except there's no parsing of numbers ending in 'l' or 'L' and the like.
+If writing a hexadecimal number, a-f and A-F are both acceptable.
+
+    * Opcode Mnemonics
+
+Labels notwithstanding, opcode mnemonics begin every instruction line in nas.
+Opcode mnemonics are case sensitive, and are keywords in nas.  The following are
+the valid opcode mnemonics nas understands:
+
+    addacc and wand clrp compare wcompare dec fetch wfetch imm inc jumpcy
+    jumpn jumpnz jumpz load wload mult multacc nop saveplo savephi shftbl
+    shftbr shftar shftl shftr stash subtacc testplo testphi
+
+Note for the shift opcodes, nas understands shftbl, shftbr, shftl, and shftr.
+Nas does NOT understand shiftbl, shiftbr, shiftl, and shiftr.
+
+    * wide instructions
+
+The NPU hardware uses a temporary register to store the high nybble or byte of a
+12 or 16 bit number used in an instruction.  This register can be set using the
+imm <8-bit number> instruction.  Alternately, nas recognizes wide versions of
+certain instructions for which it emits the imm instruction before the instruction
+proper.  The following are the standard instructions and their widened variants:
+
+      and <reg> <8-bit number>     -> wand <reg> <16-bit number>
+      compare <reg> <8-bit number> -> wcompare <reg> <16-bit number>
+      fetch <reg> <8-bit number>   -> wfetch <reg> <16-bit number>
+      fetch <reg> <label>          -> wfetch <reg> <label>
+      load  <reg> <8-bit number>   -> wload <reg> <12-bit number>
+      load  <reg> <label>          -> wload <reg> <label>
+
+    * Labels
+
+Nas has the concept of labels for convenient branching.
+
+Any instruction line can be preceded with a label declaration, and a label
+declaration can appear on a line by itself (in which case, it refers to the next
+valid instruction line, no matter how many blank lines or comment-only lines
+follow).  An instruction line can have any number of label declaration.
+
+Labels can consist of any string of alphanumeric characters, exclusive of
+whitespace and keywords.
+
+A label declaration is defined by the ':' following it.  The ':' may or may not
+have whitespace between it and the newly declared label name.
+
+Labels are case sensitive, so Label: and label: declare two different labels.
+
+Labels can be used in any jumpX instruction.  To use a label, use the declared
+label string where an address literal would normally be used.
+
+Here are some examples of label declaration and use:
+
+    foo: Bar:
+    Foo: bar:and reg0 0x8 ; foo, Bar, Foo, and bar all refer to this instruction
+    0label :
+        ;
+        ; ...any number of comments can go here... 0label refers to the wand
+        ;    instruction below
+        ;
+            wand regf 0x8000
+    compare: compare rege 2 ; ERROR: you can't use keywords as labels
+             jumpnz foo
+             jumpz 0label
+
+Nas warns the invoker if a label is declared but never used (so it would warn
+about the non-use of Bar, Foo, and bar above).
+
+    * defNum
+
+Arbitrary numbers can be bound to strings for any number of purposes (e.g.,
+binding a human recognizable string to a data address; think of #define).  The
+syntax is:
+
+    defNum <string> <number>
+
+<string> follows the same rules for strings in label declarations, and <number>
+follows the same rules for numbers given above.  To use a defNum binding, simply
+insert the string anywhere where a number is valid.

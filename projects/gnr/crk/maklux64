@@ -1,0 +1,459 @@
+# (c) Copyright 1999-2018, The Rockefeller University *11224* 
+# $Id: maklux64 68 2018-08-15 19:33:46Z  $
+########################################################################
+#         Make file for ROCKS library - Linux 64-bit version           #
+#                                                                      #
+# Note that the "verbose" allocation routines mallocv, callocv,        #
+# reallocv, and freev must be provided on all systems.  On systems     #
+# where cryout() is not available, the user must provide versions      #
+# of abexit(), etc. to intercept error messages.                       #
+#                                                                      #
+########################################################################
+# Rev, 04/18/99, GNR - New version for PCLINUX (GNU make)              #
+# Rev, 09/19/99, GNR - Add abexitme, [bl]em{fm|to}[iu]8, rf[rw][iu]8   #
+# Rev, 07/01/00, GNR - Add ilstiter, ilstread, ilstsrch                #
+# Rev, 08/12/01, GNR - Add rktext                                      #
+# Rev, 09/15/01, GNR - Add ilstitct                                    #
+# Rev, 03/22/03, GNR - Add jasl, jasle, jaul, jaule, dsrswq, dsruwq    #
+# Rev, 04/19/03, GNR - Add mssw, msswe, msuw, msuwe, swloe, uwloe      #
+# Rev, 08/27/05, GNR - Add bitpack                                     #
+# Rev, 04/19/03, GNR - Add mssw, msswe, msuw, msuwe, swloe, uwloe      #
+# Rev, 11/18/06, GNR - Add bitsz                                       #
+# Rev, 03/04/07, GNR - Add rfdups                                      #
+# Rev, 08/24/07, GNR - Add itercyl, itershl, itersph                   #
+# Rev, 12/31/07, GNR - Add valck                                       #
+# Rev, 09/19/08ff, GNR - Revise for 64-bit systems                     #
+# ==>, 11/16/08, GNR - Last date before committing to svn repository   #
+# Rev, 12/06/08, GNR - Add msrswe, msruwe                              #
+# Rev, 12/22/08, GNR - Add crkvers, dmfsd & dsinv to NOIO              #
+# Rev, 12/27/08, GNR - Add clean target, dependency on makefile itself #
+# Rev, 12/30/08, GNR - Add mssle, msrsle                               #
+# Rev, 01/07/09, GNR - Change bitor to bitior (bitor is C++ keyword)   #
+# Rev, 01/17/09, GNR - Add jmuwb , wbcdwt                              #
+# Rev, 05/24/09, GNR - Add ibcdin, ubcdin, vckmsg, vdivl, wbcdin       #
+# Rev, 07/25/09, GNR - Add dvalck, fvalck, ivalck, uvalck, wvalck      #
+# Rev, 08/29/09, GNR - Update Nelder-Mead routines                     #
+# Rev, 10/15/09, GNR - Add msrule, msule                               #
+# Rev, 12/29/09, GNR - Add wseedin, wseedout, wdev, etc.               #
+# Rev, 10/02/10, GNR - Add jmsle, jmule                                #
+# Rev, 08/12/11, GNR - Add iterrect, itercirc, iterpoly                #
+# Rev, 10/23/11, GNR - Add itershl2                                    #
+# Rev, 11/14/11, GNR - Add si16perm, si32perm                          #
+# Rev, 12/10/11, GNR - bitsz --> bitszs32, bitszu32, bitszsw, bitszuw  #
+# Rev, 12/13/11, GNR - Add iterpgfg.  Rev, 2/20/12, add itertape       #
+# Rev, 08/20/12, GNR - Add amuwwe, jmuwwe, uw2le, sw2le                #
+# Rev, 11/16/12, GNR - Add iterepgf                                    #
+# Rev, 12/01/12, GNR - Add dsrswqe, dsruwqe, jdswqe, jdswbe, jduwqe    #
+# Rev, 12/03/12, GNR - Add msrsl, msrul                                #
+# Rev, 01/21/13, GNR - Make bitcnt a separate source file              #
+# Rev, 02/02/13, GNR - Add iterroi                                     #
+# Rev, 04/28/13, GNR - Add dbl2swe, dbl2uwe                            #
+# Rev, 05/28/13, GNR - Add dsrswwqe, dsruwwqe, dsrswwje, dsruwwje      #
+# Rev, 06/12/13, GNR - Add dmrswjwe, abexitq, abexitmq, dsrsjqe        #
+# Rev, 08/26/13, GNR - Add jmuwje                                      #
+# Rev, 10/26/13, GNR - Add xxxd arith routines with e64dac error calls #
+# Rev, 05/25/14, GNR - Add jrsld, jrsle, jruld, jrule                  #
+# Rev, 07/18/14, GNR - Add ui32powe                                    #
+# Rev, 09/27/14, GNR - Remove msrsl, msrul, add msrswj, msruwj         #
+# Rev, 10/04/14, GNR - Add mlsswjd, mlsswje, mlsuwjd, mlsuwje          #
+# Rev, 10/11/14, GNR - Add jsl[us]w[de], jsrr[su]w                     #
+# Rev, 11/20/14, GNR - Add itersect                                    #
+# Rev, 12/25/15, GNR - Add sort2                                       #
+# Rev, 03/02/16, GNR - Add {bem|lem}{fm|to}[iu]l family for long|ulng  #
+# Rev, 03/29/16, GNR - Add dbgout, [iyz]mulup, udevwskp, ja[su]lo[de]  #
+# Rev, 10/21/16, GNR - Add wbcdwtPn, bcdoutPn                          #
+# Rev, 08/28/17, GNR - Add dmrswwqd, dmrswwqe, 10/07/17 envout         #
+# Rev, 10/30/17, GNR - Add jsrr[su]j, 02/21/18 mrsrsl                  #
+# Rev, 08/03/18, GNR - Incorporate LCLHOME, add envin                  #
+# Rev, 08/31/18, GNR - Add dsrswjqd, dsrswjqe                          #
+########################################################################
+
+#----------------------------------------------------------------------#
+#                         MUY IMPORTANTE !!!                           #
+#                                                                      #
+#   The macro LIBDIR defines the parent directory for user libraries.  #
+#   There should be a subdirectory under LIBDIR for each architecture  #
+#   (e.g. pclinux, sparc, etc.) for which libraries are to be built.   #
+#   The LL macro should point to the specific subdirectory for the     #
+#   current build.                                                     #
+#                                                                      #
+#----------------------------------------------------------------------#
+
+LCLHOME  ?= $(HOME)
+LIBDIR   = $(LCLHOME)/lib
+INC	   = $(LCLHOME)/include
+
+# Linux common pathnames
+DIR := pclux64
+LL  := $(LIBDIR)/$(DIR)
+
+# Object code to be included in ROCKS library:
+
+FILES_NOIO = \
+amssw   \
+amsswd  \
+amsswe  \
+amsuw   \
+amsuwd  \
+amsuwe  \
+amuwwd  \
+amuwwe  \
+bcdout  \
+bcdoutPn \
+bemfmi8 \
+bemfmil \
+bemfmr4 \
+bemfmr8 \
+bemfmu8 \
+bemfmul \
+bemtoi8 \
+bemtoild \
+bemtoile \
+bemtor4 \
+bemtor8 \
+bemtou8 \
+bemtould \
+bemtoule \
+bessi0  \
+bitcnt  \
+bitior  \
+bitpack \
+bitpkg  \
+bitszs32 \
+bitszsw \
+bitszu32 \
+bitszuw \
+bytpkg  \
+callocv \
+cntrl   \
+crkvers \
+dbl2swd \
+dbl2swe \
+dbl2uwd \
+dbl2uwe \
+dmfsd   \
+dmrswjwd \
+dmrswjwe \
+dmrswwqd \
+dmrswwqe \
+drswq   \
+dsinv   \
+dsrsjqd \
+dsrsjqe \
+dsrswjqd \
+dsrswjqe \
+dsrswq  \
+dsrswqd \
+dsrswqe \
+dsrswwjd \
+dsrswwje \
+dsrswwqd \
+dsrswwqe \
+dsruwq  \
+dsruwqd \
+dsruwqe \
+dsruwwjd \
+dsruwwje \
+dsruwwqd \
+dsruwwqe \
+e64set  \
+freev   \
+getprime \
+hashtbl  \
+ibcdwt   \
+imulup   \
+ilstitct \
+ilstiter \
+ilstsrch \
+itercirc \
+itercyl  \
+iterepgf \
+iterpgfg \
+iterpoly \
+iterrect \
+iterroi  \
+itersect \
+itershl  \
+itershl2 \
+itersph  \
+itertape \
+jacobi  \
+jasld   \
+jasle   \
+jaslod  \
+jasloe  \
+jaswd   \
+jaswe   \
+jauld   \
+jaule   \
+jaulod  \
+jauloe  \
+jauwd   \
+jauwe   \
+jauzd   \
+jdswb   \
+jdswbd  \
+jdswbe  \
+jdswqd  \
+jdswqe  \
+jduwb   \
+jduwqd  \
+jduwqe  \
+jmsld   \
+jmsle   \
+jmuld   \
+jmule   \
+jmuwb   \
+jmuwjd  \
+jmuwje  \
+jmuwwd  \
+jmuwwe  \
+jmuzjd  \
+jmuzje  \
+jnswd   \
+jnswe   \
+jrsld   \
+jrsle   \
+jrswd   \
+jrswe   \
+jruld   \
+jrule   \
+jruwd   \
+jruwe   \
+jslswd  \
+jslswe  \
+jsluwd  \
+jsluwe  \
+jsrrsj  \
+jsrruj  \
+jsrrsw  \
+jsrruw  \
+jssw    \
+jsswd   \
+jsswe   \
+jsuw    \
+jsuwd   \
+jsuwe   \
+lemfmi8 \
+lemfmil \
+lemfmr4 \
+lemfmr8 \
+lemfmu8 \
+lemfmul \
+lemtoi8 \
+lemtoild \
+lemtoile \
+lemtor4 \
+lemtor8 \
+lemtou8 \
+lemtould \
+lemtoule \
+lmulup  \
+mallocv \
+mlsswjd \
+mlsswje \
+mlsuwjd \
+mlsuwje \
+mrsrsl  \
+mrsrsld \
+mrsrsle \
+mrsrswd \
+mrsrswe \
+mrsrswj \
+mrsrul  \
+mrsruld \
+mrsrule \
+mrsruwd \
+mrsruwe \
+mrsruwj \
+mrssld  \
+mrssle  \
+mrsswd  \
+mrsswe  \
+mrsuld  \
+mrsule  \
+mrsuwd  \
+mrsuwe  \
+nwdev   \
+nwdevd  \
+nwdevf  \
+nwdevi  \
+nwdevs  \
+nwndev  \
+nwndevd \
+nwndevf \
+qwhite  \
+rand    \
+rannor  \
+rannum  \
+reallocv \
+rerfc   \
+rksleep \
+rktext  \
+shsortus \
+sibcdin  \
+si16perm \
+si32perm \
+sort     \
+sort2    \
+ssmatch  \
+ssprintf \
+strncpy0 \
+strnlen \
+swlod   \
+swloe   \
+sw2ld   \
+sw2le   \
+tstamp  \
+udevskip \
+udevwskp \
+ui32powd \
+ui32powe \
+umulup \
+uwlod  \
+uwloe  \
+uw2ld  \
+uw2le  \
+vdivl  \
+wbcdwt \
+wbcdwtPn \
+wdev   \
+wdevd  \
+wdevf  \
+wdevi  \
+wdevs  \
+wdevskip \
+wndev  \
+wndevd \
+wndevf \
+wntype \
+ymulup \
+zmulup
+
+OTHERFILES = \
+abexit  \
+abexitm \
+abexitme \
+abexitmq \
+abexitq \
+bcdin   \
+cdscan  \
+convrt  \
+cryin   \
+cryout  \
+dbgout  \
+dvalck  \
+envin   \
+envout  \
+ermark  \
+fvalck  \
+getmyip \
+ibcdin  \
+ilstread \
+ivalck  \
+jfind   \
+kwscan  \
+match   \
+mcodes  \
+mcodprt \
+muscan  \
+nelmeadf \
+nelmeadd \
+nmitrnaf \
+nmitrnad \
+nmitrsaf \
+nmitrsad \
+pxq     \
+qonlin  \
+rfallo  \
+rfclose \
+rfdups  \
+rfflush \
+rfopen  \
+rfqsame \
+rfread  \
+rfseek  \
+rftell  \
+rfwrite \
+rfri2   \
+rfri4   \
+rfri8   \
+rfru8   \
+rfrr4   \
+rfrr8   \
+rfwi2   \
+rfwi4   \
+rfwi8   \
+rfwu8   \
+rfwr4   \
+rfwr8   \
+second  \
+smatch  \
+sprmpt  \
+ubcdin  \
+uvalck  \
+valck   \
+vckmsg  \
+wbcdin  \
+wseedin \
+wseedout \
+wvalck
+#pxq     \
+
+# Assembly language files--sometimes need underscore, sometimes not
+
+ASMFILES = \
+#_dm64nb \
+#_ds64nq \
+#_jm64nb \
+#_jm64sb \
+#_jm64sh \
+#_jm64sl \
+#_ndev   \
+#_udev
+
+# The following are currently macros in all comps
+# dm64nb, dm64nq, ds64nq, jm64nh, jm64sh, jm64sl, dm64nr (HAS_I64 only)
+ASMNULFILES = \
+jm64nb \
+jm64sb \
+ndev   \
+udev
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+# Target dependent macro definitions:
+CC := gcc
+CFLAGS := -m64 -g -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS :=	PCLUX64 _ISOC99_SOURCE _XOPEN_SOURCE \
+ SVNVRS=$(patsubst %,'"%"',$(SVNV))
+FILES := $(FILES_NOIO) $(OTHERFILES) $(ASMNULFILES)
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(CPPFLAGS) -I$(INC) $< \
+	| sed '\''s/^\(.*\)\.o[ :]*/$(DIR)\/\1.o $(DIR)\/\1\.d : /g'\'' > $@; \
+	[ -s $@ ] || rm -f $@'
+
+# Compile for Linux
+$(DIR)/%.o:	%.c $(DIR)/%.d maklux64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+.PHONY : pclinux depend
+pclinux:   $(LL)/libcrk.a
+depend:	   $(FILES:%=$(DIR)/%.d)
+
+$(LL)/libcrk.a:	$(FILES:%=$(DIR)/%.o)
+	ar r libcrk.a $(FILES:%=$(DIR)/%.o)
+	ranlib libcrk.a
+	mv libcrk.a $(LL)
+
+clean:
+	rm -f $(DIR)/*.o $(LL)/libcrk.a
+
+-include $(FILES:%=$(DIR)/%.d)

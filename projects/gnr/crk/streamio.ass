@@ -1,0 +1,925 @@
+STRM     TITLE     'STREAM I/O'
+* (c) Copyright 1990, The Rockefeller University *11111* */
+* $Id: streamio.ass 61 2017-01-16 19:26:44Z  $
+**********************************************************************
+*                                                                    *
+*        ROUTINE TO PERFORM STREAM-BASED I/O OPERATIONS ON           *
+*        SEQUENTIAL FILES WITH RECORD FORMATS U, V, OR F             *
+*                                                                    *
+*        V1A, 07/09/90, G.N. REEKE                                   *
+* ==> 09/23/08, GNR - Last date before committing to svn repository  *
+*                                                                    *
+*        THE MAIN PURPOSE OF THIS PROGRAM IS TO BE ABLE TO PROCESS   *
+*        UNIX-STYLE FILES THAT COME THROUGH FTP AS RECFM V, AND      *
+*        YET BE COMPATIBLE WITH RECFM F FILES PRODUCED UNDER CMS.    *
+*        UP TO EIGHT FILES MAY BE OPEN AT ONCE IN ANY COMBINATION    *
+*        OF INPUT AND OUTPUT FILES.  USE OPNSTO TO OPEN FOR OUTPUT,  *
+*        OPNSTI TO OPEN FOR INPUT.  INPUT WILL HANDLE ANY VALID      *
+*        RECFM, BLKSIZE, AND LRECL.  OUTPUT WILL BE WRITTEN USING    *
+*        PARAMETERS GIVEN IN THE DD CARD (MVS) OR FILEDEF (CMS). THE *
+*        DEFAULT DDNAMES ARE 'STRM01' THROUGH 'STRM08' FOR THE EIGHT *
+*        FILES.  ENTRIES ARE PROVIDED FOR MOVING DATA TO AND FROM    *
+*        BUFFERS, FOR LOCATING DATA FOR MOVING BY THE USER PROGRAM,  *
+*        AND FOR FLUSHING BUFFERS.  IN CASE OF RECFM F, IF AN OUTPUT *
+*        RECORD IS FLUSHED, THE UNUSED BALANCE WILL BE PADDED WITH   *
+*        ZEROS.  FOR SPEED, THE UNIT NUMBER IS NOT CHECKED FOR       *
+*        VALIDITY EXCEPT ON OPEN/CLOSE CALLS.                        *
+*                                                                    *
+**********************************************************************
+         SPACE
+**********************************************************************
+*                                                                    *
+*                   ---> INPUT INSTRUCTIONS <---                     *
+*                                                                    *
+**********************************************************************
+*
+* OPEN:  TO OPEN A FILE FOR STREAM INPUT,
+*          CALL OPNSTI(DSRN,DDNAME,*1)
+*        DSRN IS AN INTEGER UNIT NUMBER IN THE RANGE 1-8.  IT HAS
+*          NOTHING TO DO WITH FORTRAN UNIT NUMBERS OR UNIT NUMBERS
+*          USED IN THE BDAMIO OR QSAMIO PACKAGES.
+*        DDNAME IS A STRING OF 8 BLANKS OR CHARACTERS (PADDED ON THE
+*          RIGHT WITH BLANKS IF NECESSARY).  IF BLANK, THE DDNAME
+*          DEFAULTS TO 'STRMNN', WHERE NN IS THE DSRN.  OTHERWISE,
+*          THE SPECIFIED DDNAME IS USED.
+*        STMT#1 IS RETURN POINT ENTERED IF THE FILE WOULD NOT OPEN.
+*
+* MOVE:  TO MOVE DATA FROM THE STREAM FILE TO THE USER PROGAM,
+*          CALL MSTI(DSRN,REC,LEN,*2,*3)
+*        DSRN IS THE UNIT NUMBER OF A PREVIOUSLY OPENED STREAM FILE.
+*        REC IS AN ARRAY OF AT LEAST 'LEN' BYTES INTO WHICH DATA
+*          ARE MOVED FROM THE FILE IN SEQUENTIAL ORDER.  THE RECORD
+*          STRUCTURE OF THE FILE IS HIDDEN FROM THE USER PROGRAM;
+*          NEW RECORDS ARE AUTOMATICALLY READ AND DATA ARE TRANS-
+*          FERRED ACROSS RECORD BOUNDARIES AS REQUIRED.
+*        LEN IS AN INTEGER*4 VARIABLE GIVING THE NUMBER OF BYTES TO
+*          BE MOVED.
+*        STMT#2 IS THE RETURN POINT WHEN END-OF-FILE IS REACHED.
+*        STMT#3 IS THE RETURN POINT FOR I/O ERRORS.
+*
+* LOCATE: TO LOCATE THE CURRENT BUFFER SO PGM CAN DO ITS OWN MOVING,
+*          CALL LSTI(DSRN,REC,LEN,*2,*3)
+*        DSRN IS THE UNIT NUMBER.
+*        REC IS A LOCATION WHERE THE NEXT BUFFER ADDRESS IS PLACED.
+*        LEN IS AN INTEGER VARIABLE WHERE THE LENGTH OF THE BUFFER
+*          IS PLACED.  IF THE BUFFER IS EMPTY, ANOTHER IS READ.
+*        STMT#2 IS THE RETURN POINT WHEN END-OF-FILE IS REACHED.
+*        STMT#3 IS THE RETURN POINT FOR I/O ERRORS ON READING.
+*        THE CALLER MAY USE ANY DESIRED TECHNIQUE TO MOVE DATA FROM
+*          THE BUFFER INTO ITS OWN DATA AREAS, UP TO A MAXIMUM OF
+*          'LEN' BYTES.  AFTER THIS HAS BEEN DONE, SSTI SHOULD BE
+*          CALLED TO REPORT THE AMOUNT OF DATA MOVED AND TO UPDATE
+*          INTERNAL POINTERS IN THE READ ROUTINE.
+*
+* SKIP:  TO SKIP OVER DATA IN AN INPUT RECORD:
+*          CALL SSTI(DSRN,LEN,*2,*3)
+*        DSRN IS THE UNIT NUMBER.
+*        LEN IS THE NUMBER OF BYTES TO SKIP OVER.
+*        STMT#2 IS THE RETURN POINT WHEN END-OF-FILE IS REACHED.
+*        STMT#3 IS THE RETURN POINT FOR I/O ERRORS.
+*        THIS CALL IS THE SAME AS MSTI EXCEPT NO DATA IS TRANSFERRED
+*          BACK TO THE CALLING PROGRAM.
+*
+* FLUSH: TO FLUSH THE INPUT BUFFER (I.E. SKIP TO A NEW INPUT RECORD),
+*          CALL FSTI(DSRN,*2,*3)
+*        DSRN IS THE UNIT NUMBER.
+*        STMT#2 IS THE RETURN POINT WHEN END-OF-FILE IS REACHED.
+*        STMT#3 IS THE RETURN POINT FOR I/O ERRORS.
+*
+* CLOSE: TO CLOSE ANY STREAM FILE, CALL CLSSTR(DSRN,*4)
+*        DSRN IS THE UNIT NUMBER TO BE CLOSED.
+*        STMT#4 IS RETURN POINT IF FILE DOES NOT CLOSE
+         SPACE
+**********************************************************************
+*                                                                    *
+*                   ---> OUTPUT INSTRUCTIONS <---                    *
+*                                                                    *
+**********************************************************************
+*
+* OPEN:  TO OPEN A FILE FOR STREAM OUTPUT,
+*          CALL OPNSTO(DSRN,DDNAME,*1)
+*        DSRN IS AN INTEGER UNIT NUMBER IN THE RANGE 1-8.  IT HAS
+*          NOTHING TO DO WITH FORTRAN UNIT NUMBERS OR UNIT NUMBERS
+*          USED IN THE BDAMIO OR QSAMIO PACKAGES.
+*        DDNAME IS A STRING OF 8 CHARACTERS OR BLANKS.  IF BLANK,
+*          THE DDNAME DEFAULTS TO 'STRMNN', WHERE 'NN' IS THE DSRN.
+*          OTHERWISE, THE SPECIFIED DDNAME IS USED.
+*        STMT#1 IS RETURN POINT ENTERED IF THE FILE WOULD NOT OPEN.
+*        THE RECFM, BLKSIZE, AND LRECL ON THE DD OR FILEDEF CARD, IF
+*          ANY, WILL BE USED.  IF NO RECFM IS GIVEN, F WILL BE USED.
+*          IF NO BLKSIZE IS GIVEN, 4096 WILL BE USED.  IF NO LRECL
+*          IS GIVEN, BLKSIZE WILL BE USED IF RECFM=U OR F, BLKSIZE-4
+*          IF RECFM=V.
+*
+* MOVE:  TO MOVE DATA INTO A RECORD,
+*          CALL MSTO(DSRN,REC,LEN,*2)
+*        DSRN IS THE UNIT NUMBER.
+*        REC IS THE LOCATION OF THE DATA TO BE WRITTEN TO THE FILE.
+*        LEN IS THE LENGTH OF THE DATA IN BYTES, WHICH MAY BE LESS
+*          THAN, EQUAL TO, OR GREATER THAN LRECL.  A BUFFER IS WRIT-
+*          TEN ONLY WHEN FULL.  USE FSTO TO FORCE A WRITE.
+*        STMT#2 IS RETURN POINT FOR AN I/O ERROR ON THE FILE.
+*
+* LOCATE:  TO LOCATE AN OUTPUT BUFFER,
+*          CALL LSTO(DSRN,REC,LEN,*2)
+*        DSRN IS THE UNIT NUMBER.
+*        REC IS A VARIABLE INTO WHICH THE ADDRESS OF AN OUTPUT
+*          BUFFER WILL BE PLACED.
+*        LEN IS A VARIABLE INTO WHICH THE LENGTH OF THE OUTPUT
+*          BUFFER WILL BE PLACED.  THIS NUMBER IS THE MAXIMUM
+*          ALLOWABLE TRANSFER.  ZERO WILL NEVER BE RETURNED--IF
+*          THE CURRENT BUFFER IS FULL, IT IS WRITTEN AND A NEW
+*          ONE IS RETURNED.  WHEN THE TRANSFER IS COMPLETE,
+*          CALL SSTO TO REPORT THE NUMBER OF BYTES ACTUALLY MOVED.
+*        STMT#2 IS THE RETURN POINT FOR WRITE ERRORS.
+*
+* SKIP:  TO REPORT THE DATA MOVED TO A BUFFER AFTER AN LSTO CALL,
+*          CALL SSTO(DSRN,LEN,*2)
+*        DSRN IS THE UNIT NUMBER.
+*        LEN IS THE NUMBER OF BYTES MOVED BY THE USER TO THE BUFFER.
+*        STMT#2 IS THE RETURN POINT FOR WRITE ERRORS.
+*        THIS CALL SIMPLY ADVANCES INTERNAL POINTERS IN THE WRITE
+*          ROUTINE.  IF THE BUFFER IS FULL, AN ACTUAL WRITE DOES
+*          NOT OCCUR UNTIL THE NEXT LSTO, MSTO, OR FSTO CALL.
+*
+* FLUSH: TO FLUSH THE OUTPUT BUFFER (I.E. WRITE IT TO THE FILE),
+*          CALL FSTO(DSRN,*2)
+*        DSRN IS THE UNIT NUMBER.
+*        STMT#2 IS THE RETURN POINT FOR WRITE ERRORS.
+*
+* CLOSE: TO CLOSE THE OUTPUT FILE, CALL CLSSTR(DSRN,*4)
+*        DSRN IS THE UNIT NUMBER OF THE FILE TO BE CLOSED.
+*        STMT#4 IS RETURN POINT IF FILE COULD NOT BE CLOSED.
+         EJECT
+**********************************************************************
+*                                                                    *
+*        MACRO DEFINITIONS                                           *
+*                                                                    *
+**********************************************************************
+         MACRO
+&NAME    COMMENCE  &SAVE,&LAST
+.*       MACRO TO BEGIN A ROUTINE, COMPLETE WITH ENTRY NAME,
+.*       SAVE AREA LINKAGE, AND ESTABLISHMENT OF R13 BASE REGISTER
+.*       &SAVE IS SAVE AREA TO BE USED
+.*       &LAST IS NUMBER OF HIGHEST REGISTER TO BE SAVED
+         GBLA      &NDX
+         LCLA      &LNAME
+         SPACE     1
+         ENTRY     &NAME
+         USING     &NAME,15
+&NAME    B         HERE&NDX            BRANCH AROUND NAME
+&LNAME   SETA      K'&NAME
+         DC        AL1(&LNAME),C'&NAME'
+HERE&NDX STM       14,&LAST,12(13)     SAVE HIS REGISTERS
+         LR        14,13               SAVE PTR TO OLD SAVE AREA
+         L         13,=A(&SAVE)        LOCATE NEW SAVE AREA AND BASE
+         ST        13,8(0,14)          STORE FORE POINTER
+         ST        14,4(0,13)          STORE BACK POINTER
+         USING     &SAVE,13
+         DROP      15
+&NDX     SETA      &NDX+1
+         MEND
+         SPACE     2
+         MACRO
+&NAME    FINDDSRN  &NOFIND,&BADRNGE,&CHECK=YES
+.*       MACRO TO LOCATE THE INFORMATION BLOCK FOR THE REQUESTED DSRN.
+.*       EXITS TO &NOFIND IF AN I/O BLOCK HAS NOT BEEN ALLOCATED.
+.*       EXITS TO &BADRNGE IF THE UNIT NUMBER IS BAD.
+.*       OMITS ERROR CHECKING IF &CHECK=NO.
+.*       RETURNS WITH PARMLIST STILL IN GR1, DSRN PTR IN GR9
+&NAME    L         G9,0(0,1)           LOCATE DSRN
+         L         2,0(0,G9)           PICK UP DSRN
+         AIF       ('&CHECK' EQ 'NO').NC1
+         LA        0,MXUNITS           CHECK RANGE
+         CR        2,0
+         BH        &BADRNGE
+.NC1     ANOP
+         SLA       2,2                 INDEX INTO UNIT TABLE
+         AIF       ('&CHECK' EQ 'NO').NC2
+         BNP       &BADRNGE
+.NC2     ANOP
+         L         DCBPNT,UNITTBL-4(2) PICK UP POINTER TO DCB INFO
+         AIF       ('&CHECK' EQ 'NO').NC3
+         LTR       DCBPNT,DCBPNT       CHECK FOR ALLOCATION
+         BZ        &NOFIND             NOT THERE, TAKE EXIT
+.NC3     MEND
+         SPACE     2
+         MACRO
+&NAME    TESTOPEN  &MODE,&NOOPEN
+.*       MACRO TO OPEN DATA SET AND TEST OPEN
+.*       ADDRESS OF DCB MUST BE IN DCBPNT REGISTER
+.*       &MODE IS THE MODE OF OPENING (INPUT OR OUTPUT)
+.*       &NOOPEN IS BRANCH ADDRESS TAKEN IF D/S DOES NOT OPEN
+         GBLA      &NDX
+&NAME    DS        0H
+         TM        DCBOFLGS,X'10' ,    TEST FOR ALREADY OPEN
+         BO        OPENAL&NDX
+*        OPEN      ((DCBPNT),(&MODE)),MF=(E,OPNCLOSE) OPEN DATA SET
+         OPEN      ((DCBPNT),(&MODE)),MF=(E,OPNCLOSE)
+         TM        DCBOFLGS,X'10' ,    TEST OPEN
+         BNO       &NOOPEN ,           DID NOT OPEN OK
+         TM        FLAGS,NOGOOD ,      IS IT A CMS DUMMY?
+         BNZ       &NOOPEN ,           YES, TAKE ERROR EXIT
+*        GETBUF    (DCBPNT),RBUF       LOCATE FIRST BUFFER
+         GETBUF    (DCBPNT),RBUF
+         ST        RBUF,BUF1
+         CLI       DCBBUFNO,1          OMIT SECOND IF NOT ALLOCATED
+         BNH       OPENAL&NDX
+*        GETBUF    (DCBPNT),RBUF       LOCATE SECOND BUFFER
+         GETBUF    (DCBPNT),RBUF
+         ST        RBUF,BUF2
+OPENAL&NDX DS      0H ,                CONTINUE
+         SPACE     1
+&NDX     SETA      &NDX+1
+         MEND
+         SPACE 2
+         MACRO
+&PLACE   RTRN      &CODE,&LAST
+.*       RETURN FROM A SUBROUTINE WITH A RETURN CODE
+.*       &CODE IS THE RETURN CODE
+.*       &LAST IS THE LAST REGISTER TO BE RESTORED
+&PLACE   L         13,4(0,13)          POINT TO OLD SAVE AREA
+         LM        14,&LAST,12(13)     RESTORE REGISTERS 14 TO &LAST
+         AIF       (&CODE NE 0).CODE
+         SR        15,15               ZERO REGISTER 15
+         BR        14                  RETURN
+         MEXIT
+.CODE    ANOP
+         LA        15,&CODE            LOAD RETURN CODE
+         BR        14                  RETURN
+         MEND
+         EJECT
+STREAMIO START     0
+SAVEAREA DS        18F                 COMMON SAVE AREA HERE
+         SPACE     2
+**********************************************************************
+*                                                                    *
+*        REGISTER AND FLAG DEFINITIONS                               *
+*        (NOTE: THERE ARE MANY LM/STM DEPENDENCIES--DO NOT REORDER)  *
+*                                                                    *
+**********************************************************************
+G0       EQU       0
+G1       EQU       1
+G2       EQU       2                   DSRN INDEX
+DCBPNT   EQU       3                   DCB POINTER
+G4       EQU       4                   DDNAME POINTER
+RREC     EQU       4                   RECORD POINTER
+G5       EQU       5
+RLEN     EQU       5                   USER'S REC LENGTH (= RREC+1)
+G6       EQU       6
+RBUF     EQU       6                   BUFFER POINTER (= RREC+2)
+G7       EQU       7
+RCAP     EQU       7                   RECORD CAPACITY (= RREC+3)
+*G8-9                                  USED FOR INTERNAL CALLS
+G9       EQU       9                   DSRN POINTER
+*G10-12                                CURRENTLY NOT USED OR SAVED
+SAVE     EQU       13
+*
+MXUNITS  EQU       8                   MAXIMUM ALLOWED UNITS
+DFLTBLK  EQU       4096                DEFAULT BLOCKSIZE
+MXSAVE   EQU       9                   HIGHEST REGISTER SAVED
+ALL      EQU       X'FF'               ALL FLAGS
+ACTIVE   EQU       1                   I/O ACTIVE FLAG
+NOGOOD   EQU       2                   OPEN ERROR (SET BY DCB EXIT)
+OUTPUT   EQU       4                   FILE IS BEING OPENED FOR OUTPUT
+NOTFIRST EQU       8                   NOT FIRST READ
+         EJECT
+**********************************************************************
+*                                                                    *
+*        OPNSTI: OPEN AN INPUT STREAM FILE                           *
+*                SET POINTERS FOR MSTI                               *
+*                                                                    *
+**********************************************************************
+OPNSTI   COMMENCE  SAVEAREA,MXSAVE     OPEN FOR INPUT
+         LA        G6,XBLBDCB          LOCATE INPUT DCB SKELETON
+         BAL       7,FINDOPEN          GET A DCB AND SET DDNAME
+         USING     IHADCB,DCBPNT
+         TM        DCBOFLGS,X'10'      IS IT OPEN?
+         BZ        OSTINOPN            NO
+         BAL       8,DOCHECK           YES, CHECK ANY PENDING WRITE
+         BAL       9,DOCLOSE           CLOSE THE FILE
+         MVC       0(LIOMOV,DCBPNT),XBLBDCB MOVE IN A FRESH DCB
+OSTINOPN MVC       DCBDDNAM(8),0(G4)   MOVE IN DDNAME
+         ST        DCBPNT,RWBLOCK+8    INITIALIZE DECB
+         TESTOPEN  INPUT,NOOPEN        OPEN INPUT FILE
+         MVI       FLAGS,0             INITIALIZE FLAGS
+         BAL       8,DOREAD            INITIATE LOOK-AHEAD READING
+         SR        RCAP,RCAP           INDICATE NO DATA AVAILABLE
+         STM       RBUF,RCAP,BCSAVE
+OSTIRET  RTRN      0,MXSAVE            NORMAL RETURN
+NOOPEN   RTRN      4,9                 RETURN 1 FOR NO OPEN
+         DROP      13,DCBPNT
+         EJECT
+**********************************************************************
+*                                                                    *
+*        OPNSTO: OPEN AN OUTPUT STREAM FILE                          *
+*                SET POINTERS FOR MSTO                               *
+*                                                                    *
+**********************************************************************
+OPNSTO   COMMENCE  SAVEAREA,MXSAVE     OPEN FOR OUTPUT
+         LA        G6,YBLBDCB          LOCATE OUTPUT DCB SKELETON
+         BAL       7,FINDOPEN          GET A DCB AND SET DDNAME
+         USING     IHADCB,DCBPNT
+         TM        DCBOFLGS,X'10'      IS IT ALREADY OPEN?
+         BZ        OSTONOPN            NO
+         TM        FLAGS,OUTPUT        OPEN FOR OUTPUT?
+         BNZ       OSTORET             YES, NO ACTION REQUIRED
+         BAL       8,DOCHECK           CHECK ANY PENDING OPERATION
+         BAL       9,DOCLOSE           CLOSE AND RELEASE BUFFERS
+         MVC       0(LIOMOV,DCBPNT),YBLBDCB MOVE IN A FRESH DCB
+OSTONOPN MVC       DCBDDNAM(8),0(G4)   MOVE IN DDNAME
+         ST        DCBPNT,RWBLOCK+8    INITIALIZE DECB
+         TESTOPEN  OUTPUT,NOOPEN       OPEN OUTPUT FILE
+         MVI       FLAGS,OUTPUT        INDICATE OUTPUT MODE
+         LH        RLEN,USDATL         PREPARE BUFFER PTRS
+         L         RBUF,BUF1
+         STM       RLEN,RBUF,BCSAVE
+OSTORET  RTRN      0,MXSAVE            NORMAL RETURN
+         DROP      13,DCBPNT
+         EJECT
+**********************************************************************
+*                                                                    *
+*        MSTI: MOVE ALL OR PART OF A RECORD TO USER DATA AREA        *
+*              FIRST ARGUMENT: DSRN                                  *
+*              SECOND ARGUMENT: BUFFER AREA                          *
+*              THIRD ARGUMENT: LENGTH TO BE RETURNED (BYTES)         *
+*                                                                    *
+**********************************************************************
+MSTI     COMMENCE  SAVEAREA,MXSAVE
+         FINDDSRN  RSTREXIT,RSTREXIT,CHECK=NO
+         USING     IHADCB,DCBPNT
+         LM        G4,G5,4(1)          LOCATE ARGUMENTS
+         L         RLEN,0(0,G5)        PICK UP LENGTH
+         LTR       RLEN,RLEN           CHECK FOR NEGATIVE
+         BM        RSTREXIT
+         LM        RBUF,RCAP,BCSAVE    RESTORE BUFFER STATUS
+MD1      CR        RLEN,RCAP           IS THERE ENOUGH DATA IN BUFFER?
+         BNH       MSTIOK              YES
+         SR        RLEN,RCAP           THIS WILL BE AMOUNT REMAINING
+         LR        9,RLEN              HOLD IT TEMPORARILY
+         LR        RLEN,RCAP           DO A CAPACITY MOVE
+         MVCL      RREC,RBUF           MOVE RECORD OR SEGMENT
+         LR        RLEN,9              RESTORE REMAINDER COUNT
+         BAL       9,CKREAD            READ ANOTHER ONE
+         B         MD1                 AND LOOP BACK FOR MORE
+MSTIOK   MVCL      RREC,RBUF           MAKE LAST MOVE
+         STM       RBUF,RCAP,BCSAVE    SAVE BUFFER STATUS
+         RTRN      0,MXSAVE            NORMAL RETURN
+         DROP      13,DCBPNT
+         EJECT
+**********************************************************************
+*                                                                    *
+*        LSTI: LOCATE A BUFFER                                       *
+*              FIRST ARGUMENT: DSRN                                  *
+*              SECOND ARGUMENT: BUFFER AREA                          *
+*              THIRD ARGUMENT: LENGTH TO BE RETURNED (BYTES)         *
+*                                                                    *
+**********************************************************************
+LSTI     COMMENCE  SAVEAREA,MXSAVE
+         FINDDSRN  RSTREXIT,RSTREXIT,CHECK=NO
+         USING     IHADCB,DCBPNT
+         LM        G4,G5,4(1)          LOCATE ARGUMENTS
+         LM        RBUF,RCAP,BCSAVE    RESTORE BUFFER STATUS
+         LTR       RCAP,RCAP           IS THERE ANY DATA THERE?
+         BP        LD1                 YES
+         BAL       9,CKREAD            READ ANOTHER RECORD
+LD1      ST        RBUF,0(0,G4)        RETURN BUFFER LOCATION
+         ST        RCAP,0(0,G5)        RETURN LENGTH
+         STM       RBUF,RCAP,BCSAVE    SAVE BUFFER STATUS FOR SSTI CALL
+         RTRN      0,MXSAVE            NORMAL RETURN
+         DROP      13,DCBPNT
+         EJECT
+**********************************************************************
+*                                                                    *
+*        SSTI: SKIP OVER ALL OR PART OF A RECORD                     *
+*              FIRST ARGUMENT: DSRN                                  *
+*              SECOND ARGUMENT: NUMBER OF BYTES TO SKIP              *
+*                                                                    *
+**********************************************************************
+SSTI     COMMENCE  SAVEAREA,MXSAVE
+         FINDDSRN  RSTREXIT,RSTREXIT,CHECK=NO
+         USING     IHADCB,DCBPNT
+         L         G5,4(1)             LOCATE SECOND ARGUMENT
+         L         RLEN,0(0,G5)        PICK UP LENGTH
+         LTR       RLEN,RLEN           CHECK FOR NEGATIVE
+         BM        RSTREXIT
+         LM        RBUF,RCAP,BCSAVE    RESTORE BUFFER STATUS
+SD1      CR        RLEN,RCAP           IS THERE ENOUGH DATA IN BUFFER?
+         BNH       SSTIOK              YES
+         SR        RLEN,RCAP           NO, RLEN = AMOUNT REMAINING
+         BAL       9,CKREAD            READ ANOTHER ONE
+         B         SD1                 AND LOOP BACK FOR MORE
+SSTIOK   AR        RBUF,RLEN           MAKE LAST SKIP
+         SR        RCAP,RLEN
+         STM       RBUF,RCAP,BCSAVE    SAVE BUFFER STATUS
+         RTRN      0,MXSAVE            NORMAL RETURN
+         DROP      13,DCBPNT
+         EJECT
+**********************************************************************
+*                                                                    *
+*        FSTI: FLUSH INPUT BUFFER (I.E. SKIP TO NEW RECORD)          *
+*              FIRST ARGUMENT: DSRN                                  *
+*                                                                    *
+**********************************************************************
+FSTI     COMMENCE  SAVEAREA,MXSAVE
+         FINDDSRN  BRECEXIT,BRECEXIT,CHECK=NO
+         USING     IHADCB,DCBPNT
+         LM        RBUF,RCAP,BCSAVE    RESTORE BUFFER STATUS
+         BAL       9,CKREAD            READ ANOTHER ONE
+         STM       RBUF,RCAP,BCSAVE    SAVE BUFFER STATUS
+         RTRN      0,MXSAVE            RETURN
+         DROP      13,DCBPNT
+         EJECT
+**********************************************************************
+*                                                                    *
+*        MSTO: MOVE ALL OR PART OF A RECORD TO OUTPUT BUFFER         *
+*              FIRST ARGUMENT: DSRN                                  *
+*              SECOND ARGUMENT: BUFFER AREA                          *
+*              THIRD ARGUMENT: LENGTH TO BE WRITTEN                  *
+*        NOTE THAT THE ROLES OF RCAP AND RLEN ARE REVERSED IN THE    *
+*          OUTPUT ROUTINES SO MVCL CAN DECREMENT CAPACITY PROPERLY.  *
+*                                                                    *
+**********************************************************************
+MSTO     COMMENCE  SAVEAREA,MXSAVE
+         FINDDSRN  WSTREXIT,WSTREXIT,CHECK=NO
+         USING     IHADCB,DCBPNT
+         LM        G4,G5,4(1)          LOCATE ARGUMENTS
+         L         RCAP,0(0,G5)        PICK UP LENGTH
+         LTR       RCAP,RCAP           CHECK FOR NEGATIVE
+         BM        WSTREXIT
+         LM        RLEN,RBUF,BCSAVE    RESTORE BUFFER STATUS
+MD2      CR        RCAP,RLEN           IS THERE ENOUGH ROOM IN BUFFER?
+         BNH       MSTOOK              YES
+         SR        RCAP,RLEN           THIS WILL BE AMOUNT REMAINING
+         LR        9,RCAP              HOLD IT TEMPORARILY
+         LR        RCAP,RLEN           DO A CAPACITY MOVE
+         MVCL      RBUF,RREC           MOVE RECORD OR SEGMENT
+         LR        RCAP,9              RESTORE REMAINDER COUNT
+         BAL       9,DOWRITE           WRITE ANOTHER ONE
+         B         MD2                 AND LOOP BACK FOR MORE
+MSTOOK   MVCL      RBUF,RREC           MAKE LAST MOVE
+         STM       RLEN,RBUF,BCSAVE    SAVE BUFFER STATUS
+         RTRN      0,MXSAVE            NORMAL RETURN
+         DROP      13,DCBPNT
+         EJECT
+**********************************************************************
+*                                                                    *
+*        LSTO: LOCATE AN OUTPUT BUFFER                               *
+*              FIRST ARGUMENT: DSRN                                  *
+*              SECOND ARGUMENT: BUFFER AREA (RETURNED)               *
+*              THIRD ARGUMENT: LENGTH OF BUFFER (RETURNED)           *
+*                                                                    *
+**********************************************************************
+LSTO     COMMENCE  SAVEAREA,MXSAVE
+         FINDDSRN  WSTREXIT,WSTREXIT,CHECK=NO
+         USING     IHADCB,DCBPNT
+         L         G4,4(0,1)           PICK UP USER BUFFER PTR
+         L         G7,8(0,1)           PICK UP USER LENGTH PTR
+         LM        RLEN,RBUF,BCSAVE    RESTORE BUFFER STATUS
+         LTR       RLEN,RLEN           ANY ROOM LEFT?
+         BP        LDF1                YES
+         BAL       9,DOWRITE           NO, WRITE OUT THE FULL ONE
+LDF1     STM       RLEN,RBUF,BCSAVE    SAVE BUFFER STATUS
+         ST        RBUF,0(0,G4)        SAVE BUFFER ADDRESS
+         ST        RLEN,0(0,G7)        AND LENGTH
+         RTRN      0,MXSAVE            NORMAL RETURN
+         DROP      13,DCBPNT
+         EJECT
+**********************************************************************
+*                                                                    *
+*        SSTO: SKIP OVER DATA ALREADY MOVED TO OUTPUT BUFFER         *
+*              FIRST ARGUMENT: DSRN                                  *
+*              SECOND ARGUMENT: LENGTH TO BE SKIPPED                 *
+*                                                                    *
+**********************************************************************
+SSTO     COMMENCE  SAVEAREA,MXSAVE
+         FINDDSRN  WSTREXIT,WSTREXIT,CHECK=NO
+         USING     IHADCB,DCBPNT
+         L         G5,4(0,1)           LOCATE LENGTH
+         L         RCAP,0(0,G5)        PICK UP LENGTH
+         LTR       RCAP,RCAP           CHECK FOR NEGATIVE
+         BM        WSTREXIT
+         LM        RLEN,RBUF,BCSAVE    RESTORE BUFFER STATUS
+         AR        RBUF,RCAP           UPDATE BUFFER STATUS
+         SR        RLEN,RCAP
+         BNM       SSTOOK              DID HE RUN OFF THE END?
+         ABEND     6                   YES, THIS IS A SERIOUS ERROR
+SSTOOK   STM       RLEN,RBUF,BCSAVE    SAVE BUFFER STATUS
+         RTRN      0,MXSAVE            NORMAL RETURN
+         DROP      13,DCBPNT
+         EJECT
+**********************************************************************
+*                                                                    *
+*        FSTO: FLUSH OUTPUT BUFFER                                   *
+*                                                                    *
+**********************************************************************
+FSTO     COMMENCE  SAVEAREA,MXSAVE
+         FINDDSRN  WSTREXIT,WSTREXIT,CHECK=NO
+         USING     IHADCB,DCBPNT
+         LM        RLEN,RBUF,BCSAVE    LOCATE BUFFER
+         BAL       9,DOWRITE           WRITE THE BUFFER
+         STM       RLEN,RBUF,BCSAVE    SAVE BUFFER STATUS FOR MSTO CALL
+         RTRN      0,MXSAVE            NORMAL RETURN
+         DROP      13,DCBPNT
+         EJECT
+**********************************************************************
+*                                                                    *
+*        CLSSTR: CLOSE INPUT OR OUTPUT FILE                          *
+*                FIRST ARGUMENT: DSRN                                *
+*                                                                    *
+**********************************************************************
+CLSSTR   COMMENCE  SAVEAREA,MXSAVE
+         FINDDSRN  NOCLOSE,NOCLOSE
+         USING     IHADCB,DCBPNT
+         TM        DCBOFLGS,X'10'      IF IT'S ALREADY CLOSED,
+         BZ        CLSRET              IGNORE THE REQUEST
+         TM        FLAGS,OUTPUT        IF IT'S OUTPUT,
+         BZ        CLSREAD
+         LM        RLEN,RBUF,BCSAVE    WRITE THE LAST BUFFER
+         BAL       9,DOWRITE
+CLSREAD  BAL       9,DOCLOSE           DO THE CLOSE
+CLSRET   RTRN      0,MXSAVE            NORMAL RETURN
+         DROP      13,DCBPNT
+         EJECT
+**********************************************************************
+*                                                                    *
+*        INTERNAL SUBROUTINES                                        *
+*                                                                    *
+**********************************************************************
+         USING     IHADCB,DCBPNT
+         USING     SAVEAREA,13
+*--------------------------------------------------------------------*
+*        DOWRITE:  WRITE BUFFER IF ANYTHING IN IT                    *
+*        CALL BY:  BAL  9,DOWRITE                                    *
+*          RETURNS TO 0(9) IF PREVIOUS OPERATION WAS SUCCESSFUL      *
+*          RETURNS TO USER'S ERROR EXIT VIA SYNAD IF UNSUCCESSFUL    *
+*        RECFM=VS,VSB WILL NOT GENERATE ANY ACTUAL SPANNED RECORDS,  *
+*          AS THE STREAM CONCEPT DOES NOT REQUIRE DISTINCT RECORDS.  *
+*--------------------------------------------------------------------*
+DOWRITE  C         RLEN,USDATL         ANY DATA WRITTEN?
+         BER       9                   NO, JUST RETURN
+         BAL       8,DOCHECK           CHECK ANY PENDING WRITE
+*
+*        IF RECFM=V OR VB, PREPARE SCW AND BCW
+*
+         TM        DCBRECFM,DCBRECU    RECFM=U?
+         BO        DOWRECU             YES
+         TM        DCBRECFM,DCBRECV    RECFM=V?
+         BZ        DOWRECF             NO, MUST BE F
+         L         RBUF,BUF1           RELOCATE START OF BUFFER
+         LCR       RLEN,RLEN           CALCULATE LENGTH TO WRITE
+         A         RLEN,USDATL         
+         A         RLEN,=F'4'          ALLOW FOR SCW
+         TM        DCBRECFM,DCBRECBR   BLOCKED RECORDS?
+         BZ        DOWVNB              NO
+         STCM      RLEN,3,4(RBUF)      YES, PUT SCW AFTER BCW
+         STCM      RLEN,12,6(RBUF)
+         A         RLEN,=F'4'          ALLOW FOR BCW
+DOWVNB   STCM      RLEN,3,0(RBUF)      CREATE BCW OR SCW
+         STCM      RLEN,12,2(RBUF)
+         B         DOW1                GO DO WRITE
+*
+*        IF RECFM=F, PAD BUFFER WITH ZEROS
+*        NOTE: A FULL RECORD IS WRITTEN EVEN AS THE LAST RECORD
+*          IN A RECFM=FB FILE--KEEPS THINGS NEAT
+*
+DOWRECF  LR        RCAP,RLEN           PREPARE FOR PADDING
+         SR        RLEN,RLEN
+         MVCL      RBUF,RREC           PAD
+         B         DOWGENL             GO DO WRITE
+*
+*        IF RECFM=U, STORE LENGTH TO BE WRITTEN IN DCBBLKSI
+*
+DOWRECU  LCR       RLEN,RLEN           CALCULATE LENGTH TO WRITE
+         A         RLEN,USDATL         
+         STH       RLEN,DCBBLKSI
+*
+*        INITIATE PHYSICAL-SEQUENTIAL WRITE
+*
+DOWGENL  L         RBUF,BUF1           LOC BUF FOR MF=E WRITE
+DOW1     WRITE     RWBLOCK,SF,,(RBUF),MF=E
+         L         RBUF,BUF2           SWAP BUFFERS, WRITE 2 NEXT
+         MVC       BUF2,BUF1
+         ST        RBUF,BUF1
+         LH        RLEN,USDATL         RELOAD USABLE DATA LENGTH
+         OI        FLAGS,ACTIVE        INDICATE WRITE IS ACTIVE
+*
+*        IF RECFM=V OR VB, ADJUST RBUF TO ALLOW FOR SCW AND BCW
+*
+         TM        DCBRECFM,DCBRECU    RECFM=U?
+         BO        DOWNOTV2            NO
+         TM        DCBRECFM,DCBRECV    RECFM=V?
+         BZ        DOWNOTV2            NO
+         A         RBUF,=F'4'          ALLOW FOR SCW
+         TM        DCBRECFM,DCBRECBR   BLOCKED RECORDS?
+         BZ        DOWNOTV2            NO
+         A         RBUF,=F'4'          ALLOW FOR BCW
+DOWNOTV2 DS        0H
+*
+         BR        9                   RETURN
+         SPACE     2
+*--------------------------------------------------------------------*
+*        CKREAD:   CHECK PREVIOUS READ, INITIATE LOOK AHEAD READ     *
+*          IF RECFM=VB OR VSB, ALSO DEBLOCK/DESEGMENT                * 
+*        CALL BY:  BAL 9,CKREAD                                      *
+*          RETURNS TO 0(9) WITH RBUF AND RCAP SET IF SUCCESSFUL      *
+*          RETURNS TO USER'S ERROR EXIT VIA SYNAD IF BAD             *
+*--------------------------------------------------------------------*
+*
+*        IF RECFM=VB OR VSB, DEBLOCK TO END OF BUFFER
+*
+CKREAD   TM        DCBRECFM,DCBRECU    RECFM=U?
+         BO        DORNOTVB            YES
+         TM        DCBRECFM,DCBRECV+DCBRECBR RECFM=VB?
+         BNO       DORNOTVB            NO
+         TM        FLAGS,NOTFIRST      IS THIS FIRST TIME?
+         BZ        DORNOTVB            YES, NOTHING TO DEBLOCK
+         L         14,BUF1             PICK UP A(BCW)
+         AH        14,0(0,14)          LOCATE END OF BUFFER
+         CR        RBUF,14             ARE WE THERE YET?
+         BNL       DORNOTVB            YES, MUST READ A NEW ONE
+         LH        RCAP,0(0,RBUF)      NO, PICK UP NEW SCW
+         A         RBUF,=F'4'          SKIP OVER SCW
+         BR        9                   RETURN
+*
+*        CHECK PREVIOUS READ AND DETERMINE RECORD LENGTH
+*
+DORNOTVB BAL       8,DOCHECK           CHECK AND CLEAR ACTIVE
+         L         RBUF,BUF1           LOCATE BUFFER JUST READ
+         TM        DCBRECFM,DCBRECU    RECFM=U?
+         BO        DORNOTV2            YES
+         TM        DCBRECFM,DCBRECV    RECFM=V?
+         BZ        DORNOTV2            NO
+         LH        RCAP,0(0,RBUF)      YES, PICK UP SCW OR BCW
+         B         DORSWAP
+DORNOTV2 LH        RCAP,DCBBLKSI       PICK UP BLOCK SIZE
+         TM        DCBRECFM,DCBRECF+DCBRECBR RECFM=FB OR U
+         BM        DORSWAP
+         L         14,RWBLOCK+16       PICK UP IOB ADDRESS
+         SH        RCAP,14(0,14)       SUBTRACT RESIDUAL COUNT         
+*
+*        SWAP BUFFERS AND INITIATE NEXT READ
+*
+DORSWAP  MVC       BUF1,BUF2           SWAP BUFFERS
+         ST        RBUF,BUF2
+         BAL       8,DOREAD            INITIATE PHYSICAL READ
+         L         RBUF,BUF2           NOW BACK TO THE ONE WE WANT
+*
+*        ADJUST RBUF AND RCAP FOR RECFM=V OR VB RECORDS
+*
+         TM        DCBRECFM,DCBRECU    RECFM=U?
+         BO        DORNOTV3            YES
+         TM        DCBRECFM,DCBRECV    RECFM=V?
+         BZ        DORNOTV3            NO
+         TM        DCBRECFM,DCBRECBR   IS IT VB?
+         BZ        DORNOTB2            NO
+         A         RBUF,=F'4'          YES, SKIP OVER BCW
+         LH        RCAP,0(0,RBUF)      GET SEGMENT COUNT
+DORNOTB2 A         RBUF,=F'4'          SKIP OVER RCW
+         S         RBUF,=F'4'          SUBTRACT LENGTH OF RCW
+DORNOTV3 OI        FLAGS,NOTFIRST      INDICATE NOT FIRST CALL
+         BR        9                   RETURN
+         SPACE     2
+*--------------------------------------------------------------------*
+*        DOREAD:   INITIATE LOOK-AHEAD PHYSICAL-SEQUENTIAL READ      *
+*        CALL BY:  BAL  8,DOREAD                                     *
+*          RETURNS TO 0(8)                                           *
+*          DOES NOT PERFORM CHECKING OR DEBLOCKING.                  *
+*--------------------------------------------------------------------*
+DOREAD   L         RBUF,BUF1
+         READ      RWBLOCK,SF,,(RBUF),MF=E
+         OI        FLAGS,ACTIVE        INDICATE READ PENDING
+         BR        8                   RETURN
+         SPACE     2
+*--------------------------------------------------------------------*
+*        DOCHECK:  CHECK A PENDING OPERATION                         *
+*        CALL BY:  BAL  8,DOCHECK                                    *
+*          RETURNS TO 0(8) IF OPERATION WAS SUCCESSFUL               *
+*          RETURNS TO USER'S ERROR EXIT VIA SYNAD IF UNSUCCESSFUL    *
+*--------------------------------------------------------------------*
+DOCHECK  TM        FLAGS,ACTIVE        IS THERE AN OPERATION GOING?
+         BZR       8                   NO
+         CHECK     RWBLOCK             YES, CHECK IT
+         NI        FLAGS,ALL-ACTIVE    CLEAR ACTIVE FLAG
+         BR        8                   IF WE GOT HERE, IT MUST BE OK
+         SPACE     2
+*--------------------------------------------------------------------*
+*        OPENFIND: LOCATE INFORMATION BLOCK FOR DSRN TO BE OPENED    *
+*                  CREATE A NEW BLOCK IF ONE IS NOT ALREADY THERE    *
+*                  INSERT DDNAME IN BLOCK                            *
+*        CALL BY:  BAL 7,OPENFIND WITH PTR TO SKELETON IN G6         *
+*          RETURNS TO 0(7) IF SUCCESSFUL WITH DCBPNT LOADED          *
+*          RETURNS TO USER'S FIRST ERROR EXIT IF BAD                 *
+*--------------------------------------------------------------------*
+OPENFIND L         G9,0(0,1)           LOCATE DSRN
+         L         2,0(0,G9)           PICK UP DSRN
+         LA        0,MXUNITS           CHECK RANGE
+         CR        2,0
+         BH        NOOPEN              RANGE ERROR
+         SLA       2,2                 INDEX INTO UNIT TABLE
+         BNP       NOOPEN              NEGATIVE DSRN ERROR
+         L         DCBPNT,UNITTBL-4(2) PICK UP POINTER TO DCB INFO
+         LTR       DCBPNT,DCBPNT       CHECK FOR ALLOCATION
+         BNZ       GOTBLK              THERE, EXIT
+*
+*        CREATE A NEW I/O BLOCK FOR THIS DATA SET
+*
+         LR        G8,1                SAVE GR1
+         GETMAIN   R,LV=LIODAT
+         LR        DCBPNT,1
+         ST        1,UNITTBL-4(2)      SAVE FOR NEXT TIME
+         MVC       0(LIOMOV,DCBPNT),0(G6) MOVE IN SKELETON IO BLOCK
+         LR        1,G8                RESTORE PARM LIST PTR
+GOTBLK   L         G4,4(0,1)           PICK UP DDNAME PTR
+         CLC       0(8,G4),BLANK8      IS DDNAME BLANK?
+         BNE       GOTDD1              NO
+         LA        G4,DFLTDDN          YES, USE DEFAULT DDNAME
+         MVN       5(1,G4),3(G9)       PUT IN UNIT NUMBER
+GOTDD1   BR        7                   RETURN
+         SPACE     2
+*--------------------------------------------------------------------*
+*        DOCLOSE:  CLOSE FILE AND RELEASE BUFFER POOL                *
+*        CALL BY:  BAL 9,DOCLOSE                                     *
+*          RETURNS TO 0(9) IF SUCCESSFUL                             *
+*          RETURNS TO USER'S FIRST ERROR EXIT IF BAD                 *
+*        THERE IS SOME SAVE AREA HANKY-PANK SO IT CAN BE CALLED FROM *
+*          INSIDE THE SYNAD ROUTINE, WHERE G8 IS THE BASE REGISTER.  *
+*--------------------------------------------------------------------*
+DOCLOSE  LR        8,13                TEMPORARILY USE G8 BASE
+         DROP      13
+         USING     SAVEAREA,8
+ERRCLOSE CLOSE     ((DCBPNT),REWIND),MF=(E,OPNCLOSE)
+         TM        DCBOFLGS,X'10'      BE SURE IT CLOSED
+         BO        NOCLOSE             ERROR, FILE DID NOT CLOSE
+         L         RBUF,BUF1           RELEASE FIRST BUFFER
+         FREEBUF   (DCBPNT),RBUF
+         CLI       DCBBUFNO,1          OMIT SECOND IF NOT ALLOCATED
+         BNH       CLSF1
+         L         RBUF,BUF2           RELEASE SECOND BUFFER
+         FREEBUF   (DCBPNT),RBUF
+CLSF1    FREEPOOL  (DCBPNT)            GET RID OF BUFFERS
+         BR        9                   RETURN
+         DROP      8
+         SPACE     2
+*--------------------------------------------------------------------*
+*                                                                    *
+*        XBLBEOD: ENTER HERE FROM OPSYS ON END-OF-FILE               *
+*                                                                    *
+*--------------------------------------------------------------------*
+         USING     SAVEAREA,13
+XBLBEOD  BAL       9,DOCLOSE           CLOSE THE FILE, FREE BUFFERS
+NOCLOSE  RTRN      4,MXSAVE            RETURN 1
+         DROP      13,DCBPNT
+         EJECT
+**********************************************************************
+*                                                                    *
+*        SYNAD EXIT ROUTINE                                          *
+*                                                                    *
+**********************************************************************
+*
+*        ERROR ROUTINE ENTERED FOR READ OR WRITE ERRORS
+*
+STRMERR  LR        8,13                PROVIDE A BASE REGISTER
+         USING     SAVEAREA,8
+         USING     IHADCB,DCBPNT
+         SYNADAF   ACSMETH=BSAM        ANALYZE ERROR, GET SAVEAREA
+         MVC       WTOMSG+4(120),8(1)  MOVE ERROR MESSAGE TO WTO
+         MVC       WTOMSG+10(20),MSGHDR
+         WTO       MF=(E,WTOMSG)       SEND TO USER
+         BAL       9,ERRCLOSE          CLOSE THE FILE
+         SYNADRLS
+         TM        FLAGS,OUTPUT        WAS IT AN OUTPUT FILE?
+         BNZ       WSTREXIT            YES
+RSTREXIT RTRN      8,MXSAVE            RETURN 2 FOR ERROR ON INPUT
+WSTREXIT RTRN      4,MXSAVE            RETURN 1 FOR ERROR ON OUTPUT
+         DROP      8,DCBPNT
+         SPACE     2
+**********************************************************************
+*                                                                    *
+*        DCB EXIT ROUTINES                                           *
+*                                                                    *
+**********************************************************************
+         USING     IHADCB,DCBPNT
+*
+*        DCB EXIT FOR INPUT DATA SET
+*
+DCBXRTN  BALR      8,0                 ESTABLISH BASE REGISTER
+         USING     *,8
+*
+*        IF THERE IS NO DCBBLKSI IN THE DCB, THIS IS PROBABLY A CMS
+*        RUN AND NO FILEDEF WAS ISSUED--TREAT AS OPEN ERROR
+*
+         LH        0,DCBBLKSI
+         LTR       0,0                 IS THERE A KNOWN BLOCKSIZE?
+         BNZR      14                  YES, CONTINUE OPENING
+         OI        FLAGS,NOGOOD        NO, GENERATE OPEN ERROR
+         L         0,=A(DFLTBLK)       TEMPORARILY PLUG IN DEFAULT
+         STH       0,DCBBLKSI          TO PREVENT CMS ERROR MSG
+         BR        14                  RETURN TO OPEN PROCESSING
+*
+*        DCB EXIT FOR OUTPUT DATA SET
+*
+DCBYRTN  BALR      8,0                 ESTABLISH BASE REGISTER
+         USING     *,8
+*
+*        ESTABLISH RECORD FORMAT
+*
+         TM        DCBRECFM,DCBRECU    RECORD FORMAT GIVEN?
+         BNZ       DCBYREC             YES
+         OI        DCBRECFM,DCBRECF    NO, SET IT TO RECFM=F
+*
+*        ESTABLISH BLOCK SIZE
+*
+DCBYREC  LH        RLEN,DCBBLKSI       BLOCK SIZE GIVEN?
+         LTR       RLEN,RLEN
+         BP        DCBYBLK             YES
+         L         RLEN,=A(DFLTBLK)    NO, USE DEFAULT
+         STH       RLEN,DCBBLKSI       SET BLKSIZE
+*
+*        ESTABLISH LOGICAL RECORD LENGTH
+*
+DCBYBLK  LH        0,DCBLRECL          LRECL GIVEN?
+         LTR       0,0
+         BP        DCBYLREC            YES
+         LR        0,RLEN              NO, USE BLKSIZE AS DEFAULT
+         TM        DCBRECFM,DCBRECU    RECFM=U?
+         BO        DCBYSETL            YES
+         TM        DCBRECFM,DCBRECV    RECFM=V?
+         BZ        DCBYSETL            NO
+         S         0,=F'4'             YES, ADJUST FOR BCW
+DCBYSETL STH       0,DCBLRECL          SET LRECL
+*
+*        DETERMINE USABLE RECORD LENGTH
+*
+DCBYLREC TM        DCBRECFM,DCBRECU    RECFM=U?
+         BO        DCBYUSDL            YES
+         TM        DCBRECFM,DCBRECF    RECFM=F?
+         BO        DCBYUSDL            YES
+         S         RLEN,=F'4'          ADJUST RLEN FOR SCW
+         TM        DCBRECFM,DCBRECBR   RECFM=VB?
+         BZ        DCBYUSDL            NO
+         S         RLEN,=F'4'          ADJUST FOR BCW
+DCBYUSDL ST        RLEN,USDATL         SAVE USABLE DATA LENGTH
+         BR        14                  AND RETURN TO 'OPEN'
+         DROP      8,DCBPNT
+         EJECT
+**********************************************************************
+*                                                                    *
+*        CONSTANTS, STORAGE, CONTROL BLOCKS, ETC.                    *
+*                                                                    *
+**********************************************************************
+         DS        0D
+BLANK8   DC        CL8'        '
+DFLTDDN  DC        CL8'DASD00  '       DEFAULT DDNAME
+UNITTBL  DC        (MXUNITS)A(0)       UNIT TABLE
+         LTORG
+         SPACE     2
+OPNCLOSE OPEN      (,),MF=L            OPEN/CLOSE SKELETON
+XBLBDCB  DCB       DDNAME=STRMXX,      DDNAME FOR INPUT FILE           1
+                   DSORG=PS,           MUST BE PHYSICAL-SEQUENTIAL     2
+                   SYNAD=STRMERR,      RETURN FOR I/O ERROR            3
+                   EODAD=XBLBEOD,      RETURN FOR END-OF-FILE          4
+                   MACRF=(R),          USE BDAM READ/WRITE/CHECK       5
+                   BUFNO=2,            ACQUIRE 2 BUFFERS AUTOMATICALLY 6
+                   EXLST=INXL          USE DCB EXIT FOR MISSING STUFF
+         READ      INDECB,SF,,,'S',MF=L  MAKE READ DECB
+         DS        0F                  ALIGN
+INXL     DC        X'85',AL3(DCBXRTN)  '05' IS DCB EXIT CODE
+         DC        X'0'                INPUT FLAGS
+         SPACE     3
+YBLBDCB  DCB       DDNAME=STRMXX,      DDNAME FOR OUTPUT FILE          1
+                   DSORG=PS,           FILE MUST BE SEQUENTIAL         2
+                   SYNAD=STRMERR,      RETURN ADDRESS FOR I/O ERROR    3
+                   MACRF=(W),          USE BSAM WRITE (FORMAT DIRECT)  4
+                   BUFNO=2,            ACQUIRE 2 BUFFERS AUTOMATICALLY 5
+                   EXLST=OUTXL         USE DCB EXIT FOR MISSING STUFF
+*
+*        CAUTION: FOLLOWING CODE USES ORG'S TO ALIGN THE DIFFERENT-
+*        SIZED DCB'S AND DECB'S FOR READING AND WRITING.  ERRORS
+*        WILL BE INTRODUCED IF IBM CHANGES THE SIZES OF THESE BLOCKS
+*
+         ORG       YBLBDCB+X'68'
+         WRITE     OUTDECB,SF,,,'S',MF=L  MAKE WRITE DECB
+         ORG       YBLBDCB+X'84'       ALIGN
+OUTXL    DC        X'85',AL3(DCBYRTN)  '05' IS DCB EXIT CODE
+         DC        X'0'                OUTPUT FLAGS
+         SPACE     3
+         DS        0F                  ALIGN
+MSGHDR   DC        CL20'STRMIO PACKAGE ERROR'
+WTOMSG   WTO       'DUMMY MESSAGE-120 CHARACTERS WILL BE REPLACED FROM X
+               THE SYNADAF MESSAGE1234567890123456789012345678901234567X
+               8901234567890',ROUTCDE=(11),DESC=(4,7),MF=L
+         PRINT     NOGEN
+         DCBD      DSORG=(PS),DEVD=DA
+IHADCB   DSECT                         OUR OWN STUFF ADDED
+         ORG       IHADCB+X'68'
+RWBLOCK  DS        7F                  READ OR WRITE DECB
+XL       DS        A                   EXIT LIST
+FLAGS    DS        XL1                 STATUS INDICATORS
+LIOMOV   EQU       *-IHADCB            LENGTH OF INITIALIZED PART
+BUF1     DS        A                   ADDRESS OF FIRST BUFFER
+BUF2     DS        A                   ADDRESS OF SECOND BUFFER
+BCSAVE   DS        2F                  BUFFER STATUS SAVE AREA
+USDATL   DS        F                   USABLE DATA LENGTH
+LIODAT   EQU       *-IHADCB            LENGTH OF DYNAMIC INFO BLOCK
+         END

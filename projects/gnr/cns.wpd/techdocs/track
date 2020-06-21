@@ -1,0 +1,180 @@
+TITLE  VISUAL TRACKING TASK--SAMPLE CNS RUN
+*
+* Group 0
+*
+* In the following lines, replace <uid> with your own user id.
+LIBRARY  /home/uid/cns/stim/e3
+METAFILE /home/uid/cns/mf/track
+GRAFDATA /home/uid/cns/graf/track
+*
+* Group I
+*
+* Define items to be saved in GRAFDATA file.
+SAVE GRAPH=W,OBJECT=1,VALUE=1
+* Define size of input array and size of stimulus (not on L26
+card).
+INPUT 6 6 KUX=12,KUY=12
+* Define a foveal window to be moved by (RU,RU) and (LD,LD) cells.
+* The horizontal and vertical degrees-of-freedom of the window are
+*     driven by separate 9-cell subsets of RU and LD.
+WINDOW 21.0,43.0,22,22,FIRST=0,SPACING=1,
+    EXCIT=(RU,RU),INHIB=(LD,LD),SCLX=5.0,ARBWID=9
+* Define a peripheral window that moves in step with the fovea.
+WINDOW  3.0,61.0,58,58,CHANGE=4
+* Allow amplification with only one step per trial, adjust
+*     connection scales compatibly with CNS used for Darwin III.
+RESPONSE FUNCTION IMMEDIATE, COMPAT=S
+* Define value scheme based on number of (FO,FO) cells firing.
+VALUE NFIRE FO FO SCALE=4.0,BEST=40,HWIDTH=20,DAMPFAC=0.25
+PLIM GRIDS=1,MXOBJ=1,CPT=0.125,STDLHT,SQUARE
+* Define locations for plotting input array and value bars.
+PLOC VX=8.00,VY=3.40,VW=2.25,VH=0.25,
+EX=0.25,EY=4.375,EW=5.00,EH=5.00
+* Plot average connection strengths for cells that drive eye
+movement.
+* Arrange right, up, left, and down cells in the form of a cross.
+CIJPLOT RURU PLOTCT=1,OPT=NO,ARBOR=WINDOW(1),CELLS=(0,8,1),
+    X=8.833,Y=6.042,W=1.667,H=1.667
+CIJPLOT RURU PLOTCT=1,OPT=NO,ARBOR=WINDOW(1),CELLS=(9,17,1),
+    X=7.167,Y=7.710,W=1.667,H=1.667
+CIJPLOT LDLD PLOTCT=1,OPT=NO,ARBOR=WINDOW(1),CELLS=(0,8,1),
+    X=5.500,Y=6.042,W=1.667,H=1.667
+CIJPLOT LDLD PLOTCT=1,OPT=NO,ARBOR=WINDOW(1),CELLS=(9,17,1),
+    X=7.167,Y=4.375,W=1.667,H=1.667
+* Plot modifying substance for "right" motor cells in center of
+cross.
+MIJPLOT RURU PLOTCT=1,OPT=NO,ARBOR=WINDOW(1),CELLS=(0,8,1),
+    X=7.167,Y=6.042,W=1.667,H=1.667
+*
+* Group II
+*
+* --------- INITIAL VISUAL REPERTOIRE: LGN-LIKE ---------
+*
+REPERTOIRE 'VISION' RM 29 29 1 1 KP=AB,X=0.25,Y=1.625,W=1.25,H=2.50
+CELLTYPE RM 1 PT=0.1,ST=1.0,OPT=S
+DEPRESSION 0.075 0.98 0.6 REFRAC=4
+DECAY 1.0 0.3
+NOISE .075 .025
+GCONN *  2 2 0.20 BETA=(0,-1),MXIB=(1.6,2)
+* These inhibitory connections favor cells at the center of the
+fovea.
+* They are used to select which object to saccade to when more than
+*     one object is present in the visual window.
+GCONN RI 5 2 0.20 BETA=(0,0,0,10,30),MXIB=(0,2,0,2,2),OPT=X,
+    FOFF=1/RSQ,HR=7.5
+* These topographic connections view the world through the larger
+*     (peripheral) visual window.
+CONNTYPE IA 2 1 RSI PP=1.0,SIGMA=0.045,NUX=58,NUY=58
+THRESH SCALE=1
+* Inhibitory interneurons for stimulus competition.
+CELLTYPE RI 1 PT=0.0,ST=1.0,OPT=S
+DECAY 1.0 0.2
+NOISE 0 0
+CONNTYPE RM RM 1 RG PP=1.0,SIGMA=0.0
+THRESH SCALE=0.35
+*
+* --------- COLLICULUS-LIKE REPERTOIRE ---------
+*
+REPERTOIRE 'COLLICULUS' SC 16 16 16 16 KP=AB,X=2.00,Y=1.625,
+     W=1.25,H=2.50
+*
+CELLTYPE M2 1 PT=0.0,ST=1.0,OPT=S
+DECAY 1.0 0.2
+NOISE 0.05 0.075
+GCONN *  2 2 0.20 BETA=(0,-1.0),MXIB=(1.6,2)
+* These connections provide a sharply rising inhibitory surround
+*     which helps normalize size of response to different sized
+*     stimulus objects.
+GCONN IN 5 2 0.20 BETA=(0,0,0,10,20),MXIB=(0,2,0,2,2),OPT=X,
+    FOFF=1/RSQ,HR=7.5
+CONNTYPE RM RM 4 RTI SIGMA=0.1,PP=1.0
+THRESH 0.5 SCALE=1.5
+* Inhibitory interneurons.
+CELLTYPE IN 1 PT=0.0,ST=5.0,OPT=S
+DECAY 1.0 0.2
+NOISE 0 0
+CONNTYPE * M2 1 RG PP=1.0,SIGMA=0.0
+THRESH SCALE=0.35
+*
+* --------- VALUE REPERTOIRE ---------
+*
+REPERTOIRE FOVEAL FO 11 11 1 1 KP=AB,X=5.55,Y=9.5,W=1.00,H=1.00
+*
+CELLTYPE FO 1 PT=0.2,ST=1.0,HT=0.5,OPT=S
+DECAY 0 0
+* These cells respond weakly to input in the periphery and more
+*     strongly to input in the fovea, because such objects
+*     provide input via both of these connection types.  Thus,
+*     value increases as the eye moves the object into the fovea.
+CONNTYPE IA 1 1 RSI PP=1.0,SIGMA=0,NUX=22,NUY=22
+THRESH SCALE=0.5
+CONNTYPE IA 2 1 RSI PP=1.0,SIGMA=0,NUX=58,NUY=58
+THRESH SCALE=0.5
+*
+* --------- RIGHT-UP MOTOR REPERTOIRE ---------
+*
+* The RU and LD repertoires have two groups of nine cells each.
+* The first group drives horizontal window motion, the second
+*     drives vertical window motion.
+REPERTOIRE 'RIGHT     UP' RU 2 1 3 3 KP=ABG,
+    X=8.00,Y=1.625,W=2.50,H=1.25
+* Update RU and LD together because the inhibit each other
+CELLTYPE RU 9 PT=0.1,NT=-0.1,BITS=6,UPWITH=LDLD,OPT=S
+* Amplification uses a "slow" rule so that synaptic activity
+*     in the cycles just before value increases is taken into
+*     account in determining which connections get strengthened.
+AMPLIF IDNVS 0.25 VT=0,UPSM=0.6,MNSJ=0.1
+DECAY 1 0.15 DAMPFAC=0.4,TAUM=0.2,MXMP=0.25
+* This noise source serves to generate spontaneous eye movement
+*     when no object is in view, therefore, it is modulated
+*     downward by any activity in the SC area.
+NOISE 0.0 0.25 0.5
+NMOD SC M2 0.2 -25.0
+* These are the key connections that are modified during
+*     training on the tracking task.  Each cell receives
+*     connections from all cells in SC.  Connections are
+*     initially middle-strength to generate spontaneous
+*     behavior that can provide a substrate for selection.
+CONNTYPE SC M2 256 RXA MEAN=0.5,SIGMA=0.1,PP=1
+THRESH 0.2,MTJ=0.2,SCALE=0.16
+* Negative synaptic change is given slightly lower weight than
+*     positive to compensate for the latter's lower frequency.
+PARAMS MTI=0.1,RULE=EDNVS,WAY=(1.0,0.75,0,0,0.75,0,0,0),VI=1
+* These connections allow opposing directions of motion to
+*     inhibit each other.
+CONNTYPE LD LD 2 RTI MEAN=0.5,SIGMA=0,PP=0
+* Disable amplification of these inhibitory connections.
+PARAMS 0
+THRESH SCALE=0.36
+*
+* --------- LEFT-DOWN MOTOR REPERTOIRE ---------
+*
+* This repertoire is symmetric to RU in all respects.
+REPERTOIRE 'LEFT      DOWN' LD 2 1 3 3 KP=ABG,
+    X=5.50,Y=1.625,W=2.50,H=1.25
+CELLTYPE LD 9 PT=0.1,NT=-0.1,BITS=6,OPT=S
+AMPLIF IDNVS 0.25 VT=0,UPSM=0.6,MNSJ=0.1
+DECAY 1 0.15 DAMPFAC=0.4,TAUM=0.2,MXMP=0.25
+NOISE 0.0 0.25 0.5
+NMOD SC M2 0.2 -25.0
+CONNTYPE SC M2 256 RXA MEAN=0.5,SIGMA=0.1,PP=1
+THRESH 0.2,MTJ=0.2,SCALE=0.16
+PARAMS MTI=0.1,RULE=EDNVS,WAY=(1.0,0.75,0,0,0.75,0,0,0),VI=1
+CONNTYPE RU RU 2 RTI MEAN=0.5,SIGMA=0,PP=0
+PARAMS 0
+THRESH SCALE=0.36
+*
+* Group III
+*
+MOVIE MMODE;  Keep the graphics moving.
+* Detail print for testing, commented out during long runs.
+*DETAIL PRINT=CSM, NEW, RURU(0), LDLD(0)
+SNOISE 0 .075
+CREATE L26 1 X=16,Y=16
+MOVE 1,RANDOM,VEL=1.813,FRAC=0.0433,JSEED=5498721,JUMP=16,
+    XMIN=6,XMAX=58,YMIN=6,YMAX=58
+* Do 100 frozen trials before and after training to observe
+*     performance while system is not changing.
+CYCLE 1 100 1 FRZINT=1,PLOT=AS
+CYCLE 8 500 1 FRZINT=0,PLOT=AS
+CYCLE 1 100 1 FRZINT=1,PLOT=AS

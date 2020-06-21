@@ -1,0 +1,67 @@
+# (c) Copyright 2007-2014, The Rockefeller University *21223* 
+########################################################################
+#                Makefile for mfdraw (64-bit version)                  #
+#                                                                      #
+# Version: initial mfdraw version  2/21/2006        Steven Marx        #
+# Rev, 11/06/07, GNR - Change /home/smarx to $(HOME) etc.              #
+# Rev, 01/15/09, GNR - Pass svn revision number to code via -DSVNVRS   #
+# Rev, 02/09/12, GNR - Store object files in pclux64 subdirectory      #
+# Rev, 02/12/14, GNR - Modified for fltk 1.3.2 w/glut emulation        #
+# Rev, 09/11/18, GMK - Added -lXcursor to LIBS                         #
+########################################################################
+
+# Define architecture-specific subdirectories
+DIR	:= pclux64
+LDIR	:= $(HOME)/lib/$(DIR)
+
+# Includes
+INCLUDES  = -I$(HOME)/include
+
+# Libraries
+LDIRS  = -L$(LDIR) -L/usr/local/lib -L/usr/lib64 
+
+# Added libXmu and libXi and libglut to support glut stroke fonts
+LIBS = -lfltk -lfltk_forms -lfltk_images -lfltk_gl -lXext -lXft \
+	-lfontconfig -lXinerama -lpthread -ldl -lm -lGL -lGLU -lX11 -lXcursor 
+
+## LIBS list from RHEL 5 compilations with old glut stuff
+# Added libXmu and libXi and libglut to support glut stroke fonts
+#LIBS = -lfltk -lfltk_forms -lfltk_images -lm -lXext -lX11 \
+#	-lXmu -lXi -lsupc++ -lglut -lGL -lGLU
+
+CC := g++
+# Compilation flags--add -pg for profiler
+CXXFLAGS := -g -Wall -m64
+SVNV := $(shell gnrversn)
+# Compilation defs--See mfdraw.h for useful values of -DDEBUG
+DEFS := PCLUX64 MESA _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV)) \
+	DEBUG=0
+
+EXECUT = mfdraw
+OBJS   = mfdraw mfdrawmain mfdrawUI mfdrawsockserver
+
+# Build the executable
+$(EXECUT) : $(OBJS:%=$(DIR)/%.o) $(COBJS:%=$(DIR)/%.o) maklux64
+	$(CC) $(OBJS:%=$(DIR)/%.o) $(COBJS:%=$(DIR)/%.o) -o $@ \
+		$(LDIRS) $(LIBS)
+
+$(DIR)/%.o:	%.cxx maklux64
+	$(CC) `fltk-config --cxxflags` $(CXXFLAGS) $(DEFS:%=-D%) \
+		$(INCLUDES) -c $< -o $@
+
+$(EXECUT)UI.h  $(EXECUT)UI.cxx : $(EXECUT)UI.fl 
+	fluid -c $(EXECUT)UI.fl
+
+$(DIR)/mfdrawUI.o : mfdrawUI.cxx mfdrawUI.h
+
+$(DIR)/mfdraw.o : mfdraw.cxx $(HOME)/include/sysdef.h \
+	$(HOME)/include/plotdefs.h \
+	mfdrawsockserver.h mfdraw.h mfdrawUI.h
+
+$(DIR)/mfdrawmain.o $(DIR)/mfdrawsockserver.o : \
+	mfdrawsockserver.h mfdraw.h mfdrawUI.h
+
+.PHONY : cleanall	
+cleanall :
+	rm -f  core* *~  $(DIR)/*.o $(EXECUT)
+	@echo 'Removed all core, *~, object, and executable files'

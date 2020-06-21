@@ -1,0 +1,150 @@
+specification of operator intervention feature:
+
+purpose: specify the functionality and part of the programing techniques
+         for this new feature.
+
+1. Functionality:
+
+Pressing ^C at any time while CNS is running and the appropriate initialization code
+has been executed, will result in the following sequence:
+
+1.1 When running with the platform:
+
+   - The platform will be stopped, if in motion.
+   - If needed, video recording will be paused.
+   - The following menu will be displayed.  Selection is by using the arrow
+     keys to highlight the requested entry and pressing <enter>, or by
+     pressing the highlighted letter (most likely the first one) of any
+     entry.
+    
+
+         OOPS... Resume execution.
+         Abort trial and resume execution.
+         Discard trial and series ( display secondary menu).
+         Finish trial, abort series (display secondary menu).
+         Move platform. (not implemented yet).
+         Terminate execution.
+
+NOTE:
+   In referring to the options in this text, an entry is identified by its
+   first letter, in single quotes.
+
+   If option 'O' is selected, platform movement for the current trial will
+   be resumed, and execution of cards in input file will continue.
+
+   If option 'A' is selected, platform movement for the current trial will not 
+   be re-started, and CNS will resume execution with the platform in the
+   current position for the start of the next trial.
+
+   If option 'D' is selected, platform movement for the current trial will not
+   be re-started and CNS will discard the remainder of the CYCLE card.  
+   menu #2 (see below) will be displayed.
+
+   If option 'F' is selected, CNS will wait for current platform movement
+   to finish, and discard the remainder of the CYCLE card.
+   menu #2 (see below) will be displayed.
+
+   If option 'M' is selected, operator will be able to move issue movement
+   commands to the platform, from the terminal, while CNS is paused. 
+   At the end of a series of command, the menu will be re-displayed, and
+   CNS may be resumed with option 'O'.  
+   Currently option 'M' is not implemented and will print a warning message
+   if selected.
+
+   If option 'T' is selected, CNS and the driver will perform a graceful 
+   shutdown, after verification.
+
+
+
+   --SELECTING options 'D' or 'F' in the main menu, will invoke, as mentioned
+   above, menu #2:
+
+         File - continue from input file.
+         Interactive - continue from terminal.
+         Alternate - continue from alternative file (not implemented yet).
+         Move platform (not implemented yet).
+         Terminate execution.
+
+   If option 'F' is selected, execution will resume at the next card in
+   the input file, if CNS was invoked with an input file.  If CNS was
+   invoked with the terminal as the card input (stdin), the operator will
+   be prompted for a file name, and that file will be opened and used
+   as stdin. 
+
+
+   Note that menu #2 is displayed only after the current CYCLE card has
+   been discarded, so selecting 'F' is not identical to selecting 'O'
+   from the main menu.
+
+   If option 'I' is selected, CNS will read control cards from the terminal.
+   The operator will be prompted for CNS cards, one line at a time. 
+   Every line will be input to CNS when <Enter> is pressed.
+   Pressing the operator intervention hot-key (currently ^C), will have
+   the same effect as when reading input from file, with the exception
+   that a partially entered input line (i.e. <enter> not hit yet) will
+   be lost.   Lines may be edited with the usual C-shell commands before
+   hitting <enter>.
+
+   If option 'A' is selected, operator will be prompted for a new
+   input file name, and execution will resume with inout cards read
+   from that file.  This option is not implemented yet, and will print
+   a warning message.
+
+   Options 'M' and 'T' are similar to the options with the same names
+   in the main menu, see there.
+
+
+1.2 When running without the platform:
+
+   Operator intervention will work the same way, with action related
+   to the platform omitted.  The main menu will not display options
+   'D', 'F', 'M' and menu #2 will not have option 'M'
+
+NOTE:
+   Currently the main menu will display all options even when running
+   without the platform, but the effect of 'D' and 'F' will be identical
+   to 'A'.  Both menus will also display option 'M', which is not implemented
+   yet, and will display the same warning message as when running with the
+   platform.
+   
+   - Menu #2 does not have option 4 (Move platform).
+
+
+2.1  New CNS command line arguments and restrictions:
+
+The current version of the driver introduces some limitations on the
+way CNS is invoked:
+
+--To use the new operator intervention function, the command line
+argument ONLINE must be given.
+
+--When running with the ONLINE option, the process may not be run
+in the background, as it needs to be in control of the terminal.
+
+--Output of the process (stdout and stderr) may not be pipelined (to
+a tee process, for example). This restriction is imposed by the program.
+New command line arguments, described below, compensate for loss of 'tee'.
+
+--Several new command line parameters have been added.  With the exception
+of '-t' , all are intended for programming and debugging and are not
+specified here.  '-t' (or '-T') has an effect similar to '| tee ' which
+may no longer be used.  Its effect is to send output (stdout, stderr) to
+the terminal, in addition to a text file specified as stdout by using
+shell i/o redirection.  For example,
+
+                cns <inpfile >out1 -t
+
+Will send stdout to a file (out1) and also to the terminal, 
+and is equivelent to the command
+
+               cns <infile | tee out1
+
+And, similarly, the command
+
+               cns <infile >&out1 -t
+
+is equivelent to
+
+               cns <infile |& tee out1
+
+

@@ -1,0 +1,88 @@
+# (c) Copyright 2016-2018, The Rockefeller University *11226* 
+# $Id: makmacpic64 4 2017-02-03 18:57:19Z  $
+########################################################################
+#                   MAKE file for hybrid utilities                     #
+#                  Version for Mac OS (64-bit -fPIC)                   #
+#                        Serial -fPIC Version                          #
+#                                                                      #
+# This version is intended for use in situations where everything      #
+# needs to be relocatable, e.g. matlab mex functions.  These will      #
+# always be serial processes in our scheme of things.                  #
+#                                                                      #
+# Call with make CFLAGS=-O2 to get optimized compilations.             #
+#                                                                      #
+# Versions of ROCKS routines abexit(), abexitm(), and abexitme() that  #
+# call appexit() are provided in file abexit.o but are not linked into #
+# any library.  This file can be explictly linked into any application #
+# that does not support cryout-style output in order to prevent the    #
+# usual versions from being linked from the ROCKS library.             #
+#                                                                      #
+# Rev, 03/09/16, GNR - Mac OS version derived from makpic64            #
+# ==>, 03/09/16, GNR - Last mod before committing to svn repository    #
+# R10, 09/01/18, GNR - Update file list to match makpic64              #
+########################################################################
+
+# Directory where all this stuff is stored
+LCLHOME ?= $(HOME)
+# Directories for include files:
+INC := $(LCLHOME)/include
+# Directory for object and dependency files
+DIR := macospic64
+# Directory and name of result library:
+LD := $(LCLHOME)/lib/macos64
+LN = serpictools
+
+# Object files required for serial (or relocatble) hosts:
+PIC_OBJ := \
+allocpc  \
+allocpcv \
+allocpm  \
+allocpmv \
+allocpr  \
+allocprv \
+allolink \
+chngpool \
+dbgprt   \
+freep    \
+freepv   \
+membcst  \
+memdump  \
+memsize  \
+mpitvers \
+nxtupush \
+stattmr  \
+
+
+# Compilation flags:
+CC := gcc
+CFLAGS := -g      # Override w/ -O2 from command line for optimizing
+CFLGS := $(CFLAGS) -fPIC -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := MACOS64 _ISOC99_SOURCE USE_MPI SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+.PHONY : macos64 depend
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+$(DIR)/%.o: %.c $(DIR)/%.d makmacpic64
+	$(CC) $(CFLGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+macos64: $(LD)/lib$(LN).a $(DIR)/abexit.o
+depend:  $(PIC_OBJ:%=$(DIR)/%.d) $(DIR)/abexit.d
+
+$(LD)/lib$(LN).a: $(PIC_OBJ:%=$(DIR)/%.o)
+	ar r lib$(LN).a $(PIC_OBJ:%=$(DIR)/%.o)
+	ranlib lib$(LN).a
+	mv lib$(LN).a $(LD)
+
+clean:
+	rm -f $(DIR)/*.[od] $(LD)/lib$(LN).a

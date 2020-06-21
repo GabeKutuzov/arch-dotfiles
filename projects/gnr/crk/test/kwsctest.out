@@ -1,0 +1,86 @@
+                                      ROCKS - CRYSTALLOGRAPHIC COMPUTING SYSTEM                    2 SEP 13    0:00000  Page 1    
+  
+eqscan and kwscan test results:
+Note:  ic values printed will be reversed for big-endian
+    vs. little-endian systems.
+
+   A=ABCDEFG,B=12,C=13,D=-1329,E=123456,F=1.25,G=2.4,H=189.75632 
+***Field is too long.
+
+***NUMERIC VALUE -1329.000  IS < 0, NOT VALID FOR THIS VARIABLE.
+
+***NUMERIC VALUE ==>-1329<== MUST BE >= 0.
+
+***NUMERIC VALUE 0          IS <= 0, NOT VALID FOR THIS VARIABLE.
+
+   A=ABCDEFG,B=12,C=13,D=-1329,E=123456,F=1.25,G=2.4,H=189.75632 
+***Field is too long.
+
+***NUMERIC VALUE 12.000000  IS >= 11, NOT VALID FOR THIS VARIABLE.
+
+***NUMERIC VALUE -1329.000  IS < -1300, NOT VALID FOR THIS VARIABLE.
+kwscan of card 1 gave ic = 000000FF, rc = 0
+IC value is OK
+
+   A=ABCDEFG,B=12,C=13,D=-1329,E=123456,F=1.25,G=2.4,H=189.75632 
+***Field is too long.
+
+***NUMERIC VALUE ==>-1329<== MUST BE >= 0.
+
+***NUMERIC VALUE 0          IS <= 0, NOT VALID FOR THIS VARIABLE.
+
+***NUMERIC VALUE 123456.00  IS > 1000, NOT VALID FOR THIS VARIABLE.
+kwscan of card 1 gave ic = 000000FF, rc = 0
+IC value is OK
+
+It is correct to get invalid numeric value and too long flags on each card above.
+
+Begin test of unusual codes and errors...
+
+   AMB=18,XYZ=99,VAL1,X1,X2,NAME=GNR,OPTION,INC1=5,INC2=7
+***Keyword unrecognized or invalid in context.
+***Ambiguous abbreviation.
+kwscan of card 2 gave ic = 00000030, rc = 1
+X1 exit reached
+kwscan of card 2 gave ic = 00000038, rc = 2
+X2 exit reached
+***Option >>INC2<< is incompatible with previously entered options.
+kwscan of card 2 gave ic = 0000003F, rc = 0
+IC value is OK
+
+card2 test completed, should have given:
+   Ambiguous key message for AMB
+   Unrecognized key message for XYZ
+   X1 and X2 exits reached
+   Incompatible option for INC2.
+
+Begin test of key updating, value adjustment, 64-bit and wseed input.
+
+   KEY=A,KEY+=B,X=13.8mV+Vr,IVAL=12,BIG64=6.789E9,SET64
+kwscan of card 3 gave ic = 000000F8, rc = 0
+IC value is OK
+
+   R1=1009,R2=(34567,2106798003),R3=67890123456
+
+***MAGNITUDE OF NUMERIC VALUE ==>|67890123456|<== MUST BE < 2147483648.
+kwscan of card 4 gave ic = 000000E0, rc = 0
+IC value is OK
+R3 should give 'too big' error.
+
+   OPT1=TRUE,OPT2=FALSE,OPT3,OPT4=0,OPT5=1
+kwscan of card 5 gave ic = 000000F8, rc = 0
+IC value is OK
+
+   OPT1=TRUE,OPT2=FALSE,OPT3,OPT4=0,OPT5=1
+kwscan of card 5 gave ic = 000000F8, rc = 0
+IC value is OK
+
+   ITJ1=1,ITJ2=2,XY.ITJ3=3,IT.ITJ4=4
+***Keyword unrecognized or invalid in context.
+kwscan of card 6 gave ic = 000000D0, cc = 0
+IC value is OK
+
+card6 test completed, should have given:
+   Unrecognized key message for IT.ITJ4
+End kwscan/eqscan tests, 50 correct, 0 failed
+-->cryout flushed.

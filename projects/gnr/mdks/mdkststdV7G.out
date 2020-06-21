@@ -1,0 +1,1299 @@
+mdkststd
+
+For k = 2, n = 320, uniform data
+   Brute-force mex mean MDKS1s = 1.698853, sigma MDKS1s = 0.301814, time = 0.003080
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 1.698853, sigma MDKS1s = 0.301814, time = 0.001662
+   Center-gravity method mean = 1.487544, sigma = 0.333323, error = -0.124383, time = 0.000194
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 1.698853, sigma MDKS1s = 0.301814, time = 0.001678
+   Center-gravity method mean = 1.487544, sigma = 0.333323, error = -0.124383, time = 0.000193
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 1.698853, sigma MDKS1s = 0.301814, time = 0.003240
+   Center-gravity method mean = 1.044244, sigma = 0.356034, error = -0.385324, time = 0.000135
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 1.698853, sigma MDKS1s = 0.301814, time = 0.003070
+   Center-gravity method mean = 1.044244, sigma = 0.356034, error = -0.385324, time = 0.000135
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 1.698853, sigma MDKS1s = 0.301814, time = 0.001149
+   Center-gravity method mean = 1.664753, sigma = 0.339115, error = -0.020072, time = 0.000338
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 1.698853, sigma MDKS1s = 0.301814, time = 0.001295
+   Center-gravity method mean = 1.664753, sigma = 0.339115, error = -0.020072, time = 0.000335
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 1.698853, sigma MDKS1s = 0.301814, time = 0.001177
+   Center-gravity method mean = 1.823513, sigma = 0.314504, error = 0.073379, time = 0.000647
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 1.698853, sigma MDKS1s = 0.301814, time = 0.001500
+   Center-gravity method mean = 1.823513, sigma = 0.314504, error = 0.073379, time = 0.000641
+
+For k = 2, n = 320, unlike data
+   Brute-force mex mean MDKS1s = 2.354580, sigma MDKS1s = 0.404464, time = 0.003123
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 2.354580, sigma MDKS1s = 0.404464, time = 0.001672
+   Center-gravity method mean = 1.939230, sigma = 0.447897, error = -0.176401, time = 0.000197
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 2.354580, sigma MDKS1s = 0.404464, time = 0.001682
+   Center-gravity method mean = 1.939230, sigma = 0.447897, error = -0.176401, time = 0.000197
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 2.354580, sigma MDKS1s = 0.404464, time = 0.003257
+   Center-gravity method mean = 0.999522, sigma = 0.436879, error = -0.575499, time = 0.000137
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 2.354580, sigma MDKS1s = 0.404464, time = 0.003111
+   Center-gravity method mean = 0.999522, sigma = 0.436879, error = -0.575499, time = 0.000137
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.354580, sigma MDKS1s = 0.404464, time = 0.001152
+   Center-gravity method mean = 2.286380, sigma = 0.409676, error = -0.028965, time = 0.000340
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.354580, sigma MDKS1s = 0.404464, time = 0.001304
+   Center-gravity method mean = 2.286380, sigma = 0.409676, error = -0.028965, time = 0.000339
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 2.354580, sigma MDKS1s = 0.404464, time = 0.001187
+   Center-gravity method mean = 2.468619, sigma = 0.401443, error = 0.048433, time = 0.000646
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 2.354580, sigma MDKS1s = 0.404464, time = 0.001501
+   Center-gravity method mean = 2.468619, sigma = 0.401443, error = 0.048433, time = 0.000645
+
+For k = 2, n = 1000, uniform data
+   Brute-force mex mean MDKS1s = 1.753483, sigma MDKS1s = 0.381580, time = 0.029681
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 1.753483, sigma MDKS1s = 0.381580, time = 0.008173
+   Center-gravity method mean = 1.653239, sigma = 0.385261, error = -0.057169, time = 0.000983
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 1.753483, sigma MDKS1s = 0.381580, time = 0.008579
+   Center-gravity method mean = 1.653239, sigma = 0.385261, error = -0.057169, time = 0.000986
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 1.753483, sigma MDKS1s = 0.381580, time = 0.014685
+   Center-gravity method mean = 1.453699, sigma = 0.424917, error = -0.170965, time = 0.000571
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 1.753483, sigma MDKS1s = 0.381580, time = 0.014474
+   Center-gravity method mean = 1.453699, sigma = 0.424917, error = -0.170965, time = 0.000571
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 1.753483, sigma MDKS1s = 0.381580, time = 0.006122
+   Center-gravity method mean = 1.770875, sigma = 0.387924, error = 0.009919, time = 0.001895
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 1.753483, sigma MDKS1s = 0.381580, time = 0.007297
+   Center-gravity method mean = 1.770875, sigma = 0.387924, error = 0.009919, time = 0.001891
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 1.753483, sigma MDKS1s = 0.381580, time = 0.006638
+   Center-gravity method mean = 1.917605, sigma = 0.355946, error = 0.093598, time = 0.003773
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 1.753483, sigma MDKS1s = 0.381580, time = 0.008600
+   Center-gravity method mean = 1.917605, sigma = 0.355946, error = 0.093598, time = 0.003720
+
+For k = 2, n = 1000, unlike data
+   Brute-force mex mean MDKS1s = 3.370988, sigma MDKS1s = 0.413534, time = 0.030152
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 3.370988, sigma MDKS1s = 0.413534, time = 0.008191
+   Center-gravity method mean = 3.253984, sigma = 0.458225, error = -0.034709, time = 0.000994
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 3.370988, sigma MDKS1s = 0.413534, time = 0.008638
+   Center-gravity method mean = 3.253984, sigma = 0.458225, error = -0.034709, time = 0.000994
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 3.370988, sigma MDKS1s = 0.413534, time = 0.014747
+   Center-gravity method mean = 2.755609, sigma = 0.511010, error = -0.182552, time = 0.000581
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 3.370988, sigma MDKS1s = 0.413534, time = 0.014532
+   Center-gravity method mean = 2.755609, sigma = 0.511010, error = -0.182552, time = 0.000582
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 3.370988, sigma MDKS1s = 0.413534, time = 0.006131
+   Center-gravity method mean = 3.375415, sigma = 0.421316, error = 0.001313, time = 0.001903
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 3.370988, sigma MDKS1s = 0.413534, time = 0.007317
+   Center-gravity method mean = 3.375415, sigma = 0.421316, error = 0.001313, time = 0.001903
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 3.370988, sigma MDKS1s = 0.413534, time = 0.006677
+   Center-gravity method mean = 3.568314, sigma = 0.435072, error = 0.058537, time = 0.003738
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 3.370988, sigma MDKS1s = 0.413534, time = 0.008608
+   Center-gravity method mean = 3.568314, sigma = 0.435072, error = 0.058537, time = 0.003729
+
+For k = 2, n = 3200, uniform data
+   Brute-force mex mean MDKS1s = 1.811254, sigma MDKS1s = 0.349760, time = 0.301974
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 1.811254, sigma MDKS1s = 0.349760, time = 0.045903
+   Center-gravity method mean = 1.759635, sigma = 0.351902, error = -0.028499, time = 0.005830
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 1.811254, sigma MDKS1s = 0.349760, time = 0.048892
+   Center-gravity method mean = 1.759635, sigma = 0.351902, error = -0.028499, time = 0.005839
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 1.811254, sigma MDKS1s = 0.349760, time = 0.077131
+   Center-gravity method mean = 1.650387, sigma = 0.364478, error = -0.088815, time = 0.003115
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 1.811254, sigma MDKS1s = 0.349760, time = 0.076646
+   Center-gravity method mean = 1.650387, sigma = 0.364478, error = -0.088815, time = 0.003112
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 1.811254, sigma MDKS1s = 0.349760, time = 0.036359
+   Center-gravity method mean = 1.834058, sigma = 0.347814, error = 0.012590, time = 0.011618
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 1.811254, sigma MDKS1s = 0.349760, time = 0.044618
+   Center-gravity method mean = 1.834058, sigma = 0.347814, error = 0.012590, time = 0.011609
+-->Depth = 6, Sum method = 1
+   Brick method mean MDKS1s = 1.811254, sigma MDKS1s = 0.349760, time = 0.040833
+   Center-gravity method mean = 1.985379, sigma = 0.352764, error = 0.096135, time = 0.023951
+-->Depth = 6, Sum method = 2
+   Brick method mean MDKS1s = 1.811254, sigma MDKS1s = 0.349760, time = 0.053901
+   Center-gravity method mean = 1.985379, sigma = 0.352764, error = 0.096135, time = 0.023899
+
+For k = 2, n = 3200, unlike data
+   Brute-force mex mean MDKS1s = 5.147384, sigma MDKS1s = 0.393864, time = 0.307017
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 5.147384, sigma MDKS1s = 0.393864, time = 0.045912
+   Center-gravity method mean = 5.058819, sigma = 0.432013, error = -0.017206, time = 0.005850
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 5.147384, sigma MDKS1s = 0.393864, time = 0.048884
+   Center-gravity method mean = 5.058819, sigma = 0.432013, error = -0.017206, time = 0.005836
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 5.147384, sigma MDKS1s = 0.393864, time = 0.077150
+   Center-gravity method mean = 4.961415, sigma = 0.432007, error = -0.036129, time = 0.003134
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 5.147384, sigma MDKS1s = 0.393864, time = 0.076708
+   Center-gravity method mean = 4.961415, sigma = 0.432007, error = -0.036129, time = 0.003135
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 5.147384, sigma MDKS1s = 0.393864, time = 0.036392
+   Center-gravity method mean = 5.200947, sigma = 0.398999, error = 0.010406, time = 0.011633
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 5.147384, sigma MDKS1s = 0.393864, time = 0.044679
+   Center-gravity method mean = 5.200947, sigma = 0.398999, error = 0.010406, time = 0.011629
+-->Depth = 6, Sum method = 1
+   Brick method mean MDKS1s = 5.147384, sigma MDKS1s = 0.393864, time = 0.040777
+   Center-gravity method mean = 5.399467, sigma = 0.430163, error = 0.048973, time = 0.023905
+-->Depth = 6, Sum method = 2
+   Brick method mean MDKS1s = 5.147384, sigma MDKS1s = 0.393864, time = 0.053826
+   Center-gravity method mean = 5.399467, sigma = 0.430163, error = 0.048973, time = 0.023896
+
+For k = 2, n = 10000, uniform data
+   Brute-force mex mean MDKS1s = 1.763000, sigma MDKS1s = 0.330647, time = 2.930891
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 1.763000, sigma MDKS1s = 0.330647, time = 0.268908
+   Center-gravity method mean = 1.727600, sigma = 0.317693, error = -0.020079, time = 0.035756
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 1.763000, sigma MDKS1s = 0.330647, time = 0.289590
+   Center-gravity method mean = 1.727600, sigma = 0.317693, error = -0.020079, time = 0.035751
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 1.763000, sigma MDKS1s = 0.330647, time = 0.442294
+   Center-gravity method mean = 1.674200, sigma = 0.324403, error = -0.050369, time = 0.018684
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 1.763000, sigma MDKS1s = 0.330647, time = 0.443796
+   Center-gravity method mean = 1.674200, sigma = 0.324403, error = -0.050369, time = 0.018679
+-->Depth = 6, Sum method = 1
+   Brick method mean MDKS1s = 1.763000, sigma MDKS1s = 0.330647, time = 0.220752
+   Center-gravity method mean = 1.817400, sigma = 0.289375, error = 0.030856, time = 0.072829
+-->Depth = 6, Sum method = 2
+   Brick method mean MDKS1s = 1.763000, sigma MDKS1s = 0.330647, time = 0.274294
+   Center-gravity method mean = 1.817400, sigma = 0.289375, error = 0.030856, time = 0.072766
+-->Depth = 7, Sum method = 1
+   Brick method mean MDKS1s = 1.763000, sigma MDKS1s = 0.330647, time = 0.242656
+   Center-gravity method mean = 1.968400, sigma = 0.283170, error = 0.116506, time = 0.146517
+-->Depth = 7, Sum method = 2
+   Brick method mean MDKS1s = 1.763000, sigma MDKS1s = 0.330647, time = 0.321989
+   Center-gravity method mean = 1.968400, sigma = 0.283170, error = 0.116506, time = 0.146673
+
+For k = 2, n = 10000, unlike data
+   Brute-force mex mean MDKS1s = 8.239600, sigma MDKS1s = 0.515906, time = 2.982013
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 8.239600, sigma MDKS1s = 0.515906, time = 0.268716
+   Center-gravity method mean = 8.231200, sigma = 0.513124, error = -0.001019, time = 0.035796
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 8.239600, sigma MDKS1s = 0.515906, time = 0.289566
+   Center-gravity method mean = 8.231200, sigma = 0.513124, error = -0.001019, time = 0.035780
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 8.239600, sigma MDKS1s = 0.515906, time = 0.442275
+   Center-gravity method mean = 8.101400, sigma = 0.495803, error = -0.016773, time = 0.018761
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 8.239600, sigma MDKS1s = 0.515906, time = 0.444362
+   Center-gravity method mean = 8.101400, sigma = 0.495803, error = -0.016773, time = 0.018717
+-->Depth = 6, Sum method = 1
+   Brick method mean MDKS1s = 8.239600, sigma MDKS1s = 0.515906, time = 0.215616
+   Center-gravity method mean = 8.338000, sigma = 0.526195, error = 0.011942, time = 0.072694
+-->Depth = 6, Sum method = 2
+   Brick method mean MDKS1s = 8.239600, sigma MDKS1s = 0.515906, time = 0.270596
+   Center-gravity method mean = 8.338000, sigma = 0.526195, error = 0.011942, time = 0.072716
+-->Depth = 7, Sum method = 1
+   Brick method mean MDKS1s = 8.239600, sigma MDKS1s = 0.515906, time = 0.238922
+   Center-gravity method mean = 8.525600, sigma = 0.502192, error = 0.034710, time = 0.146163
+-->Depth = 7, Sum method = 2
+   Brick method mean MDKS1s = 8.239600, sigma MDKS1s = 0.515906, time = 0.317986
+   Center-gravity method mean = 8.525600, sigma = 0.502192, error = 0.034710, time = 0.146559
+
+For k = 2, n = 32000, uniform data
+   Brute-force mex mean MDKS1s = 2.082152, sigma MDKS1s = 0.407068, time = 29.923251
+-->Depth = 6, Sum method = 1
+   Brick method mean MDKS1s = 2.082152, sigma MDKS1s = 0.407068, time = 1.498031
+   Center-gravity method mean = 2.104140, sigma = 0.429440, error = 0.010560, time = 0.232098
+-->Depth = 6, Sum method = 2
+   Brick method mean MDKS1s = 2.082152, sigma MDKS1s = 0.407068, time = 1.651730
+   Center-gravity method mean = 2.104140, sigma = 0.429440, error = 0.010560, time = 0.232285
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 2.082152, sigma MDKS1s = 0.407068, time = 2.315977
+   Center-gravity method mean = 2.011343, sigma = 0.429297, error = -0.034008, time = 0.112072
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 2.082152, sigma MDKS1s = 0.407068, time = 2.378574
+   Center-gravity method mean = 2.011343, sigma = 0.429297, error = -0.034008, time = 0.112088
+-->Depth = 7, Sum method = 1
+   Brick method mean MDKS1s = 2.082152, sigma MDKS1s = 0.407068, time = 1.233448
+   Center-gravity method mean = 2.233832, sigma = 0.429118, error = 0.072848, time = 0.475079
+-->Depth = 7, Sum method = 2
+   Brick method mean MDKS1s = 2.082152, sigma MDKS1s = 0.407068, time = 1.587713
+   Center-gravity method mean = 2.233832, sigma = 0.429118, error = 0.072848, time = 0.475196
+-->Depth = 8, Sum method = 1
+   Brick method mean MDKS1s = 2.082152, sigma MDKS1s = 0.407068, time = 1.418712
+   Center-gravity method mean = 2.315448, sigma = 0.464826, error = 0.112046, time = 0.935808
+-->Depth = 8, Sum method = 2
+   Brick method mean MDKS1s = 2.082152, sigma MDKS1s = 0.407068, time = 1.940114
+   Center-gravity method mean = 2.315448, sigma = 0.464826, error = 0.112046, time = 0.935787
+
+For k = 2, n = 32000, unlike data
+   Brute-force mex mean MDKS1s = 14.298909, sigma MDKS1s = 0.480461, time = 30.456546
+-->Depth = 6, Sum method = 1
+   Brick method mean MDKS1s = 14.298909, sigma MDKS1s = 0.480461, time = 1.495833
+   Center-gravity method mean = 14.285120, sigma = 0.493447, error = -0.000964, time = 0.232818
+-->Depth = 6, Sum method = 2
+   Brick method mean MDKS1s = 14.298909, sigma MDKS1s = 0.480461, time = 1.650230
+   Center-gravity method mean = 14.285120, sigma = 0.493447, error = -0.000964, time = 0.232285
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 14.298909, sigma MDKS1s = 0.480461, time = 2.314082
+   Center-gravity method mean = 14.184125, sigma = 0.551393, error = -0.008028, time = 0.112013
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 14.298909, sigma MDKS1s = 0.480461, time = 2.378503
+   Center-gravity method mean = 14.184125, sigma = 0.551393, error = -0.008028, time = 0.112105
+-->Depth = 7, Sum method = 1
+   Brick method mean MDKS1s = 14.298909, sigma MDKS1s = 0.480461, time = 1.234050
+   Center-gravity method mean = 14.382017, sigma = 0.456674, error = 0.005812, time = 0.474821
+-->Depth = 7, Sum method = 2
+   Brick method mean MDKS1s = 14.298909, sigma MDKS1s = 0.480461, time = 1.588111
+   Center-gravity method mean = 14.382017, sigma = 0.456674, error = 0.005812, time = 0.474925
+-->Depth = 8, Sum method = 1
+   Brick method mean MDKS1s = 14.298909, sigma MDKS1s = 0.480461, time = 1.418295
+   Center-gravity method mean = 14.467360, sigma = 0.426437, error = 0.011781, time = 0.934751
+-->Depth = 8, Sum method = 2
+   Brick method mean MDKS1s = 14.298909, sigma MDKS1s = 0.480461, time = 1.933567
+   Center-gravity method mean = 14.467360, sigma = 0.426437, error = 0.011781, time = 0.935688
+
+For k = 2, n = 100000, uniform data
+   Brute-force mex mean MDKS1s = 1.698143, sigma MDKS1s = 0.260931, time = 291.871350
+-->Depth = 8, Sum method = 1
+   Brick method mean MDKS1s = 1.698143, sigma MDKS1s = 0.260931, time = 12.139936
+   Center-gravity method mean = 1.860684, sigma = 0.159399, error = 0.095717, time = 3.040018
+-->Depth = 8, Sum method = 2
+   Brick method mean MDKS1s = 1.698143, sigma MDKS1s = 0.260931, time = 17.362789
+   Center-gravity method mean = 1.860684, sigma = 0.159399, error = 0.095717, time = 3.041174
+-->Depth = 7, Sum method = 1
+   Brick method mean MDKS1s = 1.698143, sigma MDKS1s = 0.260931, time = 10.525584
+   Center-gravity method mean = 1.684862, sigma = 0.236584, error = -0.007821, time = 1.464499
+-->Depth = 7, Sum method = 2
+   Brick method mean MDKS1s = 1.698143, sigma MDKS1s = 0.260931, time = 12.839406
+   Center-gravity method mean = 1.684862, sigma = 0.236584, error = -0.007821, time = 1.464055
+-->Depth = 9, Sum method = 1
+   Brick method mean MDKS1s = 1.698143, sigma MDKS1s = 0.260931, time = 16.245536
+   Center-gravity method mean = 1.935946, sigma = 0.122850, error = 0.140037, time = 6.517597
+-->Depth = 9, Sum method = 2
+   Brick method mean MDKS1s = 1.698143, sigma MDKS1s = 0.260931, time = 23.390077
+   Center-gravity method mean = 1.935946, sigma = 0.122850, error = 0.140037, time = 6.515548
+-->Depth = 10, Sum method = 1
+   Brick method mean MDKS1s = 1.698143, sigma MDKS1s = 0.260931, time = 19.850221
+   Center-gravity method mean = 1.804396, sigma = 0.123219, error = 0.062570, time = 13.953698
+-->Depth = 10, Sum method = 2
+   Brick method mean MDKS1s = 1.698143, sigma MDKS1s = 0.260931, time = 27.706420
+   Center-gravity method mean = 1.804396, sigma = 0.123219, error = 0.062570, time = 13.930685
+
+For k = 2, n = 100000, unlike data
+   Brute-force mex mean MDKS1s = 24.696124, sigma MDKS1s = 0.949259, time = 297.308262
+-->Depth = 8, Sum method = 1
+   Brick method mean MDKS1s = 24.696124, sigma MDKS1s = 0.949259, time = 12.357380
+   Center-gravity method mean = 24.889023, sigma = 1.010355, error = 0.007811, time = 3.060160
+-->Depth = 8, Sum method = 2
+   Brick method mean MDKS1s = 24.696124, sigma MDKS1s = 0.949259, time = 17.572357
+   Center-gravity method mean = 24.889023, sigma = 1.010355, error = 0.007811, time = 3.058895
+-->Depth = 7, Sum method = 1
+   Brick method mean MDKS1s = 24.696124, sigma MDKS1s = 0.949259, time = 11.048231
+   Center-gravity method mean = 24.763164, sigma = 1.043646, error = 0.002715, time = 1.473381
+-->Depth = 7, Sum method = 2
+   Brick method mean MDKS1s = 24.696124, sigma MDKS1s = 0.949259, time = 13.203404
+   Center-gravity method mean = 24.763164, sigma = 1.043646, error = 0.002715, time = 1.471399
+-->Depth = 9, Sum method = 1
+   Brick method mean MDKS1s = 24.696124, sigma MDKS1s = 0.949259, time = 16.318313
+   Center-gravity method mean = 24.961122, sigma = 0.992622, error = 0.010730, time = 6.517916
+-->Depth = 9, Sum method = 2
+   Brick method mean MDKS1s = 24.696124, sigma MDKS1s = 0.949259, time = 23.359249
+   Center-gravity method mean = 24.961122, sigma = 0.992622, error = 0.010730, time = 6.517719
+-->Depth = 10, Sum method = 1
+   Brick method mean MDKS1s = 24.696124, sigma MDKS1s = 0.949259, time = 19.835942
+   Center-gravity method mean = 24.809966, sigma = 0.996475, error = 0.004610, time = 13.957204
+-->Depth = 10, Sum method = 2
+   Brick method mean MDKS1s = 24.696124, sigma MDKS1s = 0.949259, time = 27.562697
+   Center-gravity method mean = 24.809966, sigma = 0.996475, error = 0.004610, time = 13.959579
+
+For k = 3, n = 320, uniform data
+   Brute-force mex mean MDKS1s = 1.792768, sigma MDKS1s = 0.359508, time = 0.004468
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 1.792768, sigma MDKS1s = 0.359508, time = 0.005122
+   Center-gravity method mean = 1.287975, sigma = 0.399014, error = -0.281572, time = 0.000223
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 1.792768, sigma MDKS1s = 0.359508, time = 0.004971
+   Center-gravity method mean = 1.287975, sigma = 0.399014, error = -0.281572, time = 0.000223
+-->Depth = 0, Sum method = 1
+   Brick method mean MDKS1s = 1.792768, sigma MDKS1s = 0.359508, time = 0.005123
+   Center-gravity method mean = 1.287975, sigma = 0.399014, error = -0.281572, time = 0.000220
+-->Depth = 0, Sum method = 2
+   Brick method mean MDKS1s = 1.792768, sigma MDKS1s = 0.359508, time = 0.004962
+   Center-gravity method mean = 1.287975, sigma = 0.399014, error = -0.281572, time = 0.000223
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 1.792768, sigma MDKS1s = 0.359508, time = 0.003239
+   Center-gravity method mean = 1.737425, sigma = 0.409690, error = -0.030870, time = 0.000597
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 1.792768, sigma MDKS1s = 0.359508, time = 0.003329
+   Center-gravity method mean = 1.737425, sigma = 0.409690, error = -0.030870, time = 0.000594
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 1.792768, sigma MDKS1s = 0.359508, time = 0.003672
+   Center-gravity method mean = 3.009747, sigma = 0.515095, error = 0.678828, time = 0.001889
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 1.792768, sigma MDKS1s = 0.359508, time = 0.003840
+   Center-gravity method mean = 3.009747, sigma = 0.515095, error = 0.678828, time = 0.001879
+
+For k = 3, n = 320, unlike data
+   Brute-force mex mean MDKS1s = 2.711232, sigma MDKS1s = 0.424138, time = 0.004545
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 2.711232, sigma MDKS1s = 0.424138, time = 0.005150
+   Center-gravity method mean = 1.327106, sigma = 0.428957, error = -0.510515, time = 0.000227
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 2.711232, sigma MDKS1s = 0.424138, time = 0.004991
+   Center-gravity method mean = 1.327106, sigma = 0.428957, error = -0.510515, time = 0.000225
+-->Depth = 0, Sum method = 1
+   Brick method mean MDKS1s = 2.711232, sigma MDKS1s = 0.424138, time = 0.005140
+   Center-gravity method mean = 1.327106, sigma = 0.428957, error = -0.510515, time = 0.000224
+-->Depth = 0, Sum method = 2
+   Brick method mean MDKS1s = 2.711232, sigma MDKS1s = 0.424138, time = 0.004992
+   Center-gravity method mean = 1.327106, sigma = 0.428957, error = -0.510515, time = 0.000229
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 2.711232, sigma MDKS1s = 0.424138, time = 0.003243
+   Center-gravity method mean = 2.298119, sigma = 0.454279, error = -0.152371, time = 0.000599
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 2.711232, sigma MDKS1s = 0.424138, time = 0.003343
+   Center-gravity method mean = 2.298119, sigma = 0.454279, error = -0.152371, time = 0.000596
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.711232, sigma MDKS1s = 0.424138, time = 0.003696
+   Center-gravity method mean = 3.921504, sigma = 0.604141, error = 0.446392, time = 0.001895
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.711232, sigma MDKS1s = 0.424138, time = 0.003851
+   Center-gravity method mean = 3.921504, sigma = 0.604141, error = 0.446392, time = 0.001886
+
+For k = 3, n = 1000, uniform data
+   Brute-force mex mean MDKS1s = 1.992867, sigma MDKS1s = 0.383550, time = 0.042585
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 1.992867, sigma MDKS1s = 0.383550, time = 0.025433
+   Center-gravity method mean = 1.848035, sigma = 0.366262, error = -0.072675, time = 0.001733
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 1.992867, sigma MDKS1s = 0.383550, time = 0.025293
+   Center-gravity method mean = 1.848035, sigma = 0.366262, error = -0.072675, time = 0.001725
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 1.992867, sigma MDKS1s = 0.383550, time = 0.048407
+   Center-gravity method mean = 1.380018, sigma = 0.427266, error = -0.307521, time = 0.000656
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 1.992867, sigma MDKS1s = 0.383550, time = 0.046933
+   Center-gravity method mean = 1.380018, sigma = 0.427266, error = -0.307521, time = 0.000661
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 1.992867, sigma MDKS1s = 0.383550, time = 0.021701
+   Center-gravity method mean = 2.458038, sigma = 0.433889, error = 0.233418, time = 0.006690
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 1.992867, sigma MDKS1s = 0.383550, time = 0.023875
+   Center-gravity method mean = 2.458038, sigma = 0.433889, error = 0.233418, time = 0.006667
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 1.992867, sigma MDKS1s = 0.383550, time = 0.026801
+   Center-gravity method mean = 3.715360, sigma = 0.505795, error = 0.864329, time = 0.017824
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 1.992867, sigma MDKS1s = 0.383550, time = 0.030597
+   Center-gravity method mean = 3.715360, sigma = 0.505795, error = 0.864329, time = 0.017803
+
+For k = 3, n = 1000, unlike data
+   Brute-force mex mean MDKS1s = 4.106534, sigma MDKS1s = 0.484591, time = 0.043340
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 4.106534, sigma MDKS1s = 0.484591, time = 0.025501
+   Center-gravity method mean = 3.193584, sigma = 0.490176, error = -0.222316, time = 0.001745
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 4.106534, sigma MDKS1s = 0.484591, time = 0.025360
+   Center-gravity method mean = 3.193584, sigma = 0.490176, error = -0.222316, time = 0.001732
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 4.106534, sigma MDKS1s = 0.484591, time = 0.048770
+   Center-gravity method mean = 1.326259, sigma = 0.374539, error = -0.677037, time = 0.000668
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 4.106534, sigma MDKS1s = 0.484591, time = 0.047228
+   Center-gravity method mean = 1.326259, sigma = 0.374539, error = -0.677037, time = 0.000671
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 4.106534, sigma MDKS1s = 0.484591, time = 0.021810
+   Center-gravity method mean = 4.477469, sigma = 0.540166, error = 0.090328, time = 0.006699
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 4.106534, sigma MDKS1s = 0.484591, time = 0.023921
+   Center-gravity method mean = 4.477469, sigma = 0.540166, error = 0.090328, time = 0.006689
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 4.106534, sigma MDKS1s = 0.484591, time = 0.026786
+   Center-gravity method mean = 5.914408, sigma = 0.608948, error = 0.440243, time = 0.017824
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 4.106534, sigma MDKS1s = 0.484591, time = 0.030558
+   Center-gravity method mean = 5.914408, sigma = 0.608948, error = 0.440243, time = 0.017813
+
+For k = 3, n = 3200, uniform data
+   Brute-force mex mean MDKS1s = 1.996162, sigma MDKS1s = 0.329999, time = 0.430394
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 1.996162, sigma MDKS1s = 0.329999, time = 0.156657
+   Center-gravity method mean = 2.039826, sigma = 0.318564, error = 0.021874, time = 0.020543
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 1.996162, sigma MDKS1s = 0.329999, time = 0.162325
+   Center-gravity method mean = 2.039826, sigma = 0.318564, error = 0.021874, time = 0.020538
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 1.996162, sigma MDKS1s = 0.329999, time = 0.248265
+   Center-gravity method mean = 1.840776, sigma = 0.342558, error = -0.077843, time = 0.005398
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 1.996162, sigma MDKS1s = 0.329999, time = 0.242439
+   Center-gravity method mean = 1.840776, sigma = 0.342558, error = -0.077843, time = 0.005394
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 1.996162, sigma MDKS1s = 0.329999, time = 0.180879
+   Center-gravity method mean = 4.452651, sigma = 0.418151, error = 1.230606, time = 0.082614
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 1.996162, sigma MDKS1s = 0.329999, time = 0.196657
+   Center-gravity method mean = 4.452651, sigma = 0.418151, error = 1.230606, time = 0.082482
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 1.996162, sigma MDKS1s = 0.329999, time = 0.224335
+   Center-gravity method mean = 4.056141, sigma = 0.409679, error = 1.031970, time = 0.164102
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 1.996162, sigma MDKS1s = 0.329999, time = 0.256733
+   Center-gravity method mean = 4.056141, sigma = 0.409679, error = 1.031970, time = 0.164110
+
+For k = 3, n = 3200, unlike data
+   Brute-force mex mean MDKS1s = 6.558239, sigma MDKS1s = 0.429870, time = 0.438356
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 6.558239, sigma MDKS1s = 0.429870, time = 0.156844
+   Center-gravity method mean = 6.448991, sigma = 0.486832, error = -0.016658, time = 0.020585
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 6.558239, sigma MDKS1s = 0.429870, time = 0.162539
+   Center-gravity method mean = 6.448991, sigma = 0.486832, error = -0.016658, time = 0.020553
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 6.558239, sigma MDKS1s = 0.429870, time = 0.249078
+   Center-gravity method mean = 4.966364, sigma = 0.512802, error = -0.242729, time = 0.005393
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 6.558239, sigma MDKS1s = 0.429870, time = 0.243298
+   Center-gravity method mean = 4.966364, sigma = 0.512802, error = -0.242729, time = 0.005378
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 6.558239, sigma MDKS1s = 0.429870, time = 0.181090
+   Center-gravity method mean = 8.788807, sigma = 0.639790, error = 0.340117, time = 0.082454
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 6.558239, sigma MDKS1s = 0.429870, time = 0.196431
+   Center-gravity method mean = 8.788807, sigma = 0.639790, error = 0.340117, time = 0.082459
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 6.558239, sigma MDKS1s = 0.429870, time = 0.224253
+   Center-gravity method mean = 8.484928, sigma = 0.580561, error = 0.293782, time = 0.164144
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 6.558239, sigma MDKS1s = 0.429870, time = 0.255782
+   Center-gravity method mean = 8.484928, sigma = 0.580561, error = 0.293782, time = 0.164167
+
+For k = 3, n = 10000, uniform data
+   Brute-force mex mean MDKS1s = 2.174242, sigma MDKS1s = 0.350027, time = 4.179288
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.174242, sigma MDKS1s = 0.350027, time = 1.419256
+   Center-gravity method mean = 2.170000, sigma = 0.392977, error = -0.001951, time = 0.063362
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.174242, sigma MDKS1s = 0.350027, time = 1.397955
+   Center-gravity method mean = 2.170000, sigma = 0.392977, error = -0.001951, time = 0.063182
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 2.174242, sigma MDKS1s = 0.350027, time = 2.587214
+   Center-gravity method mean = 1.958788, sigma = 0.334129, error = -0.099094, time = 0.017479
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 2.174242, sigma MDKS1s = 0.350027, time = 2.509331
+   Center-gravity method mean = 1.958788, sigma = 0.334129, error = -0.099094, time = 0.017502
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 2.174242, sigma MDKS1s = 0.350027, time = 1.133194
+   Center-gravity method mean = 2.923636, sigma = 0.456076, error = 0.344669, time = 0.270822
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 2.174242, sigma MDKS1s = 0.350027, time = 1.246951
+   Center-gravity method mean = 2.923636, sigma = 0.456076, error = 0.344669, time = 0.270638
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 2.174242, sigma MDKS1s = 0.350027, time = 1.370591
+   Center-gravity method mean = 5.818182, sigma = 0.442404, error = 1.675958, time = 0.813810
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 2.174242, sigma MDKS1s = 0.350027, time = 1.554962
+   Center-gravity method mean = 5.818182, sigma = 0.442404, error = 1.675958, time = 0.813792
+
+For k = 3, n = 10000, unlike data
+   Brute-force mex mean MDKS1s = 10.927576, sigma MDKS1s = 0.425698, time = 4.257329
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 10.927576, sigma MDKS1s = 0.425698, time = 1.424613
+   Center-gravity method mean = 10.769697, sigma = 0.421200, error = -0.014448, time = 0.063059
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 10.927576, sigma MDKS1s = 0.425698, time = 1.402358
+   Center-gravity method mean = 10.769697, sigma = 0.421200, error = -0.014448, time = 0.063012
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 10.927576, sigma MDKS1s = 0.425698, time = 2.599082
+   Center-gravity method mean = 8.098182, sigma = 0.372906, error = -0.258922, time = 0.017428
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 10.927576, sigma MDKS1s = 0.425698, time = 2.518639
+   Center-gravity method mean = 8.098182, sigma = 0.372906, error = -0.258922, time = 0.017419
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 10.927576, sigma MDKS1s = 0.425698, time = 1.140092
+   Center-gravity method mean = 11.551818, sigma = 0.406490, error = 0.057125, time = 0.271129
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 10.927576, sigma MDKS1s = 0.425698, time = 1.249935
+   Center-gravity method mean = 11.551818, sigma = 0.406490, error = 0.057125, time = 0.271313
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 10.927576, sigma MDKS1s = 0.425698, time = 1.371867
+   Center-gravity method mean = 14.437576, sigma = 0.647664, error = 0.321206, time = 0.813682
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 10.927576, sigma MDKS1s = 0.425698, time = 1.556454
+   Center-gravity method mean = 14.437576, sigma = 0.647664, error = 0.321206, time = 0.813965
+
+For k = 3, n = 32000, uniform data
+   Brute-force mex mean MDKS1s = 2.151656, sigma MDKS1s = 0.296278, time = 42.681922
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 2.151656, sigma MDKS1s = 0.296278, time = 8.356387
+   Center-gravity method mean = 2.209794, sigma = 0.285239, error = 0.027020, time = 0.855007
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 2.151656, sigma MDKS1s = 0.296278, time = 8.762246
+   Center-gravity method mean = 2.209794, sigma = 0.285239, error = 0.027020, time = 0.854343
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.151656, sigma MDKS1s = 0.296278, time = 13.425422
+   Center-gravity method mean = 2.091842, sigma = 0.227529, error = -0.027799, time = 0.198845
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.151656, sigma MDKS1s = 0.296278, time = 13.292289
+   Center-gravity method mean = 2.091842, sigma = 0.227529, error = -0.027799, time = 0.198758
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 2.151656, sigma MDKS1s = 0.296278, time = 8.809910
+   Center-gravity method mean = 6.030116, sigma = 0.344491, error = 1.802546, time = 3.607109
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 2.151656, sigma MDKS1s = 0.296278, time = 9.684012
+   Center-gravity method mean = 6.030116, sigma = 0.344491, error = 1.802546, time = 3.606414
+-->Depth = 6, Sum method = 1
+   Brick method mean MDKS1s = 2.151656, sigma MDKS1s = 0.296278, time = 16.559951
+   Center-gravity method mean = 6.450497, sigma = 0.334938, error = 1.997922, time = 8.730365
+-->Depth = 6, Sum method = 2
+   Brick method mean MDKS1s = 2.151656, sigma MDKS1s = 0.296278, time = 21.574135
+   Center-gravity method mean = 6.450497, sigma = 0.334938, error = 1.997922, time = 8.731442
+
+For k = 3, n = 32000, unlike data
+   Brute-force mex mean MDKS1s = 18.794151, sigma MDKS1s = 0.613822, time = 43.481649
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 18.794151, sigma MDKS1s = 0.613822, time = 8.358769
+   Center-gravity method mean = 18.558805, sigma = 0.682044, error = -0.012522, time = 0.853624
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 18.794151, sigma MDKS1s = 0.613822, time = 8.772769
+   Center-gravity method mean = 18.558805, sigma = 0.682044, error = -0.012522, time = 0.852996
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 18.794151, sigma MDKS1s = 0.613822, time = 13.337035
+   Center-gravity method mean = 18.458182, sigma = 0.757667, error = -0.017876, time = 0.195829
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 18.794151, sigma MDKS1s = 0.613822, time = 13.214013
+   Center-gravity method mean = 18.458182, sigma = 0.757667, error = -0.017876, time = 0.195787
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 18.794151, sigma MDKS1s = 0.613822, time = 8.833064
+   Center-gravity method mean = 22.364034, sigma = 0.873416, error = 0.189946, time = 3.603350
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 18.794151, sigma MDKS1s = 0.613822, time = 9.677443
+   Center-gravity method mean = 22.364034, sigma = 0.873416, error = 0.189946, time = 3.604785
+-->Depth = 6, Sum method = 1
+   Brick method mean MDKS1s = 18.794151, sigma MDKS1s = 0.613822, time = 16.504470
+   Center-gravity method mean = 22.675406, sigma = 0.966383, error = 0.206514, time = 8.704414
+-->Depth = 6, Sum method = 2
+   Brick method mean MDKS1s = 18.794151, sigma MDKS1s = 0.613822, time = 21.273657
+   Center-gravity method mean = 22.675406, sigma = 0.966383, error = 0.206514, time = 8.722263
+
+For k = 3, n = 100000, uniform data
+   Brute-force mex mean MDKS1s = 2.301506, sigma MDKS1s = 0.114136, time = 416.709052
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 2.301506, sigma MDKS1s = 0.114136, time = 104.886079
+   Center-gravity method mean = 3.097767, sigma = 0.360892, error = 0.345974, time = 10.825080
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 2.301506, sigma MDKS1s = 0.114136, time = 118.638020
+   Center-gravity method mean = 3.097767, sigma = 0.360892, error = 0.345974, time = 10.830356
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 2.301506, sigma MDKS1s = 0.114136, time = 136.035945
+   Center-gravity method mean = 2.226243, sigma = 0.229489, error = -0.032701, time = 2.555558
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 2.301506, sigma MDKS1s = 0.114136, time = 138.602894
+   Center-gravity method mean = 2.226243, sigma = 0.229489, error = -0.032701, time = 2.554323
+-->Depth = 6, Sum method = 1
+   Brick method mean MDKS1s = 2.301506, sigma MDKS1s = 0.114136, time = 152.942353
+   Center-gravity method mean = 9.024508, sigma = 0.503922, error = 2.921132, time = 42.728980
+-->Depth = 6, Sum method = 2
+   Brick method mean MDKS1s = 2.301506, sigma MDKS1s = 0.114136, time = 192.305720
+   Center-gravity method mean = 9.024508, sigma = 0.503922, error = 2.921132, time = 42.704085
+-->Depth = 7, Sum method = 1
+   Brick method mean MDKS1s = 2.301506, sigma MDKS1s = 0.114136, time = 195.376326
+   Center-gravity method mean = 6.246763, sigma = 0.521501, error = 1.714207, time = 124.426715
+-->Depth = 7, Sum method = 2
+   Brick method mean MDKS1s = 2.301506, sigma MDKS1s = 0.114136, time = 240.811643
+   Center-gravity method mean = 6.246763, sigma = 0.521501, error = 1.714207, time = 124.454702
+
+For k = 3, n = 100000, unlike data
+   Brute-force mex mean MDKS1s = 32.198944, sigma MDKS1s = 0.541292, time = 424.739772
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 32.198944, sigma MDKS1s = 0.541292, time = 104.346523
+   Center-gravity method mean = 33.408199, sigma = 0.818192, error = 0.037556, time = 10.816432
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 32.198944, sigma MDKS1s = 0.541292, time = 118.082210
+   Center-gravity method mean = 33.408199, sigma = 0.818192, error = 0.037556, time = 10.820664
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 32.198944, sigma MDKS1s = 0.541292, time = 135.088222
+   Center-gravity method mean = 32.119254, sigma = 0.453696, error = -0.002475, time = 2.531418
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 32.198944, sigma MDKS1s = 0.541292, time = 137.638591
+   Center-gravity method mean = 32.119254, sigma = 0.453696, error = -0.002475, time = 2.529712
+-->Depth = 6, Sum method = 1
+   Brick method mean MDKS1s = 32.198944, sigma MDKS1s = 0.541292, time = 151.846463
+   Center-gravity method mean = 38.826445, sigma = 0.750786, error = 0.205830, time = 42.632831
+-->Depth = 6, Sum method = 2
+   Brick method mean MDKS1s = 32.198944, sigma MDKS1s = 0.541292, time = 190.985276
+   Center-gravity method mean = 38.826445, sigma = 0.750786, error = 0.205830, time = 42.604554
+-->Depth = 7, Sum method = 1
+   Brick method mean MDKS1s = 32.198944, sigma MDKS1s = 0.541292, time = 195.228869
+   Center-gravity method mean = 36.095502, sigma = 0.529649, error = 0.121015, time = 124.521592
+-->Depth = 7, Sum method = 2
+   Brick method mean MDKS1s = 32.198944, sigma MDKS1s = 0.541292, time = 239.415773
+   Center-gravity method mean = 36.095502, sigma = 0.529649, error = 0.121015, time = 124.626794
+
+For k = 4, n = 320, uniform data
+   Brute-force mex mean MDKS1s = 1.805625, sigma MDKS1s = 0.299674, time = 0.006263
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 1.805625, sigma MDKS1s = 0.299674, time = 0.007339
+   Center-gravity method mean = 1.557980, sigma = 0.353165, error = -0.137152, time = 0.000390
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 1.805625, sigma MDKS1s = 0.299674, time = 0.007198
+   Center-gravity method mean = 1.557980, sigma = 0.353165, error = -0.137152, time = 0.000389
+-->Depth = 0, Sum method = 1
+   Brick method mean MDKS1s = 1.805625, sigma MDKS1s = 0.299674, time = 0.007323
+   Center-gravity method mean = 1.557980, sigma = 0.353165, error = -0.137152, time = 0.000379
+-->Depth = 0, Sum method = 2
+   Brick method mean MDKS1s = 1.805625, sigma MDKS1s = 0.299674, time = 0.007183
+   Center-gravity method mean = 1.557980, sigma = 0.353165, error = -0.137152, time = 0.000384
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 1.805625, sigma MDKS1s = 0.299674, time = 0.006933
+   Center-gravity method mean = 3.754358, sigma = 0.541388, error = 1.079257, time = 0.002201
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 1.805625, sigma MDKS1s = 0.299674, time = 0.006742
+   Center-gravity method mean = 3.754358, sigma = 0.541388, error = 1.079257, time = 0.002194
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 1.805625, sigma MDKS1s = 0.299674, time = 0.007719
+   Center-gravity method mean = 4.995376, sigma = 0.681396, error = 1.766563, time = 0.005271
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 1.805625, sigma MDKS1s = 0.299674, time = 0.007635
+   Center-gravity method mean = 4.995376, sigma = 0.681396, error = 1.766563, time = 0.005242
+
+For k = 4, n = 320, unlike data
+   Brute-force mex mean MDKS1s = 2.916392, sigma MDKS1s = 0.434109, time = 0.006130
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 2.916392, sigma MDKS1s = 0.434109, time = 0.007408
+   Center-gravity method mean = 1.564689, sigma = 0.389452, error = -0.463485, time = 0.000392
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 2.916392, sigma MDKS1s = 0.434109, time = 0.007278
+   Center-gravity method mean = 1.564689, sigma = 0.389452, error = -0.463485, time = 0.000397
+-->Depth = 0, Sum method = 1
+   Brick method mean MDKS1s = 2.916392, sigma MDKS1s = 0.434109, time = 0.007388
+   Center-gravity method mean = 1.564689, sigma = 0.389452, error = -0.463485, time = 0.000381
+-->Depth = 0, Sum method = 2
+   Brick method mean MDKS1s = 2.916392, sigma MDKS1s = 0.434109, time = 0.007264
+   Center-gravity method mean = 1.564689, sigma = 0.389452, error = -0.463485, time = 0.000387
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 2.916392, sigma MDKS1s = 0.434109, time = 0.006991
+   Center-gravity method mean = 4.372072, sigma = 0.521707, error = 0.499137, time = 0.002220
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 2.916392, sigma MDKS1s = 0.434109, time = 0.006774
+   Center-gravity method mean = 4.372072, sigma = 0.521707, error = 0.499137, time = 0.002215
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.916392, sigma MDKS1s = 0.434109, time = 0.007751
+   Center-gravity method mean = 5.923903, sigma = 0.693834, error = 1.031244, time = 0.005275
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.916392, sigma MDKS1s = 0.434109, time = 0.007645
+   Center-gravity method mean = 5.923903, sigma = 0.693834, error = 1.031244, time = 0.005273
+
+For k = 4, n = 1000, uniform data
+   Brute-force mex mean MDKS1s = 2.039669, sigma MDKS1s = 0.266951, time = 0.056869
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 2.039669, sigma MDKS1s = 0.266951, time = 0.046264
+   Center-gravity method mean = 2.200629, sigma = 0.343573, error = 0.078915, time = 0.007125
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 2.039669, sigma MDKS1s = 0.266951, time = 0.047230
+   Center-gravity method mean = 2.200629, sigma = 0.343573, error = 0.078915, time = 0.007129
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 2.039669, sigma MDKS1s = 0.266951, time = 0.068011
+   Center-gravity method mean = 1.657350, sigma = 0.386282, error = -0.187442, time = 0.001135
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 2.039669, sigma MDKS1s = 0.266951, time = 0.066558
+   Center-gravity method mean = 1.657350, sigma = 0.386282, error = -0.187442, time = 0.001139
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.039669, sigma MDKS1s = 0.266951, time = 0.054945
+   Center-gravity method mean = 8.089422, sigma = 0.756142, error = 2.966047, time = 0.031010
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.039669, sigma MDKS1s = 0.266951, time = 0.054229
+   Center-gravity method mean = 8.089422, sigma = 0.756142, error = 2.966047, time = 0.030978
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 2.039669, sigma MDKS1s = 0.266951, time = 0.066356
+   Center-gravity method mean = 4.709580, sigma = 0.524169, error = 1.308992, time = 0.051889
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 2.039669, sigma MDKS1s = 0.266951, time = 0.069825
+   Center-gravity method mean = 4.709580, sigma = 0.524169, error = 1.308992, time = 0.051882
+
+For k = 4, n = 1000, unlike data
+   Brute-force mex mean MDKS1s = 4.499289, sigma MDKS1s = 0.462232, time = 0.057882
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 4.499289, sigma MDKS1s = 0.462232, time = 0.046295
+   Center-gravity method mean = 3.598672, sigma = 0.488928, error = -0.200169, time = 0.007181
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 4.499289, sigma MDKS1s = 0.462232, time = 0.047201
+   Center-gravity method mean = 3.598672, sigma = 0.488928, error = -0.200169, time = 0.007213
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 4.499289, sigma MDKS1s = 0.462232, time = 0.068414
+   Center-gravity method mean = 1.647230, sigma = 0.410668, error = -0.633891, time = 0.001143
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 4.499289, sigma MDKS1s = 0.462232, time = 0.066891
+   Center-gravity method mean = 1.647230, sigma = 0.410668, error = -0.633891, time = 0.001148
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 4.499289, sigma MDKS1s = 0.462232, time = 0.054757
+   Center-gravity method mean = 10.195183, sigma = 0.864660, error = 1.265954, time = 0.030948
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 4.499289, sigma MDKS1s = 0.462232, time = 0.054086
+   Center-gravity method mean = 10.195183, sigma = 0.864660, error = 1.265954, time = 0.030942
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 4.499289, sigma MDKS1s = 0.462232, time = 0.066112
+   Center-gravity method mean = 7.139474, sigma = 0.669205, error = 0.586801, time = 0.051744
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 4.499289, sigma MDKS1s = 0.462232, time = 0.069640
+   Center-gravity method mean = 7.139474, sigma = 0.669205, error = 0.586801, time = 0.051754
+
+For k = 4, n = 3200, uniform data
+   Brute-force mex mean MDKS1s = 2.149650, sigma MDKS1s = 0.358946, time = 0.572359
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 2.149650, sigma MDKS1s = 0.358946, time = 0.396137
+   Center-gravity method mean = 2.081886, sigma = 0.404027, error = -0.031523, time = 0.022017
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 2.149650, sigma MDKS1s = 0.358946, time = 0.393685
+   Center-gravity method mean = 2.081886, sigma = 0.404027, error = -0.031523, time = 0.021985
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 2.149650, sigma MDKS1s = 0.358946, time = 0.701757
+   Center-gravity method mean = 1.570593, sigma = 0.392048, error = -0.269373, time = 0.003917
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 2.149650, sigma MDKS1s = 0.358946, time = 0.672991
+   Center-gravity method mean = 1.570593, sigma = 0.392048, error = -0.269373, time = 0.003919
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.149650, sigma MDKS1s = 0.358946, time = 0.434465
+   Center-gravity method mean = 9.386843, sigma = 0.738961, error = 3.366684, time = 0.165943
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.149650, sigma MDKS1s = 0.358946, time = 0.423418
+   Center-gravity method mean = 9.386843, sigma = 0.738961, error = 3.366684, time = 0.165963
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 2.149650, sigma MDKS1s = 0.358946, time = 0.531066
+   Center-gravity method mean = 8.673843, sigma = 0.905985, error = 3.035003, time = 0.374636
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 2.149650, sigma MDKS1s = 0.358946, time = 0.550034
+   Center-gravity method mean = 8.673843, sigma = 0.905985, error = 3.035003, time = 0.374717
+
+For k = 4, n = 3200, unlike data
+   Brute-force mex mean MDKS1s = 7.505984, sigma MDKS1s = 0.472476, time = 0.583253
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 7.505984, sigma MDKS1s = 0.472476, time = 0.396721
+   Center-gravity method mean = 5.286530, sigma = 0.515190, error = -0.295691, time = 0.022107
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 7.505984, sigma MDKS1s = 0.472476, time = 0.394267
+   Center-gravity method mean = 5.286530, sigma = 0.515190, error = -0.295691, time = 0.022114
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 7.505984, sigma MDKS1s = 0.472476, time = 0.705302
+   Center-gravity method mean = 1.563114, sigma = 0.377250, error = -0.791751, time = 0.003908
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 7.505984, sigma MDKS1s = 0.472476, time = 0.676877
+   Center-gravity method mean = 1.563114, sigma = 0.377250, error = -0.791751, time = 0.003917
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 7.505984, sigma MDKS1s = 0.472476, time = 0.434470
+   Center-gravity method mean = 13.927511, sigma = 0.778979, error = 0.855521, time = 0.165796
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 7.505984, sigma MDKS1s = 0.472476, time = 0.421967
+   Center-gravity method mean = 13.927511, sigma = 0.778979, error = 0.855521, time = 0.165798
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 7.505984, sigma MDKS1s = 0.472476, time = 0.529290
+   Center-gravity method mean = 13.413498, sigma = 0.999187, error = 0.787041, time = 0.374089
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 7.505984, sigma MDKS1s = 0.472476, time = 0.546806
+   Center-gravity method mean = 13.413498, sigma = 0.999187, error = 0.787041, time = 0.374087
+
+For k = 4, n = 10000, uniform data
+   Brute-force mex mean MDKS1s = 2.330800, sigma MDKS1s = 0.403639, time = 5.534870
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 2.330800, sigma MDKS1s = 0.403639, time = 3.733443
+   Center-gravity method mean = 2.172800, sigma = 0.358673, error = -0.067788, time = 0.068092
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 2.330800, sigma MDKS1s = 0.403639, time = 3.655518
+   Center-gravity method mean = 2.172800, sigma = 0.358673, error = -0.067788, time = 0.067848
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 2.330800, sigma MDKS1s = 0.403639, time = 7.138914
+   Center-gravity method mean = 1.674000, sigma = 0.353718, error = -0.281792, time = 0.013037
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 2.330800, sigma MDKS1s = 0.403639, time = 6.917246
+   Center-gravity method mean = 1.674000, sigma = 0.353718, error = -0.281792, time = 0.013048
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.330800, sigma MDKS1s = 0.403639, time = 2.968541
+   Center-gravity method mean = 4.621200, sigma = 0.487471, error = 0.982667, time = 0.589859
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.330800, sigma MDKS1s = 0.403639, time = 3.044990
+   Center-gravity method mean = 4.621200, sigma = 0.487471, error = 0.982667, time = 0.590467
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 2.330800, sigma MDKS1s = 0.403639, time = 3.672793
+   Center-gravity method mean = 14.596400, sigma = 1.060754, error = 5.262399, time = 2.172491
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 2.330800, sigma MDKS1s = 0.403639, time = 3.829438
+   Center-gravity method mean = 14.596400, sigma = 1.060754, error = 5.262399, time = 2.174466
+
+For k = 4, n = 10000, unlike data
+   Brute-force mex mean MDKS1s = 12.426000, sigma MDKS1s = 0.465591, time = 5.612019
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 12.426000, sigma MDKS1s = 0.465591, time = 3.718538
+   Center-gravity method mean = 8.208000, sigma = 0.495421, error = -0.339450, time = 0.067468
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 12.426000, sigma MDKS1s = 0.465591, time = 3.637927
+   Center-gravity method mean = 8.208000, sigma = 0.495421, error = -0.339450, time = 0.067135
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 12.426000, sigma MDKS1s = 0.465591, time = 7.126340
+   Center-gravity method mean = 1.529600, sigma = 0.282186, error = -0.876903, time = 0.012988
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 12.426000, sigma MDKS1s = 0.465591, time = 6.906846
+   Center-gravity method mean = 1.529600, sigma = 0.282186, error = -0.876903, time = 0.013014
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 12.426000, sigma MDKS1s = 0.465591, time = 2.955308
+   Center-gravity method mean = 13.616000, sigma = 0.690754, error = 0.095767, time = 0.588779
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 12.426000, sigma MDKS1s = 0.465591, time = 3.025934
+   Center-gravity method mean = 13.616000, sigma = 0.690754, error = 0.095767, time = 0.588686
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 12.426000, sigma MDKS1s = 0.465591, time = 3.642123
+   Center-gravity method mean = 23.186800, sigma = 1.079956, error = 0.865991, time = 2.156673
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 12.426000, sigma MDKS1s = 0.465591, time = 3.791569
+   Center-gravity method mean = 23.186800, sigma = 1.079956, error = 0.865991, time = 2.155891
+
+For k = 4, n = 32000, uniform data
+   Brute-force mex mean MDKS1s = 2.533146, sigma MDKS1s = 0.433955, time = 56.268521
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.533146, sigma MDKS1s = 0.433955, time = 22.438560
+   Center-gravity method mean = 2.597832, sigma = 0.408806, error = 0.025536, time = 1.773954
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.533146, sigma MDKS1s = 0.433955, time = 22.668528
+   Center-gravity method mean = 2.597832, sigma = 0.408806, error = 0.025536, time = 1.773942
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 2.533146, sigma MDKS1s = 0.433955, time = 38.407136
+   Center-gravity method mean = 2.082738, sigma = 0.370049, error = -0.177806, time = 0.216811
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 2.533146, sigma MDKS1s = 0.433955, time = 37.832954
+   Center-gravity method mean = 2.082738, sigma = 0.370049, error = -0.177806, time = 0.216984
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 2.533146, sigma MDKS1s = 0.433955, time = 28.217031
+   Center-gravity method mean = 20.236415, sigma = 0.905090, error = 6.988651, time = 12.064041
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 2.533146, sigma MDKS1s = 0.433955, time = 30.800069
+   Center-gravity method mean = 20.236415, sigma = 0.905090, error = 6.988651, time = 12.063832
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 2.533146, sigma MDKS1s = 0.433955, time = 77.465937
+   Center-gravity method mean = 14.908185, sigma = 1.170490, error = 4.885246, time = 49.205426
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 2.533146, sigma MDKS1s = 0.433955, time = 88.418612
+   Center-gravity method mean = 14.908185, sigma = 1.170490, error = 4.885246, time = 49.238924
+
+For k = 4, n = 32000, unlike data
+   Brute-force mex mean MDKS1s = 21.691457, sigma MDKS1s = 0.492450, time = 57.309803
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 21.691457, sigma MDKS1s = 0.492450, time = 22.319111
+   Center-gravity method mean = 21.457468, sigma = 0.701537, error = -0.010787, time = 1.772536
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 21.691457, sigma MDKS1s = 0.492450, time = 22.636942
+   Center-gravity method mean = 21.457468, sigma = 0.701537, error = -0.010787, time = 1.771424
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 21.691457, sigma MDKS1s = 0.492450, time = 38.312670
+   Center-gravity method mean = 13.710291, sigma = 0.615527, error = -0.367941, time = 0.214632
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 21.691457, sigma MDKS1s = 0.492450, time = 37.845907
+   Center-gravity method mean = 13.710291, sigma = 0.615527, error = -0.367941, time = 0.214716
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 21.691457, sigma MDKS1s = 0.492450, time = 27.926244
+   Center-gravity method mean = 37.393445, sigma = 2.585274, error = 0.723879, time = 12.030054
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 21.691457, sigma MDKS1s = 0.492450, time = 30.413866
+   Center-gravity method mean = 37.393445, sigma = 2.585274, error = 0.723879, time = 12.029734
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 21.691457, sigma MDKS1s = 0.492450, time = 77.310637
+   Center-gravity method mean = 32.001327, sigma = 1.297344, error = 0.475296, time = 49.230756
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 21.691457, sigma MDKS1s = 0.492450, time = 87.820674
+   Center-gravity method mean = 32.001327, sigma = 1.297344, error = 0.475296, time = 49.182342
+
+For k = 4, n = 100000, uniform data
+   Brute-force mex mean MDKS1s = 2.274310, sigma MDKS1s = 0.307363, time = 550.993829
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 2.274310, sigma MDKS1s = 0.307363, time = 426.493073
+   Center-gravity method mean = 14.801357, sigma = 0.756557, error = 5.508065, time = 48.573173
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 2.274310, sigma MDKS1s = 0.307363, time = 452.643080
+   Center-gravity method mean = 14.801357, sigma = 0.756557, error = 5.508065, time = 48.601322
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.274310, sigma MDKS1s = 0.307363, time = 513.423674
+   Center-gravity method mean = 2.204108, sigma = 0.288470, error = -0.030868, time = 5.734216
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.274310, sigma MDKS1s = 0.307363, time = 496.491650
+   Center-gravity method mean = 2.204108, sigma = 0.288470, error = -0.030868, time = 5.736798
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 2.274310, sigma MDKS1s = 0.307363, time = 659.252141
+   Center-gravity method mean = 25.906644, sigma = 1.918124, error = 10.390990, time = 260.333529
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 2.274310, sigma MDKS1s = 0.307363, time = 758.990299
+   Center-gravity method mean = 25.906644, sigma = 1.918124, error = 10.390990, time = 260.680792
+-->Depth = 6, Sum method = 1
+   Brick method mean MDKS1s = 2.274310, sigma MDKS1s = 0.307363, time = 795.956318
+   Center-gravity method mean = 14.111980, sigma = 0.853594, error = 5.204950, time = 591.111860
+-->Depth = 6, Sum method = 2
+   Brick method mean MDKS1s = 2.274310, sigma MDKS1s = 0.307363, time = 948.643681
+   Center-gravity method mean = 14.111980, sigma = 0.853594, error = 5.204950, time = 584.691138
+
+For k = 4, n = 100000, unlike data
+   Brute-force mex mean MDKS1s = 37.845507, sigma MDKS1s = 0.389701, time = 570.930224
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 37.845507, sigma MDKS1s = 0.389701, time = 475.059285
+   Center-gravity method mean = 49.268286, sigma = 1.297081, error = 0.301827, time = 49.647933
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 37.845507, sigma MDKS1s = 0.389701, time = 495.911450
+   Center-gravity method mean = 49.268286, sigma = 1.297081, error = 0.301827, time = 49.601229
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 37.845507, sigma MDKS1s = 0.389701, time = 560.953228
+   Center-gravity method mean = 37.110593, sigma = 0.340768, error = -0.019419, time = 5.875742
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 37.845507, sigma MDKS1s = 0.389701, time = 535.486769
+   Center-gravity method mean = 37.110593, sigma = 0.340768, error = -0.019419, time = 5.794222
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 37.845507, sigma MDKS1s = 0.389701, time = 673.612618
+   Center-gravity method mean = 58.020838, sigma = 1.548025, error = 0.533097, time = 263.216394
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 37.845507, sigma MDKS1s = 0.389701, time = 774.060815
+   Center-gravity method mean = 58.020838, sigma = 1.548025, error = 0.533097, time = 262.139217
+-->Depth = 6, Sum method = 1
+   Brick method mean MDKS1s = 37.845507, sigma MDKS1s = 0.389701, time = 809.311310
+   Center-gravity method mean = 47.578997, sigma = 1.455726, error = 0.257190, time = 593.453429
+-->Depth = 6, Sum method = 2
+   Brick method mean MDKS1s = 37.845507, sigma MDKS1s = 0.389701, time = 954.886953
+   Center-gravity method mean = 47.578997, sigma = 1.455726, error = 0.257190, time = 586.819763
+
+For k = 5, n = 320, uniform data
+   Brute-force mex mean MDKS1s = 1.785500, sigma MDKS1s = 0.260368, time = 0.007434
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 1.785500, sigma MDKS1s = 0.260368, time = 0.009627
+   Center-gravity method mean = 1.706120, sigma = 0.261778, error = -0.044458, time = 0.000665
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 1.785500, sigma MDKS1s = 0.260368, time = 0.009609
+   Center-gravity method mean = 1.706120, sigma = 0.261778, error = -0.044458, time = 0.000684
+-->Depth = 0, Sum method = 1
+   Brick method mean MDKS1s = 1.785500, sigma MDKS1s = 0.260368, time = 0.009675
+   Center-gravity method mean = 1.706120, sigma = 0.261778, error = -0.044458, time = 0.000678
+-->Depth = 0, Sum method = 2
+   Brick method mean MDKS1s = 1.785500, sigma MDKS1s = 0.260368, time = 0.009613
+   Center-gravity method mean = 1.706120, sigma = 0.261778, error = -0.044458, time = 0.000685
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 1.785500, sigma MDKS1s = 0.260368, time = 0.011289
+   Center-gravity method mean = 9.416641, sigma = 0.541251, error = 4.273951, time = 0.005198
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 1.785500, sigma MDKS1s = 0.260368, time = 0.010015
+   Center-gravity method mean = 9.416641, sigma = 0.541251, error = 4.273951, time = 0.005196
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 1.785500, sigma MDKS1s = 0.260368, time = 0.012106
+   Center-gravity method mean = 5.376625, sigma = 0.863667, error = 2.011271, time = 0.009143
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 1.785500, sigma MDKS1s = 0.260368, time = 0.011330
+   Center-gravity method mean = 5.376625, sigma = 0.863667, error = 2.011271, time = 0.009135
+
+For k = 5, n = 320, unlike data
+   Brute-force mex mean MDKS1s = 2.939870, sigma MDKS1s = 0.461805, time = 0.007418
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 2.939870, sigma MDKS1s = 0.461805, time = 0.009701
+   Center-gravity method mean = 1.606615, sigma = 0.277709, error = -0.453508, time = 0.000670
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 2.939870, sigma MDKS1s = 0.461805, time = 0.009719
+   Center-gravity method mean = 1.606615, sigma = 0.277709, error = -0.453508, time = 0.000676
+-->Depth = 0, Sum method = 1
+   Brick method mean MDKS1s = 2.939870, sigma MDKS1s = 0.461805, time = 0.009739
+   Center-gravity method mean = 1.606615, sigma = 0.277709, error = -0.453508, time = 0.000685
+-->Depth = 0, Sum method = 2
+   Brick method mean MDKS1s = 2.939870, sigma MDKS1s = 0.461805, time = 0.009739
+   Center-gravity method mean = 1.606615, sigma = 0.277709, error = -0.453508, time = 0.000693
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 2.939870, sigma MDKS1s = 0.461805, time = 0.011306
+   Center-gravity method mean = 10.000814, sigma = 0.504994, error = 2.401787, time = 0.005224
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 2.939870, sigma MDKS1s = 0.461805, time = 0.010038
+   Center-gravity method mean = 10.000814, sigma = 0.504994, error = 2.401787, time = 0.005215
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.939870, sigma MDKS1s = 0.461805, time = 0.012103
+   Center-gravity method mean = 6.482361, sigma = 0.923047, error = 1.204982, time = 0.009146
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.939870, sigma MDKS1s = 0.461805, time = 0.011331
+   Center-gravity method mean = 6.482361, sigma = 0.923047, error = 1.204982, time = 0.009146
+
+For k = 5, n = 1000, uniform data
+   Brute-force mex mean MDKS1s = 1.959663, sigma MDKS1s = 0.333892, time = 0.068746
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 1.959663, sigma MDKS1s = 0.333892, time = 0.086209
+   Center-gravity method mean = 1.726287, sigma = 0.310558, error = -0.119090, time = 0.001997
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 1.959663, sigma MDKS1s = 0.333892, time = 0.085546
+   Center-gravity method mean = 1.726287, sigma = 0.310558, error = -0.119090, time = 0.002004
+-->Depth = 0, Sum method = 1
+   Brick method mean MDKS1s = 1.959663, sigma MDKS1s = 0.333892, time = 0.086514
+   Center-gravity method mean = 1.726287, sigma = 0.310558, error = -0.119090, time = 0.002013
+-->Depth = 0, Sum method = 2
+   Brick method mean MDKS1s = 1.959663, sigma MDKS1s = 0.333892, time = 0.085709
+   Center-gravity method mean = 1.726287, sigma = 0.310558, error = -0.119090, time = 0.002024
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 1.959663, sigma MDKS1s = 0.333892, time = 0.086087
+   Center-gravity method mean = 9.016286, sigma = 0.561928, error = 3.600936, time = 0.027184
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 1.959663, sigma MDKS1s = 0.333892, time = 0.082355
+   Center-gravity method mean = 9.016286, sigma = 0.561928, error = 3.600936, time = 0.027182
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 1.959663, sigma MDKS1s = 0.333892, time = 0.101136
+   Center-gravity method mean = 10.016198, sigma = 1.085186, error = 4.111183, time = 0.066806
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 1.959663, sigma MDKS1s = 0.333892, time = 0.095580
+   Center-gravity method mean = 10.016198, sigma = 1.085186, error = 4.111183, time = 0.066803
+
+For k = 5, n = 1000, unlike data
+   Brute-force mex mean MDKS1s = 4.695350, sigma MDKS1s = 0.438304, time = 0.069960
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 4.695350, sigma MDKS1s = 0.438304, time = 0.086894
+   Center-gravity method mean = 1.663674, sigma = 0.357146, error = -0.645676, time = 0.002004
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 4.695350, sigma MDKS1s = 0.438304, time = 0.086461
+   Center-gravity method mean = 1.663674, sigma = 0.357146, error = -0.645676, time = 0.002015
+-->Depth = 0, Sum method = 1
+   Brick method mean MDKS1s = 4.695350, sigma MDKS1s = 0.438304, time = 0.087261
+   Center-gravity method mean = 1.663674, sigma = 0.357146, error = -0.645676, time = 0.002016
+-->Depth = 0, Sum method = 2
+   Brick method mean MDKS1s = 4.695350, sigma MDKS1s = 0.438304, time = 0.086667
+   Center-gravity method mean = 1.663674, sigma = 0.357146, error = -0.645676, time = 0.002024
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 4.695350, sigma MDKS1s = 0.438304, time = 0.086489
+   Center-gravity method mean = 10.149330, sigma = 0.545456, error = 1.161571, time = 0.027327
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 4.695350, sigma MDKS1s = 0.438304, time = 0.082537
+   Center-gravity method mean = 10.149330, sigma = 0.545456, error = 1.161571, time = 0.027326
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 4.695350, sigma MDKS1s = 0.438304, time = 0.101163
+   Center-gravity method mean = 12.402769, sigma = 1.263683, error = 1.641501, time = 0.066823
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 4.695350, sigma MDKS1s = 0.438304, time = 0.095444
+   Center-gravity method mean = 12.402769, sigma = 1.263683, error = 1.641501, time = 0.066853
+
+For k = 5, n = 3200, uniform data
+   Brute-force mex mean MDKS1s = 2.088816, sigma MDKS1s = 0.266046, time = 0.689292
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 2.088816, sigma MDKS1s = 0.266046, time = 0.658272
+   Center-gravity method mean = 3.419203, sigma = 0.354126, error = 0.636910, time = 0.100596
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 2.088816, sigma MDKS1s = 0.266046, time = 0.661431
+   Center-gravity method mean = 3.419203, sigma = 0.354126, error = 0.636910, time = 0.100611
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 2.088816, sigma MDKS1s = 0.266046, time = 0.893712
+   Center-gravity method mean = 1.777746, sigma = 0.358655, error = -0.148922, time = 0.006708
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 2.088816, sigma MDKS1s = 0.266046, time = 0.858186
+   Center-gravity method mean = 1.777746, sigma = 0.358655, error = -0.148922, time = 0.006709
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.088816, sigma MDKS1s = 0.266046, time = 0.816636
+   Center-gravity method mean = 18.975553, sigma = 1.843244, error = 8.084357, time = 0.452630
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.088816, sigma MDKS1s = 0.266046, time = 0.768568
+   Center-gravity method mean = 18.975553, sigma = 1.843244, error = 8.084357, time = 0.452724
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 2.088816, sigma MDKS1s = 0.266046, time = 0.893377
+   Center-gravity method mean = 9.182124, sigma = 1.383930, error = 3.395850, time = 0.696512
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 2.088816, sigma MDKS1s = 0.266046, time = 0.908212
+   Center-gravity method mean = 9.182124, sigma = 1.383930, error = 3.395850, time = 0.696530
+
+For k = 5, n = 3200, unlike data
+   Brute-force mex mean MDKS1s = 7.965501, sigma MDKS1s = 0.541273, time = 0.703485
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 7.965501, sigma MDKS1s = 0.541273, time = 0.661054
+   Center-gravity method mean = 6.180912, sigma = 0.701828, error = -0.224040, time = 0.102554
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 7.965501, sigma MDKS1s = 0.541273, time = 0.662845
+   Center-gravity method mean = 6.180912, sigma = 0.701828, error = -0.224040, time = 0.102569
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 7.965501, sigma MDKS1s = 0.541273, time = 0.899626
+   Center-gravity method mean = 1.831635, sigma = 0.347567, error = -0.770054, time = 0.006710
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 7.965501, sigma MDKS1s = 0.541273, time = 0.864787
+   Center-gravity method mean = 1.831635, sigma = 0.347567, error = -0.770054, time = 0.006716
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 7.965501, sigma MDKS1s = 0.541273, time = 0.814031
+   Center-gravity method mean = 23.155751, sigma = 1.893664, error = 1.907005, time = 0.451657
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 7.965501, sigma MDKS1s = 0.541273, time = 0.766904
+   Center-gravity method mean = 23.155751, sigma = 1.893664, error = 1.907005, time = 0.451462
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 7.965501, sigma MDKS1s = 0.541273, time = 0.869315
+   Center-gravity method mean = 14.272152, sigma = 1.263201, error = 0.791746, time = 0.679719
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 7.965501, sigma MDKS1s = 0.541273, time = 0.884913
+   Center-gravity method mean = 14.272152, sigma = 1.263201, error = 0.791746, time = 0.678568
+
+For k = 5, n = 10000, uniform data
+   Brute-force mex mean MDKS1s = 2.366500, sigma MDKS1s = 0.396355, time = 6.677892
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 2.366500, sigma MDKS1s = 0.396355, time = 5.354992
+   Center-gravity method mean = 2.426000, sigma = 0.484859, error = 0.025143, time = 0.306796
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 2.366500, sigma MDKS1s = 0.396355, time = 5.266234
+   Center-gravity method mean = 2.426000, sigma = 0.484859, error = 0.025143, time = 0.306895
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 2.366500, sigma MDKS1s = 0.396355, time = 8.888127
+   Center-gravity method mean = 1.923500, sigma = 0.620257, error = -0.187196, time = 0.022356
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 2.366500, sigma MDKS1s = 0.396355, time = 8.640333
+   Center-gravity method mean = 1.923500, sigma = 0.620257, error = -0.187196, time = 0.022364
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.366500, sigma MDKS1s = 0.396355, time = 6.431711
+   Center-gravity method mean = 29.635500, sigma = 1.851743, error = 11.522924, time = 2.903835
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.366500, sigma MDKS1s = 0.396355, time = 5.828027
+   Center-gravity method mean = 29.635500, sigma = 1.851743, error = 11.522924, time = 2.904216
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 2.366500, sigma MDKS1s = 0.396355, time = 10.609656
+   Center-gravity method mean = 17.363500, sigma = 2.133547, error = 6.337207, time = 6.786123
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 2.366500, sigma MDKS1s = 0.396355, time = 10.403795
+   Center-gravity method mean = 17.363500, sigma = 2.133547, error = 6.337207, time = 6.783283
+
+For k = 5, n = 10000, unlike data
+   Brute-force mex mean MDKS1s = 13.441500, sigma MDKS1s = 0.586401, time = 6.808470
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 13.441500, sigma MDKS1s = 0.586401, time = 5.380492
+   Center-gravity method mean = 8.284000, sigma = 0.452983, error = -0.383700, time = 0.313721
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 13.441500, sigma MDKS1s = 0.586401, time = 5.290669
+   Center-gravity method mean = 8.284000, sigma = 0.452983, error = -0.383700, time = 0.313882
+-->Depth = 1, Sum method = 1
+   Brick method mean MDKS1s = 13.441500, sigma MDKS1s = 0.586401, time = 8.939469
+   Center-gravity method mean = 1.770500, sigma = 0.343534, error = -0.868281, time = 0.022507
+-->Depth = 1, Sum method = 2
+   Brick method mean MDKS1s = 13.441500, sigma MDKS1s = 0.586401, time = 8.694426
+   Center-gravity method mean = 1.770500, sigma = 0.343534, error = -0.868281, time = 0.022487
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 13.441500, sigma MDKS1s = 0.586401, time = 6.417609
+   Center-gravity method mean = 37.410000, sigma = 1.548364, error = 1.783172, time = 2.893580
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 13.441500, sigma MDKS1s = 0.586401, time = 5.825465
+   Center-gravity method mean = 37.410000, sigma = 1.548364, error = 1.783172, time = 2.893916
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 13.441500, sigma MDKS1s = 0.586401, time = 10.625104
+   Center-gravity method mean = 26.840500, sigma = 2.030192, error = 0.996838, time = 6.850503
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 13.441500, sigma MDKS1s = 0.586401, time = 10.416615
+   Center-gravity method mean = 26.840500, sigma = 2.030192, error = 0.996838, time = 6.848399
+
+For k = 5, n = 32000, uniform data
+   Brute-force mex mean MDKS1s = 2.505328, sigma MDKS1s = 0.328356, time = 68.452676
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.505328, sigma MDKS1s = 0.328356, time = 53.365755
+   Center-gravity method mean = 29.128512, sigma = 1.037332, error = 10.626627, time = 16.171221
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.505328, sigma MDKS1s = 0.328356, time = 53.084356
+   Center-gravity method mean = 29.128512, sigma = 1.037332, error = 10.626627, time = 16.003765
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 2.505328, sigma MDKS1s = 0.328356, time = 55.255379
+   Center-gravity method mean = 2.286380, sigma = 0.309516, error = -0.087393, time = 1.058972
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 2.505328, sigma MDKS1s = 0.328356, time = 52.302613
+   Center-gravity method mean = 2.286380, sigma = 0.309516, error = -0.087393, time = 0.990302
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 2.505328, sigma MDKS1s = 0.328356, time = 147.836645
+   Center-gravity method mean = 32.738830, sigma = 4.331011, error = 12.067683, time = 88.155556
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 2.505328, sigma MDKS1s = 0.328356, time = 151.659787
+   Center-gravity method mean = 32.738830, sigma = 4.331011, error = 12.067683, time = 85.679902
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 2.505328, sigma MDKS1s = 0.328356, time = 204.786818
+   Center-gravity method mean = 15.661793, sigma = 1.949569, error = 5.251395, time = 252.101893
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 2.505328, sigma MDKS1s = 0.328356, time = 238.554678
+   Center-gravity method mean = 15.661793, sigma = 1.949569, error = 5.251395, time = 224.298132
+
+For k = 5, n = 32000, unlike data
+   Brute-force mex mean MDKS1s = 24.148602, sigma MDKS1s = 0.715903, time = 69.739089
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 24.148602, sigma MDKS1s = 0.715903, time = 54.035272
+   Center-gravity method mean = 44.297438, sigma = 1.084766, error = 0.834369, time = 16.015824
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 24.148602, sigma MDKS1s = 0.715903, time = 52.680531
+   Center-gravity method mean = 44.297438, sigma = 1.084766, error = 0.834369, time = 15.964018
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 24.148602, sigma MDKS1s = 0.715903, time = 56.624642
+   Center-gravity method mean = 13.392184, sigma = 0.492337, error = -0.445426, time = 1.036870
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 24.148602, sigma MDKS1s = 0.715903, time = 53.295458
+   Center-gravity method mean = 13.392184, sigma = 0.492337, error = -0.445426, time = 1.012859
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 24.148602, sigma MDKS1s = 0.715903, time = 153.020730
+   Center-gravity method mean = 49.550335, sigma = 2.046330, error = 1.051892, time = 90.687945
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 24.148602, sigma MDKS1s = 0.715903, time = 152.174560
+   Center-gravity method mean = 49.550335, sigma = 2.046330, error = 1.051892, time = 87.691497
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 24.148602, sigma MDKS1s = 0.715903, time = 215.436489
+   Center-gravity method mean = 34.776447, sigma = 1.350458, error = 0.440102, time = 250.721335
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 24.148602, sigma MDKS1s = 0.715903, time = 238.998255
+   Center-gravity method mean = 34.776447, sigma = 1.350458, error = 0.440102, time = 248.274412
+
+For k = 5, n = 100000, uniform data
+   Brute-force mex mean MDKS1s = 2.113666, sigma MDKS1s = 0.241688, time = 671.233649
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 2.113666, sigma MDKS1s = 0.241688, time = 851.003285
+   Center-gravity method mean = 9.719577, sigma = 0.298099, error = 3.598444, time = 52.253161
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 2.113666, sigma MDKS1s = 0.241688, time = 831.130287
+   Center-gravity method mean = 9.719577, sigma = 0.298099, error = 3.598444, time = 52.071565
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 2.113666, sigma MDKS1s = 0.241688, time = 1375.901471
+   Center-gravity method mean = 1.918870, sigma = 0.265098, error = -0.092160, time = 3.724985
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 2.113666, sigma MDKS1s = 0.241688, time = 1276.812009
+   Center-gravity method mean = 1.918870, sigma = 0.265098, error = -0.092160, time = 3.565770
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 2.113666, sigma MDKS1s = 0.241688, time = 1395.712096
+   Center-gravity method mean = 59.114354, sigma = 3.744347, error = 26.967684, time = 474.013320
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 2.113666, sigma MDKS1s = 0.241688, time = 1452.541644
+   Center-gravity method mean = 59.114354, sigma = 3.744347, error = 26.967684, time = 470.032858
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 2.113666, sigma MDKS1s = 0.241688, time = 1748.582665
+   Center-gravity method mean = 30.016340, sigma = 1.967838, error = 13.201077, time = 1422.092281
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 2.113666, sigma MDKS1s = 0.241688, time = 1952.994988
+   Center-gravity method mean = 30.016340, sigma = 1.967838, error = 13.201077, time = 1381.338899
+
+For k = 5, n = 100000, unlike data
+   Brute-force mex mean MDKS1s = 43.456652, sigma MDKS1s = 0.531382, time = 684.353627
+-->Depth = 3, Sum method = 1
+   Brick method mean MDKS1s = 43.456652, sigma MDKS1s = 0.531382, time = 840.923093
+   Center-gravity method mean = 45.533004, sigma = 1.431393, error = 0.047780, time = 52.630597
+-->Depth = 3, Sum method = 2
+   Brick method mean MDKS1s = 43.456652, sigma MDKS1s = 0.531382, time = 826.121437
+   Center-gravity method mean = 45.533004, sigma = 1.431393, error = 0.047780, time = 52.426649
+-->Depth = 2, Sum method = 1
+   Brick method mean MDKS1s = 43.456652, sigma MDKS1s = 0.531382, time = 1369.642257
+   Center-gravity method mean = 23.335712, sigma = 0.290074, error = -0.463012, time = 3.697713
+-->Depth = 2, Sum method = 2
+   Brick method mean MDKS1s = 43.456652, sigma MDKS1s = 0.531382, time = 1273.820867
+   Center-gravity method mean = 23.335712, sigma = 0.290074, error = -0.463012, time = 3.553490
+-->Depth = 4, Sum method = 1
+   Brick method mean MDKS1s = 43.456652, sigma MDKS1s = 0.531382, time = 1381.499720
+   Center-gravity method mean = 88.037178, sigma = 1.601110, error = 1.025862, time = 474.848640
+-->Depth = 4, Sum method = 2
+   Brick method mean MDKS1s = 43.456652, sigma MDKS1s = 0.531382, time = 1466.818360
+   Center-gravity method mean = 88.037178, sigma = 1.601110, error = 1.025862, time = 469.523665
+-->Depth = 5, Sum method = 1
+   Brick method mean MDKS1s = 43.456652, sigma MDKS1s = 0.531382, time = 1735.881537
+   Center-gravity method mean = 63.300577, sigma = 1.034707, error = 0.456637, time = 1380.814696
+-->Depth = 5, Sum method = 2
+   Brick method mean MDKS1s = 43.456652, sigma MDKS1s = 0.531382, time = 1942.217388
+   Center-gravity method mean = 63.300577, sigma = 1.034707, error = 0.456637, time = 1400.539279
+***Work areas not freed--current bug when more than one allocated
+MDKS timing and accuracy test completed.diary off

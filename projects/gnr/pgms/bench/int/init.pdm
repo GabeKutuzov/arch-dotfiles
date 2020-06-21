@@ -1,0 +1,22 @@
+;	init.pdm -	C80 simulator command file for the S/IP80 SBus TMX320C80 board
+;
+;   Initial Date:   02/04/95    BV
+;	Revised:		02/21/95	BV
+;
+;	Notes:
+
+; Startup the simulators
+spawn mpsim -n mp
+spawn ppsim -n pp0
+
+; Setup simulator group definitions
+set dgroup mp pp0 
+
+; Load the program
+send load int_mpS.out
+
+; Send breakpoint/display commands
+;take break.pdm
+
+; Start the simulations
+;send -r run

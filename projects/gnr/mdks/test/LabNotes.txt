@@ -1,0 +1,165 @@
+05/07/14
+--------
+
+This file initiated 05/07/14 as I was testing the latest and greatest
+version of mdks, V5C and V5D, which added a preliminary loop over all
+pairs of bricks, keeping a linked list of just the overlapping ones
+so that these tests did not need to be repeated for each individual
+point in a brick in the first set.  To my surprise and disappointment,
+this was actually slower than some earlier versions, at least as
+measured by speed-up ratio relative to brute-force method.
+
+I realized what was still missing was a way to keep sums over sets of
+nonoverlapping bricks to avoid even the need for a loop over all source
+bricks each time a new target brick is entered.  As of today, I am
+thinking about an algorithm that would involve making a hierarchy
+of bricks within bricks, not just a single level of bricks.
+
+But meanwhile, I would like to put something online before the
+Neural Computation paper comes out.  So I decided to revert to the
+best earlier version, enhance it with the later improvements in V5D
+other than the brick algorithm (textual messages for mdksallo errors
+found in mex-file invocations, correct bug that led to segmentation
+faults when number of points in a brick was zero, fix bug in k == 1
+code, add const qualifiers to calling args, MD1SDBG outputs).  This
+was a problem because I have not always been consistent in version
+numbering, at least prior to initiating the svn repository for this
+project.
+
+Roughly, we have the following:
+V1  -- Original incorrect Manhattan-block algorithm, never put in svn.
+V2  -- Original brick algorithm, divided coords into equal intervals.
+V3  -- Sorted coords, put equal numbers of points in each interval, but
+       globally across all values of other coords.
+V4  r1 Separate brick distribution for each band.  Initiated svn r1.
+V5A -- Saved nonoverlapping brick counts in partial quad sums.
+V5B r2 Added saving bit mask in overlapping bricks so only overlapping
+       coords need to be tested to establish quadrant.
+V5C -- Store partial sums and overlapping bricks lists  (pobn lists).
+--  r3 Added improved tests in mdksallo to catch cases where memory
+       offset calculations could overflow.  Added mdksdivs function.
+V5D -- Cleaner (high-->low) brick assignment method.
+--  r4 MDS1DBG debug outputs, text error messages in mdksallo MATLAB
+       interface, added 'const' qualifier to args where appropriate.
+
+Early test results were recorded on paper and are in the 'MDKSS' fol-
+der.  Later ones were saved in computer files.  Some saved outputs
+have names like 'mdkstestxx'.  These were made with the MATLAB
+mdkstest script, where always the number of divisions of each axis is
+the default.  Others have names like 'mdksoptxx'.  These were made
+with the mdksopt C program and at some point moved to the 'test'
+subdirectory (so it would not be included in the online package).
+These outputs test various number of axial divisions for each com-
+bination of k and n.  Some were run on marengo, others on marengo2;
+some at runlevel 1, some at runlevel 3; some with -O2, some with -g,
+so results are not directly comparable.
+So now let me try to align the test results with the versions, along
+with the brick times and brick/brute force speed-up ratios, "T3" and
+"BM3" for the sort-of "benchmark" t=unif,k=3,n=5000 case, "T2" and
+"BM2" for k=2, and "T25" or "BM25" for k=2,n=25000 (divs = default
+for mdkstest runs, best time for mdksopt runs):
+
+05/08/14
+--------
+
+1)  mdkstestV2.out  12/16/13  Version not recorded, this was assigned to
+    V2 based on the date (file data later due to edits).
+2)  Hand-written V2 12/19/13  Comparing equal-interval vs equal-count
+    axial divisions.  Equal count always better.
+3)  Hand-written V2 02/01/14  T2, T25 (Cove Rd).
+4)  Hand-written V3 02/17/14.
+5)  Hand-written V4 04/08/14.
+6)  Hand-written V5 Undated.
+7)  mdkstestV5.out  04/24/14.
+8)  mdkstestV4.out  04/28/14.
+9)  mdkstestV5C.out 04/28/14.
+10) mdksoptV5D.out  05/05/14.
+11) mdksoptV5B.out  05/07/14.
+12) mdksoptV4_Ret.out  05/08/14 (numbers for default and optimized
+    divs, see below).
+13) mdksoptV5D      05/09/14 (compiled with -g)
+
+Run     T2       BM2     T25     BM25     T3      BM3
+1)      1.31     5.33    32.74   7.21     1.84    2.73
+2)      0.245             4.54            0.672
+3)      0.431            66.37            0.388
+4)      0.109             4.58
+5)      0.111    6.50     1.76  10.16     0.378   2.70
+6)      0.110    6.74
+7)      0.118    6.25     1.92   9.46     0.396   2.65
+8)      0.113    6.48     1.90   9.63     0.384   2.72
+9)      0.104    7.08     1.60  11.38     0.388   2.70
+10)     0.073    3.97     1.15   6.28     0.255   1.52
+11)     0.052    3.25     1.08   3.95     0.171   1.41
+12opt)  0.043    4.02     0.77   5.55     0.178   1.34
+12dflt) 0.056    3.05     1.12   3.84     0.238   1.01
+13)     0.082    8.80     1.31  13.86     0.348   3.01
+
+So now we have the curious result that V5B and V5D appear to have
+poorer speed-ups relative to brute force than all earlier runs,
+even back to V2, while their times per trial are the lowest ever.
+Further, the run labelled V5C, which has an earlier date, has
+better speed-ups.  Possibly this run was mislabelled and actually
+run with V5A, which was not saved.  Another possibility is that
+there is something different about the method of measuring speed-up
+in the mdksopt program that gives the poorer results.
+
+So I am going to retrieve V4 (svn r1), which has close to the best
+BM times, and run it with mdksopt to see if those BMs are now in
+the range of V5B.  Comparing lines 5) and 12dflt) above, we see
+that the difference is something in the difference between the
+mdksopt and mdkstest scripts.  
+
+05/09/14
+--------
+
+So I rebuilt V5D with -g (no optimization) and redid the three
+runs in the table above (line 13).  Now we see that -O2 optimization
+improves the brute force a lot more than the mdks, with the result
+that the raw times look better but the BM times look worse (line 10).
+Mystery solved, and we can go with the best raw times, which are
+pretty much still V4.
+
+Thus, I will need to reinstall V4 for Nick's tests of the demo and to
+put online.  But if the new hierarchical version doesn't work out, we
+will need to improve the default divisions a lot.
+
+05/21/14
+--------
+
+Hierarchical bricks code (V6) completed 05/18/14 and after debugging
+today got correct results for mdkstst1 and mdkstst2.
+
+06/04/14
+--------
+
+Ran full mdksopt2.in run on V6 code (5/30).  Editing results file to
+make mdksoptV6.data file with just numbers for easy input to matlab.
+On each line, order is:  k, n, calculated default depth, two values of
+integer depth and execution time.  I saved this info just for the UNIF
+data.  The NORM and GAM data are essentially the same.
+
+Looking at graphs of the error in the default depth versus the best
+depth, this error always increases with n and with k, but there is no
+obvious simple correction to the default.  I tried a few fits (using
+Matlab linsolve function), viz (D == present log2(n)/k default):
+2 variables:  1.0688*D - 1.0625 -- Not great
+4 variables:  0.0568*log2(n) + 0.5491*k + 1.2661*D - 4.4596 --
+    Better but still often wrong
+7 variables:  -9.4937E-5*n + 5.4981E-6*n*log2(n) + 1.6674E-6*n*D +
+    1.0626*D +0.0494*log2(n) + 0.3871*k - 3.1163.  This one gives
+    correct results (rounded to nearest integer) for all the 20
+    cases tested, but might be overfitting.  Also, the very small
+    coefficients of the first few terms suggest dropping them:
+4 variables:  1.2661*D + 0.0568*log2(n) + 0.5491*k - 4.4596
+    Not so good again.  So tried terms 1,4,5,6,7 of the 7:
+5 variables:  1.1120E-5*n + 1.2653*D - 0.0740*log2(n) + 0.5482*k -
+    3.1938.  This gives the correct depth for all the tested cases
+    except k=4, n=1000, where the incorrect depth (1 instead of 2)
+    gives a time that is "only" 20% longer.  Another 5 variable
+    variant:
+5b variables:  1.9287E-6*n*D + 1.0305*D + 0.0101*log2(n) + 0.3616*k -
+    2.6180.  This gives all the best depths and I like it better
+    because the first term is positive rather than negative.  So
+    I will put this one into the program for first distro.
+

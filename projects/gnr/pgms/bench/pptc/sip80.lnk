@@ -1,0 +1,94 @@
+/* mvp.lnk	--	A linker command file for linking MVP code for 
+				General Imaging's S/IP80 TMX320C80 SBus card.
+
+	Created:	11/03/94,	BV
+	Revised:	02/06/95,	BV
+	  		02/21/95,	BV	Release 0.2A, 0.3A
+	  		04/21/95,	BV
+	  		07/07/95,	BV  Release 0.32A, 0.32B (Internal)
+	  		07/17/95,	BV  Release 0.32C (Internal)
+
+	Notes:	-Removed MP_PRAM1 from table.  MP_PTREQ use 1K, not 128bytes.
+	  	-We should consider reducing this size to 512bytes, for a total
+	  	of 8 packet transfer requests if it is necessary to reclaim some
+	  	space.
+	  	-Added the necessary sections for 1.10 Toolkit
+	  	-Altered heap size to accomodate new "vram" section.  The AVBoard
+	  	uses this memory for digitization.
+	  	-Why did I only reserve 0x68000 in VRAM?  >> AVB1.0 could only do
+	  	-AVB1.2 has a similar problem.  Counters roll-over at 0x80000.
+
+	Rev:		09/29/95,	GNR - Increase stack to 0x6000
+                                            - Tried to remove VRAM, but load fails
+
+*/
+
+-heap  0x140000
+-stack 0x8000 
+
+MEMORY
+{
+	PP_RAM0 (RW)	:	origin = 0x00000000,	length = 0x800
+	PP_RAM1 (RW)	:	origin = 0x00000800,	length = 0x800
+	PP_RAM2 (RW)	:	origin = 0x00008000,	length = 0x400
+	PP_BSS	(RW)	:	origin = 0x00008400,	length = 0x2b0
+	PP_COMM (RW)	:	origin = 0x000086b0,	length = 0x10
+	PP_TCTL	(RW)	:	origin = 0x000086c0,	length = 0x140
+
+	PP_TRAM (RW)	:	origin = 0x01000000,	length = 0x180
+	PP_VECT (RW)	:	origin = 0x01000180,	length = 0x80
+	PP_CMDB (RW)	:	origin = 0x01000200,	length = 0x40
+	PP_PRAM (RW)	:	origin = 0x01000240,	length = 0x5b4
+	PP_CTXT	(R)	:	origin = 0x010007f4,	length = 0xc
+
+	MP_TRAM0 (RW)	:	origin = 0x01010000,	length = 0x180
+	MP_VECTS (RW)	:	origin = 0x01010180,	length = 0xa0
+	MP_TRAM1 (RW)	:	origin = 0x01010220,	length = 0x80
+	MP_QUEUE (RW)	:	origin = 0x010102a0,	length = 0xa8
+	MP_PRAM0 (RW)	:	origin = 0x01010348,	length = 0xb8
+	MP_PKTRQ (RW)	:	origin = 0x01010400,	length = 0x400
+
+	TC_REGS (RW)	:	origin = 0x01820000,	length = 0x200
+	VC_REGS (RW)	:	origin = 0x01820200,	length = 0x200
+
+	FCODE 	(R)	:	origin = 0x21000000,	length = 0x200000
+	COMM 	(RWI)	:	origin = 0x21200000,	length = 0x4
+	EXT_REG	(RWI)	:	origin = 0x21400000,	length = 0xB
+	BT_REG 	(RW)	:	origin = 0x2140000B,	length = 0x2
+
+	VRAM	(RWIX)	:	origin = 0x21600000,	length = 0x80000
+	RAM 	(RWIX)	:	origin = 0x21680000,	length = 0x17ff40
+	HOST	(RWI)	:	origin = 0x217fff40,	length = 0xb8
+	BOOT	(RWI)	:	origin = 0x217ffff8,	length = 0x8
+
+}
+
+SECTIONS
+{
+	.text		: > RAM			/* MP code */
+	.ptext		: > RAM			/* PP code */
+	.cinit		: > RAM			/* Initialization Tables */
+	.pcinit		: > RAM			/* PP Initialization Tables */
+	.const		: > RAM			/* String Constants */
+	.switch		: > RAM			/* Switch Tables */
+	.pswitch	: > RAM			/* PP Switch Tables */
+	.data		: > RAM			/* Data Section */
+	.bss		: > RAM			/* Static, Global Data (off-chip) */
+	.pbss		: > PP_BSS		/* PP Static, global data (on-chip) */
+	.ext		: > RAM			/* External Initialized Data */
+	.stack		: > RAM			/* Stack Area */
+	.pstack		: > PP_PRAM		/* PP Stack Area (in PP_PRAM) */
+	.sysmem		: > RAM			/* System Memory */
+	.psysmem	: > PP_BSS		/* PP System Memory (on-chip ONLY) */
+	.cio		: > RAM			/* Force this section into RAM */
+
+	host		: > HOST		/* SBus <-> SIP80 Communication block */
+	sysque		: > MP_QUEUE	/* SBus --> SIP80 Message Queue */
+	vram		: > VRAM		/* Memory space used by AVBoard */
+
+	mpram0		: > MP_PRAM0	/* Block 0 of MP Parameter RAM for use */
+	ppram0		: > PP_RAM0		/* Block 0 of PP Data RAM */
+	ppram1		: > PP_RAM1		/* Block 1 of PP Data RAM */
+	ppram2		: > PP_RAM2		/* Block 2 of PP Data RAM */
+	ppcomm		: > PP_COMM		/* Block useful for MP-PP communications */
+}

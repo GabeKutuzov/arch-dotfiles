@@ -1,0 +1,261 @@
+08/24/16, GNR - Corrected interpretation of startup message so the
+new mfsr could write the new icon-length, version sequence and have
+it understood correctly but compatible with the old format.
+   Documented in plot library that smarx mfdraw requires first
+frame to be frame 0, not frame 1.  Intent is to fix this when
+version 9 is written.
+   Deleted irrelevant old messages from this file.
+   Noted that there is no nice mechanism to return error messages
+to plot library or mfsr caller even though we have mechanism to
+receive and report such errors--smarx just writes them to the log
+file and exits with a random number.  I am leaving this to fix when
+new mfdraw is written someday.
+
+05/05/14, GNR - Corrected bug in way smx called fl_file_chooser
+in mfdrawUI.fl which caused a segmentation fault (zero pointer)
+when user clicked CANCEL.
+
+N.B.  12/20/12 - In socket mode, still mode, program segfaults
+after 80 frames at mfdraw line 942 -- pointer frit obtained from
+frametracker[81], is NULL.
+--Another bug:  The last frame is not plotted!
+--Another bug:  Started with a zero-length file, you get a
+                segfault instead of an error message.
+--Another bug:  Lots of places where code does an exit(nn) and
+                CNS just gets an abexit(222) (socket gone)
+		instead of reporting the error.
+
+----- Original Message -----  
+
+Dear Steve,
+   Here is the Oct. 19 revision of the mfdraw specs, with the change
+that we will retain the feature that one can navigate through the
+frames in memory while still receiving new frames in movie mode.
+   Thanks for your patience,
+   GNR
+
+Plain Text Attachment [ Scan and Save to Computer -- See file GNRnotes ]
+
+
+----- Original Message -----  
+From: "George Reeke" <reeke@mail.rockefeller.edu>
+To: "Steven Marx" <smarx@verizon.net>
+Sent: Tuesday, September 25, 2007 3:28 PM
+Subject: Inheritance
+
+> Steve,
+> Actually, there does seem to be a bug with inheritance in today's
+> version:  In socket-movie mode, first I tried expanding with the
+> new zoom widget--it worked on the current frame, did not inherit
+> to the next frame.  So I went to still mode, expanded the view,
+> then went back to movie mode.  Now all the frames were zoomed,
+> but nothing I did in either still or movie mode could get new
+> frames to come up the old default (1.0) size.
+>   I would think in movie mode that if I change the size while
+> looking at one picture, this should then become the size of
+> all subsequent new frames until changed again.
+>   GNR
+> 
+
+----- Original Message ----- 
+Date: 3-jul-2007 17:06:07 -0400
+From: "STEVEN MARX" <smarx@verizon.net>
+To: <smarx@rockefeller.edu>
+Subject: Fwd: mfdraw
+
+Dear Steve,
+   A couple of suggestions for mfdraw based on my experience out here:
+
+(1) There are still problems with the magnification.  The slider
+increments are so large as to be essentially unusable:  If I start
+at 1.0 and make the drawing smaller, it goes to 0.5 with nothing
+in between.  If I try to make it larger, it goes to 3.xx.  There
+seems to be a setting at 1.8, but it won't stick there when a new
+frame comes along.  If I use the keyboard, the changes are unstable--
+when the next frame arrives, it often goes back to the previous mags
+rather than stay at the one I just set.  Given a logarithmic scale, each
+slider increment should probably be something like 95% (moving left) or
+105% (moving right).  The keyboard steps are OK, but they don't
+stick.
+
+(2) Regarding allocation for number of frames:  Why not make it a
+command-line parameter (which can be specified in the xinetd
+config file) so it can be set appropriately on different machines
+without recompilation.
+
+(3) In working towards larger numbers of frames, have you considered
+separate compilation for 32-bit vs 64-bit operating systems?
+Obviously the latter have more address space so can hold more
+frames if you continue to use a frame size big enough to hold the
+largest likely frame rather than the actual size of each frame.
+
+Regards and thanks,
+GNR
+----- Original Message ----- 
+From: "George Reeke" <reeke@mail.rockefeller.edu>
+To: "Steven Marx" <smarx@verizon.net>
+Sent: Friday, May 18, 2007 5:23 PM
+Subject: Another little mfdraw glitch
+
+> Dear Steve,
+>   When I expand the view to fullscreen (button next to kill button at
+> upper right) and then use the magnification slider, the magnification
+> happens, but the slider does not move under the mouse.
+>   Sorry,
+>   GNR
+> 
+> 
+>
+----- Original Message ----- 
+From: "George Reeke" <reeke@mail.rockefeller.edu>
+To: "Steven Marx" <smarx@verizon.net>
+Sent: Friday, May 18, 2007 1:44 PM
+Subject: mfdraw bug
+
+
+> Dear Steve,
+>   I just noticed the following:
+> If I am in step mode (if it matters, I started in Movie mode
+> but changed to step mode with the mouse button) and I hit
+> the rewind button back to step 1, then move forward one
+> frame at a time with the mouse on the right arrow button,
+> the application receives acknowledgment on each click as
+> if the next frame had been received and plotted.  This is
+> not as it should be--should only acknowledge when last frame
+> received is plotted, not when an earlier frame is revisited.
+>   Not urgent, but have a look next time working on this code.
+>   Thanks,
+>   GNR
+> 
+> 
+>
+----- Original Message ----- 
+From: "George Reeke" <reeke@mail.rockefeller.edu>
+To: "Steven Marx" <smarx@verizon.net>
+Sent: Friday, December 15, 2006 3:15 PM
+Subject: Batch mode
+
+
+> Steve,
+>   I copied a new Cns (still V8D) to your home directory this p.m.
+> It should request batch mode now when user specifies movie mode but
+> it is offline, as per the documentation.  Please test at your 
+leisure.
+>   There is really another change I would like you to make which has
+> been on my mind for a long time.  Could you make the QUIT button
+> actually quit, i.e. remove the window, kill the socket, & end the
+> process?  We will have to see about that comment you have that bad
+> things happen when you send the quit message to the client, as that
+> may actually be necessary to make the application do a controlled
+> quit.  It may depend on whether the QUIT is done before or after the
+> frame with the MF_CLOSE has been received.  I will work on this with
+> you.
+>   GNR
+> 
+
+
+----- Original Message ----- 
+From: "George Reeke" <reeke@mail.rockefeller.edu>
+To: "Steven Marx" <smarx@verizon.net>
+Sent: Monday, August 14, 2006 4:53 PM
+Subject: A new problem with latest mfdraw
+
+
+> Dear Steve,
+>   Using the new mfdraw, in movie mode, at a certain point I hit
+> the back arrow and studied the current figure for a minute or so.
+> Then I hit the forward arrow, expecting to go to the next figure,
+> but instead it went to the last figure (I believe the calculation
+> had gotten to the last figure while I was looking at the earlier
+> one, about 100 frames back from the end).  It did not go through
+> all the intermediate ones as with the FF button, it just went
+> straight to the last one.
+>   I'm sure this was working before.
+>   GNR
+> 
+> 
+>
+
+
+From: "George Reeke" <reeke@mail.rockefeller.edu>
+To: "Steven Marx" <smarx@verizon.net>
+Sent: Friday, August 04, 2006 5:55 PM
+Subject: Re: New version
+
+
+> Steve,
+>   We'll have to deal with that Monday, its getting late now.
+> Another thing I would like you to change:
+>   I go into STILL mode.  Now I have to click to get a new picture.
+> You quite correctly, as we discussed, discard extra clicks.  But I
+> think you should keep one click--that is, if I click before the next
+> picture is ready, it saves the click and moves to the next picture
+> when it comes.  Any further extra clicks are discarded.
+>   The way it is, I don't know when the next picture is ready, so I
+> have to keep clicking until I see it.  This may be what happened in
+> the problem I reported to you earlier, although in that case I am
+> quite sure I was still in movie mode, but having just come back to
+> the current frame after backtracing, I kept clicking the forward
+> button when there was no picture ready.
+>   GNR
+>
+> On Fri, 2006-08-04 at 17:47 -0400, STEVEN MARX wrote:
+>> Hi George:
+>> I will try to reproduce this problem with the femesh executable and 
+data
+>> that I
+>> already have. If possible please place  a new femesh/input (if any) 
+into 
+>> my
+>> home directory
+>> /home/smarx so that I can use it as well.
+>> Regards,
+>> Steve
+>> ----- Original Message ----- 
+>> From: "George Reeke" <reeke@mail.rockefeller.edu>
+>> To: "Steven Marx" <smarx@verizon.net>
+>> Sent: Friday, August 04, 2006 5:21 PM
+>> Subject: New version
+>>
+>>
+>> > Steve,
+>> >   It sems to work except I observed another strange problem.
+>> > After about 200 frames, in the section that draws the fitting 
+curves,
+>> > I did a back one, then slowly hit the forward button one at a 
+time,
+>> > i.e. too slowly to catch up with the current plotting.  At a 
+certain
+>> > point, the plot disappeared and mfdraw died, as judged by a ps 
+that
+>> > didn't show it running.  No error messages, femesh kept merrily on 
+its
+>> > way.
+>> >   GNR
+
+
+From: George Reeke <reeke@rockefeller.edu>
+To: Steven Marx <smarx@i2000.com>
+Subject: Plotting documentation
+Date: Tue, 02 May 2006 17:21:33 -0400
+Dear Steve,
+   I have deleted the file "plotting.doc" from /home/nsi/docs.
+   There are now two ASCII plotting documentation files there:
+plotting.txt (new, as yet unimplemented, version)
+oldplot.txt  (modified old, i.e. current, version)
+   These files document the changes to bitmap functions and
+metafile records we have discussed.  They are essentially the
+same in the two versions except for details of the binary
+file representation, which is not currently implemented anyway.
+The case I will want to put into femesh will be the scaled
+grayscale image.  Please work from (and let me know if anything
+is unclear in) the oldplot.txt document.  I will modify the
+bitmap library routine (and add the new bitmaps library routine)
+accordingly.
+   Thanks,
+   George
+[At the time I originally starting making these documentation
+files, I did not know that Microsoft had appropriated the
+file extension ".doc" for their word processor.  I will in the
+future change the extensions of the other /home/nsi/docs/*.doc
+files to .txt when any of them are updated.]

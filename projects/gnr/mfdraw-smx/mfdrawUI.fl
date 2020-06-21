@@ -1,0 +1,1222 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0107 
+header_name {.h} 
+code_name {.cxx}
+class FrameViewUI {open
+} {
+  Function {FrameViewUI()} {open
+  } {
+    Fl_Window mainWindow {
+      label mfdraw
+      callback {if(Fl::event_key() == FL_Escape)
+	exit(0);
+	
+if(skey == false) //the s key was not pressed so we must be getting a close window / close app command
+	exit(0);
+
+if(Fl::event_key() == 's' || Fl::event_key() == 'S') {
+	static int toggle = 0;
+        static int px;
+        static int py;
+        static int pw;
+        static int ph;
+        static int phglview;
+        //const int bordersize = 25;
+        //if( (Fl::event_key() == FL_Escape) && toggle == 0)
+	  //return;
+        if(toggle == 0) {
+                px = mainWindow->x();
+                py = mainWindow->y();
+                pw = mainWindow->w();
+                ph = mainWindow->h();
+                phglview = glView->h();
+                mainWindow->border(0);
+                mainWindow->fullscreen();
+                //cout<<"in mainWindow Callback: full screen called"<<endl;
+                //ptrcontrols->hide();
+                glView->resize(0,0,mainWindow->w(),mainWindow->h()); 
+                mainWindow->redraw();
+                toggle = 1;              
+        }
+	else {  
+                mainWindow->fullscreen_off(px, py, pw, ph);
+                //cout<<"in mainWindow Callback: full screen_off called"<<endl;
+                mainWindow->border(1);
+                glView->resize(0,25,pw,phglview); 
+                //ptrcontrols->show();
+                mainWindow->redraw();
+                //mainWindow->hide(); //hide/show seems to be needed so that border can be activated 
+                //mainWindow->show();             
+                toggle = 0;                            
+       }
+return;
+}
+
+exit(0);} open
+      xywh {118 134 500 525} type Double box UP_BOX labelsize 12 hide resizable
+      code0 {//mainWindow->size_range(500,525);}
+      code1 {\#include "mfdrawsockserver.h"}
+      code2 {if(runmode == 0) Netbutton->deactivate();}
+      code3 {if(runmode == 1) MenuFilebutton->mode(0,FL_MENU_INACTIVE);}
+    } {
+      Fl_Group Controls {open
+        xywh {0 0 500 25}
+        code0 {\#include "mfdraw.h"}
+      } {
+        Fl_Menu_Button MenuFilebutton {
+          label {&File} open
+          xywh {1 3 50 21} labelsize 10
+          code0 {\#include <FL/Fl_File_Chooser.H>}
+          code1 {\#include "mfdraw.h"}
+          code2 {\#include "mfdrawsockserver.h"}
+        } {
+          MenuItem {} {
+            label {&Open file}
+            callback {if(runmode == 1) {
+  fl_alert("you are in cns socket mode. you cannot use the File control to input data.");
+  o->deactivate();
+  mf_filename = "cns socket mode ";
+return;
+}
+static char filename[120];
+static bool metaopened = false;
+
+sprintf(filename, "%s", fl_file_chooser("Pick a meta data file.", "Meta Command Files (*.mf)", "", 0));
+string s(filename);
+if(s == "(null)")
+	return;
+if(metaopened == false)
+	metaopened = true;
+else {
+	fl_alert("cannot open metafile if metafile is already open");
+	return;
+}
+
+deletedata(); //clear out any data and initialize prior to loading new data
+createdata(filename);
+buildframetracker();
+LISTOFCOMMANDS::iterator frit;
+frit = frametracker[atframe]; //frame is pointed to by the iterators in frametracker[n]
+glView->left = ((Newframe*)(*frit))->left;
+glView->right = ((Newframe*)(*frit))->right;
+glView->bottom = ((Newframe*)(*frit))->bottom;
+glView->top = ((Newframe*)(*frit))->top;
+glView->invalidate();
+glView->redraw();
+glFlush();
+glFinish(); //force completion of draw prior to next frame - only at file load 
+static char versionandfile[120];
+mainWindow->label("");
+sprintf(versionandfile, "%s using file %s", mainWindow->label(), filename);
+//mainWindow->label(versionandfile);
+
+
+static char firstlabel[120];
+//sprintf(firstlabel,"using file %s at frame %d", filename, atframe);
+sprintf(firstlabel, "%s", header2.c_str());      //display title on main window
+mainWindow->label(firstlabel);
+
+zoom->value(1); 
+glView->init();
+runmode = 0;
+
+//char logmsg[300];
+//sprintf(logmsg, "runmode = %d data from file not from a socket to Cns", runmode);
+//writetolog(logmsg);
+//zoom->take_focus();
+
+
+//mf_filename = versionandfile;  //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ commented out 1/23/08
+mf_filename = filename;      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ added 1/23/08
+
+
+
+
+//------ used to automatically load frames 1 through N while displaying the first frame see also  createdata()
+bool initialload = true;
+
+
+
+while(moreframes && initialload) {
+	
+        if(lastframe == MAXNUMFRAMES-2) 
+        	initialload = false;	
+	//cout<<"in gui open file: atframes = "<<atframe<< " moreframes = "<<moreframes<<" lastframe = "<<lastframe<<endl<<flush;
+					
+	createdata(filename);
+	buildframetracker();
+		
+	Fl::check(); //++++++++++++++++++++++++++++++++++++++++ moved from createdata 1/25/08
+
+}
+
+
+//------ end used to automatically load frames 1 through N while displaying the first frame}
+            xywh {0 0 100 20} labelsize 12
+            code0 {extern string mf_filename;}
+          }
+          MenuItem {} {
+            label {&Settings}
+            callback {//circlepts->value(circledata.getcirclepoints());
+//Settings->show();
+//cout<<"pixels per inch = "<<glView->h()/(glView->top - glView->bottom)<<endl;
+//if(runmode == 0)  {
+//    ptrsettings->show(); //++++++++++++++++++++++++++++++++++++++++ permit user to modify any run time settings before (only before) starting main drawing loop  new
+//}
+
+ptrsettings->show();}
+            xywh {0 0 100 20} labelsize 12
+            code0 {\#include "mfdraw.h"}
+          }
+          MenuItem {} {
+            label {&About}
+            callback {//fl_message("%s\\n%s\\n%s",header1.c_str(), header2.c_str(), header3.c_str());
+const GLubyte *mesaversion;
+const GLubyte *mesarenderer;
+//const GLubyte *mesaextensions;
+mesaversion = glGetString(GL_VERSION);
+mesarenderer = glGetString(GL_RENDERER);
+//mesaextensions = glGetString(GL_EXTENSIONS);
+
+//double fltkv = Fl::version();
+int fltkmajorv = FL_MAJOR_VERSION;
+int fltkminorv = FL_MINOR_VERSION;
+int fltkpatch  = FL_PATCH_VERSION;
+
+
+char fltkversion[100];
+sprintf(fltkversion, "fltk version = %d.%d.%d", fltkmajorv, fltkminorv, fltkpatch);
+
+char shortcuts[300];
+sprintf(shortcuts, "shortcut keys (upper or lower case allowed):\\nA about info\\nB toggle background\\nF file dialog\\nH home\\nM toggle movie and step\\n\\
+N socket mode dialog\\nO set origin with cursor\\nctl-Q or alt-F4 for quit\\nup/down arrows for precision zoom\\nleft/right arrows for frame back or forward");
+
+//char mfdrawversion[30]; -- now global -- first statement in main()
+//sprintf(mfdrawversion,"mfdraw version %s", "0.1");
+
+//fl_message("%s\\n%s\\n%s\\n%s\\t%s\\n%s\\n%s", header1.c_str(), header2.c_str(), header3.c_str(), mesaversion, mesarenderer, fltkversion, shortcuts);
+fl_message("%s\\n%s\\n%s\\n%s\\n%s\\t%s\\n%s\\n%s",mfdrawversion, header1.c_str(), header2.c_str(), header3.c_str(), mesaversion, mesarenderer, fltkversion, shortcuts);}
+            xywh {10 10 100 20} labelsize 12
+            code0 {\#include "mfdraw.h"}
+            code1 {\#include <FL/fl_ask.H>}
+          }
+          MenuItem {} {
+            label {&Exit}
+            callback {//if(runmode == 0) {
+//	printf("total command count = %d\\n", commandcount); //used for debug only
+//}
+if(runmode == 1) {
+	closeconnection();
+	exit(0);
+        //return;
+}
+exit(0);}
+            xywh {0 0 100 20} labelsize 12
+            code0 {\#include "mfdraw.h"}
+          }
+        }
+        Fl_Button Netbutton {
+          label {&Net}
+          callback {if(runmode == 1) { 
+  Netdialog->show();
+}
+else {
+fl_alert("you are in file mode not cns socket mode. use the file menu or exit.");
+o->deactivate();
+}}
+          xywh {54 3 41 21} labelsize 10 hide
+          code0 {o->tooltip("quit socket communication with science model or enter step, movie or interrupt mode");}
+          code1 {\#include "mfdrawsockserver.h"}
+        }
+        Fl_Button {} {
+          callback {glView->home();}
+          image {./fit.png} xywh {308 3 22 21} labelsize 10
+          code0 {o->tooltip("reset view to initial view");}
+        }
+        Fl_Button {} {
+          label {@<<}
+          callback {fastprevious_cb(glView);
+return;
+//================ fastprevious_cb replaces code below ========================================= 2/13/2008
+
+
+//if(sListofCommands.size() == 0) 
+if(sListofCommands.empty())
+  return;
+static char lbl[120];
+
+
+ //speed adjust fast forward when clicked
+  static double speedup = 0;
+  if(fastprevious == true) {       
+  	//speedup++;
+  	speedup += .333;
+  } else {
+     speedup = 0;
+  } 
+ //speed adust fast forward when clicked
+ 
+ 
+ //+++++++++++++++++++++++++++++++++++++++++++++++++ 
+ 
+ if(speedup > MINFRAMEVIEWTIMEPREV) {    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ in test
+  	//speedup -= .333;               //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ in test
+  	speedup = MINFRAMEVIEWTIMEPREV;
+  }   
+                         
+ //++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+ 
+ 
+ 
+
+ fastforward = false;
+ fastprevious = true; 
+ 
+ //atframe = 1;
+ while(atframe > 1) {
+  if(fastprevious == false)
+ 	return;
+  previousframe = atframe;
+  atframe--;
+   
+   //char debugmsg[300];
+  //sprintf(debugmsg,"in >>: mode = %d fastforward = %d atframe = %d lastframe = %d moreframes = %d",
+  //          mmode, fastforward, atframe, lastframe, moreframes);
+  //writetolog(debugmsg);
+  
+  LISTOFCOMMANDS::iterator frit;
+  frit = frametracker[atframe]; //frame is pointed to by the iterator in frametracker[n]
+  glView->left = ((Newframe*)(*frit))->left;
+  glView->right = ((Newframe*)(*frit))->right;
+  glView->bottom = ((Newframe*)(*frit))->bottom;
+  glView->top = ((Newframe*)(*frit))->top;
+  glView->invalidate();
+  glView->init();
+  glView->redraw();
+  glView->show();
+  Fl::check();
+  //sprintf(lbl, "%s   frame = %d", mf_filename.c_str(), atframe);
+  sprintf(lbl, "%s", header2.c_str());                             //display title on main window
+  mainWindow->label(lbl);
+  mainWindow->redraw();
+  Fl::check();  
+    //time_t t0 = time(NULL);
+    
+    int tustart = 0;   //in microseconds
+    int tuend   = 0;   //in microseconds
+    int tstart  = 0;   //in seconds
+    int tend    = 0;   //in seconds
+    struct timeval  tv;
+    struct timezone tz; 
+    gettimeofday(&tv, &tz);
+    tstart  = tv.tv_sec;
+    tustart = tv.tv_usec;
+      
+    
+    while(1) {
+      //time_t t1 = time(NULL);
+      //double elasped = difftime(t1,t0);
+      
+      gettimeofday(&tv, &tz); //speed adust fast forward when clicked  replaces 2 lines above
+      tend  = tv.tv_sec;
+      tuend = tv.tv_usec; 
+      double tuelapsed = (tend - tstart)*10e6 + (tuend - tustart);
+      double elapsed = tuelapsed/10e6; //elapsed time in seconds 
+      
+      
+      //if(elasped >= MINFRAMEVIEWTIMEPREV) 
+        //break;       
+      if(elapsed >= (MINFRAMEVIEWTIMEPREV - speedup) ) //speed adust fast forward when clicked  replaces 2 lines above
+        break;     
+        
+      
+      Fl::check();
+      fd_set rfds;
+      struct timeval tv;
+      int retval; 
+      FD_ZERO(&rfds);
+      FD_SET(0, &rfds);			   
+      tv.tv_sec =  0; 
+      tv.tv_usec = 100000;   
+      retval = select(0, NULL, NULL, NULL, &tv);
+      Fl::check();
+      if (retval == -1)
+        perror("select()");
+      else if (retval) {
+        break;
+      }
+    }
+  }
+  
+  fastprevious = false; //+++++++++++++++++++++++++++++  2/13/2008}
+          xywh {77 3 22 21} labelsize 10
+          code0 {extern bool fastforward, fastprevious;}
+          code1 {o->tooltip("automatically display frames until you reach the first frame");}
+          code2 {extern int MINFRAMEVIEWTIMEPREV;}
+          code3 {\#include <sys/time.h>}
+        }
+        Fl_Button prevfrm {
+          label {@<-}
+          callback {//if(sListofCommands.size() == 0) 
+if(sListofCommands.empty())
+      return;
+ 
+//no more cycle through frames         
+if(atframe == 1)
+	return;
+previousframe = atframe;
+atframe--;
+//we no longer cycle through frames	
+//previousframe = atframe;
+//(atframe == 1) ? atframe = lastframe : atframe--;
+
+advanceframe = true;
+fastforward = false;
+
+//printf("Debug: last frame \# is %d. advanced frame to %d\\n",lastframe, atframe);
+//initialize orthographic projection from the framenumber frame data record
+LISTOFCOMMANDS::iterator frit;
+frit = frametracker[atframe]; //frame is pointed to by the iterators in frametracker[n]
+glView->left = ((Newframe*)(*frit))->left;
+glView->right = ((Newframe*)(*frit))->right;
+glView->bottom = ((Newframe*)(*frit))->bottom;
+glView->top = ((Newframe*)(*frit))->top;
+glView->init();
+glView->invalidate();
+glView->redraw();
+glView->show();
+//zoom->take_focus();
+
+//static char lbl[120];
+//sprintf(lbl, "frame = %d", atframe);
+//mainWindow->label(lbl);
+//mainWindow->redraw();
+
+//static char debugmsg[300];
+//sprintf(debugmsg, "now at frame %d via previous frame gui fastsforward = %d and mode = %d", atframe, fastforward, mmode);
+//writetolog(debugmsg);
+
+fastforward = false;
+
+
+static char lbl[120];
+//sprintf(lbl, "%s   frame = %d", mf_filename.c_str(), atframe);
+sprintf(lbl, "%s", header2.c_str());                             //display title on main window
+
+mainWindow->label(lbl);
+mainWindow->redraw();}
+          xywh {101 3 22 21} labelsize 10
+          code0 {\#include "mfdraw.h"}
+          code1 {\#include "mfdrawsockserver.h"}
+          code2 {o->tooltip("previous frame");}
+          code3 {ptrprevfrm = o;}
+        }
+        Fl_Button nxtfrm {
+          label {@->}
+          callback {//if(sListofCommands.size() == 0) 
+if(sListofCommands.empty())
+  return;
+ 
+ 
+//char debugmsg[300];
+//sprintf(debugmsg,"(1) in nxtfrm button cb: start of next frame: atframe = %d mode = %d lastframe = %d and fastforward = %d about to call nextframe_cb", atframe, mmode, lastframe, fastforward);
+//writetolog(debugmsg);
+
+//stop fast previous 
+if(fastprevious == true) {
+	fastprevious = false;
+	//if(runmode > 0)              //+++++++++++++++++++++++++++++++++ commented for test 2/13/08
+		//return; 
+		
+}  
+
+//sprintf(debugmsg,"(2) in nxtfrm button cb: start of next frame: atframe = %d mode = %d lastframe = %d and fastforward = %d about to call nextframe_cb", atframe, mmode, lastframe, fastforward);
+//writetolog(debugmsg);
+
+\#if 0
+//disablde anti-typermatic code for debug purposes
+
+//when in still mode we do not want repeated forward frames to be stacked
+//disable the next frame button (and command) when waiting on cns data buffer arrival - disable widget not implemented yet
+static int locknextframe = 0;
+if(moreframes == true && mmode == MM_STILL) {
+        if(atframe == locknextframe) {
+                //sprintf(debugmsg, "in nxtfrm callbackadvance atframe = %d will NOT be handled", atframe);
+                //writetolog(debugmsg);
+        	return;
+        }
+	locknextframe = atframe;
+	//sprintf(debugmsg, "advance atframe = %d will be handled", atframe);
+        //writetolog(debugmsg);        
+}
+\#endif
+
+	
+
+//sprintf(msglog, "in callback for nxtfrm in gui: pressed > button and atframe = %d  lastframe = %d and moreframes = %d", atframe, lastframe, moreframes);
+//cout<<msglog<<endl;
+//writetolog(msglog);
+
+nextframe_cb(glView);
+
+//memfile(); //debug memory trace}
+          xywh {150 3 22 21} labelsize 10
+          code0 {\#include "mfdraw.h"}
+          code1 {\#include "mfdrawsockserver.h"}
+          code2 {o->tooltip("advance frame");}
+          code3 {ptrnxtfrm = o;}
+        }
+        Fl_Button {} {
+          label {@>>}
+          callback {fastforward_cb(glView);
+return;
+
+//================ fastforward_cb replaces code belog - delete the above return and what follows once fastforward_cb is implemented ========================================= 1/17/08
+
+\#if 0
+//high precision time  experiment  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  int tustart = 0;   //in microseconds
+  int tuend =   0;   //in microseconds
+  int tend  = 0;     //in seconds
+  int tstart = 0;    //in seconds
+  
+  struct timeval  tv;
+  struct timezone tz;
+  
+  gettimeofday(&tv, &tz);
+  tstart  = tv.tv_sec;
+  tustart = tv.tv_usec; 
+  printf("the current time of day is %d seconds and %d microseconds\\n", (int)tv.tv_sec, (int)tv.tv_usec);
+  fflush(stdout);
+  
+  sleep(3);
+  
+  gettimeofday(&tv, &tz); 
+  tend  = tv.tv_sec;
+  tuend = tv.tv_usec; 
+  printf("the current time of day is %d seconds and %d microseconds\\n", (int)tv.tv_sec, (int)tv.tv_usec);
+  fflush(stdout);
+  
+  double tuelapsed = (tend - tstart)*10e6 + (tuend - tustart);
+  double elapsed_seconds = tuelapsed/10e6;
+  printf("the elapsed time in %g microseconds and restated in seconds %g\\n", tuelapsed, elapsed_seconds );
+  fflush(stdout);
+  
+  return; 
+  //end high precision time  experiment  //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\#endif
+  
+
+if(sListofCommands.empty())
+  return;
+  
+static char lbl[120];
+
+  //speed adjust fast forward when rapidly clicked
+  static double speedup = 0;
+  
+  static bool speedclick = false; //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/11/08
+  if(Fl::event_clicks() > 0) \{    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/11/08
+  	//printf("rapid click\\n");  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/11/08
+  	speedclick = true;        //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/11/08
+  	Fl::event_clicks(0);     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/11/08	
+  \} else \{                        //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/11/08
+        //printf("slow click\\n"); //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/11/08
+  	speedclick = false;       //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/11/08
+  	Fl::event_clicks(0);      //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/11/08 	
+  \}
+  
+  
+  //if(fastforward == true) \{  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/11/08 
+  if(speedclick = true) \{      //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/11/08 
+  	//speedup++;
+  	speedup += .333;		
+  \} else \{
+     speedup = 0;
+  \} 
+  //speed adust fast forward when rapidly clicked
+  
+   
+  
+  if(speedup > MINFRAMEVIEWTIMENEXT) \{ //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ in test
+  	//speedup -= .333; 
+  	speedup = MINFRAMEVIEWTIMENEXT;        	  	 	                               
+  \}   
+  
+                           
+ fastforward  = true;
+ fastprevious = false;     //for implementation of time controlled fastprevious 
+ 
+ 
+ //if(runmode != 0 && speedclick && atframe < lastframe) \{   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/15/08 
+
+ //if(runmode != 0 && atframe == lastframe) \{   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/16/08
+ 
+ if(runmode != 0 && (atframe == lastframe || speedclick == true) ) \{   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/17/08 
+ 	return;
+ \} 
+
+
+ while( moreframes || (atframe < lastframe) ) \{ 
+ //while( moreframes && (atframe < lastframe) ) \{ //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 1/16/08 
+  
+  if(fastforward == false) //for implementation of time controlled fastprevious & halt fast forward by < > || etc.
+  	return;
+  	 	
+  if(atframe < lastframe) \{
+  previousframe = atframe;
+  atframe++; 
+
+  
+  //char debugmsg[300];
+  //sprintf(debugmsg,"in >>: mode = %d fastforward = %d atframe = %d lastframe = %d moreframes = %d",
+  //    mmode, fastforward, atframe, lastframe, moreframes);
+  //writetolog(debugmsg);
+  
+  LISTOFCOMMANDS::iterator frit;
+  frit = frametracker[atframe]; //frame is pointed to by the iterator in frametracker[n]
+  glView->left   = ((Newframe*)(*frit))->left;
+  glView->right  = ((Newframe*)(*frit))->right;
+  glView->bottom = ((Newframe*)(*frit))->bottom;
+  glView->top    = ((Newframe*)(*frit))->top;
+  glView->invalidate();
+  glView->init();
+  glView->redraw();
+  glView->show();
+   
+  Fl::check();
+   
+  //sprintf(lbl, "%s   frame = %d", mf_filename.c_str(), atframe);
+  sprintf(lbl, "%s", header2.c_str());                             //display title on main window
+  mainWindow->label(lbl);
+  mainWindow->redraw();
+ 
+  Fl::check();
+  
+  \}  
+  else \{
+      if(runmode == 0)         //if added to allow meta file automated load  
+        nextframe_cb(glView);                    
+  \}
+
+ 
+
+ if(fastforward) \{ 
+    //time_t t0 = time(NULL);
+    
+    
+      
+    int tustart = 0;   //in microseconds
+    int tuend =   0;   //in microseconds
+    int tstart = 0;    //in seconds
+    int tend  = 0;     //in seconds
+    struct timeval  tv;
+    struct timezone tz; 
+    gettimeofday(&tv, &tz);
+    tstart  = tv.tv_sec;
+    tustart = tv.tv_usec;
+                  
+    while(1) \{
+
+  
+      //time_t t1 = time(NULL);   
+      //double elapsed = difftime(t1,t0); 
+      
+      gettimeofday(&tv, &tz); 
+      tend  = tv.tv_sec;
+      tuend = tv.tv_usec; 
+      double tuelapsed = (tend - tstart)*10e6 + (tuend - tustart);
+      double elapsed = tuelapsed/10e6; //elapsed time in seconds 
+      
+          
+      //if(elasped >= MINFRAMEVIEWTIMENEXT)
+      	//break;     	
+      if(elapsed >= (MINFRAMEVIEWTIMENEXT - speedup) )
+        break;
+        
+      Fl::check();
+         
+      fd_set rfds;
+      struct timeval tv;
+      int retval; 
+      FD_ZERO(&rfds);
+      FD_SET(0, &rfds);			   
+      tv.tv_sec =  0;            
+      tv.tv_usec = 100000;  //smaller provides more precision but increases cpu usage            
+      retval = select(0, NULL, NULL, NULL, &tv);
+         
+      Fl::check();
+          
+      if (retval == -1) \{
+        perror("select()");
+      \}
+      else if (retval) \{
+        break;
+      \}
+    \}
+  \}
+  
+    
+  //following is for fast forward being ended by backframe or other gui action
+  //if(mmode != MM_MOVIE && fastforward == false)
+  if(fastforward == false) //++++++++++++++++++++++++++++ replaced above line 1/17/08
+  	return;
+  	  	 	  	
+\}}
+          xywh {173 3 22 21} labelsize 10
+          code0 {extern bool fastforward; extern int MINFRAMEVIEWTIMENEXT;}
+          code1 {o->tooltip("automatically display frames in ascending load order");}
+          code2 {\#include <sys/time.h>}
+        }
+        Fl_Button {} {
+          callback {if(glView->bkgrndwhite[atframe])
+	glView->bkgrndwhite[atframe] = false;
+else
+	glView->bkgrndwhite[atframe] = true;
+glView->redraw();
+//zoom->take_focus();}
+          image {./background4.png} xywh {332 3 22 21} labelsize 10
+          code0 {\#include "mfdraw.h"}
+          code1 {o->tooltip("choose a white or black background");}
+        }
+        Fl_Light_Button {} {
+          label {&Origin}
+          callback {glView->setorigin = o->value();
+if(glView->setorigin == false) {
+  glView->modelviewsetorigin( (glView->w())/2, (glView->h())/2 );
+}
+else {
+  glView->cursor(FL_CURSOR_CROSS);
+}}
+          xywh {331 3 55 21} color 48 selection_color 71 labelsize 10 hide
+          code0 {\#include "mfdraw.h"}
+          code1 {o->tooltip("point and click for new center of interest");}
+          code2 {ptrorigin = o;}
+        }
+        Fl_Value_Slider zoom {
+          label Zoom
+          callback {glView->size[atframe] =((Fl_Value_Slider *)o)->value();
+//printf("call callback for zoom slider\\n");
+
+//glView->size[atframe] = pow(glView->size[atframe], 2); 
+//commented out to revert to linear from exponential slider
+
+//printf("size in zoom widget = %g\\n",glView->size[atframe]); //+++++++++++++++++++++++  adjuster support testing 
+glView->zoomfunc();
+//cout<<"in zoom widget: size = "<<glView->size[atframe]<<" step = "<<glView->sizestep<<endl; //++++++ debug
+
+
+//zoomadjuster->value(glView->size[atframe]); //++++++++++++++++++++++++++++++++ zoomadjuster will change when zoom changes size
+//printf("in zoom widget: zoomadjuster value = %g\\n", zoomadjuster->value()); //++++++++++++++++ zoomadjuster will change when zoom changes size
+//zoomadjuster->do_callback(zoomdisplay);     //++++++++++++++++++++++++++++++++ zoomadjuster will change when zoom changes size}
+          xywh {271 3 229 21} type {Horz Knob} selection_color 136 labelfont 1 labelsize 10 align 4 minimum 0.5 maximum 100 step 0.02 value 1 textfont 1 hide
+          code0 {\#include "mfdraw.h"}
+          code1 {o->tooltip("zoom in or out");}
+          code2 {ptrzoom = o;}
+          code3 {\#include <math.h>}
+        }
+        Fl_Adjuster zoomadjuster {
+          user_data {&zoomdisplay}
+          callback {if( Fl::event_key(FL_Left) || Fl::event_key(FL_Right) )
+ return;
+ 
+ 
+
+Fl_Adjuster *a = (Fl_Adjuster*)o;
+
+glView->size[atframe] = a->value();
+//printf("in zoomadjuster: size[%d] = %g\\n", atframe, glView->size[atframe]);
+
+
+ptrzoom->value(glView->size[atframe]); // synchronize old zoomfunc
+
+//printf("in adjuster with value = %g and size = %g\\n",a->value(), glView->size[atframe] );//+++++++++  adjuster support testing 
+
+zoomdisplay->do_callback();
+
+glView->zoomfunc();
+glView->redraw();}
+          xywh {356 3 60 21} align 0 minimum 0.25 maximum 100 step 0.005 value 1
+        }
+        Fl_Box zoomdisplay {
+          label {1.0}
+          callback {//printf("atframe %d in zoomdisplay size relative to current window = %g with size = %g and zoomfactor = %g\\n", atframe, glView->size[atframe] - glView->zoomfactor[atframe] + 1.00 ,glView->size[atframe], glView->zoomfactor[atframe]);
+static char labbuf[100];
+
+//sprintf(labbuf,"%6.2f", glView->size[atframe]); //commented out in order to display size relative to current window as opposed to relatice to original window 3/10/2008
+sprintf(labbuf,"%6.2f", glView->size[atframe] - glView->zoomfactor[atframe] + 1.00);   //see comment above
+
+o->label(labbuf);}
+          xywh {418 3 55 21} box ENGRAVED_BOX color 215 when 1
+        }
+        Fl_Button {} {
+          label {@|<}
+          callback {// |<<	Jump immediately to the earliest available frame (always
+// frame 1 if viewing a metafile when (9) implemented).
+// frame 1 properties are NOT to be over written by any form of inheritance
+
+//if(sListofCommands.size() == 0)
+if(sListofCommands.empty()) 
+  return;
+static char lbl[120];
+
+\#if 0
+ //we do not switch to still mode - if this is required user will toggle with m/M keys
+ if( mmode == MM_MOVIE ) {
+	//writetolog("toggle from movie mode to still mode\\n");
+	mmode = MM_STILL;
+ }
+\#endif
+
+ fastforward  = false;
+ fastprevious = false;
+ 
+  //previousframe NOT relevant we do not support inheritance with this button
+  atframe = 1;
+  
+  Fl::check();
+  
+  LISTOFCOMMANDS::iterator frit;
+  frit = frametracker[atframe]; //frame is pointed to by the iterator in frametracker[n]
+  glView->left = ((Newframe*)(*frit))->left;
+  glView->right = ((Newframe*)(*frit))->right;
+  glView->bottom = ((Newframe*)(*frit))->bottom;
+  glView->top = ((Newframe*)(*frit))->top;
+  glView->invalidate();
+  
+  //glView->init(); ///no - without inheritance ++++++++++++++++++++++++++++++++++++++ uncommented for test only 3/10/2008
+  zoomdisplay->do_callback(); // reset zoom display to reflect size of frame 1
+  
+  glView->redraw();
+  glView->show();
+  Fl::check();
+  //sprintf(lbl, "%s   frame = %d", mf_filename.c_str(), atframe);
+  sprintf(lbl, "%s", header2.c_str());                             //display title on main window
+  mainWindow->label(lbl);
+  mainWindow->redraw();}
+          xywh {52 3 22 21} labelsize 10
+          code0 {extern bool fastforward, fastprevious;}
+          code1 {o->tooltip("display the first frame");}
+          code2 {extern int MINFRAMEVIEWTIMEPREV;}
+        }
+        Fl_Button {} {
+          label {@>|}
+          callback {// |<<	Jump immediately to the earliest available frame (always
+// frame 1 if viewing a metafile when (9) implemented).
+// frame 1 properties are NOT to be over written by any form of inheritance
+
+//if(sListofCommands.size() == 0)
+if(sListofCommands.empty()) 
+  return;
+static char lbl[120];
+
+\#if 0
+ //we do not switch to still mode - if this is required user will toggle with m or M keys
+ if( mmode == MM_MOVIE ) {
+	//writetolog("toggle from movie mode to still mode\\n");
+	mmode = MM_STILL;
+ }
+\#endif
+
+ fastforward  = false;
+ fastprevious = false;
+ 
+  //previousframe NOT relevant we do not support inheritance with this button
+  atframe = lastframe;
+  
+  
+  Fl::check();
+  
+  LISTOFCOMMANDS::iterator frit;
+  frit = frametracker[atframe]; //frame is pointed to by the iterator in frametracker[n]
+  glView->left = ((Newframe*)(*frit))->left;
+  glView->right = ((Newframe*)(*frit))->right;
+  glView->bottom = ((Newframe*)(*frit))->bottom;
+  glView->top = ((Newframe*)(*frit))->top;
+  glView->invalidate();
+   
+  glView->init(); //with inheritance ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ uncommented for test only 3/11/2008
+        
+  zoomdisplay->do_callback(); // reset zoom display to reflect size of frame 1 
+  glView->redraw();
+  glView->show();
+  Fl::check();
+  //sprintf(lbl, "%s   frame = %d", mf_filename.c_str(), atframe);
+  sprintf(lbl, "%s", header2.c_str());                             //display title on main window
+  mainWindow->label(lbl);
+  mainWindow->redraw();}
+          xywh {196 3 22 21} labelsize 10
+          code0 {extern bool fastforward, fastprevious;}
+          code1 {o->tooltip("display the last frame");}
+          code2 {extern int MINFRAMEVIEWTIMEPREV;}
+        }
+        Fl_Value_Input {} {
+          label GoTo
+          callback {if(sListofCommands.empty()) 
+  return;
+   
+int gotoatframe = (int)(o->value());
+//printf("in GoTo with atframe = %d and goto value = %d\\n", atframe, gotoatframe);
+//fflush(stdout); 
+if( (gotoatframe > lastframe) || (gotoatframe < 1) ) {
+         fl_beep();
+         return;
+}
+
+\#if 0
+//++++++++++++++++++++++++++++++++++++++++++++ start experiment to keep frames in viewing not loading order +++++++++++++++++++++++++
+//this experimental code block converts the load ordering into a viewing order NOT by a separate viewing order list
+LISTOFCOMMANDS::iterator  tempf;
+if(gotoatframe >= atframe) {
+  tempf = frametracker[gotoatframe];
+  for(int i = gotoatframe; i >= (atframe + 1); i--) {
+	frametracker[i] = frametracker[i-1];
+  }
+  frametracker[atframe + 1] = tempf;
+  atframe++; //the goto frame is now one greater than frame (i.e. atframe) 
+}
+else {
+//gotoatframe < atframe
+  tempf = frametracker[atframe];
+  for(int i = atframe; i >= gotoatframe; i--) {
+  	frametracker[i] = frametracker[i-1]; 
+  }
+  frametracker[gotoatframe] = tempf;
+  atframe = gotoatframe + 1;
+}
+//++++++++++++++++++++++++++++++++++++++++++++ end experiment to keep frames in viewing not loading order ++++++++++++++++++++++++++++
+\#endif
+
+atframe = gotoatframe;//+++++++++++++++++++++++ comment out if frames in viewing not loading order +++++++++++++++++++++++++++++++++
+
+static char lbl[120];
+
+ fastforward  = false;
+ fastprevious = false;
+
+  Fl::check();
+  
+  LISTOFCOMMANDS::iterator frit;
+  frit = frametracker[atframe]; //frame is pointed to by the iterator in frametracker[n]
+  glView->left = ((Newframe*)(*frit))->left;
+  glView->right = ((Newframe*)(*frit))->right;
+  glView->bottom = ((Newframe*)(*frit))->bottom;
+  glView->top = ((Newframe*)(*frit))->top;
+  glView->invalidate();
+  
+  glView->init(); //with inheritance +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ added 3/11/2008
+  
+  //glView->init(); //no - we return to frame 1 in the state that its in without inheritance
+  zoomdisplay->do_callback(); // reset zoom display to reflect size of frame 1
+  
+  glView->redraw();
+  glView->show();
+  Fl::check();
+  //sprintf(lbl, "%s   frame = %d", mf_filename.c_str(), atframe);
+  sprintf(lbl, "%s", header2.c_str());                             //display title on main window
+  mainWindow->label(lbl);
+  mainWindow->redraw();}
+          xywh {251 3 55 21} box UP_BOX labeltype ENGRAVED_LABEL labelsize 10 when 10 textsize 12
+        }
+        Fl_Button {} {
+          label {@||}
+          callback {if(sListofCommands.empty()) 
+  return;
+static char lbl[120];
+
+// if(mmode == MM_MOVIE) //commented out: we now couple frame acquisition (from cns) with user gui view
+ 	//return;
+
+  fastforward  = false;
+  fastprevious = false;
+ 
+   Fl::check();
+  
+  LISTOFCOMMANDS::iterator frit;
+  frit = frametracker[atframe]; //frame is pointed to by the iterator in frametracker[n]
+  glView->left = ((Newframe*)(*frit))->left;
+  glView->right = ((Newframe*)(*frit))->right;
+  glView->bottom = ((Newframe*)(*frit))->bottom;
+  glView->top = ((Newframe*)(*frit))->top;
+  glView->invalidate();
+  
+  //glView->init(); //no - we return to frame 1 in the state that its in without inheritance
+  zoomdisplay->do_callback(); // reset zoom display to reflect size of frame 1
+  
+  glView->redraw();
+  glView->show();
+  Fl::check();
+  //sprintf(lbl, "%s   frame = %d", mf_filename.c_str(), atframe);
+  sprintf(lbl, "%s", header2.c_str());                             //display title on main window
+  mainWindow->label(lbl);
+  mainWindow->redraw();}
+          xywh {124 4 22 21} labelsize 10
+          code0 {extern bool fastforward, fastprevious;}
+          code1 {o->tooltip("stop fast forward or fast previous");}
+        }
+      }
+      Fl_Group {} {open
+        xywh {0 25 500 500} resizable
+      } {
+        Fl_Group MainView {open
+          xywh {0 25 500 500}
+        } {
+          Fl_Box glView {
+            xywh {0 25 500 500} align 16
+            code0 {\#include "mfdraw.h"}
+            class FrameView
+          }
+        }
+      }
+    }
+    Fl_Window Netdialog {
+      callback {o->hide();
+Controls->activate();} open
+      xywh {719 22 245 80} type Double hide
+      code0 {\#include "mfdraw.h"}
+      code1 {ptrnetdialog = o;} non_modal
+    } {
+      Fl_Group {} {
+        label {Mode of Operation} open
+        xywh {12 20 115 55} box BORDER_BOX
+      } {
+        Fl_Button {} {
+          label Step
+          callback {mmode = MM_STILL;
+
+//char debugmsg[300];
+//sprintf(debugmsg,"in step button: atframe %d mmode = %d,will call nxtrfrm->do_callback()",atframe,mmode);
+//writetolog(debugmsg);
+
+Netdialog->hide();}
+          xywh {35 24 75 20}
+        }
+        Fl_Button {} {
+          label Movie
+          callback {if(moreframes == false) //if there is no more connection to the science model then there can be no movie
+	return; 
+
+Netdialog->hide();
+
+//this if block is commented out in m/M handle 
+\#if 0
+if(mmode == MM_STILL && previousframe < atframe ) { //we are transitioning from still to movie - need to handle previousframe when atframe is == 1 ???????????????? 
+ previousframe = atframe;
+  atframe++;
+}
+\#endif
+
+if (mmode == MM_STILL)
+	fastforward = true;	
+mmode = MM_MOVIE;
+
+//char debugmsg[300];
+//sprintf(debugmsg,"in movie button: atframe %d mmode = %d,will call nxtrfrm->do_callback()",atframe,mmode);
+//writetolog(debugmsg);
+
+nxtfrm->do_callback();}
+          xywh {34 49 75 20}
+        }
+      }
+      Fl_Group {} {
+        label Action open
+        xywh {132 20 105 55} box BORDER_BOX
+      } {
+        Fl_Button {} {
+          label Interrupt
+          callback {Netdialog->hide();
+interruptcns();}
+          xywh {147 25 75 20}
+        }
+        Fl_Button {} {
+          label Quit
+          callback {\#if 0
+//this block replaced by following code
+static int connectionclosed = false;
+if(moreframes == false && connectionclosed) {
+        //writetolog("quit button pressed but not acted upon because connetion is already closed");
+	return; 
+	//exit(0); //++++++++++++++++++++++++++++++++ 5/8/2008
+} 		
+Netdialog->hide();
+closeconnection();
+o->deactivate();
+//connectionclosed = true; //++++++++++++++++++++++++++++++++++++++++ 4/7/2008
+//char debugmsg[300];
+//sprintf(debugmsg, "in file %s at line %d: connection closed in callback to quit atframe = %d mmode = %d and connection closed = %d", __FILE__, __LINE__, atframe, mmode, connectionclosed);
+//writetolog(debugmsg);
+\#endif
+
+
+
+// start ------------- new as of 4/18/2008 ------------
+if(!connectionclosed) { 
+  Netdialog->hide();
+  closeconnection();
+  quitpressed = true; 
+} else {
+	exit(0);
+}
+// end ------------ new as of 4/18/2008 ------------} selected
+          xywh {147 50 75 20}
+        }
+      }
+    }
+    Fl_Window Settings {
+      label Settings open
+      xywh {49 146 525 505} type Double align 8 hide resizable
+      code0 {\#include "mfdraw.h"}
+      code1 {ptrsettings = o;} modal
+    } {
+      Fl_Value_Input minframeviewtimeprev {
+        label {Minimum previous frame viewing time (secs)}
+        xywh {296 7 49 23} when 6 maximum 200 step 1
+        code0 {minframeviewtimeprev->value(MINFRAMEVIEWTIMEPREV);}
+      }
+      Fl_Value_Input minframeviewtimenext {
+        label {Minimum forward frame viewing time (secs)}
+        xywh {296 35 49 23} when 6 maximum 200 step 1
+        code0 {minframeviewtimenext->value(MINFRAMEVIEWTIMENEXT);}
+      }
+      Fl_Value_Input xposwindow {
+        label {Initial Window  X Position}
+        xywh {297 64 49 23} when 4 maximum 2000 step 1
+        code0 {xposwindow->value(XPOSWINDOW);}
+      }
+      Fl_Value_Input yposwindow {
+        label {Initial Window  Y Position}
+        xywh {297 92 49 23} when 4 maximum 2000 step 1
+        code0 {yposwindow->value(YPOSWINDOW);}
+      }
+      Fl_Value_Input mainwindowwidthsize {
+        label {Initial Window  Width}
+        xywh {297 121 49 23} when 4 maximum 2000 step 1
+        code0 {mainwindowwidthsize->value(MAINWINDOWWIDTHSIZE);}
+      }
+      Fl_Button {} {
+        label CANCEL
+        callback {minframeviewtimeprev->value(MINFRAMEVIEWTIMEPREV);
+minframeviewtimenext->value(MINFRAMEVIEWTIMENEXT);
+
+xposwindow->value(XPOSWINDOW);
+yposwindow->value(YPOSWINDOW);
+
+mainwindowwidthsize->value(MAINWINDOWWIDTHSIZE);
+
+//cout<<"cancel and restored INFRAMEVIEWTIMEPREV to "<<(int)(minframeviewtimeprev->value())<<endl;
+//cout<<"cancel and restored INFRAMEVIEWTIMENEXT to "<<(int)(minframeviewtimenext->value())<<endl;
+
+//cout<<"cancel and restored XPOSWINDOW to "<<(int)(xposwindow->value())<<endl;
+//cout<<"cancel and restored YPOSWINDOW to "<<(int)(yposwindow->value())<<endl;
+
+Settings->hide();}
+        xywh {459 470 65 25}
+        code0 {\#include "mfdraw.h"}
+      }
+      Fl_Button {} {
+        label SAVE
+        callback {MINFRAMEVIEWTIMEPREV = (int)(minframeviewtimeprev->value());
+MINFRAMEVIEWTIMENEXT = (int)(minframeviewtimenext->value());
+
+XPOSWINDOW = (int)(xposwindow->value());
+YPOSWINDOW = (int)(yposwindow->value());
+
+MAINWINDOWWIDTHSIZE = (int)(mainwindowwidthsize->value());
+//above performs ok prior to actual save
+
+char msglog[100];
+sprintf(msglog, "in save call back, preference file = %s\\n", preffileinuse.c_str());
+writetolog(msglog);
+
+FILE *fp;
+fp = fopen(preffileinuse.c_str(),"w+");
+if(fp == NULL) {
+	writetolog("Error in opening file .mfdrawrc");
+	exit(1);
+}
+
+//char prefs[500];
+
+char *prefs = new char[500];
+sprintf(prefs, "MAXNUMFRAMES %d\\nMINFRAMEVIEWTIMEPREV %d\\nMINFRAMEVIEWTIMENEXT %d\\n\\
+XPOSWINDOW %d\\nYPOSWINDOW %d\\nMAINWINDOWWIDTHSIZE %d",\\
+MAXNUMFRAMES,MINFRAMEVIEWTIMEPREV,MINFRAMEVIEWTIMENEXT,XPOSWINDOW,YPOSWINDOW,MAINWINDOWWIDTHSIZE);
+fprintf(fp, prefs);
+fclose(fp);
+Settings->hide();
+mainWindow->position(XPOSWINDOW,YPOSWINDOW);
+delete [] prefs;}
+        xywh {329 470 65 25}
+        code0 {\#include "mfdraw.h"}
+      }
+      Fl_Button {} {
+        label OK
+        callback {MINFRAMEVIEWTIMEPREV = (int)(minframeviewtimeprev->value());
+MINFRAMEVIEWTIMENEXT = (int)(minframeviewtimenext->value());
+
+XPOSWINDOW = (int)(xposwindow->value());
+YPOSWINDOW = (int)(yposwindow->value());
+
+MAINWINDOWWIDTHSIZE = (int)(mainwindowwidthsize->value());
+
+
+//cout<<"ok INFRAMEVIEWTIMEPREV = "<<(int)(minframeviewtimeprev->value())<<endl;
+//cout<<"ok INFRAMEVIEWTIMENEXT = "<<(int)(minframeviewtimenext->value())<<endl;
+//cout<<"ok XPOSWINDOW = "<<(int)(xposwindow->value())<<endl;
+//cout<<"ok YPOSWINDOW = "<<(int)(yposwindow->value())<<endl;
+
+Settings->hide();
+
+mainWindow->position(XPOSWINDOW,YPOSWINDOW);}
+        xywh {400 470 55 25}
+        code0 {\#include "mfdraw.h"}
+      }
+    }
+    Fl_Window ExitContinue {open
+      xywh {344 411 145 75} type Double align 8 hide resizable
+      code0 {\#include "mfdraw.h"}
+      code1 {ptrexitcontinue = o;} modal
+    } {
+      Fl_Button {} {
+        label CONTINUE
+        callback {ExitContinue->hide();}
+        xywh {36 44 80 25}
+        code0 {\#include "mfdraw.h"}
+      }
+      Fl_Button {} {
+        label EXIT
+        callback {exit(0);}
+        xywh {36 9 80 25}
+        code0 {\#include "mfdraw.h"}
+      }
+    }
+  }
+  Function {show(int argc, char **argv)} {open
+  } {
+    code {//char msglog[300];
+//sprintf(msglog,"calling mainWindow->show(argc, argv) with argc = %d argv[0] = %s argv[1] = %s argv[2] = %s ",argc, argv[0], argv[1],argv[2]);
+//writetolog(msglog);
+if(runmode == 1) {
+	//mainWindow->label("data obtained from science model via socket");
+	static char lbl[120];
+	sprintf(lbl, "%s", header2.c_str());                             //display title on main window
+	mainWindow->label(lbl);	
+        glView->init();
+        
+}
+  
+//mainWindow->position(XPOSWINDOW,YPOSWINDOW); //overriding window manager for positioning
+
+mainWindow->show(argc, argv);
+
+//printf("at line %d in fluid show: size[1] = %g\\n", __LINE__, pfvui->glView->size[1]); //+++++++++++++++++++++++++++++++++++++++++++++++++++++ test 3/7/08
+
+mainWindow->position(XPOSWINDOW,YPOSWINDOW); //overriding window manager for positioning
+if(runmode == 0) {
+  mainWindow->resize(XPOSWINDOW,YPOSWINDOW, MAINWINDOWWIDTHSIZE, MAINWINDOWWIDTHSIZE + 22); //works in meta mode but not socket modes
+}
+
+//printf("at line %d in fluid show: size[1] = %g\\n", __LINE__, pfvui->glView->size[1]); //+++++++++++++++++++++++++++++++++++++++++++++++++++++ test 3/7/08} {}
+  }
+} 

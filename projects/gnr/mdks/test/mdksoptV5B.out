@@ -1,0 +1,165 @@
+
+CLOCKS_PER_SEC is 1000000.0
+
+   SPOUT ON
+
+   MDKSOPT K=1,N=200,DIVS=10,R=500,T=UNIF
+
+For k = 1, n = 200, dist = (UNIF,UNIF), reps = 500
+   Divs = 1, mean s =  1.18257, sigma s =  0.36867, time/trial =      0.00004
+
+   Brute force mean s =  1.18257, sigma s =  0.36867, time/trial =      0.00016
+   Brute force time/min brick time =      4.00000
+
+   MDKSOPT K=1,N=1000,DIVS=10,R=500
+
+For k = 1, n = 1000, dist = (UNIF,UNIF), reps = 500
+   Divs = 1, mean s =  1.20919, sigma s =  0.37575, time/trial =      0.00004
+
+   Brute force mean s =  1.20919, sigma s =  0.37575, time/trial =      0.00468
+   Brute force time/min brick time =    117.00000
+
+   MDKSOPT K=1,N=5000,DIVS=10,R=250
+
+For k = 1, n = 5000, dist = (UNIF,UNIF), reps = 250
+   Divs = 1, mean s =  1.23619, sigma s =  0.39454, time/trial =      0.00028
+
+   Brute force mean s =  1.23619, sigma s =  0.39454, time/trial =      0.12732
+   Brute force time/min brick time =    454.71429
+
+   MDKSOPT K=1,N=25000,DIVS=10,R=50
+
+For k = 1, n = 25000, dist = (UNIF,UNIF), reps = 50
+   Divs = 1, mean s =  1.25087, sigma s =  0.37661, time/trial =      0.00220
+
+   Brute force mean s =  1.25087, sigma s =  0.37661, time/trial =      3.15980
+   Brute force time/min brick time =   1436.27273
+
+       *MDKSOPT K=1,N=125000,DIVS=10,R=10
+       *
+
+   MDKSOPT K=2,N=200,DOED=2,R=500,T=UNIF
+
+For k = 2, n = 200, dist = (UNIF,UNIF), reps = 500
+   Divs = 4, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00022
+   Divs = 5, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00018
+   Divs = 6, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00020
+   Divs = 7, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00020
+   Divs = 8, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00022
+
+   Brute force mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00028
+   Brute force time/min brick time =      1.55556
+
+   MDKSOPT K=2,N=1000,DOED=2,R=500
+
+For k = 2, n = 1000, dist = (UNIF,UNIF), reps = 500
+   Divs = 9, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00318
+   Divs = 10, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00298
+   Divs = 11, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00296
+   Divs = 12, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00282
+   Divs = 13, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00284
+   Divs = 14, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00290
+   Divs = 15, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00306
+
+   Brute force mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00684
+   Brute force time/min brick time =      2.42553
+
+   MDKSOPT K=2,N=5000,DOED=2,R=125
+
+For k = 2, n = 5000, dist = (UNIF,UNIF), reps = 125
+   Divs = 19, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.05664
+   Divs = 20, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.05544
+   Divs = 21, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.05416
+   Divs = 22, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.05336
+   Divs = 23, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.05232
+   Divs = 24, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.05264
+   Divs = 25, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.05320
+   Divs = 26, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.05312
+   Divs = 27, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.05256
+   Divs = 28, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.05304
+   Divs = 29, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.05360
+
+   Brute force mean s =  1.86586, sigma s =  0.34535, time/trial =      0.16992
+   Brute force time/min brick time =      3.24771
+
+   MDKSOPT K=2,N=25000,DOED=2,R=25
+
+For k = 2, n = 25000, dist = (UNIF,UNIF), reps = 25
+   Divs = 40, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.25920
+   Divs = 41, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.18600
+   Divs = 42, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.17160
+   Divs = 43, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.16200
+   Divs = 44, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.15120
+   Divs = 45, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.14600
+   Divs = 46, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.13800
+   Divs = 47, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.13160
+   Divs = 48, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.12800
+   Divs = 49, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.08440
+   Divs = 50, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.07840
+   Divs = 51, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.08040
+   Divs = 52, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.07880
+   Divs = 53, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.07840
+   Divs = 54, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.09240
+
+   Brute force mean s =  1.86220, sigma s =  0.36214, time/trial =      4.26440
+   Brute force time/min brick time =      3.95438
+
+       *MDKSOPT K=2,N=125000,DOED=2,R=5
+       *
+
+   MDKSOPT K=3,N=200,DOED=2,R=500,T=UNIF
+
+For k = 3, n = 200, dist = (UNIF,UNIF), reps = 500
+   Divs = 2, mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00040
+   Divs = 3, mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00036
+   Divs = 4, mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00038
+   Divs = 5, mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00048
+   Divs = 6, mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00070
+
+   Brute force mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00040
+   Brute force time/min brick time =      1.11111
+
+   MDKSOPT K=3,N=1000,DOED=2,R=400
+
+For k = 3, n = 1000, dist = (UNIF,UNIF), reps = 400
+   Divs = 3, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.00790
+   Divs = 4, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.00683
+   Divs = 5, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.00648
+   Divs = 6, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.00743
+   Divs = 7, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.00922
+   Divs = 8, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.01160
+
+   Brute force mean s =  1.94962, sigma s =  0.34789, time/trial =      0.00968
+   Brute force time/min brick time =      1.49421
+
+   MDKSOPT K=3,N=5000,DOED=2,R=80
+
+For k = 3, n = 5000, dist = (UNIF,UNIF), reps = 80
+   Divs = 6, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.19988
+   Divs = 7, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.18475
+   Divs = 8, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.17112
+   Divs = 9, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.17512
+   Divs = 10, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.18413
+   Divs = 11, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.19688
+
+   Brute force mean s =  2.09392, sigma s =  0.28111, time/trial =      0.24213
+   Brute force time/min brick time =      1.41490
+
+   MDKSOPT K=3,N=25000,DOED=2,R=16
+
+For k = 3, n = 25000, dist = (UNIF,UNIF), reps = 16
+   Divs = 10, mean s =  2.02821, sigma s =  0.28606, time/trial =      4.15063
+   Divs = 11, mean s =  2.02821, sigma s =  0.28606, time/trial =      3.86625
+   Divs = 12, mean s =  2.02821, sigma s =  0.28606, time/trial =      3.66000
+   Divs = 13, mean s =  2.02821, sigma s =  0.28606, time/trial =      3.57938
+   Divs = 14, mean s =  2.02821, sigma s =  0.28606, time/trial =      3.45375
+   Divs = 15, mean s =  2.02821, sigma s =  0.28606, time/trial =      3.45313
+   Divs = 16, mean s =  2.02821, sigma s =  0.28606, time/trial =      3.54937
+   Divs = 17, mean s =  2.02821, sigma s =  0.28606, time/trial =      3.70937
+   Divs = 18, mean s =  2.02821, sigma s =  0.28606, time/trial =      3.88000
+
+   Brute force mean s =  2.02821, sigma s =  0.28606, time/trial =      6.04688
+   Brute force time/min brick time =      1.75113
+
+       *MDKSOPT K=3,N=125000,DOED=2,R=3
+   

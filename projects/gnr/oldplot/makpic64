@@ -1,0 +1,120 @@
+# (c) Copyright 2011-2018, The Rockefeller University *11225* 
+# $Id: makpic64 37 2018-08-15 19:53:33Z  $
+########################################################################
+#          Make file for old ROCKS metafile plotting library           #
+#                 Version for PC Linux (64-bit -fPIC)                  #
+#                                                                      #
+# V2A, 08/26/11, GNR - Derived from 32-bit makefile                    #
+# Rev, 10/06/11, GNR - Revise for -fPIC library                        #
+# ==>, 08/10/16, GNR - Last mod before committing to svn repository    #
+# Rev, 05/27/18, GNR - Add col2gr                                      #
+# Rev, 08/03/18, GNR - Incorporate LCLHOME                             #
+########################################################################
+
+# Directory where all this stuff is stored
+LCLHOME ?= $(HOME)
+# Name of result library
+LN = libserpicplot
+# Define directory where plot library is stored
+RL = $(LCLHOME)/lib/pclux64
+# Define directory where include files are stored
+INC = $(LCLHOME)/include
+# Define directory where object files are stored
+DIR = pcpic64
+
+# Object files to be included in PLOT library
+
+OBJFILES = \
+arc \
+arrow \
+axis \
+axlin \
+axlog \
+axpol \
+bitmap \
+bitmaps \
+bmpxsz \
+bpause \
+circle \
+color \
+col2gr \
+deccol \
+ellips \
+endplt \
+factor \
+i2a \
+line \
+newplt \
+number \
+pencol \
+penset \
+pentyp \
+plot \
+plotvers \
+polyln \
+rect \
+retrace \
+setmovie \
+symbol \
+where
+
+MFFILES = \
+mfbchk \
+mfckerr \
+mfstate \
+mfsynch \
+mfwrite \
+setmf
+
+MF0FILES = \
+mfclose \
+mfcreate \
+mfhead \
+mfst
+
+RKGFILES = \
+rkgcpy \
+rkgget \
+rkgput \
+rkgcls
+
+.SUFFIXES:
+.SUFFIXES: .d .c .s .o
+
+FILES := $(OBJFILES) $(MFFILES) $(MF0FILES) $(RKGFILES)
+CC := gcc
+# Note, 08/09/16, GNR:  -O2 here resulted in large numbers of
+# 'will never be executed' warnings that made no sense.
+CFLAGS := -m64 -g -fPIC -Wcomment -Wformat -Wimplicit -Wsequence-point \
+   -Wreturn-type -Wunused-variable -Wunused-label -Wuninitialized \
+   -Wundef -Wcast-qual -Wunreachable-code
+SVNV := $(shell gnrversn)
+DEFS := PCLUX64 _ISOC99_SOURCE SVNVRS=$(patsubst %,'"%"',$(SVNV))
+
+# Targets
+.PHONY : all depend
+all:		$(RL)/$(LN).a
+depend:		$(FILES:%=$(DIR)/%.d)
+
+# Generate dependencies via gcc mechanism
+$(DIR)/%.d:	%.c
+	$(SHELL) -ec '$(CC) -MM $(DEFS:%=-D%) $(INC:%=-I%) $< \
+   | cat dirfile - > $@'
+
+$(DIR)/%.o: %.c $(DIR)/%.d makpic64
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) -I$(INC) -c $<
+	mv $*.o $(DIR)
+
+$(DIR)/%.o: %.s makpic64
+	as $(CFLAGS) -I$(INC) $*.s
+	mv $*.o $(DIR)
+
+$(RL)/$(LN).a: $(FILES:%=$(DIR)/%.o)
+	ar r $(LN).a $(FILES:%=$(DIR)/%.o)
+	ranlib $(LN).a
+	mv $(LN).a $(RL)
+
+clean:
+	rm -f $(DIR)/*.o $(RL)/$(LN).a
+
+-include $(FILES:%=$(DIR)/%.d)

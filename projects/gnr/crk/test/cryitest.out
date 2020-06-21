@@ -1,0 +1,133 @@
+Open returned 0xba6010
+For line 1, fgets returns TITLE This is run in directory &syscwd
+
+   feof returns 0, newline offset is 38, data is
+==>TITLE This is run in directory &syscwd
+
+For line 2, fgets returns This is the first line of the test data
+
+   feof returns 0, newline offset is 39, data is
+==>This is the first line of the test data
+
+For line 3, fgets returns * This was run on &sysdate at &systime
+
+   feof returns 0, newline offset is 38, data is
+==>* This was run on &sysdate at &systime
+
+For line 4, fgets returns * This is an &example_of_a_symbol_that_is_way_too_long end
+
+   feof returns 0, newline offset is 58, data is
+==>* This is an &example_of_a_symbol_that_is_way_too_long end
+
+For line 5, fgets returns * This is an &&example of an escaped symbol
+
+   feof returns 0, newline offset is 43, data is
+==>* This is an &&example of an escaped symbol
+
+For line 6, fgets returns * This is another \&example of an escaped symbol
+
+   feof returns 0, newline offset is 48, data is
+==>* This is another \&example of an escaped symbol
+
+For line 7, fgets returns * This is a &syscpu==IBM symbol ended by a punctuation character
+
+   feof returns 0, newline offset is 64, data is
+==>* This is a &syscpu==IBM symbol ended by a punctuation character
+
+For line 8, fgets returns * This is a &syscpu.=&undefined symbol ended by a period
+
+   feof returns 0, newline offset is 56, data is
+==>* This is a &syscpu.=&undefined symbol ended by a period
+
+For line 9, fgets returns 
+
+   feof returns 0, newline offset is 0, data is
+==>
+
+For line 10, fgets returns DEFAULT Dat1=1001,Dat2=1002
+
+   feof returns 0, newline offset is 27, data is
+==>DEFAULT Dat1=1001,Dat2=1002
+
+For line 11, fgets returns This is the third line of the test data
+
+   feof returns 0, newline offset is 39, data is
+==>This is the third line of the test data
+
+For line 12, fgets returns SETENV Cryitest=Data7890,Cryi1=&Dat1,Cryi2=&Dat2
+
+   feof returns 0, newline offset is 48, data is
+==>SETENV Cryitest=Data7890,Cryi1=&Dat1,Cryi2=&Dat2
+
+For line 13, fgets returns And this should be read after the insert
+
+   feof returns 0, newline offset is 40, data is
+==>And this should be read after the insert
+
+End-of-file reached reading line 14
+Close returned 0
+Now reading with cryin...
+                                    Cryin Test Program                                            25 SEP 17    0:00000  Page 1    
+  
+   TITLE This is run in directory &syscwd
+
+For line 1, cryin returns This is the first line of the test data
+  line length is 39, cdprt1 result on next line:
+
+   This is the first line of the test data
+
+       * This was run on 09/25/2017 at 17:37:52
+       * This is an example_of_a_symbol_that_is_way_too_long end
+       * This is an &example of an escaped symbol
+       * This is another &example of an escaped symbol
+       * This is a x86_64==IBM symbol ended by a punctuation character
+       * This is a x86_64=undefined symbol ended by a period
+   
+
+   DEFAULT Dat1=1001,Dat2=1002
+
+For line 2, cryin returns This is the third line of the test data
+  line length is 39, cdprt1 result on next line:
+
+   This is the third line of the test data
+
+   SETENV Cryitest=Data7890,Cryi1=&Dat1,Cryi2=&Dat2
+
+For line 3, cryin returns And this should be read after the insert
+  line length is 40, cdprt1 result on next line:
+
+   And this should be read after the insert
+
+For line 4, cryin returns This is the first line of the test data
+  line length is 39, cdprt1 result on next line:
+
+   This is the first line of the test data
+
+   OUTPRTY 4
+
+   SPOUT ON
+
+For line 5, cryin returns This is the second line of the test data
+  line length is 40, cdprt1 result on next line:
+
+   This is the second line of the test data
+
+For line 6, cryin returns This is the third line of the test data
+  line length is 39, cdprt1 result on next line:
+
+   This is the third line of the test data
+
+For line 7, cryin returns This is the fourth line of the test data
+  line length is 40, cdprt1 result on next line:
+
+   This is the fourth line of the test data
+
+For line 8, cryin returned end-of-file.
+Env variable Cryitest was set to: Data7890
+Env variable Cryi1 was set to: 1001
+Env variable Cryi2 was set to: 1002
+                                    This is run in directory /home/cdr/src/crk/test               25 SEP 17    0:00000  Page 2    
+  
+Force a page eject to see new title.
+
+   

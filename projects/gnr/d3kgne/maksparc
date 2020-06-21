@@ -1,0 +1,191 @@
+# $Id: maksparc 31 2010-08-30 18:57:56Z  $
+########################################################################
+# MAKE file for CNS (DARWIN III) running on Sun4/SPARC                 #
+#                                                                      #
+# Targets supported:                                                   #
+#    Cns, sparc, sun: 		normal version                         #
+#    optimized:                 optimized version (no d1 or timers)    #
+#    sparct:                    profiling timers added                 #
+#    d1sparc:                   Darwin I support added                 #
+#    d1sparct:                  Darwin I support and timers added      #
+#    solaris:			Same as optimized but run on solaris   #
+#                                                                      #
+# Rev, 04/20/94, GNR - Support NOMAD platform in serial version        #
+# Rev, 12/23/94, GNR - Make NY,NSI versions parallel, add d3decay      #
+# Rev, 05/13/96, GNR - Add new routines, structs for V8A, improve      #
+#                      support for with/without D1, default without    #
+# Rev, 12/31/96, GNR - Add optimized, sparct, d1sparct targets         #
+# Rev, 01/30/98, GNR - Add solaris target                              #
+# Rev, 03/28/98, GNR - Reverse order of nsitool and ROCKS libraries    #
+# Rev, 05/04/99, GNR - New directory layout                            #
+# Rev, 09/05/99, GNR - Remove remaining NCUBE support                  #
+# V8D, 02/14/07, GNR - Remove PNS, add d3vitp                          #
+# ==>, 12/29/07, GNR - Last mod before committing to svn repository    #
+# Rev, 12/28/08, GNR - Add clean target, dependency on makefile itself #
+# Rev, 12/19/09, GNR - Add mechanism for retrieving svn version        #
+########################################################################
+
+SUNOBJ= \
+darwin3 \
+d3abort \
+d3ajw  \
+d3allo \
+d3autsc \
+d3bgis \
+d3bxvp \
+d3cchk \
+d3chng \
+d3cij  \
+d3clst \
+d3cnmd \
+d3cond \
+d3ctbl \
+d3decay \
+d3dflt \
+d3dij  \
+d3dprt \
+d3echo \
+d3elij \
+d3epsi \
+d3evtm \
+d3exit \
+d3fchk \
+d3foff \
+d3g1g3 \
+d3g1imin \
+d3g2cell \
+d3g2cond \
+d3g2conn \
+d3g3prob \
+d3g3rset \
+d3g3timr \
+d3genr \
+d3gfcl \
+d3gfhd \
+d3gfsh \
+d3gfsv \
+d3go   \
+d3grp0 \
+d3grp1 \
+d3grp2 \
+d3grp3 \
+d3gvin \
+d3i3vr \
+d3ijpi \
+d3ijpl \
+d3imgt \
+d3inhb \
+d3inhi \
+d3kij  \
+d3lij  \
+d3lplt \
+d3mark \
+d3master \
+d3mchk \
+d3mset \
+d3news \
+d3ngph \
+d3nset \
+d3nxtab \
+d3oafs \
+d3parm \
+d3perr \
+d3phase \
+d3plot \
+d3regenr \
+d3resetn \
+d3resetz \
+d3rlnm \
+d3rplt \
+d3rprt \
+d3rpsi \
+d3rstr \
+d3salf \
+d3save \
+d3schk \
+d3sfhm \
+d3sj  \
+d3snsa \
+d3stat \
+d3tchk \
+d3tsvp \
+d3uprg \
+d3valu \
+d3vitp \
+d3vjnt \
+d3vplt \
+d3vtch \
+d3woff \
+d3zsta \
+findln \
+findmdlt \
+findpcf \
+findvc \
+rfdmtx \
+stubs  \
+sunstubs \
+tvplot
+
+# Object files added for D1 support
+OBJD1 = \
+d1genr \
+d1go \
+d1nset \
+d1rplt
+
+# Common target for all SunOS variants
+all sparc sun optimized sparct d1sparc d1sparct: sparccns
+sparccns solaris: Cns
+
+# Common pathnames
+SRCROOT  = $(HOME)/src
+I        = $(HOME)/include
+sparccns := L = $(HOME)/lib/sparc
+solaris  := L = $(HOME)/lib/solaris
+S        = ../
+
+# Search path additions for "include" files
+INC = -I$S -I$I
+
+# NSI home-grown libraries (note: order is NOT arbitrary)
+TOOLS = tools
+sparct d1sparct := TOOLS = tools_t
+NSILIBS = env \
+          serplot \
+          host$(TOOLS) \
+          crk
+
+# Get svn version
+SVNV:sh = gnrversn
+SVNVQT  = $(SVNV:%='"%"')
+
+# Compile-time definitions
+sparccns := CC = acc
+sparccns := DEFS = SUN4 SVNVRS=$(SVNVQT)
+sparccns := LIBS = m
+solaris  := CC = cc
+solaris  := DEFS = SUN5 SVNVRS=$(SVNVQT)
+solaris  := LIBS = m socket nsl
+CFLAGS = -g
+
+# Additions for specialized targets
+optimized         := CFLAGS += -O2
+solaris           := CFLAGS += -O
+d1sparc d1sparct  := SUNOBJ += $(OBJD1)
+d1sparc d1sparct  := DEFS += D1
+sparct d1sparct   := DEFS += TIMERS
+
+.SUFFIXES: .o .c
+
+# Rule for compiling C source programs
+%.o:	../%.c makefile
+	$(CC) $(CFLAGS) $(DEFS:%=-D%) $(INC) -c $<
+
+.KEEP_STATE:
+
+Cns:	$$(SUNOBJ:%=%.o) $$(NSILIBS:%=$$(L)/lib%.a)
+	$(CC) -g $(SUNOBJ:%=%.o) -o $@ -L$L $(NSILIBS:%=-l%) \
+		-L$(NCLIBDIR) -Bdynamic $(LIBS:%=-l%)
+
+clean:
+	rm -f *.o Cns

@@ -1,0 +1,77 @@
+/***********************************************************************
+*                             phantom.doc                              *
+*                                                                      *
+*     Description of input for phantom (synthetic image) program       *
+*                                                                      *
+*   V1A, 01/20/95, GNR                                                 *
+***********************************************************************/
+
+    Standard ROCKS conventions apply and the usual generic control
+cards (TITLE, etc.) are available.  There are no ordering restrictions
+on phantom control cards, except that each type of object is placed on
+the lattice given by the most recent LATTICE card.  x is always hori-
+zontal, y vertical, and z is the section coordinate.  The origin is at
+the upper left hand corner of each section.  Negative densities will
+cause the object to be subtracted from whatever objects came before.
+
+
+FILE fnm
+
+    fnm = name of acrNEMA image file to be written.
+
+STUDY study
+
+    study = study number for acrNEMA header.
+
+SERIES series
+
+    series = study series number for acrNEMA header.
+
+NOTE note
+
+    note = comment or note field for acrNEMA header.  Remember to
+           place the note in quotes if it contains blanks or other
+           special characters.
+
+IMAGE SIZE cols rows secs
+
+    cols,rows,secs = size of image in pixels along x,y,z.
+
+PIXEL SIZE xpix ypix zpix
+
+    xpix,ypix,zpix = size of one pixel along x,y,z in mm.
+
+NOISE  sigma  [seed]
+
+    sigma = mean and standard deviation of Poisson-distributed
+            noise added to all pixels in image.
+    seed = random number generating seed (default: 1009).
+
+LATTICE  [x1 y1 z1  [x2 y2 z2  [x3 y3 z3]]]
+
+    There may be from 0 to 3 vectors on a LATTICE card.
+    x1,y1,z1 = x,y,z translations of first lattice vector in mm.
+    x2,y2,z2 = x,y,z translations of second lattice vector in mm.
+    x3,y3,z3 = x,y,z translations of third lattice vector in mm.
+
+BRICK  rho  xo yo zo  x1 y1 z1  x2 y2 z2  x3 y3 z3
+
+    rho = density to be assigned to each pixel inside a brick.
+    xo,yo,zo = position of geometric center of one brick in mm.
+    x1,y1,z1 = vector defining one edge of brick in mm.
+    x2,y2,z2 = vector defining second edge of brick in mm.
+    x3,y3,z3 = vector defining third edge of brick in mm.
+
+CYLINDER  rho  xo yo zo  xc yc zc  radius
+
+    rho = density to be assigned to each pixel inside a cylinder
+    xo,yo,zo = position of center of one cylinder in mm.
+    xc,yc,zc = vector defining axis of cylinder in mm.
+    radius = radius of cylinder in mm.
+
+SPHERE  rho  xo yo zo  diameter
+
+    rho = density to be assigned to each pixel inside a sphere
+    xo,yo,zo = position of center of one sphere in mm.
+    diameter = diameter of sphere in mm.
+

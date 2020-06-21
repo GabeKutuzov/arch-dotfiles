@@ -1,0 +1,197 @@
+/***********************************************************************
+*                              NEMA.HDR                                *
+*                                                                      *
+*  This file defines a few basic elements of an ACR_NEMA file that     *
+*  are likely to be used by programs external to 3dviewnix (basically, *
+*  these are the items with an asterisk in the manual).  There does    *
+*  not appear to be such a file included with 3dviewnix--it seems to   *
+*  use a more formal, machine-readable definition, viz:                *
+*  $(VIEWNIX_ENV)/FILES/ACRNEMA_V1.0.STD.  Expand as needed!           *
+*                                                                      *
+*  Initial version, 12/14/94, G.N. Reeke                               *
+*  Rev, 01/26/95, GNR - Add data set types, a few other items          *
+***********************************************************************/
+
+/* Define data in a header item */
+typedef struct {
+   unsigned short group;
+   unsigned short item;
+   int length;
+   } HeaderItem;
+
+/* Program code that depends on the fact that all GroupLength codes
+*  are identical to zero will reference this definition so that such
+*  instances can be found easily and changed if necessary.  */
+#define GenericGroupLength       0x0000
+
+/*---------------------------------------------------------------------*
+*                  Define Command Information Group                    *
+*---------------------------------------------------------------------*/
+
+#define GRP_CommandInfo          0x0000
+
+#define GCI_GroupLength          0x0000
+#define GCI_MessageLength        0x0001
+
+/*---------------------------------------------------------------------*
+*               Define Identification Information Group                *
+*---------------------------------------------------------------------*/
+
+#define GRP_IdentInfo            0x0008
+
+#define GII_GroupLength          0x0000
+#define GII_MessageLength        0x0001
+#define GII_VersionNumber        0x0010
+#define GII_StudyDate            0x0020
+#define GII_StudyTime            0x0030
+#define GII_DataSetType          0x0040
+#define GII_Modality             0x0060
+#define GII_Institution          0x0080
+#define GII_Physician            0x0090
+#define GII_Department           0x1040
+#define GII_Radiologist          0x1060
+#define GII_MfgModel             0x1090
+
+/*---------------------------------------------------------------------*
+*                  Define General Information Group                    *
+*---------------------------------------------------------------------*/
+
+#define GRP_GeneralInfo          0x0009
+
+#define GGI_GroupLength          0x0000
+#define GGI_MessageFile          0x8000
+#define GGI_OrigSceneFile        0x8010
+#define GGI_Description          0x8020
+#define GGI_ScratchPad           0x8030
+
+/*---------------------------------------------------------------------*
+*                  Define Patient Information Group                    *
+*---------------------------------------------------------------------*/
+
+#define GRP_PatientInfo          0x0010
+
+#define GPI_GroupLength          0x0000
+#define GPI_PatientName          0x0010
+#define GPI_PatientID            0x0020
+
+/*---------------------------------------------------------------------*
+*                Define Acquisition Information Group                  *
+*---------------------------------------------------------------------*/
+
+#define GRP_AcqInfo              0x0018
+
+#define GAI_GroupLength          0x0000
+#define GAI_SliceThickness       0x0050
+#define GAI_KVP                  0x0060
+#define GAI_RepetitionTime       0x0080
+#define GAI_EchoTime             0x0081
+#define GAI_ImagedNucleus        0x0085
+#define GAI_GantryTilt           0x1120
+
+/*---------------------------------------------------------------------*
+*                Define Relationship Information Group                 *
+*---------------------------------------------------------------------*/
+
+#define GRP_RelInfo              0x0020
+
+#define GRI_GroupLength          0x0000
+#define GRI_StudyID              0x0010
+#define GRI_Series               0x0011
+
+/*---------------------------------------------------------------------*
+*             Define Image Presentation Information Group              *
+*---------------------------------------------------------------------*/
+
+#define GRP_ImageInfo            0x0028
+
+#define GPR_GroupLength          0x0000
+#define GPR_LUTDescriptors       0x1100
+#define GPR_LUTDRed              0x1101
+#define GPR_LUTDGreen            0x1102
+#define GPR_LUTDBlue             0x1103
+#define GPR_LUTData              0x1200
+#define GPR_LUTDataRed           0x1201
+#define GPR_LUTDataGreen         0x1202
+#define GPR_LUTDataBlue          0x1203
+
+/*---------------------------------------------------------------------*
+*                   Define Scene Information Group                     *
+*---------------------------------------------------------------------*/
+
+#define GRP_SceneInfo            0x0029
+
+#define GSC_GroupLength          0x0000
+#define GSC_Dimension            0x8000
+#define GSC_DomainLocation       0x8010
+#define GSC_AxisLabels           0x8015
+#define GSC_AxisUnits            0x8020
+#define GSC_ValsPerCell          0x8030
+#define GSC_DensityUnits         0x8035
+#define GSC_MinDens              0x8040
+#define GSC_MaxDens              0x8050
+#define GSC_IntegersPerVector    0x8060
+#define GSC_Signedness           0x8070
+#define GSC_BitsPerDensity       0x8080
+#define GSC_LowHighBits          0x8090
+#define GSC_AlignmentDim         0x8091
+#define GSC_AlignmentBytes       0x8091
+#define GSC_ColsRows             0x8095
+#define GSC_Sections             0x80a0
+#define GSC_ColRowIncrs          0x80a5
+#define GSC_SliceLocations       0x80b0
+#define GSC_ProcessingOps        0x80c0
+
+/*---------------------------------------------------------------------*
+*                 Define Structure Information Group                   *
+*---------------------------------------------------------------------*/
+
+#define GRP_StructureInfo        0x002b
+
+#define GST_GroupLength          0x0000
+
+/*---------------------------------------------------------------------*
+*                  Define Display Information Group                    *
+*---------------------------------------------------------------------*/
+
+#define GRP_DisplayInfo          0x002d
+
+#define GDR_GroupLength          0x0000
+
+/*---------------------------------------------------------------------*
+*                       Define Scene Data Group                        *
+*---------------------------------------------------------------------*/
+
+#define GRP_SceneData            0x7fe0
+
+#define GSCDGroupLength          0x0000
+#define GSCDImage                0x0010
+
+/*---------------------------------------------------------------------*
+*                     Define Structure Data Group                      *
+*---------------------------------------------------------------------*/
+
+#define GRP_StructureData        0x8001
+
+#define GSTDGroupLength          0x0000
+#define GSTDStructureData        0x8000
+
+/*---------------------------------------------------------------------*
+*                      Define Display Data Group                       *
+*---------------------------------------------------------------------*/
+
+#define GRP_DisplayData          0x8021
+
+#define GDRDGroupLength          0x0000
+#define GDRDDisplayData          0x8000
+
+/*---------------------------------------------------------------------*
+*                        Define Data Set Types                         *
+*---------------------------------------------------------------------*/
+
+#define IMAGE0      0
+#define IMAGE1      1
+#define CURVE0    100
+#define SURFACE0  110
+#define SHELL0    120
+#define SHELL1    121
+#define MOVIE0    200

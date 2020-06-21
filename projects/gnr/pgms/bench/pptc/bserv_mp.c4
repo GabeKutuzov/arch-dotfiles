@@ -1,0 +1,1152 @@
+/* (c) Copyright 1988-95 George N. Reeke, Jr.  *** CONFIDENTIAL ***   */
+/* For use only in testing performance of computers on a simplified   */
+/* version of a Darwin III simulation.  Please do not distribute      */
+/* to any third parties without permission.                           */
+/*--------------------------------------------------------------------*/
+/*                                                                    */
+/*    Darwin III "Benchmark" Program                                  */
+/*                                                                    */
+/*    This program is designed to be a "miniature" version of         */
+/*    Darwin III, incorporating the most time-consuming inner-        */
+/*    loop calculations.  It should be a suitable basis for           */
+/*    developing specialized versions for various parallel-           */
+/*    architecture machines.                                          */
+/*                                                                    */
+/*    V1A, 05/05/88, G. N. Reeke                                      */
+/*    V1B, 05/26/88, GNR - Fix bug allocating CONNDATA structures     */
+/*                                                                    */
+/*--------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------*
+*      THIS IS THE TI MVP MASTER PROCESSOR (MP) SERVER COMPONENT       *
+*   THIS VERSION USES THE MP TO SCHEDULE DATA MOVEMENTS ON AND OFF     *
+*   OF PP MEMORY.  1-4 PP'S MAY BE USED TO RUN CONNECTION BATCHES.     *
+*   INTERRUPTS ARE USED TO MAXIMIZE OVERLAP OF TC AND PP OPERATIONS    *
+*                                                                      *
+*  The basic scheme is to create a WORKUNIT structure for each of two  *
+*  work areas on each PP.  In general, I/O will be carried out on one  *
+*  of these areas while a batch of connections is calculated in the    *
+*  other.  Initially, all WORKUNITs are on an Available queue.  Ports  *
+*  are created to hold work waiting for the TC and for each PP.  The   *
+*  MP program has a main process, a dispatch process, and separate     *
+*  processes to monitor the ports for the TC and each PP.  The main    *
+*  process sets everything up, starts the other processes, and then    *
+*  spins as the default (lowest-priority) process while the other      *
+*  processes manage the work.  The dispatch process cycles through     *
+*  the requested simulations, breaking the work into batches.  Each    *
+*  batch is assigned to an available WORKUNIT and passed to the Load   *
+*  TC port for data loading.  It is then passed to the appropriate     *
+*  PP for processing, and finally to the WBack TC port for write-back. *
+*  Results are taken directly from WORKOUT structures on the PPs.      *
+*  When all work is complete, the main process prints the DAS stats.   *
+*                                                                      *
+*  Some comments removed for easier navigation through this file       *
+*---------------------------------------------------------------------*/
+
+/* The simulation parameters are built into the MP program in a
+   structure that emulates the input file used by other versions.
+   This file contains:
+
+   Line 1: NCELLTYPES, NITERATIONS, SEED, NPP
+   where:  NCELLTYPES = Number of types of cells to be simulated
+           NITERATIONS = Number of times to iterate entire model
+           SEED = Random number generating seed
+           NPP = Number of PP's to use (1-4, default 1)
+
+   For each cell type, the following line is read, followed
+   immediately by NCONNTYPES lines of connection information:
+           NCELLS, NCONNTYPES, DELTA
+   where:  NCELLS = Number of cells of this type (NCELLS < 65536)
+           NCONNTYPES = Number of connection types for these cells
+           DELTA = Amplification parameter (zero to disable amp)
+
+   For each of NCONNTYPE connection types, a line of the following
+   format is read:
+           NCONNS, SOURCE, RULE, SCALE
+   where:  NCONNS = Number of connections of this type
+           SOURCE = Integer between 1 and NCELLTYPES, giving the
+                        type of source cells for these connections
+           RULE = 0 for completely random connections
+                  1 for sequential ("partitioned") connections
+           SCALE = scale factor for these connections
+                                                                      */
+/* Include standard library functions */
+
+#include <stdlib.h>           /* MVP Standard Definitions */
+#include <stdarg.h>
+#include <stdio.h>
+
+/* Include MVP files */
+#include "mvp.h"              /* MVP hardware functions */
+#include "mvp_hw.h"           /* MVP hardware parameters */
+#include "mp_int.h"           /* MP interrupt control software */
+#include "mp_ppcmd.h"         /* MP to PP command interface */
+#include "mp_ptreq.h"         /* MP transfer control software */
+#include "task.h"             /* MP multitasking kernel */
+
+/* Local (GIC) include files */
+#include "bios.h"             /* Printing and improved NOCACHE defs */
+#include "dspAPI.h"
+#include "param.h"            /* Cache row size, etc. */
+#include "timemgr.h"          /* Timer functions */
+
+/* GNR generic headers */
+#include "ptreq.h"
+/* Application-specific header */
+#include "bserv.h"
+
+/*---------------------------------------------------------------------*
+*                Global data, needed by all processes                  *
+*---------------------------------------------------------------------*/
+
+/* N.B. This is volatile, but compiler won't let us work that way */
+WORKUNIT *Available;          /* Queue of available workunits */
+
+Port AvailMsg;                /* Port for holding available msgs */
+Port AvailCSum;               /* Port for holding available CELLSUMs */
+Port Load;                    /* Port for holding load requests */
+Port WaitPP[NumPP];           /* Ports for WUs waiting for each PP */
+Port CalcPP[NumPP];           /* Ports for WUs calculating on a PP */
+Port WBack;                   /* Port for holding write-back requests */
+
+Semaphore AvQueueSema;        /* Semaphore for manipulating Avail Q */
+Semaphore DoneCellType;       /* Semaphore for cell type finished */
+Semaphore DoneIteration;      /* Semaphore for iteration completed */
+Semaphore TCSema;             /* Semaphore for TC requests */
+Semaphore PPWaitSema[NumPP];  /* Semaphores for PP sched tasks */
+Semaphore PPDoneSema[NumPP];  /* Semaphores for PP done tasks */
+
+CELLBLK *play1;               /* Ptr to first cell block */
+int Done = 0;                 /* Finished flag (should be volatile) */
+volatile long int mibatch;    /* Batch counter for current iteration */
+volatile unsigned long int mcells;
+                              /* Cell counter for current celltype */
+unsigned long int next = 1;   /* Random number generator state */
+int niterations;              /* Number of iterations to perform */
+unsigned long niterbatch;     /* Number batches in an iteration */
+volatile byte PPPrio[NumPP];  /* Flags for determining PP priority */
+
+/*---------------------------------------------------------------------*
+*  malloc replacement needed for safe cache management:                *
+*     (1) Always request alignment on a 64 byte boundary               *
+*     (2) Always request space in a multiple of 64 bytes               *
+*---------------------------------------------------------------------*/
+
+/*** DEBUG replacement for mallocv--report amount requested ***/
+#ifdef DBGF
+void *mallocv(unsigned int n) {
+   void *mret;
+   size_t nn = (n+63) & (~63);
+   printf("malloc requesting %u bytes, rounded to %u\n", n, nn);
+   mret = memalign(MVP_CACHE_SUBBLOCK, nn);
+   printf ("malloc returned %x\n", mret);
+   return mret;
+   }
+#else
+void *mallocv(unsigned int n) {
+   n = (n+63) & (~63);
+   return memalign(MVP_CACHE_SUBBLOCK, n);
+   }
+#endif
+   
+/*---------------------------------------------------------------------*
+*                       Random Number Generator                        *
+*                                                                      *
+*  Crude random number generator - taken from Kernigan & Ritchie,      *
+*  second edition, page 46.  This generates only 15-bit random         *
+*  numbers, which is good enough for the benchmark.                    *
+*---------------------------------------------------------------------*/
+
+int rand(void) {
+
+   next = next * 1103515245 + 12345;
+   return (unsigned int)(next>>16) & RAND_MAX;
+   } /* End rand() */
+
+void srand(unsigned int seed) {
+
+   next = seed;
+   } /* End srand() */
+
+/*---------------------------------------------------------------------*
+*                         Debugging routines                           *
+*                                                                      *
+*  WARNING:  The need for flush() calls in these routines may be       *
+*  different than it was when they were written.                       *
+*---------------------------------------------------------------------*/
+
+#ifdef DBGF
+/**** rptlij DEBUG ****/
+void rptlij(struct CELLBLK *play1) {
+   int jl,jx;
+   struct CELLBLK *il;
+   struct CONNBLK *ix;
+   struct CONNDATA *ic;
+
+   for (jl=1,il=play1; il; il=il->play,jl++) {
+      ic = il->prd;
+      for (jx=1,ix=il->pct1; ix; ix=ix->pct,jx++) {
+         printf("For celltype %d, conntype %d, first lij is %d,"
+            " first cij is %d\n", jl, jx, (int)ic->lij, (int)ic->cij);
+         ic += ix->nconns;
+         } /* End connblk loop */
+      } /* End cellblk loop */
+   } /* End rptlij */
+
+/**** prts DEBUG ****/
+void prts(struct CELLBLK *play1) {
+   int j,jl;
+   struct CELLBLK *il;
+
+   for (jl=1,il=play1; il; il=il->play,jl++) {
+      printf("si for celltype %d\n", jl);
+      for (j=0; j<il->ncells; j++) {
+         printf("%8d",il->psi[j]);
+         if (j % 10 == 9) printf("\n"); }
+      printf("\ns2 for celltype %d\n", jl);
+      for (j=0; j<il->ncells; j++) {
+         printf("%8d",il->ps2[j]);
+         if (j % 10 == 9) printf("\n"); }
+      printf("\n");
+      }
+   }
+/*** ENDDEBUG ROUTINE ***/
+#endif
+
+
+/***********************************************************************
+*                                                                      *
+*                            MAIN PROCESS                              *
+*                                                                      *
+*  Main Process:  The main process sets everything up, starts the      *
+*  other processes, and then stands by to run as the default task at   *
+*  priority zero when all the other processes are blocked.  The TI     *
+*  multiprocessing kernel requires this arrangement.                   *
+*                                                                      *
+***********************************************************************/
+
+#pragma SHARED(bserv_pp)
+void bserv_pp(WORKUNIT *);    /* PP function to perform actual calc */
+
+userMain(int argc, char *argv[]) {
+
+/* Declarations: */
+
+TaskId DispatchTask;          /* Id of dispatcher task */
+TaskId TransferTask;          /* Id of transfer control task */
+TaskId ProcessorTask[NumPP];  /* Ids of processor scheduler tasks */
+TaskId CleanUpTask[NumPP];    /* Ids of work unit cleanup tasks */
+
+   CELLBLK *il,*ll;           /* Ptr to current, last CELLBLK */
+   CONNBLK *ix,*lx;           /* Ptr to current, last CONNBLK */
+   CONNDATA *ic;              /* Ptr to current connection data */
+   PTReq *pPTReq;             /* Ptr to a PTReq */
+   WORKUNIT *pwu,**ppwu;      /* Ptr, ptr to ptr to a work unit */
+   byte *is;                  /* Ptrs to state variables */
+   double time1,time2,time3;  /* Starting, setup, ending time */
+   float tdelta,tscale;       /* Temporary delta, scale */
+   unsigned long seed;        /* Random number seed */
+   long mireport;    /***DEBUG***/
+   int jl,js,jx,jc;           /* Cell, conn type & data counters */
+   int jp;                    /* Processor counter */
+   int ncelltypes;            /* Number of cell types in simulation */
+   int nprocessors;           /* Number of processors to use */
+   int PPUsedMask;            /* Mask for those PPs in use */
+   int trule;                 /* Temporary copy of 'rule' */
+   int ptr = 0;               /* Input array index */
+
+#ifdef SIM   
+   char *dum;                 /* Stdout buffer when simulated */
+
+/*  Smaller version for running on simulator */
+   char *input[] = {
+      "2 1 1009 4",
+      "5 2 0.1",
+         "2 1 1 0.2",
+         "2 2 0 0.25",
+      "3 2 0.2",
+         "2 1 1 0.1",
+         "2 2 0 0.2",
+         "\0"};
+#else
+/*  Standard test input */
+   char *input[] = {
+      "4 10 1009 4",
+      "300 4 0.1",
+         "400 1 0 0.2",
+         "100 2 1 0.3",
+         "40  3 0 0.25",
+         "20  4 1 0.18",
+      "120 4 0.2",
+         "200 1 1 0.2",
+         "100 2 0 0.25",
+         "40  3 1 0.18",
+         "20  4 0 0.25",
+      "50 4 0.1",
+         "400 1 1 0.2",
+         "150 2 0 0.25",
+         "40  3 0 0.33",
+         "24  4 1 0.25",
+      "30 4 0.2",
+         "120 1 1 0.1",
+         "10  2 0 0.2",
+         "40  3 1 0.25",
+         "20  4 0 0.18",
+         "\0"};
+#endif
+
+/* Get starting time */
+
+   dspAPIInit();
+   time1 = GICTimerGet();
+   PpResetAll();
+
+/* Read and echo header info for setting up loops */
+
+   if (sscanf(input[ptr++], "%d %d %u %d",
+      &ncelltypes, &niterations, &seed, &nprocessors) < 4)
+      nprocessors = 1;
+
+#ifdef SIM
+   dum = mallocv(100);  /* Allocate output buffer for simulation */
+   sprintf(dum,
+   "Numbers of celltypes = %d, iterations = %d, seed = %u,"
+   " processors = %d\n", ncelltypes, niterations, seed, nprocessors);
+#else
+   printf(
+   "Numbers of celltypes = %d, iterations = %d, seed = %u,"
+   " processors = %d\n", ncelltypes, niterations, seed, nprocessors);
+#endif
+
+/* Check for valid number of processors requested */
+
+   if (nprocessors > NumPP) {
+#ifndef SIM
+      printf("Too many processors\n");
+#endif
+      exit(2);
+      }
+
+/* Initialize random number seed from input value */
+
+   srand(seed);
+
+/* Read cell type information and create cell block linked list */
+
+   niterbatch = 0;
+   play1 = NULL; ll = NULL;
+   for (jl=1; jl<=ncelltypes; jl++) {
+      if ((il=(CELLBLK *)mallocv(sizeof(CELLBLK)))==NULL) {
+#ifndef SIM
+         printf("No mem for cellblk\n");
+#endif
+         exit(3);
+         }
+
+      if (ll==NULL) play1 = il; else ll->play = il;
+      ll = il;
+
+      sscanf(input[ptr++], "%ld %ld %f", &il->ncells, &il->nconntypes,
+         &tdelta);
+#ifndef SIM
+      printf("   Cell type %d\n",jl);
+      printf("      Ncells = %ld, nconntypes = %ld, delta = %f\n",
+         il->ncells,il->nconntypes,tdelta);
+#endif
+      il->nbatches = il->nconntotal = 0;
+      il->delta = (long int)(1024.0*tdelta);
+
+/* Read the connection type information and create connection
+   blocks in a linked list chained to the controlling CELLBLK.  */
+
+      lx = NULL;
+      for (jx=1; jx<=il->nconntypes; jx++)  {
+         if ((ix=(CONNBLK *)mallocv(sizeof(CONNBLK)))==NULL) {
+#ifndef SIM
+            printf("No mem for CONNBLK\n"); 
+#endif
+            exit(4);
+            }
+         if (lx==NULL) il->pct1 = ix; else lx->pct = ix;
+         lx = ix;
+
+         sscanf(input[ptr++], "%ld %d %d %f", &ix->nconns, &ix->source,
+            &ix->rule, &tscale);
+#ifndef SIM 
+         printf("      Connection type %d\n",jx);
+         printf("         Nconns = %ld, source = %d, rule = %d,"
+            " scale = %f\n",ix->nconns,ix->source,ix->rule,tscale);
+#endif
+         ix->scale = (long int)(256.0*tscale);
+         ix->nbatch = (ix->nconns+(NConnsPerBatch-1)) / NConnsPerBatch;
+         il->nconntotal += ix->nconns;
+         il->nbatches += ix->nbatch;
+         } /* End reading CONNBLK input lines for this CELLBLK */
+      niterbatch += il->nbatches * il->ncells;
+      lx->pct = NULL; /* Terminate the connection linked list */
+
+      } /* End reading CELLBLK input lines */
+   ll->play = NULL; /* Terminate the cell linked list */
+
+/* Allocate space for two vectors of s(i) values (s(i) == state of
+   cell i).  psi points to current values, ps2 points to newly cal-
+   culated values.  The psi states are given random initial values.   */
+
+   for (il=play1; il; il=il->play) {
+      if ((il->psi=(byte *)mallocv((unsigned int)il->ncells))==NULL) {
+#ifndef SIM
+         printf("No mem for s(i)\n");
+#endif
+         exit(5);
+         }
+      if ((il->ps2=(byte *)mallocv((unsigned int)il->ncells))==NULL) {
+#ifndef SIM
+         printf("No mem for s(i)\n"); 
+#endif
+         exit(5);
+         }
+      for (is=il->psi,js=1; js<=il->ncells; js++) 
+         *is++ = (byte)rand();
+      flush(il->psi, il->ncells);
+      } /* End celltype loop */
+
+/* Complete the connection blocks:
+   1) Allocate space for the connection data
+   2) Locate the relevant source data and save pointers
+   3) Fill in random starting values for cij and lij.  */
+
+#ifndef SIM
+   printf("\nStarting cell initialization\n"); 
+#endif
+
+   for (il=play1; il; il=il->play) {   /* Celltype */
+
+      /* Allocate space for the actual connection data */
+
+      il->prd=(CONNDATA *)mallocv((unsigned int)
+         il->ncells*il->nconntotal*sizeof(CONNDATA));
+      if (il->prd==NULL) {
+#ifndef SIM
+           printf("Nconns %d ncells %d couldn't alloc cif lij\n",
+                    il->nconntotal, il->ncells);
+#else
+           sprintf(dum,"Nconns %d ncells %d couldn't alloc cif lij\n",
+                    il->nconntotal, il->ncells);
+#endif
+           exit(6);
+           }
+      ic = il->prd;
+
+      /* Locate the appropriate cell blocks and figure chunksize */
+
+      for (ix=il->pct1; ix; ix=ix->pct) {    /* Connblk */
+
+         /* Locate the source cell type block */
+         for (jl=1,ll=play1; jl<ix->source; jl++,ll=ll->play) ; 
+         ix->psrc = ll;
+
+         /* Constant for uniform random connection rule */
+         ix->chunksize = (double)ll->ncells/((double)RAND_MAX+1.0);
+         /* Constant for partitioned connection rule */
+         if (ix->rule) ix->chunksize /= (double)ix->nconns;
+         } /* End connection block initialization */
+
+      /* Generate and fill in the actual connection data */
+
+      for (js=1; js<=il->ncells; js++) {  /* Loop over cells */
+         for (ix=il->pct1; ix; ix=ix->pct) { /* Connection types */
+
+            trule = ix->rule;
+            for (jc=0; jc<ix->nconns; jc++,ic++) {
+               /* Note that the eight bits of cij will be interpreted
+                  later as a sign and 7 fraction bits */
+               ic->cij = (byte) rand();
+               /* Note that the following calculation of lij is not
+                  really adequate with a 15-bit random number gene-
+                  rator -- try to do better on individual machines.
+                  Also, we are forced to use an intermediate double-
+                  float variable, since 'C' does not support access
+                  to the high-order 32 bits of a 32 x 32 bit product. */
+               ic->lij = trule ?
+                  /* Partitioned (pseudo-linear) connection rule */
+                  (short)(ix->chunksize*((double)jc*(double)RAND_MAX +
+                     (double)rand())) :
+                  /* Uniformly distributed random connection rule */
+                  (short)(ix->chunksize*(double)rand());
+               } /* End loop over connections */
+            } /* End loop over connection types */
+         } /* End loop over cells */
+      flush(il->prd, il->ncells*il->nconntotal*sizeof(CONNDATA));
+      } /* End loop over cell types */
+
+#ifdef DBGF
+   printf("Calling rptlij first time\n");
+   rptlij(play1);
+#endif
+
+/* Note the end-of-setup time */
+
+   time2 = GICTimerGet();
+#ifndef SIM
+   printf("Setup required %lf seconds\n",time2-time1);
+#else
+   sprintf(dum,"Setup required %lf seconds\n",time2-time1);
+#endif
+
+/* Create one WORKUNIT for each of two RAM areas on each processor.
+*  Each WORKUNIT points to a string of PTReqs to load its area.
+*  These PTReqs are located in the RAM of the processor in question.
+*  Also create one CELLSUM block for each CONNDATA area.
+*  Recall that accesses to PP memory from the MP are not cached.  */
+
+   ppwu = &Available;
+   for (jp=0; jp<nprocessors; jp++) {
+      int PPOffset = jp << PPRAMShift;
+      FixedGuide *pLijGuides = (FixedGuide *)
+         ((char *)PP_DATA_RAM2 + PPOffset);
+      memset(pLijGuides, 0, NLijGuides*sizeof(FixedGuide));
+      PPPrio[jp] = 0;         /* No current activity in this PP */
+
+      for (jc=0; jc<2; jc++) {
+         WORKUNIT *pMywu;
+         char *myRAM = (char *)PP_DATA_RAM0 + PPOffset +
+               (jc * PPRAM_SIZE);
+         pwu = *ppwu = (WORKUNIT *)mallocv(sizeof(WORKUNIT));
+         ppwu = &pwu->pnwu;
+         pPTReq = pwu->pTCList = (PTReq *)(myRAM + PPRAM_SIZE -
+               NumPTReq*sizeof(PTReq));
+         pwu->Myic = ic = (CONNDATA *)myRAM;
+            myRAM += NConnsPerBatch * sizeof(CONNDATA);
+         pMywu = (WORKUNIT *)myRAM;
+            myRAM += sizeof(WORKUNIT);
+         pwu->Mywo = (WORKOUT *)myRAM;
+         pwu->MyPP = jp;
+
+/* Generate simulation parameters from global definitions.  In
+*  the real simulation, these would be variables and would be
+*  taken from the CONNBLK when each batch is initialized.  */
+
+         pwu->et  = 256.0*ET;
+         pwu->mti = 256.0*MTI;
+         pwu->mtj = 256.0*MTJ;
+
+/* Set up the unchanging parameters in the chain that will handle
+*  the CONNDATA and s(j) input.  In all these blocks, the B counts
+*  must be filled in at the time the chain is executed.  */
+
+         memset(pPTReq, 0, NumPTReq*sizeof(PTReq));
+
+         /* Copy the WORKUNIT itself to the PP */
+         TRWorkUnitIn->srcAddr = (char *)pwu;
+         TRWorkUnitIn->dstAddr = (char *)pMywu;
+         TRWorkUnitIn->srcACnt =
+            TRWorkUnitIn->dstACnt = sizeof(WORKUNIT);
+         TRWorkUnitIn->next = TRConnDatIn;
+
+         /* Read some CONNDATA */
+         TRConnDatIn->dstAddr = ic;
+         TRConnDatIn->srcACnt = TRConnDatIn->dstACnt =
+            TRConnDatIn->w32.srcBPitch = TRConnDatIn->dstBPitch =
+            sizeof(CONNDATA);
+         TRConnDatIn->next = TRLijToLUT;
+
+         /* Copy Lij from CONNDATA just loaded into LijGuides.
+         *  This code assumes we are in big-endian mode.  */
+         TRLijToLUT->srcAddr = &ic->lij;
+         TRLijToLUT->dstAddr = (char *)pLijGuides +
+            (sizeof(FixedGuide) - sizeof(short));
+         TRLijToLUT->srcACnt = TRLijToLUT->dstACnt = sizeof(short);
+         TRLijToLUT->w32.srcBPitch = sizeof(CONNDATA);
+         TRLijToLUT->dstBPitch = sizeof(FixedGuide);
+         TRLijToLUT->next = TRSjIn;
+
+         /* Now use the LijGuides table to bring in the s(j) values.
+         *  There just happens to be space in the CONNDATA array.
+         *  srcAddr has to be filled in from current CONNBLK.  */
+         TRSjIn->options = PTOPT_STM_FIXOFF + PTOPT_S_LINKEND;
+         TRSjIn->dstAddr = &ic->sj;
+         TRSjIn->srcACnt = TRSjIn->dstACnt = 1; /* Size of sj */
+         TRSjIn->dstBPitch = sizeof(CONNDATA);
+         TRSjIn->w40.srcGuide = pLijGuides;
+
+         } /* End RAM block loop */
+      } /* End processor loop */
+      pwu->pnwu = NULL;       /* End linked list */
+
+#ifndef SIM /***DEBUG***/
+printf("Completed setup of PT requests and PP memory\n");
+#endif
+
+/* Set up multitasking, interrupts, ports, and semaphores.  It is not clear how
+*  large the individual task stacks should be, but debugging showed they go on
+*  the heap, not on the initial stack assigned to the default task.  A size of
+*  256 for a simple task was too small, and caused returns from timer interrupts
+*  to go astray.  */
+
+   IE = disable() | 0xff8f0000;  /* Mine (040f) and theirs (ff80) */
+   PtReqInit();                  /* Init transfer control package */
+
+   AvailMsg = TaskOpenPort(-1);
+   AvailCSum= TaskOpenPort(-1);
+   Load     = TaskOpenPort(-1);
+   WBack    = TaskOpenPort(-1);
+
+   DispatchTask = TaskCreate(-1, Dispatch, (void *)Available,
+      DispatchPrio, StackSize);
+   TransferTask = TaskCreate(-1, TransferControl, NULL,
+      TransferPrio, StackSize);
+
+   AvQueueSema  = TaskOpenSema(-1, 1);
+   DoneCellType = TaskOpenSema(-1, 0);
+   DoneIteration= TaskOpenSema(-1, 0);
+   TCSema       = TaskOpenSema(-1, 1);
+
+/*=====================================================================*
+*              Start PP Simulators When MP Gets Here !!!               *
+*=====================================================================*/
+
+/* ProcessorSched tasks started in the following loop will attempt
+*  to communicate with their respective PPs.  During debugging, PP
+*  simulators must be started before these tasks resume.  */
+
+#ifndef SIM  /***DEBUG***/
+printf("Completed task setup, starting PP setup\n");
+#endif
+
+   for (jp=0; jp<nprocessors; jp++) {
+      /* Make four messages per PP, two for sending WORKUNITs around
+      *  and another two for keeping track of CELLSUMs.  */
+      Message pMsg;
+      pMsg = TaskAllocMsg(sizeof(WORKUNIT *), AvailMsg);
+      TaskReclaimMsg(pMsg);   /* 1st AvailMsg */
+      pMsg = TaskAllocMsg(sizeof(WORKUNIT *), AvailMsg);
+      TaskReclaimMsg(pMsg);   /* 2nd AvailMsg */
+      pMsg = TaskAllocMsg(sizeof(CELLSUM), AvailCSum);
+      TaskReclaimMsg(pMsg);   /* 1st AvailCSum */
+      pMsg = TaskAllocMsg(sizeof(CELLSUM), AvailCSum);
+      TaskReclaimMsg(pMsg);   /* 2nd AvailCSum */
+      ProcessorTask[jp] = TaskCreate(-1, ProcessorSched, (void *)jp,
+         PPSchedPrio, StackSize);
+      CleanUpTask[jp] = TaskCreate(-1, ProcessorFinish, (void *)jp,
+         PPFinishPrio, StackSize);
+      WaitPP[jp] = TaskOpenPort(-1);
+      CalcPP[jp] = TaskOpenPort(-1);
+      PPWaitSema[jp] = TaskOpenSema(-1, NumCmdBufs);
+      PPDoneSema[jp] = TaskOpenSema(-1, 0);
+      TaskResume(ProcessorTask[jp]);
+      TaskResume(CleanUpTask[jp]);
+
+#ifndef SIM    /***DEBUG***/
+printf("Completed startup for PP %d\n", jp);
+fflush(stdout);
+#endif
+
+      }
+
+   time2 = GICTimerGet();
+   TaskResume(TransferTask);
+
+#ifndef SIM    /***DEBUG***/
+printf("Resumed transfer task\n");
+fflush(stdout);
+#endif
+
+   TaskResume(DispatchTask);
+
+#ifndef SIM    /***DEBUG***/
+printf("Resumed dispatch task\n");
+fflush(stdout);
+#endif
+
+/* Process until finished with timing.  Note that we are
+*  the lowest priority process--must spin wait while others work */
+
+#ifndef SIM    /***DEBUG***/
+mireport = niterbatch;
+printf("\nUserMain reached wait loop\n");
+fflush(stdout);
+#endif
+
+   while (!Done)
+#ifndef SIM    /***DEBUG***/
+   {  if (mibatch > mireport) mireport = niterbatch;
+      if (mibatch <= mireport) {
+      printf("mibatch value %d\n", mibatch);
+      fflush(stdout);
+      mireport -= max(niterbatch>>3,1);
+      }}
+#endif   
+   ;
+   time3 = GICTimerGet();
+
+#ifndef SIM
+   printf("\nBenchmark time is %lf \n", time3-time2);
+#else
+   sprintf(dum, "\nBenchmark time is %lf \n", time3-time2);
+#endif
+
+/* Print DAS results */
+
+#ifndef SIM
+   for (jl=1,il=play1; il; il=il->play,jl++) {
+      printf(" Celltype %d \n", jl);
+      for (jx=1,ix=il->pct1; ix; ix=ix->pct,jx++) {
+         printf("      Conntype %3d: %8ld%8ld%8ld%8ld\n",
+         jx,ix->das[0],ix->das[1],ix->das[2],ix->das[3]);
+         }
+      }
+#endif
+
+   } /* End main process */
+
+
+/***********************************************************************
+*                                                                      *
+*  Dispatch Process:  This process loops through the requested itera-  *
+*  tions in outline, dividing the work up into batches of connections. *
+*  For each batch, it waits until at least one WORKUNIT is available,  *
+*  chooses which workunit to use according to a priority scheme, then  *
+*  sets up that WORKUNIT along with its PTReqs to load the data for    *
+*  the batch into PP memory and process it.  The WORKUNIT is then sent *
+*  to the Load port for processing in fifo order by the transfer con-  *
+*  troller.  When all work has been dispatched in this way, Dispatch   *
+*  waits for the DoneIteration semaphore, which is signalled when all  *
+*  WORKUNITs have been completed and written back.  The Done flag is   *
+*  then set, causing the main process to print stats and terminate     *
+*  the whole show.                                                     *
+*                                                                      *
+***********************************************************************/
+
+void Dispatch(void *MyQ) {
+
+/* Declarations: */
+
+   CELLBLK *il;               /* Ptr to current CELLBLK */
+   CONNBLK *ix;               /* Ptr to current CONNBLK */
+   CONNDATA *ic;              /* Ptr to current connection data */
+   PTReq *pPTReq;             /* Ptr to a PTReq */
+   WORKUNIT *pwu;             /* Ptr to a work unit */
+   CELLSUM *pcs;              /* Ptr to a cell input accumulator */
+   Message *pMsg;             /* Ptr to a message */
+   byte *is,*is2;             /* Ptrs to state variables */
+   int holdIE;                /* Hold IE register while disabled */
+   int ji,js;                 /* Iter, cell counters */
+   int jp;                    /* Processor index */
+   int ncb,ncbi;              /* Number of conns in batch, ideal */
+   int ncr;                   /* Number of connections remaining */
+
+/* Perform 'niterations' iterations */
+
+   for (ji=1; ji<=niterations; ji++) {
+      mibatch = niterbatch;
+
+/* Loop over cell blocks until hit end of linked list.  */
+
+      for (il=play1; il; il=il->play) {
+
+/* Clear DAS statistics and set psj addresses in all CONNBLKs */
+
+         for (ix=il->pct1; ix; ix=ix->pct) {
+            ix->das[0] = ix->das[1] = ix->das[2] = ix->das[3] = 0;
+            ix->psj = ix->psrc->psi; }
+
+/* Evaluate responses for all cells of this type.
+*  Initialize a CELLSUM accumulator for each cell.  */
+         
+         mcells = il->ncells; /* Start done counter */
+         is = il->psi; is2 = il->ps2; ic = il->prd;
+         for (js=1; js<=il->ncells; js++,is++) {
+            
+            pcs = (CELLSUM *)TaskReceiveMsg(AvailCSum);
+            pcs->pnsi = is2++;
+            pcs->wksum = 0;
+            pcs->wknum = il->nbatches;
+
+/* Evaluate inputs for all connection types input to this cell type */
+
+            for (ix=il->pct1; ix; ix=ix->pct) {
+
+/* Try to divide the connections as evenly as possible into batches.
+*  For each batch, wait for a WORKUNIT to be available, which will be
+*  the case when a message can be received off the AvailMsg port.
+*  Then obtain a lock on the Available queue.  Scan list of available
+*  WORKUNITs and select the one with the lowest priority score for
+*  assignment.  The priority score is based on the availability of
+*  processor and buffer slots.
+* 
+*  N.B.  One might think that it is not necessary to obtain a lock
+*  on the Avail queue at this point--completed WORKUNITs can be added
+*  harmlessly at the start of the queue while the scan is in progress.
+*  However, a second scan is then necessary after locking to skip over
+*  any WORKUNITs with higher priority that may have been inserted, and
+*  we can no longer be sure the original choice still has the lowest
+*  score.  Better to select and dequeue in one atomic operation.  */
+
+               ncr = ix->nconns;
+               ncbi = (ncr + ix->nbatch - 1)/ix->nbatch;
+               while (ncr) {
+                  WORKUNIT **ppwu = &Available;
+                  /* Ptr to predecessor of selected WORKUNIT */
+                  WORKUNIT **pswu;
+                  /* Keep track of lowest priority score found */
+                  byte LowPrio = WBackPrio + LoadPrio + CalcPrio + 1;
+
+                  ncb = min(ncr,ncbi);
+                  
+                  pMsg = TaskReceiveMsg(AvailMsg);
+                  TaskWaitSema(AvQueueSema); /* Lock the queue */
+
+                  while (pwu = *ppwu) {      /* Assignment intended */
+                     jp = pwu->MyPP;
+                     if (PPPrio[jp] < LowPrio) {
+                        LowPrio = PPPrio[jp];
+                        pswu = ppwu;
+                        }
+                     ppwu = &pwu->pnwu;
+                     }
+
+/* Remove selected WORKUNIT from the queue and release the lock */
+                  
+                  pwu = *pswu;
+                  *pswu = pwu->pnwu;
+                  TaskSignalSema(AvQueueSema);
+
+/* Complete WORKUNIT fields that depend on cell and connection types */
+
+                  pwu->pconnb = ix;
+                  pwu->pcsum = pcs;
+                  pwu->scale = ix->scale;
+                  pwu->delta = il->delta;
+                  pwu->nbatch = ncb;
+                  pwu->si = *is;
+
+/* Customize WU input PTReqs to load the needed info */
+
+                  jp = pwu->MyPP;
+                  pPTReq = pwu->pTCList;
+                  TRConnDatIn->options &= /* Clear write-back flags */
+                     ~(PTOPT_X_SWAP | PTOPT_S_LINKEND);
+                  TRConnDatIn->srcAddr = ic;
+                  TRConnDatIn->srcBCnt = TRConnDatIn->dstBCnt =
+                     TRLijToLUT->srcBCnt = TRLijToLUT->dstBCnt =
+                     TRSjIn->dstBCnt = (ncb - 1);
+                  TRSjIn->srcAddr = ix->psj;
+                  TRSjIn->srcCCnt = ncb;  /* Actual no. of lookups */
+                  flush(pwu, sizeof(WORKUNIT)); /* No more changes */
+
+/* Set priority bits indicating work in progress, then send
+*  this WORKUNIT to the TransferControl process for loading */
+
+                  holdIE = disable();
+                  PPPrio[jp] += CalcPrio + LoadPrio + WBackPrio;
+                  IE = holdIE;
+                  *((WORKUNIT **)pMsg) = pwu;
+                  TaskSendMsg(pMsg, Load);
+
+/* Advance to next batch, next conntype, next cell */
+
+                  ic += ncb;
+                  ncr -= ncb;
+                  } /* End loop over connection batches */
+
+               } /* End loop over connection types */
+
+            } /* End loop over cells of current type */
+
+/* All cells of current celltype have been dispatched.  Now wait
+*  until all cell accumulators are completed and all DAS stats
+*  stored, indicating that the calculation is complete for this
+*  celltype and it is safe to advance to the next cell type.
+*  Some write-backs of Cij data may still be in progress.  */
+
+         TaskWaitSema(DoneCellType);
+         /* Reverse the new and old states of the cells */
+         is = il->ps2; il->ps2 = il->psi; il->psi = is;
+         } /* End loop over cell types */
+
+/* End of iteration.  Sleep until all the workunits are back on
+*  the available chaina.  This signifies that updated Cij's have
+*  been written back to off-chip memory, and it is safe to start
+*  another iteration.  */
+
+      TaskWaitSema(DoneIteration);
+      } /* End loop over requested number of iterations */
+
+#if 0
+/* This routine checks that the s(j) that were written back in the
+*  CONNDATA by the PP match what they should be as seen from here.
+*  Note that if the CONNTYPE source is earlier than the current jl,
+*  we should have used the new (now psi) values, otherwise the old
+*  ones (now ps2).  */
+
+   {  int RemSjReports = 50;
+      byte *psj;
+      CELLBLK *ilsrc;
+      for (jl=1,il=play1; il; il=il->play,jl++) {
+         ic = il->prd;
+         for (js=0; js<il->ncells; js++) {
+            for (jx=1,ix=il->pct1; ix; ix=ix->pct,jx++) {
+               ilsrc = ix->psrc;
+               psj = (ix->source < jl) ? ilsrc->psi : ilsrc->ps2;
+               for (jc=0; jc<ix->nconns; jc++,ic++) {
+                  if (ic->sj != psj[ic->lij]) {
+                     printf(" Celltype %d, cell "
+                        "%d, conntype %d, conn %d:\n Val in "
+                        "CONNDATA %d, val in s(i) mem %d\n",
+                        jl,js,jx,jc,(int)ic->sj,(int)psj[ic->lij]);
+                     if (--RemSjReports <= 0) goto EnoughOfThisChecking;
+                     } /* End if discrepancy */
+                  } /* End connection loop */
+               } /* End connblk loop */
+            } /* End cell loop */
+         } /* End cellblk loop */
+      } /* End Sj checker local scope */
+EnoughOfThisChecking: ;
+/****ENDDEBUG****/
+#endif
+
+   Done = TRUE;
+
+   /* Here must do TaskSuspend--allowing task to fall out bottom
+   *  automatically calls TaskExit and kills everything.  */
+   TaskSuspend(-1);
+   } /* End Dispatch */
+
+
+/***********************************************************************
+*                                                                      *
+*  Transfer Control Process:  This process schedules the TC (transfer  *
+*  controller).  Whenever the TC is not busy, TransferControl checks   *
+*  the Load and WBack ports for transfer requests and initiates the    *
+*  next waiting request.  If both ports contain requests, priority is  *
+*  given to write-backs.  When a transfer is complete, the WORKUNIT is *
+*  passed on to the next station.  CELLSUMs and DAS stats are accumu-  *
+*  lated here as WORKUNITS enter write-back, rather than in the more   *
+*  logical ProcessorFinish processes, to assure serialized access to   *
+*  sums.                                                               *
+*                                                                      *
+*  N.B.  The reason we can get away with having just one process to    *
+*  run the TC, while the PP's need two each, is that there is no       *
+*  command buffer pool here, so we can dispose of completed PTReq's    *
+*  before waiting on the input port.  This lets things wind down at    *
+*  the end of the cycle or iteration when no more work is coming in.   *
+*  The down side is the extra delay inserted between completion of     *
+*  one PTReq and initiation of the next.  This can be eliminated by    *
+*  breaking this process into two processes, one to initiate PTReq's   *
+*  and one to service them when finished.  The additional kernel       *
+*  overhead must be considered in deciding if this is a "good idea".   *
+***********************************************************************/
+ 
+void TransferControl(void *MyQ) {
+   
+   Message *pMsg = NULL;      /* Ptr to current message */
+   WORKUNIT *pwu = NULL;      /* Ptr to current workunit */
+   CELLSUM *pcs;              /* Ptr to current cell accumulator */
+   PTReq *pPTReq;             /* Ptr to transfer request */
+   long kPTReq = 0;           /* Kind of PTReq now executing */
+#define kTR_Load  1              /* Loading */
+#define kTR_WBack 2              /* Writing back */
+#define fTR_Load  0              /* Flag number for kTR_Load */
+#define fTR_WBack 1              /* Flag number for kTR_WBack */
+   long pt = 8388608.0*PT;    /* Positive threshold (S23) */
+   int holdIE;                /* Hold IE register while disabled */
+   int jp;                    /* Processor index */
+   
+/* Perform necessary setup to wait on two ports */
+
+   TaskBindPort(Load, fTR_Load);
+   TaskBindPort(WBack, fTR_WBack);
+
+/* Sleep until transfer controller is not busy.
+*  This semaphore is initialized to a 1 count.  */
+
+   for (;;) {
+
+      TaskWaitSema(TCSema);
+
+/* If last transfer was a write-back, replace WORKUNIT on Available
+*  queue where Dispatch process can reuse it.  Reclaim the carrier
+*  message.  (Can't just leave WORKUNIT at AvailMsg port, because
+*  Dispatch process must be able to scan entire list of available
+*  WORKUNITs to assign priority.)  Signal end-of-iteration when all
+*  connection batches have been completed and written back */
+
+      if (kPTReq == kTR_WBack) {
+         jp = pwu->MyPP;
+         holdIE = disable();
+         PPPrio[jp] -= WBackPrio;
+         IE = holdIE;
+         TaskWaitSema(AvQueueSema); /* Get a lock on Available queue */
+         pwu->pnwu = Available;
+         Available = pwu;
+         TaskSignalSema(AvQueueSema);
+         TaskReclaimMsg(pMsg);
+         if (!(--mibatch)) TaskSignalSema(DoneIteration);
+         }
+
+/* If last transfer was a load, send the WORKUNIT in its carrier
+*  message on to the proper PP to perform batch calculation.  */
+
+      else if (kPTReq == kTR_Load) {
+         jp = pwu->MyPP;
+         holdIE = disable();
+         PPPrio[jp] -= LoadPrio;
+         IE = holdIE;
+         TaskSendMsg(pMsg, WaitPP[jp]);
+         }
+
+/* Wait for another transfer request to appear on either port */
+
+      kPTReq = kTR_Load | kTR_WBack;
+      kPTReq = TaskWaitEvents(kPTReq);
+
+/* If there is a write-back request, use it, otherwise there
+*  must be a load request.  Get the TC working on the new
+*  request as quickly as possible, then deal with other
+*  processing that must be done for write-back requests.  */
+
+      if (kPTReq & kTR_WBack) {
+         kPTReq = kTR_WBack;
+         pMsg = TaskReceiveMsg(WBack);
+         pwu = *((WORKUNIT **)pMsg);
+         pPTReq = pwu->pTCList;
+         PtReqIssue(TRConnDatIn, TCSema);
+         }
+      else {
+         kPTReq = kTR_Load;
+         pMsg = TaskReceiveMsg(Load);
+         pwu = *((WORKUNIT **)pMsg);
+         pPTReq = pwu->pTCList;
+         PtReqIssue(TRWorkUnitIn, TCSema);
+         }
+
+/* If this was a write-back request, add batch sum to cell sum
+*  (sum is scaled by PP--contributions from different CONNBLKs
+*  have different scales).  When cell sum is complete, apply s(i)
+*  range limits and write result back to ps2 array, bypassing cache
+*  so there is no need to flush next time TransferControl reads it.
+*  Decrement count and signal when all cells of this type are done.
+*  Update DAS stats in off-chip memory from batch sums in PP memory.
+*/
+
+      if (kPTReq & kTR_WBack) {
+         long *PPDAS,*OCRDAS;    /* DAS controls */
+         pcs = pwu->pcsum;
+         pcs->wksum += pwu->Mywo->ax;
+         if (!(--pcs->wknum)) {
+            register long newsi = pcs->wksum;
+            /* Force the final s(i) into range 0 to 255 */
+            if (newsi < pt) newsi = 0;
+            else { newsi >>= 15; if (newsi > 255) newsi = 255; }
+            NOCACHE_UCHAR_PTR(pcs->pnsi) = (byte)newsi;
+            TaskReclaimMsg(pcs);
+            --mcells;
+            } /* End finished s(i) */
+
+#if NDAS != 4
+#error Following code is incorrect given that NDAS is not 4
+#endif
+         PPDAS = pwu->Mywo->das;
+         OCRDAS = pwu->pconnb->das;
+         OCRDAS[0] += PPDAS[0];
+         OCRDAS[1] += PPDAS[1];
+         OCRDAS[2] += PPDAS[2];
+         OCRDAS[3] += PPDAS[3];
+         if (!mcells) TaskSignalSema(DoneCellType);
+         } /* End write-back handling of s(i) and das sums */
+
+      } /* End infinite loop */
+
+   } /* End TransferControl */
+
+
+/***********************************************************************
+*                                                                      *
+*  ProcessorSched Process:  There are as many copies of this process   *
+*  running as there are PP's in the run.  Each ProcessorSched process  *
+*  schedules work on the corresponding PP using a circular queue of    *
+*  two command buffers to minimize downtime between batches.  When a   *
+*  WORKUNIT wrapped in a message appears at the input port, that       *
+*  WORKUNIT is transferred to the next available command buffer.       *
+*                                                                      *
+*  N.B.  No attempt is made to use the simpler GIC dspAPI functions,   *
+*  because their documentation does not discuss whether they are safe  *
+*  in a multitasking environment.                                      *
+*                                                                      *
+*  N.B.  The TI documentation does not state whether the PpCmdBufNext  *
+*  function checks that the next command buffer is in fact available.  *
+*  To avoid trouble, code below checks independently with a semaphore. *
+***********************************************************************/
+
+void ProcessorSched(void *taskArg) {
+   
+   Message pMsg = NULL;       /* Ptr to current message */
+   WORKUNIT *pwu = NULL;      /* Ptr to current workunit */
+   PPCMDBUF *pcb;             /* Ptr to next command buffer */
+   PTReq *pPTReq;             /* Ptr to PTReq for WORKUNIT */
+   int jp = (int)taskArg;     /* Get my processor number */
+
+/* Initialize communication with my assigned processor */
+
+   pcb = (PPCMDBUF *)PpCmdBufInit(jp, PpCmdInterp, NumCmdBufs);
+   if (!pcb) TaskExit();
+   /* Set both command buffers to execute bserv_pp */
+   PpCmdBufSetFunc(pcb, bserv_pp);
+   pcb = PpCmdBufNext(pcb);
+   PpCmdBufSetFunc(pcb, bserv_pp);
+   PpMsgIntSetSema(jp, PPMsgLevel, PPDoneSema[jp]);
+
+/* Wait for a work unit to arrive at my input port.
+*  Then wait for a command buffer to be available.
+*  Then put the work unit on the command buffer, and
+*  hold it on the CalcPP port for ProcessorFinish.  */
+
+   for (;;) {
+      pMsg = TaskReceiveMsg(WaitPP[jp]);
+      TaskWaitSema(PPWaitSema[jp]);
+      pcb = PpCmdBufNext(pcb);
+      pwu = *((WORKUNIT **)pMsg);
+      pPTReq = pwu->pTCList;
+      PpCmdBufSetArgs(pcb, TRWorkUnitIn->dstAddr);
+      PpCmdBufNotifyIssue(pcb);
+      TaskSendMsg(pMsg, CalcPP[jp]);
+      } /* End infinite loop */
+
+   } /* End ProcessorSched */
+
+
+/***********************************************************************
+*                                                                      *
+*  ProcessorFinish Process:  There are as many copies of this process  *
+*  running as there are PP's in the run.  When a batch of connections  *
+*  is finished by a PP, this process modifies the WORKUNIT for write-  *
+*  back and transfers it to the WBack port of the transfer controller  *
+*  for execution.  It returns the command buffer for use by the        *
+*  ProcessorSched task.                                                *
+*                                                                      *
+***********************************************************************/
+
+void ProcessorFinish(void *taskArg) {
+   
+   Message pMsg;              /* Ptr to current message */
+   WORKUNIT *pwu = NULL;      /* Ptr to current workunit */
+   PPCMDBUF *pcb;             /* Ptr to next command buffer */
+   int jp = (int)taskArg;     /* Get my processor number */
+   PTReq *pPTReq;             /* Ptr to PTReq for write-back */
+   int holdIE;                /* Hold IE register while disabled */
+
+   for (;;) {
+      pMsg = TaskReceiveMsg(CalcPP[jp]);
+      TaskWaitSema(PPDoneSema[jp]);
+      TaskSignalSema(PPWaitSema[jp]);
+      holdIE = disable();
+      PPPrio[jp] -= CalcPrio;
+      IE = holdIE;
+      pPTReq = (*((WORKUNIT **)pMsg))->pTCList;
+      /* Set to reverse source and destination and end chain */
+      TRConnDatIn->options |= (PTOPT_X_SWAP | PTOPT_S_LINKEND);
+      TaskSendMsg(pMsg, WBack);
+      } /* End infinite loop */
+
+   } /* End ProcessorFinish */
+

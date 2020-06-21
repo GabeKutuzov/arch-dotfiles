@@ -1,0 +1,818 @@
+
+CLOCKS_PER_SEC is 1000000.0
+
+   SPOUT ON
+
+   MDKSOPT K=1,N=200,R=500,T=UNIF,DOOP=0
+
+For k = 1, n = 200, dist = (UNIF,UNIF), reps = 500
+   Depth = 1, mean s =  1.18257, sigma s =  0.36867, time/trial =      0.00006
+
+   Brute force mean s =  1.18257, sigma s =  0.36867, time/trial =      0.00032
+   Brute force time/min brick time =      5.33333
+
+   MDKSOPT K=1,N=1000,R=500
+
+For k = 1, n = 1000, dist = (UNIF,UNIF), reps = 500
+   Depth = 1, mean s =  1.20919, sigma s =  0.37575, time/trial =      0.00016
+
+   Brute force mean s =  1.20919, sigma s =  0.37575, time/trial =      0.00746
+   Brute force time/min brick time =     46.62500
+
+   MDKSOPT K=1,N=5000,R=250
+
+For k = 1, n = 5000, dist = (UNIF,UNIF), reps = 250
+   Depth = 1, mean s =  1.23619, sigma s =  0.39454, time/trial =      0.00096
+
+   Brute force mean s =  1.23619, sigma s =  0.39454, time/trial =      0.18744
+   Brute force time/min brick time =    195.25000
+
+   MDKSOPT K=1,N=25000,R=50
+
+For k = 1, n = 25000, dist = (UNIF,UNIF), reps = 50
+   Depth = 1, mean s =  1.25087, sigma s =  0.37661, time/trial =      0.00540
+
+   Brute force mean s =  1.25087, sigma s =  0.37661, time/trial =      4.67220
+   Brute force time/min brick time =    865.22222
+
+   MDKSOPT K=1,N=125000,R=10
+
+For k = 1, n = 125000, dist = (UNIF,UNIF), reps = 10
+   Depth = 1, mean s =  1.21283, sigma s =  0.19704, time/trial =      0.16700
+
+   Brute force mean s =  1.21283, sigma s =  0.19704, time/trial =    117.95300
+   Brute force time/min brick time =    706.30539
+
+       *
+
+   MDKSOPT K=2,N=200,R=500,T=UNIF,DOOP=1
+
+For k = 2, n = 200, dist = (UNIF,UNIF), reps = 500
+Default depth is 3.82
+   Depth = 4, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00060
+   Depth = 3, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00040
+   Depth = 2, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00034
+   Depth = 1, mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00046
+
+   Brute force mean s =  1.64289, sigma s =  0.37563, time/trial =      0.00048
+   Brute force time/min brick time =      1.41176
+
+   MDKSOPT K=2,N=1000,R=500
+
+For k = 2, n = 1000, dist = (UNIF,UNIF), reps = 500
+Default depth is 4.98
+   Depth = 5, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00806
+   Depth = 4, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00596
+   Depth = 3, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00536
+   Depth = 2, mean s =  1.76272, sigma s =  0.36389, time/trial =      0.00752
+
+   Brute force mean s =  1.76272, sigma s =  0.36389, time/trial =      0.01156
+   Brute force time/min brick time =      2.15672
+
+   MDKSOPT K=2,N=5000,R=125
+
+For k = 2, n = 5000, dist = (UNIF,UNIF), reps = 125
+Default depth is 6.14
+   Depth = 7, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.10640
+   Depth = 6, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.08544
+   Depth = 5, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.06480
+   Depth = 4, mean s =  1.86586, sigma s =  0.34535, time/trial =      0.07024
+
+   Brute force mean s =  1.86586, sigma s =  0.34535, time/trial =      0.28792
+   Brute force time/min brick time =      4.44321
+
+   MDKSOPT K=2,N=25000,R=25
+
+For k = 2, n = 25000, dist = (UNIF,UNIF), reps = 25
+Default depth is 7.30
+   Depth = 8, mean s =  1.86220, sigma s =  0.36214, time/trial =      2.31520
+   Depth = 7, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.20680
+   Depth = 6, mean s =  1.86220, sigma s =  0.36214, time/trial =      0.97080
+   Depth = 5, mean s =  1.86220, sigma s =  0.36214, time/trial =      1.21320
+
+   Brute force mean s =  1.86220, sigma s =  0.36214, time/trial =      7.19800
+   Brute force time/min brick time =      7.41450
+
+   MDKSOPT K=2,N=125000,R=5
+
+For k = 2, n = 125000, dist = (UNIF,UNIF), reps = 5
+Default depth is 8.47
+   Depth = 9, mean s =  1.84696, sigma s =  0.22269, time/trial =     50.12200
+   Depth = 8, mean s =  1.84696, sigma s =  0.22269, time/trial =     57.98400
+
+   Brute force mean s =  1.84696, sigma s =  0.22269, time/trial =    196.89800
+   Brute force time/min brick time =      3.92837
+
+       *
+
+   MDKSOPT K=3,N=200,R=500,T=UNIF
+
+For k = 3, n = 200, dist = (UNIF,UNIF), reps = 500
+Default depth is 2.55
+   Depth = 3, mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00132
+   Depth = 2, mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00076
+   Depth = 1, mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00072
+
+   Brute force mean s =  1.79280, sigma s =  0.34909, time/trial =      0.00064
+   Brute force time/min brick time =      0.88889
+
+   MDKSOPT K=3,N=1000,R=400
+
+For k = 3, n = 1000, dist = (UNIF,UNIF), reps = 400
+Default depth is 3.32
+   Depth = 4, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.02675
+   Depth = 3, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.01750
+   Depth = 2, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.01298
+   Depth = 1, mean s =  1.94962, sigma s =  0.34789, time/trial =      0.02033
+
+   Brute force mean s =  1.94962, sigma s =  0.34789, time/trial =      0.01558
+   Brute force time/min brick time =      1.20039
+
+   MDKSOPT K=3,N=5000,R=80
+
+For k = 3, n = 5000, dist = (UNIF,UNIF), reps = 80
+Default depth is 4.10
+   Depth = 5, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.44175
+   Depth = 4, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.30088
+   Depth = 3, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.21687
+   Depth = 2, mean s =  2.09392, sigma s =  0.28111, time/trial =      0.31200
+
+   Brute force mean s =  2.09392, sigma s =  0.28111, time/trial =      0.38812
+   Brute force time/min brick time =      1.78963
+
+   MDKSOPT K=3,N=25000,R=16
+
+For k = 3, n = 25000, dist = (UNIF,UNIF), reps = 16
+Default depth is 4.87
+   Depth = 5, mean s =  2.02821, sigma s =  0.28606, time/trial =     10.24187
+   Depth = 4, mean s =  2.02821, sigma s =  0.28606, time/trial =      6.99500
+   Depth = 3, mean s =  2.02821, sigma s =  0.28606, time/trial =     10.00000
+
+   Brute force mean s =  2.02821, sigma s =  0.28606, time/trial =      9.70687
+   Brute force time/min brick time =      1.38769
+
+   MDKSOPT K=3,N=125000,R=3
+
+For k = 3, n = 125000, dist = (UNIF,UNIF), reps = 3
+Default depth is 5.64
+   Depth = 6, mean s =  2.33062, sigma s =  0.27365, time/trial =    426.78667
+   Depth = 5, mean s =  2.33062, sigma s =  0.27365, time/trial =    573.74667
+
+   Brute force mean s =  2.33062, sigma s =  0.27365, time/trial =    276.05667
+   Brute force time/min brick time =      0.64683
+
+       *
+
+   MDKSOPT K=4,N=200,R=500,T=UNIF
+
+For k = 4, n = 200, dist = (UNIF,UNIF), reps = 500
+Default depth is 1.91
+   Depth = 2, mean s =  1.79252, sigma s =  0.31768, time/trial =      0.00138
+   Depth = 1, mean s =  1.79252, sigma s =  0.31768, time/trial =      0.00102
+
+   Brute force mean s =  1.79252, sigma s =  0.31768, time/trial =      0.00078
+   Brute force time/min brick time =      0.76471
+
+   MDKSOPT K=4,N=1000,R=300
+
+For k = 4, n = 1000, dist = (UNIF,UNIF), reps = 300
+Default depth is 2.49
+   Depth = 3, mean s =  2.01564, sigma s =  0.31923, time/trial =      0.04150
+   Depth = 2, mean s =  2.01564, sigma s =  0.31923, time/trial =      0.02420
+   Depth = 1, mean s =  2.01564, sigma s =  0.31923, time/trial =      0.02837
+
+   Brute force mean s =  2.01564, sigma s =  0.31923, time/trial =      0.01930
+   Brute force time/min brick time =      0.79752
+
+   MDKSOPT K=4,N=5000,R=60
+
+For k = 4, n = 5000, dist = (UNIF,UNIF), reps = 60
+Default depth is 3.07
+   Depth = 4, mean s =  2.23234, sigma s =  0.35700, time/trial =      1.09650
+   Depth = 3, mean s =  2.23234, sigma s =  0.35700, time/trial =      0.58333
+   Depth = 2, mean s =  2.23234, sigma s =  0.35700, time/trial =      0.46817
+   Depth = 1, mean s =  2.23234, sigma s =  0.35700, time/trial =      0.81300
+
+   Brute force mean s =  2.23234, sigma s =  0.35700, time/trial =      0.48083
+   Brute force time/min brick time =      1.02706
+
+   MDKSOPT K=4,N=25000,R=12
+
+For k = 4, n = 25000, dist = (UNIF,UNIF), reps = 12
+Default depth is 3.65
+   Depth = 4, mean s =  2.23204, sigma s =  0.24504, time/trial =     41.47250
+   Depth = 3, mean s =  2.23204, sigma s =  0.24504, time/trial =     22.14750
+   Depth = 2, mean s =  2.23204, sigma s =  0.24504, time/trial =     28.02500
+
+   Brute force mean s =  2.23204, sigma s =  0.24504, time/trial =     12.07750
+   Brute force time/min brick time =      0.54532
+
+   MDKSOPT K=4,N=125000,R=2
+
+For k = 4, n = 125000, dist = (UNIF,UNIF), reps = 2
+Default depth is 4.23
+   Depth = 5, mean s =  2.46356, sigma s =  0.06223, time/trial =   1429.03500
+   Depth = 4, mean s =  2.46356, sigma s =  0.06223, time/trial =   1384.89500
+   Depth = 3, mean s =  2.46356, sigma s =  0.06223, time/trial =   2183.22500
+
+   Brute force mean s =  2.46356, sigma s =  0.06223, time/trial =    345.87500
+   Brute force time/min brick time =      0.24975
+
+       *
+
+   MDKSOPT K=5,N=200,R=500,T=UNIF
+
+For k = 5, n = 200, dist = (UNIF,UNIF), reps = 500
+Default depth is 1.53
+   Depth = 2, mean s =  1.74443, sigma s =  0.29757, time/trial =      0.00228
+   Depth = 1, mean s =  1.74443, sigma s =  0.29757, time/trial =      0.00136
+
+   Brute force mean s =  1.74443, sigma s =  0.29757, time/trial =      0.00094
+   Brute force time/min brick time =      0.69118
+
+   MDKSOPT K=5,N=1000,R=250
+
+For k = 5, n = 1000, dist = (UNIF,UNIF), reps = 250
+Default depth is 1.99
+   Depth = 2, mean s =  1.99831, sigma s =  0.28382, time/trial =      0.04204
+   Depth = 1, mean s =  1.99831, sigma s =  0.28382, time/trial =      0.03576
+
+   Brute force mean s =  1.99831, sigma s =  0.28382, time/trial =      0.02320
+   Brute force time/min brick time =      0.64877
+
+   MDKSOPT K=5,N=5000,R=50
+
+For k = 5, n = 5000, dist = (UNIF,UNIF), reps = 50
+Default depth is 2.46
+   Depth = 3, mean s =  2.20702, sigma s =  0.30529, time/trial =      1.18880
+   Depth = 2, mean s =  2.20702, sigma s =  0.30529, time/trial =      0.72720
+   Depth = 1, mean s =  2.20702, sigma s =  0.30529, time/trial =      0.97200
+
+   Brute force mean s =  2.20702, sigma s =  0.30529, time/trial =      0.57680
+   Brute force time/min brick time =      0.79318
+
+   MDKSOPT K=5,N=25000,R=10
+
+For k = 5, n = 25000, dist = (UNIF,UNIF), reps = 10
+Default depth is 2.92
+   Depth = 3, mean s =  2.33692, sigma s =  0.29107, time/trial =     56.39100
+   Depth = 2, mean s =  2.33692, sigma s =  0.29107, time/trial =     42.18200
+   Depth = 1, mean s =  2.33692, sigma s =  0.29107, time/trial =     46.83200
+
+   Brute force mean s =  2.33692, sigma s =  0.29107, time/trial =     14.61200
+   Brute force time/min brick time =      0.34640
+
+   MDKSOPT K=5,N=125000,R=2
+
+For k = 5, n = 125000, dist = (UNIF,UNIF), reps = 2
+Default depth is 3.39
+   Depth = 4, mean s =  2.38719, sigma s =  0.15274, time/trial =   2738.01000
+   Depth = 3, mean s =  2.38719, sigma s =  0.15274, time/trial =   2828.19000
+
+   Brute force mean s =  2.38719, sigma s =  0.15274, time/trial =    418.55500
+   Brute force time/min brick time =      0.15287
+
+       *
+
+   MDKSOPT K=1,N=200,R=500,T=NORM,DOOP=0
+
+For k = 1, n = 200, dist = (NORM,NORM), reps = 500
+   Depth = 1, mean s =  1.17125, sigma s =  0.36429, time/trial =      0.00004
+
+   Brute force mean s =  1.17196, sigma s =  0.36472, time/trial =      0.00030
+   Brute force time/min brick time =      7.50000
+
+   MDKSOPT K=1,N=1000,R=500
+
+For k = 1, n = 1000, dist = (NORM,NORM), reps = 500
+   Depth = 1, mean s =  1.18712, sigma s =  0.38967, time/trial =      0.00014
+
+   Brute force mean s =  1.18750, sigma s =  0.38994, time/trial =      0.00748
+   Brute force time/min brick time =     53.42857
+
+   MDKSOPT K=1,N=5000,R=250
+
+For k = 1, n = 5000, dist = (NORM,NORM), reps = 250
+   Depth = 1, mean s =  1.17583, sigma s =  0.35821, time/trial =      0.00100
+
+   Brute force mean s =  1.17595, sigma s =  0.35800, time/trial =      0.18796
+   Brute force time/min brick time =    187.96000
+
+   MDKSOPT K=1,N=25000,R=50
+
+For k = 1, n = 25000, dist = (NORM,NORM), reps = 50
+   Depth = 1, mean s =  1.19850, sigma s =  0.34138, time/trial =      0.00540
+
+   Brute force mean s =  1.19749, sigma s =  0.34145, time/trial =      4.68540
+   Brute force time/min brick time =    867.66667
+
+   MDKSOPT K=1,N=125000,R=10
+
+For k = 1, n = 125000, dist = (NORM,NORM), reps = 10
+   Depth = 1, mean s =  1.22047, sigma s =  0.35858, time/trial =      0.17000
+
+   Brute force mean s =  1.21651, sigma s =  0.35953, time/trial =    117.83600
+   Brute force time/min brick time =    693.15294
+
+       *
+
+   MDKSOPT K=2,N=200,R=500,T=NORM,DOOP=1
+
+For k = 2, n = 200, dist = (NORM,NORM), reps = 500
+Default depth is 3.82
+   Depth = 4, mean s =  1.62620, sigma s =  0.35303, time/trial =      0.00058
+   Depth = 3, mean s =  1.62620, sigma s =  0.35303, time/trial =      0.00040
+   Depth = 2, mean s =  1.62606, sigma s =  0.35290, time/trial =      0.00034
+   Depth = 1, mean s =  1.62620, sigma s =  0.35263, time/trial =      0.00046
+
+   Brute force mean s =  1.62620, sigma s =  0.35263, time/trial =      0.00048
+   Brute force time/min brick time =      1.41176
+
+   MDKSOPT K=2,N=1000,R=500
+
+For k = 2, n = 1000, dist = (NORM,NORM), reps = 500
+Default depth is 4.98
+   Depth = 5, mean s =  1.74292, sigma s =  0.38209, time/trial =      0.00806
+   Depth = 4, mean s =  1.74292, sigma s =  0.38209, time/trial =      0.00594
+   Depth = 3, mean s =  1.74298, sigma s =  0.38211, time/trial =      0.00534
+   Depth = 2, mean s =  1.74387, sigma s =  0.38261, time/trial =      0.00752
+
+   Brute force mean s =  1.74279, sigma s =  0.38274, time/trial =      0.01154
+   Brute force time/min brick time =      2.16105
+
+   MDKSOPT K=2,N=5000,R=125
+
+For k = 2, n = 5000, dist = (NORM,NORM), reps = 125
+Default depth is 6.14
+   Depth = 7, mean s =  1.83203, sigma s =  0.37278, time/trial =      0.10640
+   Depth = 6, mean s =  1.83203, sigma s =  0.37278, time/trial =      0.08544
+   Depth = 5, mean s =  1.83203, sigma s =  0.37278, time/trial =      0.06480
+   Depth = 4, mean s =  1.83192, sigma s =  0.37273, time/trial =      0.07024
+
+   Brute force mean s =  1.83180, sigma s =  0.37215, time/trial =      0.28768
+   Brute force time/min brick time =      4.43951
+
+   MDKSOPT K=2,N=25000,R=25
+
+For k = 2, n = 25000, dist = (NORM,NORM), reps = 25
+Default depth is 7.30
+   Depth = 8, mean s =  1.78530, sigma s =  0.37356, time/trial =      2.34760
+   Depth = 7, mean s =  1.78530, sigma s =  0.37356, time/trial =      1.41160
+   Depth = 6, mean s =  1.78530, sigma s =  0.37356, time/trial =      1.15240
+   Depth = 5, mean s =  1.78530, sigma s =  0.37356, time/trial =      1.39640
+
+   Brute force mean s =  1.78251, sigma s =  0.37300, time/trial =      7.18800
+   Brute force time/min brick time =      6.23742
+
+   MDKSOPT K=2,N=125000,R=5
+
+For k = 2, n = 125000, dist = (NORM,NORM), reps = 5
+Default depth is 8.47
+   Depth = 9, mean s =  1.70328, sigma s =  0.19248, time/trial =     50.13000
+   Depth = 8, mean s =  1.70328, sigma s =  0.19248, time/trial =     57.94000
+
+   Brute force mean s =  1.70328, sigma s =  0.18556, time/trial =    197.35200
+   Brute force time/min brick time =      3.93680
+
+       *
+
+   MDKSOPT K=3,N=200,R=500,T=NORM
+
+For k = 3, n = 200, dist = (NORM,NORM), reps = 500
+Default depth is 2.55
+   Depth = 3, mean s =  1.78615, sigma s =  0.33485, time/trial =      0.00132
+   Depth = 2, mean s =  1.78629, sigma s =  0.33482, time/trial =      0.00076
+   Depth = 1, mean s =  1.78615, sigma s =  0.33482, time/trial =      0.00074
+
+   Brute force mean s =  1.78615, sigma s =  0.33497, time/trial =      0.00062
+   Brute force time/min brick time =      0.83784
+
+   MDKSOPT K=3,N=1000,R=400
+
+For k = 3, n = 1000, dist = (NORM,NORM), reps = 400
+Default depth is 3.32
+   Depth = 4, mean s =  1.93516, sigma s =  0.32684, time/trial =      0.02677
+   Depth = 3, mean s =  1.93531, sigma s =  0.32707, time/trial =      0.01750
+   Depth = 2, mean s =  1.93531, sigma s =  0.32702, time/trial =      0.01298
+   Depth = 1, mean s =  1.93618, sigma s =  0.32697, time/trial =      0.02033
+
+   Brute force mean s =  1.93634, sigma s =  0.32722, time/trial =      0.01558
+   Brute force time/min brick time =      1.20039
+
+   MDKSOPT K=3,N=5000,R=80
+
+For k = 3, n = 5000, dist = (NORM,NORM), reps = 80
+Default depth is 4.10
+   Depth = 5, mean s =  2.08155, sigma s =  0.33083, time/trial =      0.43788
+   Depth = 4, mean s =  2.08172, sigma s =  0.33118, time/trial =      0.30087
+   Depth = 3, mean s =  2.08172, sigma s =  0.33098, time/trial =      0.21687
+   Depth = 2, mean s =  2.08137, sigma s =  0.33092, time/trial =      0.31200
+
+   Brute force mean s =  2.08084, sigma s =  0.32924, time/trial =      0.38750
+   Brute force time/min brick time =      1.78674
+
+   MDKSOPT K=3,N=25000,R=16
+
+For k = 3, n = 25000, dist = (NORM,NORM), reps = 16
+Default depth is 4.87
+   Depth = 5, mean s =  2.17328, sigma s =  0.23868, time/trial =      9.94500
+   Depth = 4, mean s =  2.17407, sigma s =  0.23904, time/trial =      5.88375
+   Depth = 3, mean s =  2.17367, sigma s =  0.23967, time/trial =      8.24062
+
+   Brute force mean s =  2.17288, sigma s =  0.23847, time/trial =      9.70250
+   Brute force time/min brick time =      1.64903
+
+   MDKSOPT K=3,N=125000,R=3
+
+For k = 3, n = 125000, dist = (NORM,NORM), reps = 3
+Default depth is 5.64
+   Depth = 6, mean s =  2.23163, sigma s =  0.20025, time/trial =    426.40667
+   Depth = 5, mean s =  2.23163, sigma s =  0.20025, time/trial =    574.17000
+
+   Brute force mean s =  2.22409, sigma s =  0.18754, time/trial =    276.05000
+   Brute force time/min brick time =      0.64739
+
+       *
+
+   MDKSOPT K=4,N=200,R=500,T=NORM
+
+For k = 4, n = 200, dist = (NORM,NORM), reps = 500
+Default depth is 1.91
+   Depth = 2, mean s =  1.77880, sigma s =  0.30113, time/trial =      0.00138
+   Depth = 1, mean s =  1.77851, sigma s =  0.30094, time/trial =      0.00100
+
+   Brute force mean s =  1.77851, sigma s =  0.30094, time/trial =      0.00078
+   Brute force time/min brick time =      0.78000
+
+   MDKSOPT K=4,N=1000,R=300
+
+For k = 4, n = 1000, dist = (NORM,NORM), reps = 300
+Default depth is 2.49
+   Depth = 3, mean s =  2.03113, sigma s =  0.31750, time/trial =      0.04153
+   Depth = 2, mean s =  2.03050, sigma s =  0.31698, time/trial =      0.02420
+   Depth = 1, mean s =  2.02987, sigma s =  0.31727, time/trial =      0.02840
+
+   Brute force mean s =  2.02966, sigma s =  0.31720, time/trial =      0.01930
+   Brute force time/min brick time =      0.79752
+
+   MDKSOPT K=4,N=5000,R=60
+
+For k = 4, n = 5000, dist = (NORM,NORM), reps = 60
+Default depth is 3.07
+   Depth = 4, mean s =  2.22197, sigma s =  0.35558, time/trial =      1.13867
+   Depth = 3, mean s =  2.22291, sigma s =  0.35711, time/trial =      0.58300
+   Depth = 2, mean s =  2.22362, sigma s =  0.35617, time/trial =      0.46850
+   Depth = 1, mean s =  2.22739, sigma s =  0.35522, time/trial =      0.81333
+
+   Brute force mean s =  2.22267, sigma s =  0.35504, time/trial =      0.48067
+   Brute force time/min brick time =      1.02597
+
+   MDKSOPT K=4,N=25000,R=12
+
+For k = 4, n = 25000, dist = (NORM,NORM), reps = 12
+Default depth is 3.65
+   Depth = 4, mean s =  2.27895, sigma s =  0.32310, time/trial =     40.52750
+   Depth = 3, mean s =  2.27842, sigma s =  0.32337, time/trial =     21.59250
+   Depth = 2, mean s =  2.27842, sigma s =  0.32464, time/trial =     26.63083
+
+   Brute force mean s =  2.27473, sigma s =  0.32234, time/trial =     12.08250
+   Brute force time/min brick time =      0.55957
+
+   MDKSOPT K=4,N=125000,R=2
+
+For k = 4, n = 125000, dist = (NORM,NORM), reps = 2
+Default depth is 4.23
+   Depth = 5, mean s =  2.42962, sigma s =  0.07071, time/trial =   1428.76500
+   Depth = 4, mean s =  2.42962, sigma s =  0.07071, time/trial =   1385.31500
+   Depth = 3, mean s =  2.43103, sigma s =  0.06930, time/trial =   2184.32000
+
+   Brute force mean s =  2.43103, sigma s =  0.05233, time/trial =    344.96500
+   Brute force time/min brick time =      0.24902
+
+       *
+
+   MDKSOPT K=5,N=200,R=500,T=NORM
+
+For k = 5, n = 200, dist = (NORM,NORM), reps = 500
+Default depth is 1.53
+   Depth = 2, mean s =  1.73892, sigma s =  0.27714, time/trial =      0.00228
+   Depth = 1, mean s =  1.73878, sigma s =  0.27711, time/trial =      0.00136
+
+   Brute force mean s =  1.73892, sigma s =  0.27711, time/trial =      0.00096
+   Brute force time/min brick time =      0.70588
+
+   MDKSOPT K=5,N=1000,R=250
+
+For k = 5, n = 1000, dist = (NORM,NORM), reps = 250
+Default depth is 1.99
+   Depth = 2, mean s =  1.95909, sigma s =  0.29461, time/trial =      0.04200
+   Depth = 1, mean s =  1.95897, sigma s =  0.29484, time/trial =      0.03576
+
+   Brute force mean s =  1.95897, sigma s =  0.29482, time/trial =      0.02320
+   Brute force time/min brick time =      0.64877
+
+   MDKSOPT K=5,N=5000,R=50
+
+For k = 5, n = 5000, dist = (NORM,NORM), reps = 50
+Default depth is 2.46
+   Depth = 3, mean s =  2.09784, sigma s =  0.22150, time/trial =      1.10240
+   Depth = 2, mean s =  2.09728, sigma s =  0.22191, time/trial =      0.72720
+   Depth = 1, mean s =  2.09954, sigma s =  0.22140, time/trial =      0.97220
+
+   Brute force mean s =  2.09898, sigma s =  0.22109, time/trial =      0.57680
+   Brute force time/min brick time =      0.79318
+
+   MDKSOPT K=5,N=25000,R=10
+
+For k = 5, n = 25000, dist = (NORM,NORM), reps = 10
+Default depth is 2.92
+   Depth = 3, mean s =  2.34704, sigma s =  0.30314, time/trial =     56.75500
+   Depth = 2, mean s =  2.34831, sigma s =  0.30172, time/trial =     41.23800
+   Depth = 1, mean s =  2.34704, sigma s =  0.30156, time/trial =     45.83600
+
+   Brute force mean s =  2.34641, sigma s =  0.30133, time/trial =     14.59300
+   Brute force time/min brick time =      0.35387
+
+   MDKSOPT K=5,N=125000,R=2
+
+For k = 5, n = 125000, dist = (NORM,NORM), reps = 2
+Default depth is 3.39
+   Depth = 4, mean s =  2.34618, sigma s =  0.12304, time/trial =   2736.34500
+   Depth = 3, mean s =  2.34477, sigma s =  0.12445, time/trial =   2824.64500
+
+   Brute force mean s =  2.33911, sigma s =  0.13011, time/trial =    418.58500
+   Brute force time/min brick time =      0.15297
+
+       *
+
+   MDKSOPT K=1,N=200,R=500,T=GAM,DOOP=0
+
+For k = 1, n = 200, dist = (GAM ,GAM ), reps = 500
+   Depth = 1, mean s =  1.16376, sigma s =  0.38476, time/trial =      0.00006
+
+   Brute force mean s =  1.16376, sigma s =  0.38476, time/trial =      0.00030
+   Brute force time/min brick time =      5.00000
+
+   MDKSOPT K=1,N=1000,R=500
+
+For k = 1, n = 1000, dist = (GAM ,GAM ), reps = 500
+   Depth = 1, mean s =  1.20679, sigma s =  0.37055, time/trial =      0.00014
+
+   Brute force mean s =  1.20679, sigma s =  0.37055, time/trial =      0.00746
+   Brute force time/min brick time =     53.28571
+
+   MDKSOPT K=1,N=5000,R=250
+
+For k = 1, n = 5000, dist = (GAM ,GAM ), reps = 250
+   Depth = 1, mean s =  1.21543, sigma s =  0.37987, time/trial =      0.00100
+
+   Brute force mean s =  1.21543, sigma s =  0.37987, time/trial =      0.18788
+   Brute force time/min brick time =    187.88000
+
+   MDKSOPT K=1,N=25000,R=50
+
+For k = 1, n = 25000, dist = (GAM ,GAM ), reps = 50
+   Depth = 1, mean s =  1.26491, sigma s =  0.32773, time/trial =      0.00540
+
+   Brute force mean s =  1.26491, sigma s =  0.32773, time/trial =      4.68320
+   Brute force time/min brick time =    867.25926
+
+   MDKSOPT K=1,N=125000,R=10
+
+For k = 1, n = 125000, dist = (GAM ,GAM ), reps = 10
+   Depth = 1, mean s =  1.29740, sigma s =  0.24803, time/trial =      0.17000
+
+   Brute force mean s =  1.29740, sigma s =  0.24803, time/trial =    117.83900
+   Brute force time/min brick time =    693.17059
+
+       *
+
+   MDKSOPT K=2,N=200,R=500,T=GAM,DOOP=1
+
+For k = 2, n = 200, dist = (GAM ,GAM ), reps = 500
+Default depth is 3.82
+   Depth = 4, mean s =  1.63073, sigma s =  0.35396, time/trial =      0.00058
+   Depth = 3, mean s =  1.63073, sigma s =  0.35396, time/trial =      0.00040
+   Depth = 2, mean s =  1.63073, sigma s =  0.35396, time/trial =      0.00032
+   Depth = 1, mean s =  1.63073, sigma s =  0.35396, time/trial =      0.00046
+
+   Brute force mean s =  1.63073, sigma s =  0.35396, time/trial =      0.00048
+   Brute force time/min brick time =      1.50000
+
+   MDKSOPT K=2,N=1000,R=500
+
+For k = 2, n = 1000, dist = (GAM ,GAM ), reps = 500
+Default depth is 4.98
+   Depth = 5, mean s =  1.75671, sigma s =  0.36771, time/trial =      0.00806
+   Depth = 4, mean s =  1.75671, sigma s =  0.36771, time/trial =      0.00594
+   Depth = 3, mean s =  1.75671, sigma s =  0.36771, time/trial =      0.00536
+   Depth = 2, mean s =  1.75671, sigma s =  0.36771, time/trial =      0.00752
+
+   Brute force mean s =  1.75671, sigma s =  0.36771, time/trial =      0.01154
+   Brute force time/min brick time =      2.15299
+
+   MDKSOPT K=2,N=5000,R=125
+
+For k = 2, n = 5000, dist = (GAM ,GAM ), reps = 125
+Default depth is 6.14
+   Depth = 7, mean s =  1.86993, sigma s =  0.38168, time/trial =      0.10632
+   Depth = 6, mean s =  1.86993, sigma s =  0.38168, time/trial =      0.08536
+   Depth = 5, mean s =  1.86993, sigma s =  0.38168, time/trial =      0.06472
+   Depth = 4, mean s =  1.86993, sigma s =  0.38168, time/trial =      0.07024
+
+   Brute force mean s =  1.86993, sigma s =  0.38168, time/trial =      0.28816
+   Brute force time/min brick time =      4.45241
+
+   MDKSOPT K=2,N=25000,R=25
+
+For k = 2, n = 25000, dist = (GAM ,GAM ), reps = 25
+Default depth is 7.30
+   Depth = 8, mean s =  1.96466, sigma s =  0.46163, time/trial =      2.32200
+   Depth = 7, mean s =  1.96466, sigma s =  0.46163, time/trial =      1.27960
+   Depth = 6, mean s =  1.96466, sigma s =  0.46163, time/trial =      1.13760
+   Depth = 5, mean s =  1.96466, sigma s =  0.46163, time/trial =      1.39840
+
+   Brute force mean s =  1.96466, sigma s =  0.46163, time/trial =      7.20480
+   Brute force time/min brick time =      6.33333
+
+   MDKSOPT K=2,N=125000,R=5
+
+For k = 2, n = 125000, dist = (GAM ,GAM ), reps = 5
+Default depth is 8.47
+   Depth = 9, mean s =  2.18694, sigma s =  0.53135, time/trial =     50.17800
+   Depth = 8, mean s =  2.18694, sigma s =  0.53135, time/trial =     57.95400
+
+   Brute force mean s =  2.18694, sigma s =  0.53135, time/trial =    197.06600
+   Brute force time/min brick time =      3.92734
+
+       *
+
+   MDKSOPT K=3,N=200,R=500,T=GAM
+
+For k = 3, n = 200, dist = (GAM ,GAM ), reps = 500
+Default depth is 2.55
+   Depth = 3, mean s =  1.77823, sigma s =  0.32944, time/trial =      0.00132
+   Depth = 2, mean s =  1.77823, sigma s =  0.32944, time/trial =      0.00076
+   Depth = 1, mean s =  1.77823, sigma s =  0.32944, time/trial =      0.00072
+
+   Brute force mean s =  1.77823, sigma s =  0.32944, time/trial =      0.00064
+   Brute force time/min brick time =      0.88889
+
+   MDKSOPT K=3,N=1000,R=400
+
+For k = 3, n = 1000, dist = (GAM ,GAM ), reps = 400
+Default depth is 3.32
+   Depth = 4, mean s =  1.96211, sigma s =  0.33353, time/trial =      0.02675
+   Depth = 3, mean s =  1.96211, sigma s =  0.33353, time/trial =      0.01750
+   Depth = 2, mean s =  1.96211, sigma s =  0.33353, time/trial =      0.01298
+   Depth = 1, mean s =  1.96211, sigma s =  0.33353, time/trial =      0.02030
+
+   Brute force mean s =  1.96211, sigma s =  0.33353, time/trial =      0.01557
+   Brute force time/min brick time =      1.20039
+
+   MDKSOPT K=3,N=5000,R=80
+
+For k = 3, n = 5000, dist = (GAM ,GAM ), reps = 80
+Default depth is 4.10
+   Depth = 5, mean s =  2.11319, sigma s =  0.28896, time/trial =      0.43900
+   Depth = 4, mean s =  2.11319, sigma s =  0.28896, time/trial =      0.30088
+   Depth = 3, mean s =  2.11319, sigma s =  0.28896, time/trial =      0.21675
+   Depth = 2, mean s =  2.11319, sigma s =  0.28896, time/trial =      0.31187
+
+   Brute force mean s =  2.11319, sigma s =  0.28896, time/trial =      0.38762
+   Brute force time/min brick time =      1.78835
+
+   MDKSOPT K=3,N=25000,R=16
+
+For k = 3, n = 25000, dist = (GAM ,GAM ), reps = 16
+Default depth is 4.87
+   Depth = 5, mean s =  2.18553, sigma s =  0.34514, time/trial =     10.18500
+   Depth = 4, mean s =  2.18553, sigma s =  0.34514, time/trial =      6.50125
+   Depth = 3, mean s =  2.18553, sigma s =  0.34514, time/trial =      9.48750
+
+   Brute force mean s =  2.18553, sigma s =  0.34514, time/trial =      9.70188
+   Brute force time/min brick time =      1.49231
+
+   MDKSOPT K=3,N=125000,R=3
+
+For k = 3, n = 125000, dist = (GAM ,GAM ), reps = 3
+Default depth is 5.64
+   Depth = 6, mean s =  2.45696, sigma s =  0.21288, time/trial =    426.43667
+   Depth = 5, mean s =  2.45696, sigma s =  0.21288, time/trial =    573.66000
+
+   Brute force mean s =  2.45696, sigma s =  0.21288, time/trial =    275.88333
+   Brute force time/min brick time =      0.64695
+
+       *
+
+   MDKSOPT K=4,N=200,R=500,T=GAM
+
+For k = 4, n = 200, dist = (GAM ,GAM ), reps = 500
+Default depth is 1.91
+   Depth = 2, mean s =  1.81656, sigma s =  0.33721, time/trial =      0.00138
+   Depth = 1, mean s =  1.81656, sigma s =  0.33721, time/trial =      0.00102
+
+   Brute force mean s =  1.81656, sigma s =  0.33721, time/trial =      0.00078
+   Brute force time/min brick time =      0.76471
+
+   MDKSOPT K=4,N=1000,R=300
+
+For k = 4, n = 1000, dist = (GAM ,GAM ), reps = 300
+Default depth is 2.49
+   Depth = 3, mean s =  2.02544, sigma s =  0.31015, time/trial =      0.04150
+   Depth = 2, mean s =  2.02544, sigma s =  0.31015, time/trial =      0.02420
+   Depth = 1, mean s =  2.02544, sigma s =  0.31015, time/trial =      0.02837
+
+   Brute force mean s =  2.02544, sigma s =  0.31015, time/trial =      0.01930
+   Brute force time/min brick time =      0.79752
+
+   MDKSOPT K=4,N=5000,R=60
+
+For k = 4, n = 5000, dist = (GAM ,GAM ), reps = 60
+Default depth is 3.07
+   Depth = 4, mean s =  2.18967, sigma s =  0.30702, time/trial =      1.06017
+   Depth = 3, mean s =  2.18967, sigma s =  0.30702, time/trial =      0.58283
+   Depth = 2, mean s =  2.18967, sigma s =  0.30702, time/trial =      0.46817
+   Depth = 1, mean s =  2.18967, sigma s =  0.30702, time/trial =      0.81317
+
+   Brute force mean s =  2.18967, sigma s =  0.30702, time/trial =      0.48100
+   Brute force time/min brick time =      1.02741
+
+   MDKSOPT K=4,N=25000,R=12
+
+For k = 4, n = 25000, dist = (GAM ,GAM ), reps = 12
+Default depth is 3.65
+   Depth = 4, mean s =  2.40439, sigma s =  0.47527, time/trial =     40.83583
+   Depth = 3, mean s =  2.40439, sigma s =  0.47527, time/trial =     20.68750
+   Depth = 2, mean s =  2.40439, sigma s =  0.47527, time/trial =     25.98417
+
+   Brute force mean s =  2.40439, sigma s =  0.47527, time/trial =     12.09000
+   Brute force time/min brick time =      0.58441
+
+   MDKSOPT K=4,N=125000,R=2
+
+For k = 4, n = 125000, dist = (GAM ,GAM ), reps = 2
+Default depth is 4.23
+   Depth = 5, mean s =  2.93874, sigma s =  0.03960, time/trial =   1429.21500
+   Depth = 4, mean s =  2.93874, sigma s =  0.03960, time/trial =   1384.06500
+   Depth = 3, mean s =  2.93874, sigma s =  0.03960, time/trial =   2181.17500
+
+   Brute force mean s =  2.93874, sigma s =  0.03960, time/trial =    345.53500
+   Brute force time/min brick time =      0.24965
+
+       *
+
+   MDKSOPT K=5,N=200,R=500,T=GAM
+
+For k = 5, n = 200, dist = (GAM ,GAM ), reps = 500
+Default depth is 1.53
+   Depth = 2, mean s =  1.76296, sigma s =  0.27806, time/trial =      0.00228
+   Depth = 1, mean s =  1.76296, sigma s =  0.27806, time/trial =      0.00136
+
+   Brute force mean s =  1.76296, sigma s =  0.27806, time/trial =      0.00094
+   Brute force time/min brick time =      0.69118
+
+   MDKSOPT K=5,N=1000,R=250
+
+For k = 5, n = 1000, dist = (GAM ,GAM ), reps = 250
+Default depth is 1.99
+   Depth = 2, mean s =  1.98793, sigma s =  0.29062, time/trial =      0.04200
+   Depth = 1, mean s =  1.98793, sigma s =  0.29062, time/trial =      0.03576
+
+   Brute force mean s =  1.98793, sigma s =  0.29062, time/trial =      0.02320
+   Brute force time/min brick time =      0.64877
+
+   MDKSOPT K=5,N=5000,R=50
+
+For k = 5, n = 5000, dist = (GAM ,GAM ), reps = 50
+Default depth is 2.46
+   Depth = 3, mean s =  2.20504, sigma s =  0.30602, time/trial =      1.12800
+   Depth = 2, mean s =  2.20504, sigma s =  0.30602, time/trial =      0.72700
+   Depth = 1, mean s =  2.20504, sigma s =  0.30602, time/trial =      0.97200
+
+   Brute force mean s =  2.20504, sigma s =  0.30602, time/trial =      0.57660
+   Brute force time/min brick time =      0.79312
+
+   MDKSOPT K=5,N=25000,R=10
+
+For k = 5, n = 25000, dist = (GAM ,GAM ), reps = 10
+Default depth is 2.92
+   Depth = 3, mean s =  2.46215, sigma s =  0.37987, time/trial =     56.15200
+   Depth = 2, mean s =  2.46215, sigma s =  0.37987, time/trial =     40.30900
+   Depth = 1, mean s =  2.46215, sigma s =  0.37987, time/trial =     44.57800
+
+   Brute force mean s =  2.46215, sigma s =  0.37987, time/trial =     14.58600
+   Brute force time/min brick time =      0.36185
+
+   MDKSOPT K=5,N=125000,R=2
+
+For k = 5, n = 125000, dist = (GAM ,GAM ), reps = 2
+Default depth is 3.39
+   Depth = 4, mean s =  2.35608, sigma s =  0.41012, time/trial =   2735.30500
+   Depth = 3, mean s =  2.35608, sigma s =  0.41012, time/trial =   2825.53500
+
+   Brute force mean s =  2.35608, sigma s =  0.41012, time/trial =    418.53000
+   Brute force time/min brick time =      0.15301
+   
+
+

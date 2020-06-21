@@ -1,0 +1,197 @@
+# $Id: makexptr 31 2010-08-30 18:57:56Z  $
+########################################################################
+# MAKE file for CNS (D3) program--External and internal transputers    #
+# V8A, 05/13/96, GNR - Add new routines, structs for V8A               #
+# Rev, 01/06/97, GNR - Combine external,internal nodes in one makefile #
+# Rev, 03/28/98, GNR - Reverse order of nsitool and ROCKS libraries    #
+# Rev, 05/04/99, GNR - New directory layout                            #
+# V8D, 02/14/07, GNR - Update file list, remove PNS                    #
+# ==>, 08/30/07, GNR - Last mod before committing to svn repository    #
+# Rev, 12/28/08, GNR - Add clean target, dependency on makefile itself #
+########################################################################
+
+# Object files for computational nodes
+OBJD3 = \
+darwin3 \
+d3abort \
+d3autsc \
+d3cij   \
+d3cond  \
+d3decay \
+d3dij  \
+d3elij \
+d3exch \
+d3exit \
+d3foff \
+d3gcon \
+d3genr \
+d3gfsv \
+d3go   \
+d3gsta \
+d3gvin \
+d3i3vr \
+d3ijpn \
+d3inhi \
+d3kij  \
+d3lij  \
+d3lplt \
+d3mset \
+d3nset \
+d3nxtab \
+d3oafs \
+d3pdpn \
+d3phase \
+d3plot \
+d3regenr \
+d3resetn \
+d3rplt \
+d3rprt \
+d3rpsi \
+d3rstr \
+d3save \
+d3sj   \
+d3stat \
+d3ucvt \
+d3uprg \
+d3valu \
+d3woff \
+d3zsta \
+findln \
+tvplot \
+stubs \
+xpstubs
+
+# Additional object files for Darwin I support
+OBJD1 = d1exch d1genr d1go d1nset d1rplt
+
+# Pathname for nsi libraries
+NSILDIR = /home/cdr/lib/xptr
+
+# Pathnames for include files
+INCNSI = /home/cdr/include
+INCAPP = ..
+
+# Pathname for special inq version of nsitools
+NSIINQ = /home/cdr/src/nsitools/nio.inq
+
+# List of all dirs for header files, order is important
+INC = $(INCAPP) $(INCNSI)
+
+# Type of transputer
+TTYPE = 805
+
+# Object files for versions without Darwin I
+tnmext tnmint tnmoptext tnmoptint := OBJ = \
+	$(OBJD3:%=%.tco)
+
+# Object files for versions with Darwin I
+d1tnmext d1tnmint d1tnmtext d1tnmtint := OBJ = \
+	$(OBJD3:%=%.tco) $(OBJD1:%=%.tco)
+
+# Libraries for external nodes
+tnmext tnmoptext d1tnmext := LIBS = \
+	$(INMOSNET)/libs/c/isockc.lib \
+	$(NSILDIR)/xp8ietools.lib \
+	$(NSILDIR)/crkext.lib \
+	$(NSILDIR)/plot.lib
+d1tnmtext := LIBS = \
+	$(INMOSNET)/libs/c/isockc.lib \
+	$(NSILDIR)/xp8ietools_t.lib \
+	$(NSILDIR)/crkext.lib \
+	$(NSILDIR)/plot.lib
+
+# Libraries for internal nodes
+tnmint tnmoptint d1tnmint := LIBS = \
+	$(NSILDIR)/xp8iitools.lib \
+	$(NSILDIR)/crkint.lib \
+	$(NSILDIR)/plot.lib
+d1tnmtint := LIBS = \
+	$(NSILDIR)/xp8iitools_t.lib \
+	$(NSILDIR)/crkint.lib \
+	$(NSILDIR)/plot.lib
+
+# Compilation definitions for external nodes
+tnmext tnmoptext	:= DEFS = XP8I EXTNODE PAR PARn
+d1tnmext		:= DEFS = XP8I EXTNODE PAR PARn D1
+d1tnmtext		:= DEFS = XP8I EXTNODE PAR PARn D1 TIMERS
+
+# Compilation definitions for internal nodes
+tnmint tnmoptint	:= DEFS = XP8I PAR PARn
+d1tnmint 		:= DEFS = XP8I PAR PARn D1
+d1tnmtint		:= DEFS = XP8I PAR PARn D1 TIMERS
+
+# General compiler flags
+CFLAGS = -T$(TTYPE) -ep -ec -wa -wn 
+
+# Compile command and add'l compiler flags for non-optimized versions
+tnmext tnmint d1tnmext d1tnmint d1tnmtext d1tnmting := CFLAGS += -g
+tnmext tnmint d1tnmext d1tnmint d1tnmtext d1tnmting := ICC = icc
+
+# Compile command and add'l compiler flags for optimized versions
+tnmoptext tnmoptint	:= CFLAGS += -O2 -QT
+tnmoptext tnmoptint	:= ICC = $(D4314A)/optimize/tools/icc
+
+#Get the current working directory, to use in icc calls.  This
+#puts whole paths in the symbol tables, and simplifies debugging
+CWD:sh = pwd
+
+.SUFFIXES: .c .tco .btl .btr .cfb .cfs .lku .lbb .rsc
+
+# A trick to get header file dependency tables to the make utility,
+# althogh icc does not produce them: each compilation (into a .tco
+# file) is preceeded by a call to 'acc -P', which invokes the Sun
+# macro preprocessor cpp (or is it m4 ?).  The preprocessor produces
+# the tables, which 'make' stores in '.make.state' .  The only
+# thing to watch out for, are header file dirs that are built
+# into the different compilers, and the macro supplied here
+# guarantees that the preprocessor will get the $ISEARCH
+# files.
+GETDEP = acc -E $(ISEARCH:%=-I%)
+
+#Compile for T8xx transputer with INMOS dev sys
+%.tco:  ../%.c makefile
+	-@$(GETDEP) $(DEFS:%=-D%) $(INC:%=-I%) $<  1>/dev/null 2>&1
+	$(ICC) $(CFLAGS) $(INC:%=-J%) $(DEFS:%=-D%) $(CWD)/$<
+
+.KEEP_STATE:
+
+# The possible targets fed in from the caller are:
+# tnmext, tnmint:	Make default program
+# tnmoptext, tnmoptint:	Make optimized program
+# d1tnmext, d1tnmint:	Make program with Darwin I support
+# d1tnmtext, d1tnmtint:	Make program with Darwin I and timer support
+# There is no meaningful default, since must build external & internal
+# programs, each in its own directory.
+
+tnmext optext d1tnmext d1tnmtext:	darwin3e.lku darwin3e.inq
+tnmint optint d1tnmint d1tnmtint:	darwin3.lku  darwin3.inq
+
+darwin3e.lku: $$(OBJ) $$(LIBS)
+	ilink -T$(TTYPE) $(OBJ:%=$(CWD)/%) $(LIBS) -o $@ -f cstartup.lnk
+
+darwin3.lku: $$(OBJ) $$(LIBS)
+	ilink -T$(TTYPE) $(OBJ:%=$(CWD)/%) $(LIBS) -o $@ -f cstartrd.lnk
+
+# The inquest compatible executable "darwin3e.inq" must be linked with
+# a special version of the library file nsitools/nio.c, which was
+# compiled into nio.inq .   This is to overcome an inquest bug
+# which prevents it from interacting with the input process on an
+# external node (or with any process sitting in timer queues on the
+# xputer
+
+darwin3e.inq: $$(OBJ) $$(LIBS) $$(NSIINQ)
+	ilink -T$(TTYPE) $(OBJ:%=$(CWD)/%) $(NSIINQ) \
+        	$(LIBS) -o $@ -f cdebug.lnk
+
+darwin3.inq: $$(OBJ) $$(LIBS)
+	ilink -T$(TTYPE) $(OBJ:%=$(CWD)/%) $(LIBS) -o $@ -f cdebugrd.lnk
+
+# Attempt to work around icc bug which does not let us initialize the
+# conversion tables with the addresses of union conversion routines.
+
+d3nxtab.tco := CFLAGS += -ec
+d3nxtab.tco := DEFS += ICCFUNCBUG
+
+clean:
+	rm -f *.tco
+	rm -f darwin3e.lku darwin3.lku darwin3e.inq darwin3.inq
