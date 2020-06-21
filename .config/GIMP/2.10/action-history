@@ -1,0 +1,9 @@
+# GIMP action-history
+
+(history-item "file-quit" 1)
+(history-item "edit-paste" 1)
+(history-item "image-new" 2)
+(history-item "tools-rect-select" 0)
+(history-item "filters-gaussian-blur" 1)
+
+# end of action-history

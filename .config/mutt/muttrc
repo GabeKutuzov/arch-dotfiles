@@ -1,0 +1,16 @@
+set folder = "~/mail/zoho/"
+set spoolfile = "+INBOX"
+set smtp_url = "smtps://gabe@kutuzov.dev@smtp.zoho.com:465"
+set record = "+Sent"
+set trash = "+Trash"
+set postponed = "+Drafts"
+
+set from = "gabe@kutuzov.dev"
+set realname = "Gabe Kutuzov"
+
+mailboxes =INBOX =Sent =Trash = Drafts =Junk =Other
+
+source color.muttrc
+
+set sort = 'reverse-date'
+set editor = vim

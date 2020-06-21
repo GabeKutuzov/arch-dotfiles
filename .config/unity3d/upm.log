@@ -1,0 +1,3 @@
+{"level":"info","message":"Starting Server","timestamp":"2019-09-22T22:47:09.641Z"}
+{"level":"info","message":"Server started on port [35394]","timestamp":"2019-09-22T22:47:09.643Z"}
+{"level":"error","message":"[Unity Package Manager (Upm)]\nParent process [21940] was terminated","timestamp":"2019-09-22T22:47:19.653Z"}

@@ -1,0 +1,5 @@
+audio.sync_bitrate_enumeration=4
+audio.crossfade_v2=true
+gaia.known_zeroconf="{\"1237e7e9ff91c14dbde3b47d05aa4b7699241d51\":{\"known\":false,\"popularity\":1,\"prio\":\"connect\",\"shown\":0},\"59a899c345dddc847ddc95dc3f90238ad43d5223\":{\"known\":false,\"popularity\":1,\"prio\":\"connect\",\"shown\":0},\"dd2856c59a7b3a60b69451465a205d40ef23f8ac\":{\"known\":false,\"popularity\":2,\"prio\":\"connect\",\"shown\":0},\"ec433ee5ed2b179203a93b03d3d1e80cb74716c0\":{\"known\":false,\"popularity\":1,\"prio\":\"connect\",\"shown\":0}}"
+audio.play_bitrate_enumeration=4
+app.browser.zoom-level=50

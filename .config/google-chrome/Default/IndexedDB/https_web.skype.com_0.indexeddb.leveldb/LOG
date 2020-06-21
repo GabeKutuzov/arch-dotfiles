@@ -1,0 +1,14 @@
+2019/09/08-21:21:12.819 1c68 Reusing MANIFEST /home/gmk/.config/google-chrome/Default/IndexedDB/https_web.skype.com_0.indexeddb.leveldb/MANIFEST-000001
+2019/09/08-21:21:19.843 1d93 Level-0 table #5: started
+2019/09/08-21:21:19.858 1d93 Level-0 table #5: 1724418 bytes OK
+2019/09/08-21:21:19.861 1d93 Delete type=0 #3
+2019/09/08-21:21:55.799 1d93 Level-0 table #7: started
+2019/09/08-21:21:55.811 1d93 Level-0 table #7: 1422024 bytes OK
+2019/09/08-21:21:55.814 1d93 Delete type=0 #4
+2019/09/08-21:22:02.887 1d93 Compacting 1@1 + 1@2 files
+2019/09/08-21:22:02.946 1d93 Generated table #8@1: 11857 keys, 2179830 bytes
+2019/09/08-21:22:02.952 1d93 Generated table #9@1: 1032 keys, 369466 bytes
+2019/09/08-21:22:02.952 1d93 Compacted 1@1 + 1@2 files => 2549296 bytes
+2019/09/08-21:22:02.954 1d93 compacted to: files[ 0 0 2 0 0 0 0 ]
+2019/09/08-21:22:02.955 1d93 Delete type=2 #5
+2019/09/08-21:22:02.955 1d93 Delete type=2 #7

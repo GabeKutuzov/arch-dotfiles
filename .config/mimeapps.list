@@ -1,0 +1,4 @@
+
+[Default Applications]
+application/vnd.powdertoy.save=powdertoy-tpt-open.desktop
+x-scheme-handler/ptsave=powdertoy-tpt-ptsave.desktop

@@ -1,0 +1,28 @@
+2020/01/20-11:17:26.580 13aa Reusing MANIFEST /home/gmk/.config/google-chrome/Default/Local Extension Settings/gighmmpiobklfepjocnamgkkbiglidom/MANIFEST-000001
+2020/01/20-11:17:26.580 13aa Recovering log #258
+2020/01/20-11:17:26.604 13aa Level-0 table #261: started
+2020/01/20-11:17:26.669 13aa Level-0 table #261: 4862955 bytes OK
+2020/01/20-11:17:26.673 13aa Delete type=0 #258
+2020/01/20-11:18:27.388 15e9 Level-0 table #264: started
+2020/01/20-11:18:27.432 15e9 Level-0 table #264: 4862778 bytes OK
+2020/01/20-11:18:27.435 15e9 Delete type=0 #262
+2020/01/20-11:18:27.436 15e9 Compacting 4@0 + 2@1 files
+2020/01/20-11:18:27.532 15e9 Generated table #265@0: 1 keys, 4862669 bytes
+2020/01/20-11:18:27.535 15e9 Generated table #266@0: 7 keys, 508 bytes
+2020/01/20-11:18:27.535 15e9 Compacted 4@0 + 2@1 files => 4863177 bytes
+2020/01/20-11:18:27.537 15e9 compacted to: files[ 0 2 1 0 0 0 0 ]
+2020/01/20-11:18:27.537 15e9 Delete type=2 #264
+2020/01/20-11:18:27.537 15e9 Delete type=2 #259
+2020/01/20-11:18:27.537 15e9 Delete type=2 #261
+2020/01/20-11:18:27.537 15e9 Delete type=2 #254
+2020/01/20-11:18:27.537 15e9 Delete type=2 #253
+2020/01/20-11:18:27.537 15e9 Delete type=2 #256
+2020/01/20-12:18:27.077 15e9 Level-0 table #268: started
+2020/01/20-12:18:27.118 15e9 Level-0 table #268: 4862932 bytes OK
+2020/01/20-12:18:27.120 15e9 Delete type=0 #263
+2020/01/20-12:18:27.310 15e9 Level-0 table #270: started
+2020/01/20-12:18:27.353 15e9 Level-0 table #270: 4862673 bytes OK
+2020/01/20-12:18:27.356 15e9 Delete type=0 #267
+2020/01/20-12:18:29.247 15e9 Level-0 table #272: started
+2020/01/20-12:18:29.289 15e9 Level-0 table #272: 4862935 bytes OK
+2020/01/20-12:18:29.291 15e9 Delete type=0 #269

@@ -1,0 +1,70 @@
+libsecret-Message: 00:28:37.050: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+Error occurred in handler for 'keychain:delete-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+(electron) 'setResizable function' is deprecated and will be removed. Please use 'resizable property' instead.
+(electron) 'setMaximizable function' is deprecated and will be removed. Please use 'maximizable property' instead.
+(electron) 'setZoomLevel function' is deprecated and will be removed. Please use 'zoomLevel property' instead.
+(electron) 'getZoomLevel function' is deprecated and will be removed. Please use 'zoomLevel property' instead.
+libsecret-Message: 00:28:37.336: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+libsecret-Message: 00:28:37.336: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+Error occurred in handler for 'keychain:get-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+Error occurred in handler for 'keychain:get-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+libsecret-Message: 00:28:37.340: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+Error occurred in handler for 'keychain:get-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+libsecret-Message: 00:28:37.342: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+Error occurred in handler for 'keychain:delete-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+libsecret-Message: 00:28:49.974: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+libsecret-Message: 00:28:49.974: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+Error occurred in handler for 'keychain:set-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+Error occurred in handler for 'keychain:set-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+libsecret-Message: 00:28:50.360: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+libsecret-Message: 00:28:50.360: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+Error occurred in handler for 'keychain:delete-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+Error occurred in handler for 'keychain:delete-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+libsecret-Message: 00:28:50.363: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+Error occurred in handler for 'keychain:get-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+ioctl failed for wlan0, errno = 19 (No such device)
+ioctl failed for wlp2s0, errno = 19 (No such device)
+ioctl failed for wlp3s0, errno = 19 (No such device)
+ioctl failed for wlan0, errno = 19 (No such device)
+ioctl failed for wlp2s0, errno = 19 (No such device)
+ioctl failed for wlp3s0, errno = 19 (No such device)
+(electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
+libsecret-Message: 00:28:54.655: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+Error occurred in handler for 'keychain:get-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+libsecret-Message: 00:28:54.932: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+Error occurred in handler for 'keychain:get-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+
+(skypeforlinux:16671): libnotify-WARNING **: 00:49:39.017: Failed to connect to proxy
+
+(skypeforlinux:16671): libnotify-WARNING **: 00:49:39.018: Failed to connect to proxy
+
+(skypeforlinux:16671): libnotify-WARNING **: 00:49:39.019: Failed to connect to proxy
+
+(skypeforlinux:16671): libnotify-WARNING **: 00:49:39.527: Failed to connect to proxy
+
+(skypeforlinux:16671): libnotify-WARNING **: 00:49:39.527: Failed to connect to proxy
+
+(skypeforlinux:16671): libnotify-WARNING **: 00:49:39.528: Failed to connect to proxy
+(electron) 'setClosable function' is deprecated and will be removed. Please use 'closable property' instead.
+ioctl failed for wlan0, errno = 19 (No such device)
+ioctl failed for wlp2s0, errno = 19 (No such device)
+ioctl failed for wlp3s0, errno = 19 (No such device)
+libsecret-Message: 13:09:44.394: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+Error occurred in handler for 'keychain:set-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+libsecret-Message: 13:09:44.450: Remote error from secret service: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
+Error occurred in handler for 'keychain:set-password': [Error: The name org.freedesktop.secrets was not provided by any .service files]
+ioctl failed for wlan0, errno = 19 (No such device)
+ioctl failed for wlp2s0, errno = 19 (No such device)
+ioctl failed for wlp3s0, errno = 19 (No such device)
+ioctl failed for wlan0, errno = 19 (No such device)
+ioctl failed for wlp2s0, errno = 19 (No such device)
+ioctl failed for wlp3s0, errno = 19 (No such device)
+ioctl failed for wlan0, errno = 19 (No such device)
+ioctl failed for wlp2s0, errno = 19 (No such device)
+ioctl failed for wlp3s0, errno = 19 (No such device)
+ioctl failed for wlan0, errno = 19 (No such device)
+ioctl failed for wlp2s0, errno = 19 (No such device)
+ioctl failed for wlp3s0, errno = 19 (No such device)
+ioctl failed for wlan0, errno = 19 (No such device)
+ioctl failed for wlp2s0, errno = 19 (No such device)
+ioctl failed for wlp3s0, errno = 19 (No such device)
